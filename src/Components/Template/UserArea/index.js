@@ -1,5 +1,5 @@
 // Dependencies
-import Link from "next/link";
+import Link from "next/Link";
 import React, { useEffect, useState } from "react";
 
 // Style
@@ -29,7 +29,7 @@ const UserArea = ({ user }) => {
             <s.UserName>{profile?.name}</s.UserName>
 
             <s.UserLink>
-              <Link href={`perfil/${profile.url}`}>
+              <Link href={`/perfil/${profile.url}`}>
                 <a>Ir para seu perfil</a>
               </Link>
             </s.UserLink>
