@@ -26,8 +26,17 @@ export const Logo = styled.div`
 
   width: calc(${size} * 2.25);
   height: ${size};
-  padding: 0 15px;
   overflow: hidden;
+
+  a {
+    padding: 0 15px;
+
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #ffffff10;
+    }
+  }
 
   svg {
     fill: ${({ theme }) => theme.body.fontColor};

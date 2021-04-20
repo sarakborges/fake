@@ -1,7 +1,11 @@
 // Dependencies
 import React, { useContext } from "react";
+import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+
+// Helpers
+import { ROUTES } from "Helpers/routes";
 
 // Contexts
 import { AppContext } from "Contexts/App";
@@ -39,7 +43,11 @@ const TopBar = () => {
     <>
       <s.Container>
         <s.Logo>
-          <InstagramLogo />
+          <Link href={ROUTES.HOME}>
+            <a>
+              <InstagramLogo />
+            </a>
+          </Link>
         </s.Logo>
 
         <SearchBar />
