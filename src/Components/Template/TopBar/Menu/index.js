@@ -17,7 +17,7 @@ const TopBarMenu = () => {
   const { appState } = useContext(AppContext);
   const { theme } = appState;
 
-  const customStyle = {
+  const menuButtonStyle = {
     height: "70px",
     width: "70px",
     backgroundColor: theme.topBar.bgColor,
@@ -27,15 +27,15 @@ const TopBarMenu = () => {
 
   return (
     <>
-      <Button type='link' link={ROUTES.HOME} customStyle={customStyle}>
+      <Button type='link' link={ROUTES.HOME} customStyle={menuButtonStyle}>
         <FontAwesomeIcon icon={faHome} />
       </Button>
 
-      <Button customStyle={customStyle}>
+      <Button customStyle={menuButtonStyle}>
         <FontAwesomeIcon icon={faEnvelope} />
       </Button>
 
-      <Button customStyle={customStyle}>
+      <Button customStyle={menuButtonStyle}>
         <FontAwesomeIcon icon={faBell} />
       </Button>
     </>

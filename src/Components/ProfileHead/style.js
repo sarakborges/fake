@@ -49,11 +49,15 @@ export const HeadStatus = styled.div`
 `;
 
 export const HeadStatusItem = styled.div`
-  color: #ccc;
+  color: ${({ theme }) => theme.profile.header.status.fontColor};
+
+  transition: color 0.3s;
 
   span {
     font-weight: 700;
-    color: #fff;
+    color: ${({ theme }) => theme.profile.header.status.highlightColor};
+
+    transition: color 0.3s;
   }
 
   &:not(:first-child) {
@@ -65,14 +69,16 @@ export const ProfileAbout = styled.div`
   padding: 30px 0;
   margin: 30px 0;
 
-  border: 1px solid #ffffff10;
+  border: 1px solid ${({ theme }) => theme.profile.lineColors};
   border-width: 1px 0;
+
+  transition: border-color 0.3s;
 
   p {
     line-height: 160%;
 
     a {
-      color: #ffffff70;
+      color: ${({ theme }) => theme.body.linkColor};
     }
   }
 `;

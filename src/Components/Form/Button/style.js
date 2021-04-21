@@ -30,6 +30,7 @@ export const Button = styled.button`
 
   &:hover {
     ${ButtonStyleHover}
+    ${({ customHoverStyle }) => customHoverStyle}
   }
 `;
 
@@ -38,5 +39,6 @@ export const LinkButton = styled.a`
 
   &:hover {
     ${ButtonStyleHover}
+    ${({ customHoverStyle }) => customHoverStyle}
   }
 `;

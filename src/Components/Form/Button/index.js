@@ -6,7 +6,15 @@ import Link from "next/Link";
 import * as s from "./style";
 
 // Component
-const Button = ({ children, customStyle, type, link, newTab, onClick }) => {
+const Button = ({
+  children,
+  customStyle,
+  customHoverStyle,
+  type,
+  link,
+  newTab,
+  onClick,
+}) => {
   return (
     <>
       {type !== "link" ? (
@@ -14,6 +22,7 @@ const Button = ({ children, customStyle, type, link, newTab, onClick }) => {
           type={type || "button"}
           onClick={onClick}
           customStyle={customStyle}
+          customHoverStyle={customHoverStyle}
         >
           {children}
         </s.Button>
@@ -22,6 +31,7 @@ const Button = ({ children, customStyle, type, link, newTab, onClick }) => {
           <s.LinkButton
             target={newTab ? "_blank" : ""}
             customStyle={customStyle}
+            customHoverStyle={customHoverStyle}
           >
             {children}
           </s.LinkButton>

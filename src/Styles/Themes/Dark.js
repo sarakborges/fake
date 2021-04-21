@@ -6,6 +6,7 @@ export default {
   body: {
     bgColor: colors.dark,
     fontColor: colors.white,
+    linkColor: colors.lightBlue,
   },
 
   button: {
@@ -40,7 +41,6 @@ export default {
   topBar: {
     bgColor: colors.darker,
     avatarBg: colors.white,
-    linkColor: colors.gray,
 
     search: {
       bgColor: colors.white,
@@ -53,6 +53,27 @@ export default {
       },
 
       border: colors.darker,
+    },
+  },
+
+  profile: {
+    lineColors: `${colors.white}10`,
+
+    header: {
+      buttons: {
+        bgColor: colors.dark,
+        fontColor: colors.white,
+        borderColor: colors.white,
+
+        hover: {
+          bgColor: colors.darker,
+        },
+      },
+
+      status: {
+        fontColor: colors.gray,
+        highlightColor: colors.white,
+      },
     },
   },
 };

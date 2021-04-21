@@ -39,8 +39,4 @@ export const UserName = styled.div`
 export const UserLink = styled.div`
   line-height: 20px;
   font-size: 12px;
-
-  a {
-    color: ${({ theme }) => theme.topBar.linkColor};
-  }
 `;

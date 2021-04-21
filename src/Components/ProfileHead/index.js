@@ -1,11 +1,15 @@
 // Dependencies
-import React from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 
 // Helpers
 import { ROUTES } from "Helpers/routes";
+
+// Contexts
+import { AppContext } from "Contexts/App";
+import { UserContext } from "Contexts/User";
 
 // Components
 import Button from "Components/Form/Button";
@@ -15,10 +19,24 @@ import * as s from "./style";
 
 // Component
 const ProfileHead = ({ profile }) => {
+  const { appState } = useContext(AppContext);
+  const { theme } = appState;
+
+  const { userState } = useContext(UserContext);
+  const { user } = userState;
+
   const headButtonStyle = {
     padding: "0 15px",
-    marginLeft: "15px",
+    marginLeft: "10px",
     height: "40px",
+    backgroundColor: theme.profile.header.buttons.bgColor,
+    borderRadius: "7px",
+    border: `1px solid ${theme.profile.header.buttons.borderColor}`,
+    color: theme.profile.header.buttons.fontColor,
+  };
+
+  const headButtonHoverStyle = {
+    backgroundColor: theme.profile.header.buttons.hover.bgColor,
   };
 
   return (
@@ -30,13 +48,30 @@ const ProfileHead = ({ profile }) => {
           <s.HeadTitle>
             <s.HeadName>{profile.name}</s.HeadName>
 
-            <s.HeadButtons>
-              <Button customStyle={headButtonStyle}>Enviar mensagem</Button>
-              <Button customStyle={headButtonStyle}>Seguir</Button>
-              <Button customStyle={headButtonStyle}>
-                <FontAwesomeIcon icon={faEllipsisH} />
-              </Button>
-            </s.HeadButtons>
+            {profile.id !== user.activeProfile && (
+              <s.HeadButtons>
+                <Button
+                  customStyle={headButtonStyle}
+                  customHoverStyle={headButtonHoverStyle}
+                >
+                  Enviar mensagem
+                </Button>
+
+                <Button
+                  customStyle={headButtonStyle}
+                  customHoverStyle={headButtonHoverStyle}
+                >
+                  Seguir
+                </Button>
+
+                <Button
+                  customStyle={{ ...headButtonStyle, fontSize: "20px" }}
+                  customHoverStyle={headButtonHoverStyle}
+                >
+                  <FontAwesomeIcon icon={faEllipsisH} />
+                </Button>
+              </s.HeadButtons>
+            )}
           </s.HeadTitle>
 
           <s.HeadAt>@{profile.url}</s.HeadAt>

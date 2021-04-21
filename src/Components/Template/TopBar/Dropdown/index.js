@@ -25,7 +25,7 @@ const TopBar = () => {
   const { appState, appDispatch } = useContext(AppContext);
   const { theme } = appState;
 
-  const customStyle = {
+  const menuButtonStyle = {
     height: "50px",
     width: "100%",
     placeContent: "flex-start",
@@ -43,7 +43,7 @@ const TopBar = () => {
   return (
     <s.Container>
       <s.MenuItem>
-        <Button onClick={toggleTheme} customStyle={customStyle}>
+        <Button onClick={toggleTheme} customStyle={menuButtonStyle}>
           <s.MenuItemIcon>
             <FontAwesomeIcon
               icon={theme.slug === "darktheme" ? faSun : faMoon}
@@ -57,7 +57,7 @@ const TopBar = () => {
       </s.MenuItem>
 
       <s.MenuItem>
-        <Button customStyle={customStyle}>
+        <Button customStyle={menuButtonStyle}>
           <s.MenuItemIcon>
             <FontAwesomeIcon icon={faExchangeAlt} />
           </s.MenuItemIcon>
@@ -67,7 +67,7 @@ const TopBar = () => {
       </s.MenuItem>
 
       <s.MenuItem>
-        <Button customStyle={customStyle}>
+        <Button customStyle={menuButtonStyle}>
           <s.MenuItemIcon>
             <FontAwesomeIcon icon={faCog} />
           </s.MenuItemIcon>
@@ -77,7 +77,7 @@ const TopBar = () => {
       </s.MenuItem>
 
       <s.MenuItem>
-        <Button customStyle={customStyle}>
+        <Button customStyle={menuButtonStyle}>
           <s.MenuItemIcon>
             <FontAwesomeIcon icon={faDoorOpen} />
           </s.MenuItemIcon>

@@ -8,6 +8,10 @@ export const GlobalStyles = createGlobalStyle`
 
     transition: color .3s, background-color 0.3s;
   }
+
+  a{
+    color: ${({ theme }) => theme.body.linkColor};
+  }
 `;
 
 export const Container = styled.div`
