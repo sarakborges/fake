@@ -1,6 +1,7 @@
 const posts = [
   {
     id: 1,
+    date: `2021-04-20 21:30:00`,
     text: `waifuzinea uwu`,
     image: `https://assets.puzzlefactory.pl/puzzle/258/817/original.jpg`,
 
