@@ -6,6 +6,6 @@ module.exports = withPWA({
   },
 
   images: {
-    domains: ["cdn.discordapp.com"],
+    domains: ["cdn.discordapp.com", "instagram.fpoa13-1.fna.fbcdn.net"],
   },
 });

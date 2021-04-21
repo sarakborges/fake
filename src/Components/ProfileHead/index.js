@@ -1,6 +1,6 @@
 // Dependencies
-import React, { useContext } from "react";
-import Link from "next/link";
+import React, { Fragment, useContext } from "react";
+import Link from "next/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 
@@ -98,10 +98,12 @@ const ProfileHead = ({ profile }) => {
 
           if (splitItemAt) {
             return (
-              <p>
+              <p key={`splitword-${splitItemAt}`}>
                 {splitItemAt.map((splitItemPiece) => {
                   return (
-                    <>
+                    <Fragment
+                      key={`splitword-${splitItemAt}-${splitItemPiece}`}
+                    >
                       {splitItem.replace(splitItemPiece, "")}
                       <Link
                         href={`${ROUTES.PROFILE}${splitItemPiece.substr(
@@ -111,14 +113,14 @@ const ProfileHead = ({ profile }) => {
                       >
                         <a>{splitItemPiece}</a>
                       </Link>
-                    </>
+                    </Fragment>
                   );
                 })}
               </p>
             );
           }
 
-          return <p>{splitItem || <br />}</p>;
+          return <p key={`split-${splitItem}`}>{splitItem || <br />}</p>;
         })}
       </s.ProfileAbout>
     </>

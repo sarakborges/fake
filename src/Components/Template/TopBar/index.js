@@ -1,6 +1,6 @@
 // Dependencies
 import React, { useContext } from "react";
-import Link from "next/link";
+import Link from "next/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
