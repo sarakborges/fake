@@ -1,6 +1,4 @@
-import React from "react";
-
-import HomeTemplate from "Templates/Home";
+import HomeTemplate from "Components/Templates/Home";
 
 const Home = () => {
   return <HomeTemplate />;

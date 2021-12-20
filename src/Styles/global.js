@@ -7,14 +7,12 @@ export const GlobalStyle = createGlobalStyle`
   *{
     box-sizing: border-box;
     outline: none;
+
+    scrollbar-width: thin;
   }
 
   a{
     text-decoration: none;
-
-    &:hover{
-      text-decoration: underline;
-    }
   }
 
   html,

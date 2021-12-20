@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useReducer, createContext } from "react";
+import { useReducer, createContext } from "react";
 
 // Reducers
 import { UserReducer } from "Reducers/User";
@@ -11,8 +11,18 @@ const INITIAL_STATE = {
 
   user: {
     id: 0,
-    name: "",
-    avatar: "",
+    email: "",
+    password: "",
+    activeProfile: undefined,
+    profiles: undefined,
+
+    profile: {
+      id: 0,
+      name: "",
+      url: "",
+      avatar: "",
+      isAdult: false,
+    },
   },
 };
 

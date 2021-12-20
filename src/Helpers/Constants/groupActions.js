@@ -1,0 +1,46 @@
+import {
+  faEllipsisH,
+  faHome,
+  faList,
+  faSignOutAlt,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
+
+import { ROUTES } from "Helpers/routes";
+
+export const GROUP_ACTIONS = [
+  {
+    id: "home",
+    type: "link",
+    icon: faHome,
+    to: ROUTES.GROUP,
+  },
+
+  {
+    id: "forum",
+    type: "link",
+    icon: faList,
+    to: "#",
+  },
+
+  {
+    id: "members",
+    type: "link",
+    icon: faUsers,
+    to: ROUTES.GROUP_MEMBERS.MEMBERS,
+  },
+
+  {
+    id: "leave",
+    type: "button",
+    icon: faSignOutAlt,
+    action: () => {},
+  },
+
+  {
+    id: "more",
+    type: "button",
+    icon: faEllipsisH,
+    action: () => {},
+  },
+];

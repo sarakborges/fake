@@ -1,15 +1,19 @@
 export const AppReducer = (state, { type, data }) => {
   switch (type) {
-    case "SET_TOAST": {
-      return { ...state, toast: data };
-    }
-
     case "SET_THEME": {
-      return { ...state, theme: data };
+      const newData = { ...state, theme: { ...data } };
+
+      localStorage.setItem("theme", JSON.stringify(data.slug));
+
+      return newData;
     }
 
-    case "TOGGLE_TOPBAR_DROPDOWN": {
-      return { ...state, topBar: { ...state.topBar, display: data } };
+    case "SET_TOAST": {
+      return { ...state, toast: { ...data } };
+    }
+
+    case "TOGGLE_TOAST": {
+      return { ...state, toast: { ...state.toast, isVisible: data } };
     }
 
     default: {
