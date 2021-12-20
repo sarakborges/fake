@@ -1,15 +1,3 @@
-Hiya.
-
-# PT-BR
-
-Esse projeto é uma ideia de rede social que estou desenvolvendo. Com certeza não é a primeira. Dificilmente será a última.
-
-É uma junção de tudo que eu acho legal nas redes sociais que já utilizei, somado a algumas funcionalidades que eu gostaria que existissem nelas.
-
-Como trabalhei totalmente sozinha, eu tive alguma dificuldade em manter o gitflow. Sério, eu programo quando quero, e acabo esquecendo de commitar. Quando vejo, tem um projeto inteiro novo, basicamente.
-
-Outro fato legal de ter trabalhado sozinha, é que eu desenvolvi o layout e backend disso tudo sozinha. Sem qualquer noção de técnicas avançadas de design, ou de arquitetura de APIs. Caso surja alguém interessado em dar feedbacks, ou meter a mão na massa do ponto de vista de design e backend, eu aceitaria.
-
 # EN
 
 This project is a social network idea I'm working on. Surely not the first. Hardly the last.
@@ -23,6 +11,16 @@ Another cool fact of working alone, is that I developed the layout and backend o
 # TL;DR
 
 Hi. Is social network. Me works. Is cool.
+
+# PT-BR
+
+Esse projeto é uma ideia de rede social que estou desenvolvendo. Com certeza não é a primeira. Dificilmente será a última.
+
+É uma junção de tudo que eu acho legal nas redes sociais que já utilizei, somado a algumas funcionalidades que eu gostaria que existissem nelas.
+
+Como trabalhei totalmente sozinha, eu tive alguma dificuldade em manter o gitflow. Sério, eu programo quando quero, e acabo esquecendo de commitar. Quando vejo, tem um projeto inteiro novo, basicamente.
+
+Outro fato legal de ter trabalhado sozinha, é que eu desenvolvi o layout e backend disso tudo sozinha. Sem qualquer noção de técnicas avançadas de design, ou de arquitetura de APIs. Caso surja alguém interessado em dar feedbacks, ou meter a mão na massa do ponto de vista de design e backend, eu aceitaria.
 
 # Tech
 
