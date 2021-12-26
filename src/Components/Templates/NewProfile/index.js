@@ -179,6 +179,7 @@ const NewProfileTemplate = () => {
       setIsRequesting(false);
       displaySuccessToast();
     } catch (e) {
+      setIsRequesting(false);
       displayErrorToast();
       console.log(e);
     }

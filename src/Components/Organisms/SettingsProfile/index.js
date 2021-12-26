@@ -33,12 +33,15 @@ const SettingsProfile = () => {
     error: "",
   };
 
-  const [form, setForm] = useState({
+  const baseForm = {
     avatar: { ...baseFormField },
     name: { ...baseFormField },
     url: { ...baseFormField },
     isAdult: { ...baseFormField },
-  });
+  };
+
+  const [form, setForm] = useState({ ...baseForm });
+  const [isRequesting, setIsRequesting] = useState(false);
 
   const displaySuccessToast = () => {
     appDispatch({
@@ -147,9 +150,9 @@ const SettingsProfile = () => {
       });
 
       setIsRequesting(false);
-
       displaySuccessToast();
     } catch (e) {
+      setIsRequesting(false);
       displayErrorToast();
       console.log(e);
     }
@@ -224,7 +227,12 @@ const SettingsProfile = () => {
           />
 
           <S.SettingsSave>
-            <Button type='submit' style='primary' size={16}>
+            <Button
+              type='submit'
+              style='primary'
+              size={16}
+              disabled={isRequesting}
+            >
               Salvar
             </Button>
           </S.SettingsSave>

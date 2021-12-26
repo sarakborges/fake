@@ -219,6 +219,7 @@ const NewProfileTemplate = () => {
 
       displaySuccessToast();
     } catch (e) {
+      setIsRequesting(false);
       displayErrorToast();
       console.log(e);
     }
