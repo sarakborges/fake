@@ -9,13 +9,14 @@ import { AppContext } from "Contexts/App";
 import { UserContext } from "Contexts/User";
 
 // Atoms
+import Text from "Components/Atoms/Text";
 import Form from "Components/Atoms/Form";
 import Checkbox from "Components/Atoms/Checkbox";
-import Avatar from "Components/Atoms/Avatar";
 import Button from "Components/Atoms/Button";
 
 // Molecules
 import LabeledInput from "Components/Molecules/LabeledInput";
+import File from "Components/Molecules/File";
 
 // Style
 import * as S from "./style";
@@ -39,12 +40,71 @@ const SettingsProfile = () => {
     isAdult: { ...baseFormField },
   });
 
+  const displaySuccessToast = () => {
+    appDispatch({
+      type: "SET_TOAST",
+      data: {
+        title: "Sucesso!",
+        text: "Perfil editado com sucesso.",
+        type: "success",
+        isVisible: true,
+      },
+    });
+
+    setTimeout(() => {
+      appDispatch({
+        type: "TOGGLE_TOAST",
+        data: false,
+      });
+    }, 5000);
+  };
+
+  const displayWarningToast = () => {
+    appDispatch({
+      type: "SET_TOAST",
+      data: {
+        title: "Cuidado!",
+        text: "Todos os campos precisam ser preenchidos, antes de continuarmos.",
+        type: "warning",
+        isVisible: true,
+      },
+    });
+
+    setTimeout(() => {
+      appDispatch({
+        type: "TOGGLE_TOAST",
+        data: false,
+      });
+    }, 5000);
+  };
+
+  const displayErrorToast = () => {
+    appDispatch({
+      type: "SET_TOAST",
+      data: {
+        title: "Erro!",
+        text: "Aconteceu algum erro ao tentar editar seu perfil. Tente novamente.",
+        type: "error",
+        isVisible: true,
+      },
+    });
+
+    setTimeout(() => {
+      appDispatch({
+        type: "TOGGLE_TOAST",
+        data: false,
+      });
+    }, 5000);
+  };
+
   const handleChange = (e) => {
+    const tar = e.currentTarget;
+
     setForm({
       ...form,
 
-      [e.currentTarget.name]: {
-        value: e.currentTarget.value,
+      [tar.name]: {
+        value: tar.files?.length ? tar.files[0] : tar.value,
         error: "",
       },
     });
@@ -52,18 +112,26 @@ const SettingsProfile = () => {
 
   const handleSubmit = async () => {
     try {
+      if (!form.name.value) {
+        displayWarningToast();
+
+        return;
+      }
+
+      setIsRequesting(true);
+
+      const url = slugify(form.url.value || form.name.value);
+
       const newProfile = {
         ...profile,
         avatar: form.avatar.value,
         name: form.name.value,
-        url: form.url.value,
+        url,
         isAdult: form.isAdult.value,
       };
 
       await ProfileAPI.updateProfile({
         ...newProfile,
-        connections: [...newProfile.connections.map((item) => item._id)],
-        groups: [...newProfile.groups.map((item) => item._id)],
       });
 
       userDispatch({
@@ -78,47 +146,12 @@ const SettingsProfile = () => {
         },
       });
 
-      const newToast = {
-        title: "Sucesso!",
-        text: "Seu perfil foi editado com sucesso.",
-        type: "success",
-      };
+      setIsRequesting(false);
 
-      appDispatch({
-        type: "SET_TOAST",
-        data: {
-          ...newToast,
-          isVisible: true,
-        },
-      });
-
-      setTimeout(() => {
-        appDispatch({
-          type: "TOGGLE_TOAST",
-          data: false,
-        });
-      }, 5000);
+      displaySuccessToast();
     } catch (e) {
-      const newToast = {
-        title: "Erro!",
-        text: "Aconteceu algum erro ao tentar editar seu perfil. Tente novamente.",
-        type: "error",
-      };
-
-      appDispatch({
-        type: "SET_TOAST",
-        data: {
-          ...newToast,
-          isVisible: true,
-        },
-      });
-
-      setTimeout(() => {
-        appDispatch({
-          type: "TOGGLE_TOAST",
-          data: false,
-        });
-      }, 5000);
+      displayErrorToast();
+      console.log(e);
     }
   };
 
@@ -154,27 +187,22 @@ const SettingsProfile = () => {
 
   return (
     <S.SettingsWrapper>
-      <h2>Configurações do seu perfil</h2>
+      <Text type='title' pb={32}>
+        Configurações do seu perfil
+      </Text>
 
       {profile && (
         <Form onSubmit={handleSubmit}>
-          <S.AvatarItem>
-            <Avatar img={form.avatar.value} size={128} />
-
-            <S.AvatarInput>
-              <LabeledInput
-                id='avatar'
-                placeholder='Avatar'
-                label='Avatar'
-                value={form.avatar.value}
-                onChange={handleChange}
-              />
-            </S.AvatarInput>
-          </S.AvatarItem>
+          <File
+            id='avatar'
+            label='Avatar'
+            value={form.avatar.value}
+            onChange={handleChange}
+          />
 
           <LabeledInput
             id='name'
-            placeholder='Nome'
+            placeholder='Insira o nome do seu perfil'
             label='Nome'
             value={form.name.value}
             onChange={handleChange}
@@ -182,15 +210,15 @@ const SettingsProfile = () => {
 
           <LabeledInput
             id='url'
-            placeholder='URL'
-            label='URL'
+            placeholder='Insira uma URL personalizada para o seu perfil'
+            label='URL (Caso fique em branco, será baseado no nome)'
             value={form.url.value}
             onChange={handleChange}
           />
 
           <Checkbox
             id='isAdult'
-            label='Possui conteúdo adulto (+18)?'
+            label='Seu perfil possui conteúdo adulto (+18)?'
             value={form.url.value}
             onChange={handleChange}
           />

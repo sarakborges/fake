@@ -36,7 +36,9 @@ const FilteredList = ({ info, id, placeholder, title, noInfoText, type }) => {
       {info?.length ? (
         <>
           <S.Header>
-            <Text type='title'>{title}</Text>
+            <Text type='title' pb={32}>
+              {title}
+            </Text>
 
             <S.Filter>
               <Input
@@ -52,8 +54,10 @@ const FilteredList = ({ info, id, placeholder, title, noInfoText, type }) => {
         </>
       ) : (
         <>
-          <Text type='title'>{title}</Text>
-          <Text type='text'>{noInfoText}</Text>
+          <Text type='title' pb={16}>
+            {title}
+          </Text>
+          <Text>{noInfoText}</Text>
         </>
       )}
     </S.Wrapper>

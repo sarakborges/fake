@@ -1,6 +1,9 @@
 // Dependencies
-import { useContext } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import Head from "next/head";
+
+// APIs
+import ProfileAPI from "Apis/Profile";
 
 // Helpers
 import { SITE_NAME } from "Helpers/Constants";
@@ -22,21 +25,46 @@ import * as S from "./style";
 
 // Template
 const GroupsTemplate = () => {
+  const [profileData, setProfileData] = useState();
+
   const { userState } = useContext(UserContext);
   const { profile } = userState;
 
+  const getProfileData = useCallback(async () => {
+    if (!profile?._id) {
+      return;
+    }
+
+    const profileReq = await ProfileAPI.getProfileById(profile._id);
+    setProfileData(profileReq);
+  }, [profile, ProfileAPI]);
+
+  useEffect(() => {
+    getProfileData();
+  }, [profile, getProfileData]);
+
   const getOwnedGroups = () => {
-    return profile?.groups?.filter((item) => {
+    if (profileData?.groups?.length < 1) {
+      return [];
+    }
+
+    return profileData?.groups?.filter((item) => {
       return (
-        item.owner === profile._id || item.moderators.includes(profile._id)
+        item.owner === profileData._id ||
+        item.moderators.includes(profileData._id)
       );
     });
   };
 
   const getNonOwnedGroups = () => {
-    return profile?.groups?.filter((item) => {
+    if (profileData?.groups?.length < 1) {
+      return [];
+    }
+
+    return profileData?.groups?.filter((item) => {
       return (
-        item.owner !== profile._id && !item.moderators.includes(profile._id)
+        item.owner !== profileData._id &&
+        !item.moderators.includes(profileData._id)
       );
     });
   };
@@ -47,7 +75,7 @@ const GroupsTemplate = () => {
         <title>{`${SITE_NAME} - Seus grupos`}</title>
       </Head>
 
-      {profile && (
+      {profileData && (
         <S.GroupsListWrapper>
           <CreateNew type='group' />
 

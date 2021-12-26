@@ -8,6 +8,7 @@ import UserAPI from "Apis/User";
 
 // Helpers
 import { SITE_NAME } from "Helpers/Constants";
+import { slugify } from "Helpers/Functions";
 
 // Contexts
 import { AppContext } from "Contexts/App";
@@ -16,10 +17,11 @@ import { UserContext } from "Contexts/User";
 // Atoms
 import Form from "Components/Atoms/Form";
 import Checkbox from "Components/Atoms/Checkbox";
-import Avatar from "Components/Atoms/Avatar";
 import Button from "Components/Atoms/Button";
+import Text from "Components/Atoms/Text";
 
 // Molecules
+import File from "Components/Molecules/File";
 import LabeledInput from "Components/Molecules/LabeledInput";
 
 // Template
@@ -48,17 +50,6 @@ const NewProfileTemplate = () => {
 
   const [form, setForm] = useState({ ...baseForm });
   const [isRequesting, setIsRequesting] = useState(false);
-
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-
-      [e.currentTarget.name]: {
-        value: e.currentTarget.value,
-        error: "",
-      },
-    });
-  };
 
   const displaySuccessToast = () => {
     appDispatch({
@@ -117,20 +108,22 @@ const NewProfileTemplate = () => {
     }, 5000);
   };
 
+  const handleChange = (e) => {
+    const tar = e.currentTarget;
+
+    setForm({
+      ...form,
+
+      [tar.name]: {
+        value: tar.files?.length ? tar.files[0] : tar.value,
+        error: "",
+      },
+    });
+  };
+
   const handleSubmit = async () => {
     try {
-      const newProfile = {
-        avatar: form.avatar.value,
-        name: form.name.value,
-        url: form.url.value,
-        isAdult: form.isAdult.value,
-        createdAt: new Date(),
-        connections: [],
-        groups: [],
-        about: ``,
-      };
-
-      if (!form.name.value || !form.url.value) {
+      if (!form.name.value) {
         displayWarningToast();
 
         return;
@@ -138,17 +131,32 @@ const NewProfileTemplate = () => {
 
       setIsRequesting(true);
 
-      const newId = await ProfileAPI.createProfile(newProfile);
+      const url = slugify(form.url.value || form.name.value);
 
-      if (!newId) {
+      const newProfile = {
+        avatar: form.avatar.value,
+        name: form.name.value,
+        url,
+        isAdult: form.isAdult.value,
+        createdAt: new Date(),
+        connections: [],
+        groups: [],
+        about: ``,
+      };
+
+      const insertedProfile = await ProfileAPI.createProfile(newProfile);
+
+      if (!insertedProfile.newId) {
+        setIsRequesting(false);
+        displayErrorToast();
         return;
       }
 
       const newProfileData = {
-        _id: newId,
-        avatar: newProfile.avatar,
+        _id: insertedProfile.newId,
+        avatar: insertedProfile.avatar,
         name: newProfile.name,
-        url: newProfile.url,
+        url,
       };
 
       await UserAPI.updateUser({
@@ -169,7 +177,6 @@ const NewProfileTemplate = () => {
       });
 
       setIsRequesting(false);
-
       displaySuccessToast();
     } catch (e) {
       displayErrorToast();
@@ -185,22 +192,17 @@ const NewProfileTemplate = () => {
 
       <S.NewProfileWrapper>
         <S.NewProfileContent>
-          <h2>Novo perfil</h2>
+          <Text type='title' pb={32}>
+            Novo perfil
+          </Text>
 
           <Form onSubmit={handleSubmit}>
-            <S.AvatarItem>
-              <Avatar img={form.avatar.value} size={128} />
-
-              <S.AvatarInput>
-                <LabeledInput
-                  id='avatar'
-                  placeholder='Insira a URL do avatar do seu perfil'
-                  label='Avatar'
-                  value={form.avatar.value}
-                  onChange={handleChange}
-                />
-              </S.AvatarInput>
-            </S.AvatarItem>
+            <File
+              id='avatar'
+              label='Avatar'
+              value={form.avatar.value}
+              onChange={handleChange}
+            />
 
             <LabeledInput
               id='name'
@@ -213,7 +215,7 @@ const NewProfileTemplate = () => {
             <LabeledInput
               id='url'
               placeholder='Insira uma URL personalizada para o seu perfil'
-              label='URL'
+              label='URL (Caso fique em branco, será baseado no nome)'
               value={form.url.value}
               onChange={handleChange}
             />

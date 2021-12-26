@@ -11,8 +11,4 @@ export const SettingsWrapper = styled.div`
 export const SettingsSave = styled.div`
   display: flex;
   place-content: flex-end;
-
-  > button {
-    width: auto;
-  }
 `;

@@ -1,35 +1,33 @@
 import styled, { css } from "styled-components";
 
-const PL = css`
+const Style = css`
   padding-left: ${({ pl }) => (pl ? `${pl}px` : 0)};
+  padding-bottom: ${({ pb }) => (pb ? `${pb}px` : 0)};
 `;
 
 export const PageTitle = styled.h1`
-  ${PL}
-  padding-bottom: 16px;
+  ${Style}
 
   font-size: 24px;
   font-weight: 600;
 `;
 
 export const Title = styled.h2`
-  ${PL}
-  padding-bottom: 16px;
+  ${Style}
 
   font-size: 24px;
   font-weight: 600;
 `;
 
 export const SubTitle = styled.h3`
-  ${PL}
-  padding-bottom: 16px;
+  ${Style}
 
   font-size: 24px;
   font-weight: 600;
 `;
 
 export const Text = styled.p`
-  ${PL}
+  ${Style}
 
   line-height: 1.6;
   font-size: 16px;

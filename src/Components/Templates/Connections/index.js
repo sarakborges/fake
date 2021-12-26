@@ -55,7 +55,9 @@ const ConnectionsTemplate = () => {
           {profile?.connections?.length > 0 ? (
             <>
               <S.Header>
-                <Text type='title'>Suas conexões</Text>
+                <Text type='title' pb={16}>
+                  Suas conexões
+                </Text>
 
                 <S.Filter>
                   <Input
@@ -71,9 +73,11 @@ const ConnectionsTemplate = () => {
             </>
           ) : (
             <>
-              <Text type='title'>Você ainda não possui conexões</Text>
+              <Text type='title' pb={16}>
+                Você ainda não possui conexões
+              </Text>
 
-              <Text type='text'>
+              <Text>
                 Explore um pouco, que você encontrará conexões rapidinho!
               </Text>
             </>

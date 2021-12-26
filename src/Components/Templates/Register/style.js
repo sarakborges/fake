@@ -42,6 +42,7 @@ export const RegisterWrapper = styled.div`
   place-items: center;
 
   min-height: 100vh;
+  padding: 32px;
 `;
 
 export const FormWrapper = styled.div`
@@ -50,6 +51,7 @@ export const FormWrapper = styled.div`
   gap: 32px;
 
   width: 480px;
+  max-width: 100%;
   padding: 32px;
 
   background-color: var(--bg);

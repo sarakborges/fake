@@ -7,6 +7,7 @@ import { UserContext } from "Contexts/User";
 // Atoms
 import Form from "Components/Atoms/Form";
 import Button from "Components/Atoms/Button";
+import Text from "Components/Atoms/Text";
 
 // Molecules
 import LabeledInput from "Components/Molecules/LabeledInput";
@@ -64,7 +65,9 @@ const SettingsAccount = () => {
 
   return (
     <S.SettingsWrapper>
-      <h2>Configurações da sua conta</h2>
+      <Text type='title' pb={32}>
+        Configurações da sua conta
+      </Text>
 
       {user && (
         <Form onSubmit={handleSubmit}>

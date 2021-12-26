@@ -38,10 +38,12 @@ export const GlobalStyles = createGlobalStyle`
 
 export const LoginWrapper = styled.div`
   display: flex;
+  flex-flow: column;
   place-content: center;
   place-items: center;
 
   min-height: 100vh;
+  padding: 32px;
 `;
 
 export const FormWrapper = styled.div`
@@ -50,7 +52,22 @@ export const FormWrapper = styled.div`
   gap: 32px;
 
   width: 480px;
+  max-width: 100%;
   padding: 32px;
+
+  background-color: var(--bg);
+  border-radius: 16px;
+`;
+
+export const TestWarning = styled.div`
+  display: flex;
+  flex-flow: column;
+  gap: 16px;
+
+  width: 480px;
+  max-width: 100%;
+  padding: 32px;
+  margin-top: 32px;
 
   background-color: var(--bg);
   border-radius: 16px;

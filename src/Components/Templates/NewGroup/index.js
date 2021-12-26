@@ -8,6 +8,7 @@ import ProfileAPI from "Apis/Profile";
 
 // Helpers
 import { SITE_NAME } from "Helpers/Constants";
+import { slugify } from "Helpers/Functions";
 
 // Contexts
 import { AppContext } from "Contexts/App";
@@ -16,10 +17,11 @@ import { UserContext } from "Contexts/User";
 // Atoms
 import Form from "Components/Atoms/Form";
 import Checkbox from "Components/Atoms/Checkbox";
-import Avatar from "Components/Atoms/Avatar";
 import Button from "Components/Atoms/Button";
+import Text from "Components/Atoms/Text";
 
 // Molecules
+import File from "Components/Molecules/File";
 import LabeledInput from "Components/Molecules/LabeledInput";
 import LabeledTextarea from "Components/Molecules/LabeledTextarea";
 
@@ -53,11 +55,13 @@ const NewProfileTemplate = () => {
   const [isRequesting, setIsRequesting] = useState(false);
 
   const handleChange = (e) => {
+    const tar = e.currentTarget;
+
     setForm({
       ...form,
 
-      [e.currentTarget.name]: {
-        value: e.currentTarget.value,
+      [tar.name]: {
+        value: tar.files?.length ? tar.files[0] : tar.value,
         error: "",
       },
     });
@@ -122,12 +126,19 @@ const NewProfileTemplate = () => {
 
   const handleSubmit = async () => {
     try {
+      if (!form.name.value) {
+        displayWarningToast();
+        return;
+      }
+
+      const url = slugify(form.url.value || form.name.value);
+
       const newGroup = {
         owner: profile._id,
         avatar: form.avatar.value,
         cover: form.cover.value,
         name: form.name.value,
-        url: form.url.value,
+        url,
         about: form.about.value,
         isAdult: form.isAdult.value,
         createdAt: new Date(),
@@ -145,11 +156,6 @@ const NewProfileTemplate = () => {
         importantLinks: [],
       };
 
-      if (!form.name.value || !form.url.value) {
-        displayWarningToast();
-        return;
-      }
-
       setIsRequesting(true);
 
       const newId = await GroupAPI.createGroup(newGroup);
@@ -161,7 +167,7 @@ const NewProfileTemplate = () => {
       const newGroupData = {
         _id: newId,
         name: newGroup.name,
-        url: newGroup.url,
+        url,
         avatar: newGroup.avatar,
         owner: newGroup.owner,
         moderators: newGroup.moderators,
@@ -226,22 +232,17 @@ const NewProfileTemplate = () => {
 
       <S.NewGroupWrapper>
         <S.NewGroupContent>
-          <h2>Novo grupo</h2>
+          <Text type='title' pb={32}>
+            Novo grupo
+          </Text>
 
           <Form onSubmit={handleSubmit}>
-            <S.AvatarItem>
-              <Avatar img={form.avatar.value} size={128} />
-
-              <S.AvatarInput>
-                <LabeledInput
-                  id='avatar'
-                  placeholder='Insira a URL do avatar do grupo'
-                  label='Avatar'
-                  value={form.avatar.value}
-                  onChange={handleChange}
-                />
-              </S.AvatarInput>
-            </S.AvatarItem>
+            <File
+              id='avatar'
+              label='Avatar'
+              value={form.avatar.value}
+              onChange={handleChange}
+            />
 
             <LabeledInput
               id='cover'
@@ -262,7 +263,7 @@ const NewProfileTemplate = () => {
             <LabeledInput
               id='url'
               placeholder='Insira uma URL personalizada para o grupo'
-              label='URL'
+              label='URL (Caso fique em branco, será baseado no nome)'
               value={form.url.value}
               onChange={handleChange}
             />

@@ -18,33 +18,35 @@ export const RightBar = styled.div`
   display: flex;
   flex-flow: column;
   place-items: flex-end;
+  gap: 48px;
 
-  width: 320px;
-  margin: 0 32px;
+  width: 336px;
+  margin: 0 16px;
 
   > div {
     width: 100%;
+    padding: 16px 2px;
+
+    background-color: var(--bg);
+    border-radius: 16px;
   }
+`;
+
+export const RightBarNoItems = styled.div`
+  padding-top: 16px;
+
+  text-align: center;
 `;
 
 export const RightBarTitle = styled.div`
   text-align: center;
   color: var(--main);
-
-  ${RightBar} > div:not(:first-child) & {
-    padding-top: 48px;
-  }
-
-  > a {
-    margin-left: 8px;
-
-    font-size: 12px;
-  }
 `;
 
 export const BubbleList = styled.div`
   display: flex;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 12px;
 
   padding: 24px 16px 0;
 

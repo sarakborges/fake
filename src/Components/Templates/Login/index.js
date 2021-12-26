@@ -191,6 +191,35 @@ const LoginTemplate = () => {
               para se cadastrar.
             </S.RegisterLink>
           </S.FormWrapper>
+
+          <S.TestWarning>
+            <Text type='title' pb={32}>
+              Aviso!
+            </Text>
+
+            <Text>
+              Olá, caro usuário. Queremos deixa-lo avisado que este é um
+              ambiente de testes, onde coisas estranhas poderão ocorrer.
+            </Text>
+
+            <Text>
+              Então... Caso você esteja possua uma conta, e não consiga logar
+              (mesmo inserindo informações válidas), é possível que o banco de
+              dados tenha sido apagado.
+            </Text>
+
+            <Text>
+              Isso acontece porque, enquanto features são desenvolvidas, podemos
+              criar um volume muito grande de informações bugadas. Fica mais
+              fácil apagar um banco de dados inteiro, do que catar informação
+              bugada para ser apagada.
+            </Text>
+
+            <Text>
+              Agradecemos sua compreensão, a paciência, e a ajuda na hora de
+              testar o site. ♥
+            </Text>
+          </S.TestWarning>
         </S.LoginWrapper>
       </Form>
     </ThemeProvider>

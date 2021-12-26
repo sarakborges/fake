@@ -21,7 +21,9 @@ const CreateNew = ({ type }) => {
 
   return (
     <>
-      <Text type='title'>Criar novo {typeStr}</Text>
+      <Text type='title' pb={32}>
+        Criar novo {typeStr}
+      </Text>
 
       <S.Wrapper>
         <S.CreateNew>

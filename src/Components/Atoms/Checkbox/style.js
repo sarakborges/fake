@@ -15,19 +15,17 @@ export const Checkbox = styled.span`
   width: 16px;
   height: 16px;
 
+  font-size: 12px;
+
   background-color: var(--offWhite);
+  border-radius: 4px;
+`;
 
-  &:before {
-    content: "";
+export const CheckboxIcon = styled.span`
+  opacity: 0;
+  color: var(--main);
 
-    width: 12px;
-    height: 12px;
-
-    opacity: 0;
-    background-color: var(--main);
-
-    transition: opacity 0.3s;
-  }
+  transition: opacity 0.3s;
 `;
 
 export const Label = styled.label`
@@ -42,7 +40,7 @@ export const Label = styled.label`
   > input {
     display: none;
 
-    &:checked + ${Checkbox}:before {
+    &:checked + ${Checkbox} > ${CheckboxIcon} {
       opacity: 1;
     }
   }

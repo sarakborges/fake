@@ -1,3 +1,6 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+
 // Style
 import * as S from "./style";
 
@@ -16,7 +19,11 @@ const Checkbox = ({ id, label, value, onChange }) => {
           onChange={onChange}
         />
 
-        <S.Checkbox />
+        <S.Checkbox>
+          <S.CheckboxIcon>
+            <FontAwesomeIcon icon={faCheck} />
+          </S.CheckboxIcon>
+        </S.Checkbox>
       </S.Label>
     </S.CheckboxWrapper>
   );

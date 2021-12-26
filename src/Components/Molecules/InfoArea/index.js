@@ -10,19 +10,10 @@ import * as S from "./style";
 
 // Template
 const InfoArea = ({ info, side, isBox, highlighted }) => {
-  const validateAvatar = () => {
-    try {
-      new URL(info?.avatar);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
-
   const AvatarWrapper = () => {
     return (
       <>
-        {info?.icon || !validateAvatar(info?.avatar) ? (
+        {info?.icon ? (
           <RoundIcon icon={info?.icon || faQuestion} size={48} bgColor='main' />
         ) : (
           <Avatar img={info?.avatar} size={48} />

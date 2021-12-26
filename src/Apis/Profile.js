@@ -30,8 +30,16 @@ const createProfile = (data) => {
     return;
   }
 
+  const formData = new FormData();
+
+  Object.keys(data).forEach((key) => formData.append(key, data[key]));
+
   return axios
-    .post(`${process.env.NEXT_PUBLIC_REQUEST_URI}/profile`, { ...data })
+    .post(`${process.env.NEXT_PUBLIC_REQUEST_URI}/profile`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
     .then((res) => res.data)
     .catch((err) => err);
 };

@@ -42,7 +42,9 @@ const FilteredSelectProfilesList = ({
       {info?.length ? (
         <>
           <S.Header>
-            <Text type='title'>{title}</Text>
+            <Text type='title' pb={16}>
+              {title}
+            </Text>
 
             <S.Filter>
               <Input
@@ -60,13 +62,15 @@ const FilteredSelectProfilesList = ({
               activeProfile={activeProfile}
             />
           ) : (
-            <Text type='text'>Nenhum resultado encontrado</Text>
+            <Text>Nenhum resultado encontrado</Text>
           )}
         </>
       ) : (
         <>
-          <Text type='title'>{title}</Text>
-          <Text type='text'>{noInfoText}</Text>
+          <Text type='title' pb={32}>
+            {title}
+          </Text>
+          <Text>{noInfoText}</Text>
         </>
       )}
     </S.Wrapper>

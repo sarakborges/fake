@@ -1,27 +1,56 @@
 // Dependencies
+import { useCallback, useContext, useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisH, faQuestion } from "@fortawesome/free-solid-svg-icons";
 
-// Template
-import AuthedTemplate from "Components/Templates/Authed";
+// APIs
+import ProfileAPI from "Apis/Profile";
+
+// Contexts
+import { UserContext } from "Contexts/User";
 
 // Helpers
 import { SITE_NAME } from "Helpers/Constants";
+import { ROUTES } from "Helpers/routes";
 
 // Atoms
 import Button from "Components/Atoms/Button";
 import Textarea from "Components/Atoms/Textarea";
+import Text from "Components/Atoms/Text";
+import Avatar from "Components/Atoms/Avatar";
+import RoundIcon from "Components/Atoms/RoundIcon";
 
 // Molecules
 import InfoArea from "Components/Molecules/InfoArea";
+
+// Template
+import AuthedTemplate from "Components/Templates/Authed";
 
 // Styles
 import * as S from "./style";
 
 // Template
 const HomeTemplate = () => {
+  const [profileData, setProfileData] = useState();
+
+  const { userState } = useContext(UserContext);
+  const { profile } = userState;
+
+  const getProfileData = useCallback(async () => {
+    if (!profile?._id) {
+      return;
+    }
+
+    const profileReq = await ProfileAPI.getProfileById(profile._id);
+    setProfileData(profileReq);
+  }, [profile, ProfileAPI]);
+
+  useEffect(() => {
+    getProfileData();
+  }, [profile, getProfileData]);
+
   return (
     <AuthedTemplate>
       <Head>
@@ -72,7 +101,85 @@ const HomeTemplate = () => {
           </S.FeedItem>
         </S.FeedWrapper>
 
-        <S.Idk />
+        <S.RightBar>
+          <div>
+            <S.RightBarTitle>Suas conexões</S.RightBarTitle>
+
+            {profileData?.connections?.length ? (
+              <S.BubbleList>
+                {profileData.connections.slice(0, 5).map((item) => {
+                  return (
+                    <Link
+                      key={item._id}
+                      href={ROUTES.PROFILE.replace(":id", item.url)}
+                    >
+                      <a>
+                        {item.avatar ? (
+                          <Avatar img={item.avatar} size={40} />
+                        ) : (
+                          <RoundIcon
+                            icon={faQuestion}
+                            size={40}
+                            bgColor='main'
+                          />
+                        )}
+                      </a>
+                    </Link>
+                  );
+                })}
+
+                <Link href={ROUTES.CONNECTIONS}>
+                  <a>
+                    <RoundIcon icon={faEllipsisH} size={40} bgColor='main' />
+                  </a>
+                </Link>
+              </S.BubbleList>
+            ) : (
+              <S.RightBarNoItems>
+                <Text>Você ainda não possui conexões</Text>
+              </S.RightBarNoItems>
+            )}
+          </div>
+
+          <div>
+            <S.RightBarTitle>Seus grupos</S.RightBarTitle>
+
+            {profileData?.groups?.length ? (
+              <S.BubbleList>
+                {profileData.groups.slice(0, 5).map((item) => {
+                  return (
+                    <Link
+                      key={item._id}
+                      href={ROUTES.GROUP.replace(":id", item.url)}
+                    >
+                      <a>
+                        {item.avatar ? (
+                          <Avatar img={item.avatar} size={40} />
+                        ) : (
+                          <RoundIcon
+                            icon={faQuestion}
+                            size={40}
+                            bgColor='main'
+                          />
+                        )}
+                      </a>
+                    </Link>
+                  );
+                })}
+
+                <Link href={ROUTES.GROUPS}>
+                  <a>
+                    <RoundIcon icon={faEllipsisH} size={40} bgColor='main' />
+                  </a>
+                </Link>
+              </S.BubbleList>
+            ) : (
+              <S.RightBarNoItems>
+                <Text>Você ainda não participa de grupos</Text>
+              </S.RightBarNoItems>
+            )}
+          </div>
+        </S.RightBar>
       </S.HomeWrapper>
     </AuthedTemplate>
   );
