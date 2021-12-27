@@ -24,7 +24,7 @@ export const LEFT_MENU = [
     {
       icon: faUser,
       text: "Perfil",
-      link: "#",
+      link: ROUTES.PROFILE,
     },
 
     {
