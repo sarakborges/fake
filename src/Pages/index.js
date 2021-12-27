@@ -1,7 +1,7 @@
-import HomeTemplate from "Components/Templates/Home";
+import AboutTemplate from "Components/Templates/About";
 
-const Home = () => {
-  return <HomeTemplate />;
+const About = () => {
+  return <AboutTemplate />;
 };
 
-export default Home;
+export default About;

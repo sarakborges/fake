@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const LoginWrapper = styled.div`
+export const AboutWrapper = styled.div`
   display: flex;
   flex-flow: column;
   place-content: center;
@@ -10,20 +10,16 @@ export const LoginWrapper = styled.div`
   padding: 32px;
 `;
 
-export const FormWrapper = styled.div`
+export const About = styled.div`
   display: flex;
   flex-flow: column;
-  gap: 32px;
+  gap: 16px;
 
   width: 480px;
   max-width: 100%;
   padding: 32px;
+  margin-top: 32px;
 
   background-color: var(--bgContrast);
   border-radius: 16px;
-`;
-
-export const RegisterLink = styled.p`
-  text-align: center;
-  font-size: 12px;
 `;

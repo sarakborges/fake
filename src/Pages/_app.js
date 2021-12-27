@@ -5,15 +5,11 @@ import App from "next/app";
 import { AppProvider } from "Contexts/App";
 import { UserProvider } from "Contexts/User";
 
-// Styles
-import { GlobalStyle } from "Styles/global";
-
 // Component
 const MyApp = ({ Component, pageProps }) => {
   return (
     <AppProvider>
       <UserProvider>
-        <GlobalStyle />
         <Component {...pageProps} />
       </UserProvider>
     </AppProvider>

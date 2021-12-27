@@ -12,6 +12,9 @@ import { useContext, useState } from "react";
 import Input from "Components/Atoms/Input";
 import Text from "Components/Atoms/Text";
 
+// Molecules
+import NoProfile from "Components/Molecules/NoProfile";
+
 // Organisms
 import InfoList from "Components/Organisms/InfoList";
 
@@ -50,6 +53,8 @@ const ConnectionsTemplate = () => {
         <title>{`${SITE_NAME} - Suas conexões`}</title>
       </Head>
 
+      {!profile?._id && <NoProfile />}
+
       {profile && (
         <S.ProfilesListWrapper>
           {profile?.connections?.length > 0 ? (
@@ -59,14 +64,13 @@ const ConnectionsTemplate = () => {
                   Suas conexões
                 </Text>
 
-                <S.Filter>
-                  <Input
-                    id='connections-filter'
-                    placeholder='Digite o nome ou @ de quem quer encontrar'
-                    value={filter}
-                    onChange={handleFilterChange}
-                  />
-                </S.Filter>
+                <Input
+                  id='connections-filter'
+                  placeholder='Digite o nome ou @ de quem quer encontrar'
+                  value={filter}
+                  onChange={handleFilterChange}
+                  isBgInverted
+                />
               </S.Header>
 
               <InfoList info={getFilteredConnections()} type='profile' />

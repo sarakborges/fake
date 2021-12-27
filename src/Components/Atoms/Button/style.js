@@ -43,6 +43,7 @@ export const Button = styled.button`
   cursor: pointer;
 
   font-size: ${({ size }) => `${size}px`};
+  font-family: inherit;
 
   transition: background-color 0.3s, color 0.3s;
 

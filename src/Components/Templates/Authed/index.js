@@ -18,6 +18,7 @@ import Toast from "Components/Molecules/Toast";
 import Sidebar from "Components/Organisms/Sidebar";
 
 // Style
+import { GlobalStyle } from "Styles/global";
 import * as S from "./style";
 
 // Template
@@ -61,7 +62,7 @@ const AuthedTemplate = ({ children }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <S.GlobalStyles />
+      <GlobalStyle />
 
       {<Toast {...toast} />}
 
@@ -69,8 +70,6 @@ const AuthedTemplate = ({ children }) => {
         <Sidebar />
 
         <S.Content>
-          {/* <TopMenu /> */}
-
           <S.PageContent>{children}</S.PageContent>
         </S.Content>
       </S.Container>

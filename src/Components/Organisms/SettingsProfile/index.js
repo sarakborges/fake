@@ -17,6 +17,7 @@ import Button from "Components/Atoms/Button";
 // Molecules
 import LabeledInput from "Components/Molecules/LabeledInput";
 import File from "Components/Molecules/File";
+import NoProfile from "Components/Molecules/NoProfile";
 
 // Style
 import * as S from "./style";
@@ -190,53 +191,57 @@ const SettingsProfile = () => {
 
   return (
     <S.SettingsWrapper>
-      <Text type='title' pb={32}>
-        Configurações do seu perfil
-      </Text>
+      {!profile?._id && <NoProfile />}
 
       {profile && (
-        <Form onSubmit={handleSubmit}>
-          <File
-            id='avatar'
-            label='Avatar'
-            value={form.avatar.value}
-            onChange={handleChange}
-          />
+        <>
+          <Text type='title' pb={32}>
+            Configurações do seu perfil
+          </Text>
 
-          <LabeledInput
-            id='name'
-            placeholder='Insira o nome do seu perfil'
-            label='Nome'
-            value={form.name.value}
-            onChange={handleChange}
-          />
+          <Form onSubmit={handleSubmit}>
+            <File
+              id='avatar'
+              label='Avatar'
+              value={form.avatar.value}
+              onChange={handleChange}
+            />
 
-          <LabeledInput
-            id='url'
-            placeholder='Insira uma URL personalizada para o seu perfil'
-            label='URL (Caso fique em branco, será baseado no nome)'
-            value={form.url.value}
-            onChange={handleChange}
-          />
+            <LabeledInput
+              id='name'
+              placeholder='Insira o nome do seu perfil'
+              label='Nome'
+              value={form.name.value}
+              onChange={handleChange}
+            />
 
-          <Checkbox
-            id='isAdult'
-            label='Seu perfil possui conteúdo adulto (+18)?'
-            value={form.url.value}
-            onChange={handleChange}
-          />
+            <LabeledInput
+              id='url'
+              placeholder='Insira uma URL personalizada para o seu perfil'
+              label='URL (Caso fique em branco, será baseado no nome)'
+              value={form.url.value}
+              onChange={handleChange}
+            />
 
-          <S.SettingsSave>
-            <Button
-              type='submit'
-              style='primary'
-              size={16}
-              disabled={isRequesting}
-            >
-              Salvar
-            </Button>
-          </S.SettingsSave>
-        </Form>
+            <Checkbox
+              id='isAdult'
+              label='Seu perfil possui conteúdo adulto (+18)?'
+              value={form.url.value}
+              onChange={handleChange}
+            />
+
+            <S.SettingsSave>
+              <Button
+                type='submit'
+                style='primary'
+                size={16}
+                disabled={isRequesting}
+              >
+                Salvar
+              </Button>
+            </S.SettingsSave>
+          </Form>
+        </>
       )}
     </S.SettingsWrapper>
   );

@@ -7,7 +7,8 @@ export const Input = styled.input`
 
   border: 0;
   border-bottom: 1px solid var(--bgInverted);
-  background-color: var(--bg);
+  background-color: ${({ isBgInverted }) =>
+    !isBgInverted ? "var(--bg)" : "var(--bgContrast)"};
 
   font-size: 16px;
   color: var(--bgInverted);

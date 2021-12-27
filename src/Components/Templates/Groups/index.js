@@ -13,6 +13,7 @@ import { UserContext } from "Contexts/User";
 
 // Molecules
 import CreateNew from "Components/Molecules/CreateNew";
+import NoProfile from "Components/Molecules/NoProfile";
 
 // Organisms
 import FilteredList from "Components/Organisms/FilteredList";
@@ -74,6 +75,8 @@ const GroupsTemplate = () => {
       <Head>
         <title>{`${SITE_NAME} - Seus grupos`}</title>
       </Head>
+
+      {!profile?._id && <NoProfile />}
 
       {profileData && (
         <S.GroupsListWrapper>

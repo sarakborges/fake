@@ -5,7 +5,15 @@ import Input from "Components/Atoms/Input";
 import * as S from "./style";
 
 // Template
-const LabeledInput = ({ id, type, placeholder, label, value, onChange }) => {
+const LabeledInput = ({
+  id,
+  type,
+  placeholder,
+  label,
+  value,
+  onChange,
+  isBgInverted,
+}) => {
   return (
     <S.Wrapper>
       <Input
@@ -13,6 +21,7 @@ const LabeledInput = ({ id, type, placeholder, label, value, onChange }) => {
         type={type || "text"}
         placeholder={placeholder}
         value={value}
+        isBgInverted={isBgInverted}
         onChange={onChange}
       />
 

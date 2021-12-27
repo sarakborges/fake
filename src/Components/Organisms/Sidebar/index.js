@@ -1,6 +1,5 @@
 // Dependencies
 import { useContext } from "react";
-import Link from "next/link";
 
 // Contexts
 import { UserContext } from "Contexts/User";

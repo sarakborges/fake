@@ -28,6 +28,7 @@ import LabeledInput from "Components/Molecules/LabeledInput";
 import DarkTheme from "Styles/Themes/Dark";
 
 // Styles
+import { GlobalStyle } from "Styles/global";
 import * as S from "./style";
 
 // Template
@@ -144,7 +145,7 @@ const LoginTemplate = () => {
 
   return (
     <ThemeProvider theme={theme || DarkTheme}>
-      <S.GlobalStyles />
+      <GlobalStyle />
 
       {<Toast {...toast} />}
 
@@ -163,6 +164,7 @@ const LoginTemplate = () => {
               placeholder='Digite seu email aqui'
               value={form.email.value}
               onChange={handleChange}
+              isBgInverted
             />
 
             <LabeledInput
@@ -172,6 +174,7 @@ const LoginTemplate = () => {
               placeholder='Digite sua senha aqui'
               value={form.password.value}
               onChange={handleChange}
+              isBgInverted
             />
 
             <Button
@@ -191,35 +194,6 @@ const LoginTemplate = () => {
               para se cadastrar.
             </S.RegisterLink>
           </S.FormWrapper>
-
-          <S.TestWarning>
-            <Text type='title' pb={32}>
-              Aviso!
-            </Text>
-
-            <Text>
-              Olá, caro usuário. Queremos deixa-lo avisado que este é um
-              ambiente de testes, onde coisas estranhas poderão ocorrer.
-            </Text>
-
-            <Text>
-              Então... Caso você esteja possua uma conta, e não consiga logar
-              (mesmo inserindo informações válidas), é possível que o banco de
-              dados tenha sido apagado.
-            </Text>
-
-            <Text>
-              Isso acontece porque, enquanto features são desenvolvidas, podemos
-              criar um volume muito grande de informações bugadas. Fica mais
-              fácil apagar um banco de dados inteiro, do que catar informação
-              bugada para ser apagada.
-            </Text>
-
-            <Text>
-              Agradecemos sua compreensão, a paciência, e a ajuda na hora de
-              testar o site. ♥
-            </Text>
-          </S.TestWarning>
         </S.LoginWrapper>
       </Form>
     </ThemeProvider>

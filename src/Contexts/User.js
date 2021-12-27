@@ -10,18 +10,18 @@ const INITIAL_STATE = {
   isLoggedIn: false,
 
   user: {
-    id: 0,
-    email: "",
-    password: "",
+    _id: undefined,
+    email: undefined,
+    password: undefined,
     activeProfile: undefined,
     profiles: undefined,
 
     profile: {
-      id: 0,
-      name: "",
-      url: "",
-      avatar: "",
-      isAdult: false,
+      _id: undefined,
+      name: undefined,
+      url: undefined,
+      avatar: undefined,
+      isAdult: undefined,
     },
   },
 };

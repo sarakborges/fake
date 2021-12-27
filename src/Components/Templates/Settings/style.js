@@ -1,10 +1,18 @@
 import styled from "styled-components";
 
 export const SettingsWrapper = styled.div`
-  padding: 48px 32px;
+  display: flex;
+  flex-flow: column;
+
+  height: 100%;
+  padding: 32px;
 `;
 
 export const SettingsContent = styled.div`
+  display: flex;
+  flex-flow: column;
+
+  height: 100%;
   padding-top: 32px;
 
   form {

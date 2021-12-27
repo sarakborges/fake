@@ -4,6 +4,7 @@ export const HomeWrapper = styled.div`
   display: flex;
   gap: 32px;
 
+  height: 100%;
   padding: 32px;
 `;
 
@@ -68,8 +69,6 @@ export const RightBar = styled.div`
 
 export const RightBarNoItems = styled.div`
   padding-top: 16px;
-
-  text-align: center;
 `;
 
 export const RightBarTitle = styled.div`

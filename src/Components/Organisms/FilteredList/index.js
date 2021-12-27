@@ -40,14 +40,13 @@ const FilteredList = ({ info, id, placeholder, title, noInfoText, type }) => {
               {title}
             </Text>
 
-            <S.Filter>
-              <Input
-                id={id}
-                placeholder={placeholder}
-                value={filter}
-                onChange={handleFilterChange}
-              />
-            </S.Filter>
+            <Input
+              id={id}
+              placeholder={placeholder}
+              value={filter}
+              onChange={handleFilterChange}
+              isBgInverted
+            />
           </S.Header>
 
           <InfoList info={getFilteredInfo()} type={type} />

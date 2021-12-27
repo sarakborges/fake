@@ -30,9 +30,7 @@ const SettingsTemplate = ({ children }) => {
   return (
     <AuthedTemplate>
       <S.SettingsWrapper>
-        <div>
-          <Tabs tabs={tabs} />
-        </div>
+        <Tabs tabs={tabs} />
 
         <S.SettingsContent>{children}</S.SettingsContent>
       </S.SettingsWrapper>

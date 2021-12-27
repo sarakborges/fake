@@ -7,6 +7,7 @@ import { AppContext } from "Contexts/App";
 // Atoms
 import Form from "Components/Atoms/Form";
 import Button from "Components/Atoms/Button";
+import Text from "Components/Atoms/Text";
 
 // Themes
 import Themes from "Styles/Themes";

@@ -46,14 +46,13 @@ const FilteredSelectProfilesList = ({
               {title}
             </Text>
 
-            <S.Filter>
-              <Input
-                id={id}
-                placeholder={placeholder}
-                value={filter}
-                onChange={handleFilterChange}
-              />
-            </S.Filter>
+            <Input
+              id={id}
+              placeholder={placeholder}
+              value={filter}
+              onChange={handleFilterChange}
+              isBgInverted
+            />
           </S.Header>
 
           {getFilteredInfo().length ? (

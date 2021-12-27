@@ -28,6 +28,7 @@ import LabeledInput from "Components/Molecules/LabeledInput";
 import DarkTheme from "Styles/Themes/Dark";
 
 // Styles
+import { GlobalStyle } from "Styles/global";
 import * as S from "./style";
 
 // Template
@@ -175,7 +176,7 @@ const RegisterTemplate = () => {
 
   return (
     <ThemeProvider theme={theme || DarkTheme}>
-      <S.GlobalStyles />
+      <GlobalStyle />
 
       {<Toast {...toast} />}
 
@@ -194,6 +195,7 @@ const RegisterTemplate = () => {
               placeholder='Digite seu email aqui'
               value={form.email.value}
               onChange={handleChange}
+              isBgInverted
             />
 
             <LabeledInput
@@ -203,6 +205,7 @@ const RegisterTemplate = () => {
               placeholder='Digite sua senha aqui'
               value={form.password.value}
               onChange={handleChange}
+              isBgInverted
             />
 
             <Button

@@ -6,6 +6,7 @@ import InfoArea from "Components/Molecules/InfoArea";
 
 // Style
 import * as S from "./style";
+import { ROUTES } from "Helpers/routes";
 
 // Template
 const InfoList = ({ info, type }) => {
@@ -16,7 +17,9 @@ const InfoList = ({ info, type }) => {
           return (
             <S.InfoItem key={item.url}>
               {item.url ? (
-                <Link href={`/${type}/${item.url}`}>
+                <Link
+                  href={ROUTES[type.toUpperCase()].replace(":id", item.url)}
+                >
                   <a>
                     <InfoArea info={item} isBox />
                   </a>

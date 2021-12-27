@@ -9,9 +9,3 @@ export const Wrapper = styled.div`
 export const Header = styled.div`
   padding-bottom: 32px;
 `;
-
-export const Filter = styled.div`
-  input {
-    background-color: transparent;
-  }
-`;

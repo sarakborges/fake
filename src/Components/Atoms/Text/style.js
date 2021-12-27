@@ -1,8 +1,11 @@
 import styled, { css } from "styled-components";
 
 const Style = css`
-  padding-left: ${({ pl }) => (pl ? `${pl}px` : 0)};
+  padding-top: ${({ pt }) => (pt ? `${pt}px` : 0)};
   padding-bottom: ${({ pb }) => (pb ? `${pb}px` : 0)};
+  padding-left: ${({ pl }) => (pl ? `${pl}px` : 0)};
+
+  text-align: ${({ ta }) => (ta ? `${ta}` : "left")};
 `;
 
 export const PageTitle = styled.h1`

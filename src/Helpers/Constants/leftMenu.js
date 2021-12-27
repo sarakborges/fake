@@ -8,6 +8,7 @@ import {
   faUser,
   faUserFriends,
   faSignOutAlt,
+  faExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { ROUTES } from "Helpers/routes";
@@ -62,6 +63,12 @@ export const LEFT_MENU = [
       icon: faCog,
       text: "Configurações",
       link: ROUTES.SETTINGS.PROFILE,
+    },
+
+    {
+      icon: faExclamation,
+      text: "Aviso sobre BETA",
+      link: ROUTES.ABOUT,
     },
 
     {

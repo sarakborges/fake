@@ -24,6 +24,7 @@ import RoundIcon from "Components/Atoms/RoundIcon";
 
 // Molecules
 import InfoArea from "Components/Molecules/InfoArea";
+import NoProfile from "Components/Molecules/NoProfile";
 
 // Template
 import AuthedTemplate from "Components/Templates/Authed";
@@ -57,130 +58,134 @@ const HomeTemplate = () => {
         <title>{SITE_NAME} - Home</title>
       </Head>
 
-      <S.HomeWrapper>
-        <S.FeedWrapper>
-          <S.NewFeedItem>
-            <Textarea
-              id='new-feed-item'
-              size={120}
-              placeholder='Faça uma nova publicação'
-            />
-          </S.NewFeedItem>
+      {!profile?._id && <NoProfile />}
 
-          <S.FeedItem>
-            <S.FeedItemHeader>
-              <div>
-                <Link href='#'>
-                  <a>
-                    <InfoArea
-                      side='left'
-                      info={{
-                        name: "Yogg'Sara",
-                        url: "yogg-sara",
-                        avatar: `http://pm1.narvii.com/6280/2d5ef40edeab7884d64508563b7cb0d5b6321595_00.jpg`,
-                      }}
-                    />
-                  </a>
-                </Link>
-              </div>
-
-              <Button style='transparent' size={16}>
-                <FontAwesomeIcon icon={faEllipsisH} />
-              </Button>
-            </S.FeedItemHeader>
-
-            <S.FeedItemTime>1 hora atrás</S.FeedItemTime>
-
-            <S.FeedItemContent>
-              <img
-                src={`https://i.pinimg.com/originals/bc/7f/ff/bc7fff0f4fec8297bf46ae5fb5c52f9f.jpg`}
+      {profileData && (
+        <S.HomeWrapper>
+          <S.FeedWrapper>
+            <S.NewFeedItem>
+              <Textarea
+                id='new-feed-item'
+                size={120}
+                placeholder='Faça uma nova publicação'
               />
-            </S.FeedItemContent>
+            </S.NewFeedItem>
 
-            <div>1289 curtidas - 156 comentários</div>
-          </S.FeedItem>
-        </S.FeedWrapper>
+            <S.FeedItem>
+              <S.FeedItemHeader>
+                <div>
+                  <Link href='#'>
+                    <a>
+                      <InfoArea
+                        side='left'
+                        info={{
+                          name: "Yogg'Sara",
+                          url: "yogg-sara",
+                          avatar: `http://pm1.narvii.com/6280/2d5ef40edeab7884d64508563b7cb0d5b6321595_00.jpg`,
+                        }}
+                      />
+                    </a>
+                  </Link>
+                </div>
 
-        <S.RightBar>
-          <div>
-            <S.RightBarTitle>Suas conexões</S.RightBarTitle>
+                <Button style='transparent' size={16}>
+                  <FontAwesomeIcon icon={faEllipsisH} />
+                </Button>
+              </S.FeedItemHeader>
 
-            {profileData?.connections?.length ? (
-              <S.BubbleList>
-                {profileData.connections.slice(0, 5).map((item) => {
-                  return (
-                    <Link
-                      key={item._id}
-                      href={ROUTES.PROFILE.replace(":id", item.url)}
-                    >
-                      <a>
-                        {item.avatar ? (
-                          <Avatar img={item.avatar} size={40} />
-                        ) : (
-                          <RoundIcon
-                            icon={faQuestion}
-                            size={40}
-                            bgColor='main'
-                          />
-                        )}
-                      </a>
-                    </Link>
-                  );
-                })}
+              <S.FeedItemTime>1 hora atrás</S.FeedItemTime>
 
-                <Link href={ROUTES.CONNECTIONS}>
-                  <a>
-                    <RoundIcon icon={faEllipsisH} size={40} bgColor='main' />
-                  </a>
-                </Link>
-              </S.BubbleList>
-            ) : (
-              <S.RightBarNoItems>
-                <Text>Você ainda não possui conexões</Text>
-              </S.RightBarNoItems>
-            )}
-          </div>
+              <S.FeedItemContent>
+                <img
+                  src={`https://i.pinimg.com/originals/bc/7f/ff/bc7fff0f4fec8297bf46ae5fb5c52f9f.jpg`}
+                />
+              </S.FeedItemContent>
 
-          <div>
-            <S.RightBarTitle>Seus grupos</S.RightBarTitle>
+              <div>1289 curtidas - 156 comentários</div>
+            </S.FeedItem>
+          </S.FeedWrapper>
 
-            {profileData?.groups?.length ? (
-              <S.BubbleList>
-                {profileData.groups.slice(0, 5).map((item) => {
-                  return (
-                    <Link
-                      key={item._id}
-                      href={ROUTES.GROUP.replace(":id", item.url)}
-                    >
-                      <a>
-                        {item.avatar ? (
-                          <Avatar img={item.avatar} size={40} />
-                        ) : (
-                          <RoundIcon
-                            icon={faQuestion}
-                            size={40}
-                            bgColor='main'
-                          />
-                        )}
-                      </a>
-                    </Link>
-                  );
-                })}
+          <S.RightBar>
+            <div>
+              <S.RightBarTitle>Suas conexões</S.RightBarTitle>
 
-                <Link href={ROUTES.GROUPS}>
-                  <a>
-                    <RoundIcon icon={faEllipsisH} size={40} bgColor='main' />
-                  </a>
-                </Link>
-              </S.BubbleList>
-            ) : (
-              <S.RightBarNoItems>
-                <Text>Você ainda não participa de grupos</Text>
-              </S.RightBarNoItems>
-            )}
-          </div>
-        </S.RightBar>
-      </S.HomeWrapper>
+              {profileData?.connections?.length ? (
+                <S.BubbleList>
+                  {profileData.connections.slice(0, 5).map((item) => {
+                    return (
+                      <Link
+                        key={item._id}
+                        href={ROUTES.PROFILE.replace(":id", item.url)}
+                      >
+                        <a>
+                          {item.avatar ? (
+                            <Avatar img={item.avatar} size={40} />
+                          ) : (
+                            <RoundIcon
+                              icon={faQuestion}
+                              size={40}
+                              bgColor='main'
+                            />
+                          )}
+                        </a>
+                      </Link>
+                    );
+                  })}
+
+                  <Link href={ROUTES.CONNECTIONS}>
+                    <a>
+                      <RoundIcon icon={faEllipsisH} size={40} bgColor='main' />
+                    </a>
+                  </Link>
+                </S.BubbleList>
+              ) : (
+                <S.RightBarNoItems>
+                  <Text ta='center'>Você ainda não possui conexões</Text>
+                </S.RightBarNoItems>
+              )}
+            </div>
+
+            <div>
+              <S.RightBarTitle>Seus grupos</S.RightBarTitle>
+
+              {profileData?.groups?.length ? (
+                <S.BubbleList>
+                  {profileData.groups.slice(0, 5).map((item) => {
+                    return (
+                      <Link
+                        key={item._id}
+                        href={ROUTES.GROUP.replace(":id", item.url)}
+                      >
+                        <a>
+                          {item.avatar ? (
+                            <Avatar img={item.avatar} size={40} />
+                          ) : (
+                            <RoundIcon
+                              icon={faQuestion}
+                              size={40}
+                              bgColor='main'
+                            />
+                          )}
+                        </a>
+                      </Link>
+                    );
+                  })}
+
+                  <Link href={ROUTES.GROUPS}>
+                    <a>
+                      <RoundIcon icon={faEllipsisH} size={40} bgColor='main' />
+                    </a>
+                  </Link>
+                </S.BubbleList>
+              ) : (
+                <S.RightBarNoItems>
+                  <Text ta='center'>Você ainda não participa de grupos</Text>
+                </S.RightBarNoItems>
+              )}
+            </div>
+          </S.RightBar>
+        </S.HomeWrapper>
+      )}
     </AuthedTemplate>
   );
 };

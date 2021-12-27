@@ -40,7 +40,25 @@ const MenuList = () => {
 
       userDispatch({
         type: "SET_USER",
-        data: {},
+        data: {
+          isLoggedIn: false,
+
+          user: {
+            _id: undefined,
+            email: undefined,
+            password: undefined,
+            activeProfile: undefined,
+            profiles: undefined,
+
+            profile: {
+              _id: undefined,
+              name: undefined,
+              url: undefined,
+              avatar: undefined,
+              isAdult: undefined,
+            },
+          },
+        },
       });
 
       appDispatch({

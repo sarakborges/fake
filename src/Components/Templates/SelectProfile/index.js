@@ -10,6 +10,7 @@ import { UserContext } from "Contexts/User";
 
 // Molecules
 import CreateNew from "Components/Molecules/CreateNew";
+import NoProfile from "Components/Molecules/NoProfile";
 
 // Organisms
 import FilteredSelectProfilesList from "Components/Organisms/FilteredSelectProfilesList";
@@ -42,18 +43,22 @@ const SelectActiveProfileTemplate = () => {
         <title>{`${SITE_NAME} - Selecionar perfil ativo`}</title>
       </Head>
 
-      <S.ProfilesListWrapper>
-        <CreateNew type='profile' />
+      {!profile?._id && <NoProfile />}
 
-        <FilteredSelectProfilesList
-          id='select-profile-filter'
-          placeholder='Digite o nome ou @ do perfil que quer encontrar'
-          title='Qual perfil você vai usar?'
-          noInfoText={`Você ainda não possui um perfil. Crie seu primeiro perfil, para poder começar a utilizar a rede.`}
-          info={getAllProfiles()}
-          activeProfile={profile?._id}
-        />
-      </S.ProfilesListWrapper>
+      {profile && (
+        <S.ProfilesListWrapper>
+          <CreateNew type='profile' />
+
+          <FilteredSelectProfilesList
+            id='select-profile-filter'
+            placeholder='Digite o nome ou @ do perfil que quer encontrar'
+            title='Qual perfil você vai usar?'
+            noInfoText={`Você ainda não possui um perfil. Crie seu primeiro perfil, para poder começar a utilizar a rede.`}
+            info={getAllProfiles()}
+            activeProfile={profile?._id}
+          />
+        </S.ProfilesListWrapper>
+      )}
     </AuthedTemplate>
   );
 };
