@@ -195,7 +195,7 @@ const SettingsProfile = () => {
 
       {profile && (
         <>
-          <Text type='title' pb={32}>
+          <Text type='title' pb={16}>
             Configurações do seu perfil
           </Text>
 
@@ -230,16 +230,26 @@ const SettingsProfile = () => {
               onChange={handleChange}
             />
 
-            <S.SettingsSave>
-              <Button
-                type='submit'
-                style='primary'
-                size={16}
-                disabled={isRequesting}
-              >
-                Salvar
+            <S.Buttons>
+              <Button style='warning' size={16}>
+                Excluir perfil
               </Button>
-            </S.SettingsSave>
+
+              <S.ButtonsSave>
+                <Button style='secondary' size={16}>
+                  Descartar alterações
+                </Button>
+
+                <Button
+                  type='submit'
+                  style='primary'
+                  size={16}
+                  disabled={isRequesting}
+                >
+                  Salvar alterações
+                </Button>
+              </S.ButtonsSave>
+            </S.Buttons>
           </Form>
         </>
       )}

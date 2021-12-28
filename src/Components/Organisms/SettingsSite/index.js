@@ -31,14 +31,12 @@ const SettingsSite = () => {
 
   return (
     <S.SettingsWrapper>
-      <Text type='title' pb={32}>
+      <Text type='title' pb={16}>
         Configurações do site
       </Text>
 
       <Form onSubmit={handleSubmit}>
-        <Text type='subtitle' pb={16}>
-          Qual tema você prefere?
-        </Text>
+        <Text type='subtitle'>Qual tema você prefere?</Text>
 
         <S.ThemeOptions>
           {Themes.map((item) => {

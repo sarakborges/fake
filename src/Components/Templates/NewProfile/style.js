@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const NewProfileWrapper = styled.div`
-  padding: 48px 32px;
+  padding: 32px;
 `;
 
 export const NewProfileContent = styled.div`

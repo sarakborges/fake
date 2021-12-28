@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 const PrimaryButton = css`
-  border: 0;
+  border: 1px solid var(--main);
   background-color: var(--main);
   color: var(--offWhite);
 
@@ -17,7 +17,7 @@ const SecondaryButton = css`
   color: var(--main);
 
   &:not(:disabled):hover {
-    background-color: var(--bgContrast);
+    background-color: var(--white);
   }
 `;
 
@@ -28,6 +28,27 @@ const TransparentButton = css`
 
   &:not(:disabled):hover {
     background-color: var(--bgContrast);
+  }
+`;
+
+const WarningButton = css`
+  border: 1px solid var(--red);
+  background-color: var(--red);
+  color: var(--white);
+
+  &:not(:disabled):hover {
+    background-color: var(--white);
+    color: var(--red);
+  }
+`;
+
+const WarningSecondaryButton = css`
+  border: 1px solid var(--red);
+  background-color: transparent;
+  color: var(--red);
+
+  &:not(:disabled):hover {
+    background-color: var(--white);
   }
 `;
 
@@ -50,6 +71,9 @@ export const Button = styled.button`
   ${({ buttonStyle }) => buttonStyle === "primary" && PrimaryButton}
   ${({ buttonStyle }) => buttonStyle === "secondary" && SecondaryButton}
   ${({ buttonStyle }) => buttonStyle === "transparent" && TransparentButton}
+  ${({ buttonStyle }) => buttonStyle === "warning" && WarningButton}
+  ${({ buttonStyle }) =>
+    buttonStyle === "warning-secondary" && WarningSecondaryButton}
 
   &:disabled {
     opacity: 0.6;

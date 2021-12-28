@@ -3,7 +3,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisH, faQuestion } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 
 // APIs
 import ProfileAPI from "Apis/Profile";
@@ -18,13 +18,14 @@ import { ROUTES } from "Helpers/routes";
 // Atoms
 import Button from "Components/Atoms/Button";
 import Textarea from "Components/Atoms/Textarea";
-import Text from "Components/Atoms/Text";
-import Avatar from "Components/Atoms/Avatar";
-import RoundIcon from "Components/Atoms/RoundIcon";
+import Rightbar from "Components/Atoms/Rightbar";
 
 // Molecules
 import InfoArea from "Components/Molecules/InfoArea";
 import NoProfile from "Components/Molecules/NoProfile";
+
+// Organisms
+import RoundList from "Components/Organisms/RoundList";
 
 // Template
 import AuthedTemplate from "Components/Templates/Authed";
@@ -105,85 +106,23 @@ const HomeTemplate = () => {
             </S.FeedItem>
           </S.FeedWrapper>
 
-          <S.RightBar>
-            <div>
-              <S.RightBarTitle>Suas conexões</S.RightBarTitle>
+          <Rightbar>
+            <RoundList
+              type='profile'
+              title='Suas conexões'
+              emptyTitle='Você ainda não possui conexões'
+              extraItemLink={ROUTES.CONNECTIONS}
+              list={profileData?.connections?.slice?.(0, 5)}
+            />
 
-              {profileData?.connections?.length ? (
-                <S.BubbleList>
-                  {profileData.connections.slice(0, 5).map((item) => {
-                    return (
-                      <Link
-                        key={item._id}
-                        href={ROUTES.PROFILE.replace(":id", item.url)}
-                      >
-                        <a>
-                          {item.avatar ? (
-                            <Avatar img={item.avatar} size={40} />
-                          ) : (
-                            <RoundIcon
-                              icon={faQuestion}
-                              size={40}
-                              bgColor='main'
-                            />
-                          )}
-                        </a>
-                      </Link>
-                    );
-                  })}
-
-                  <Link href={ROUTES.CONNECTIONS}>
-                    <a>
-                      <RoundIcon icon={faEllipsisH} size={40} bgColor='main' />
-                    </a>
-                  </Link>
-                </S.BubbleList>
-              ) : (
-                <S.RightBarNoItems>
-                  <Text ta='center'>Você ainda não possui conexões</Text>
-                </S.RightBarNoItems>
-              )}
-            </div>
-
-            <div>
-              <S.RightBarTitle>Seus grupos</S.RightBarTitle>
-
-              {profileData?.groups?.length ? (
-                <S.BubbleList>
-                  {profileData.groups.slice(0, 5).map((item) => {
-                    return (
-                      <Link
-                        key={item._id}
-                        href={ROUTES.GROUP.replace(":id", item.url)}
-                      >
-                        <a>
-                          {item.avatar ? (
-                            <Avatar img={item.avatar} size={40} />
-                          ) : (
-                            <RoundIcon
-                              icon={faQuestion}
-                              size={40}
-                              bgColor='main'
-                            />
-                          )}
-                        </a>
-                      </Link>
-                    );
-                  })}
-
-                  <Link href={ROUTES.GROUPS}>
-                    <a>
-                      <RoundIcon icon={faEllipsisH} size={40} bgColor='main' />
-                    </a>
-                  </Link>
-                </S.BubbleList>
-              ) : (
-                <S.RightBarNoItems>
-                  <Text ta='center'>Você ainda não participa de grupos</Text>
-                </S.RightBarNoItems>
-              )}
-            </div>
-          </S.RightBar>
+            <RoundList
+              type='group'
+              title='Seus grupos'
+              emptyTitle='Você ainda não participa de grupos'
+              extraItemLink={ROUTES.GROUPS}
+              list={profileData?.groups?.slice?.(0, 5)}
+            />
+          </Rightbar>
         </S.HomeWrapper>
       )}
     </AuthedTemplate>

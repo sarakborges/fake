@@ -1,14 +1,7 @@
 // Dependencies
 import Head from "next/head";
-import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEllipsisH,
-  faLink,
-  faQuestion,
-} from "@fortawesome/free-solid-svg-icons";
 
 // APIs
 import GroupAPI from "Apis/Group";
@@ -18,11 +11,12 @@ import { SITE_NAME } from "Helpers/Constants";
 import { ROUTES } from "Helpers/routes";
 
 // Atoms
-import Avatar from "Components/Atoms/Avatar";
-import RoundIcon from "Components/Atoms/RoundIcon";
+import Rightbar from "Components/Atoms/Rightbar";
 
 // Organisms
 import GroupHeader from "Components/Organisms/GroupHeader";
+import RoundList from "Components/Organisms/RoundList";
+import LinkList from "Components/Organisms/LinkList";
 
 // Template
 import AuthedTemplate from "Components/Templates/Authed";
@@ -69,106 +63,33 @@ const GroupTemplate = () => {
               <div dangerouslySetInnerHTML={{ __html: group.about }} />
             </S.About>
 
-            <S.RightBar>
-              <div>
-                <S.RightBarTitle>Membros</S.RightBarTitle>
+            <Rightbar>
+              <RoundList
+                type='profile'
+                title='Membros'
+                list={group.members.slice(0, 5)}
+                extraItemLink={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
+                  ":id",
+                  group.url
+                )}
+              />
 
-                <S.BubbleList>
-                  {group.members.slice(0, 5).map((item) => {
-                    return (
-                      <Link
-                        key={item._id}
-                        href={ROUTES.PROFILE.replace(":id", item.url)}
-                      >
-                        <a>
-                          {item.avatar ? (
-                            <Avatar img={item.avatar} size={40} />
-                          ) : (
-                            <RoundIcon
-                              icon={faQuestion}
-                              size={40}
-                              bgColor='main'
-                            />
-                          )}
-                        </a>
-                      </Link>
-                    );
-                  })}
+              <RoundList
+                type='group'
+                title='Grupos relacionados'
+                list={group?.relatedGroups?.slice?.(0, 5)}
+                extraItemLink='#'
+                hideEmpty
+              />
 
-                  <Link
-                    href={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
-                      ":id",
-                      group.url
-                    )}
-                  >
-                    <a>
-                      <RoundIcon icon={faEllipsisH} size={40} bgColor='main' />
-                    </a>
-                  </Link>
-                </S.BubbleList>
-              </div>
+              <LinkList
+                title='Links importantes'
+                list={group?.importantLinks}
+                hideEmpty
+              />
 
-              {group.relatedGroups.length > 0 && (
-                <div>
-                  <S.RightBarTitle>Grupos relacionados</S.RightBarTitle>
-
-                  <S.BubbleList>
-                    {group.relatedGroups.slice(0, 5).map((item) => {
-                      return (
-                        <Link
-                          key={item._id}
-                          href={ROUTES.GROUP.replace(":id", item.url)}
-                        >
-                          <a>
-                            <Avatar img={item.avatar} size={48} />
-                          </a>
-                        </Link>
-                      );
-                    })}
-                  </S.BubbleList>
-                </div>
-              )}
-
-              {group.importantLinks.length > 0 && (
-                <div>
-                  <S.RightBarTitle>Links importantes</S.RightBarTitle>
-
-                  <S.TextList>
-                    {group.importantLinks.map((item) => {
-                      return (
-                        <a key={item.title} href={item.link} target='_blank'>
-                          <FontAwesomeIcon icon={faLink} />
-                          <>{item.title}</>
-                        </a>
-                      );
-                    })}
-                  </S.TextList>
-                </div>
-              )}
-
-              {group.tags.length > 0 && (
-                <div>
-                  <S.RightBarTitle>Tags</S.RightBarTitle>
-
-                  <S.TextList>
-                    {group.tags.map((item) => {
-                      return (
-                        <a
-                          key={item}
-                          href={`${ROUTES.GROUP.replace(
-                            ":id",
-                            group.url
-                          )}/tags/${item}`}
-                          target='_blank'
-                        >
-                          {item}
-                        </a>
-                      );
-                    })}
-                  </S.TextList>
-                </div>
-              )}
-            </S.RightBar>
+              <LinkList title='Tags' list={group?.tags} hideEmpty />
+            </Rightbar>
           </S.GroupBody>
         </>
       )}

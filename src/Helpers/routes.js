@@ -3,12 +3,16 @@ export const ROUTES = {
   HOME: "/home",
   LOGIN: "/login",
   REGISTER: "/register",
+
   NEW_GROUP: "/new-group",
   NEW_PROFILE: "/new-profile",
-  PROFILE: "/profile/:id",
+
   GROUP: "/group/:id",
+  PROFILE: "/profile/:id",
+
   GROUPS: "/groups",
   CONNECTIONS: "/connections",
+
   PROFILE_CONNECTIONS: "/profile/:id/connections",
   SELECT_PROFILE: "/select-profile",
 

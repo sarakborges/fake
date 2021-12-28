@@ -5,7 +5,6 @@ export const SettingsWrapper = styled.div`
   flex-flow: column;
 
   height: 100%;
-  padding: 16px 0;
 
   form {
     display: flex;
@@ -14,7 +13,15 @@ export const SettingsWrapper = styled.div`
   }
 `;
 
-export const SettingsSave = styled.div`
+export const Buttons = styled.div`
+  display: flex;
+  place-content: space-between;
+
+  padding-top: 16px;
+`;
+
+export const ButtonsSave = styled.div`
   display: flex;
   place-content: flex-end;
+  gap: 16px;
 `;

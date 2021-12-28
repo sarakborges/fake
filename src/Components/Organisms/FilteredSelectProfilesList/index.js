@@ -42,7 +42,7 @@ const FilteredSelectProfilesList = ({
       {info?.length ? (
         <>
           <S.Header>
-            <Text type='title' pb={16}>
+            <Text type='title' pb={8}>
               {title}
             </Text>
 

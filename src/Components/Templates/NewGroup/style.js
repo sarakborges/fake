@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const NewGroupWrapper = styled.div`
-  padding: 48px 32px;
+  padding: 32px;
 `;
 
 export const NewGroupContent = styled.div`

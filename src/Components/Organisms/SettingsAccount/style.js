@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 export const SettingsWrapper = styled.div`
-  padding-top: 16px;
-
   form {
     display: flex;
     flex-flow: column;

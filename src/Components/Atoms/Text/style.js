@@ -6,6 +6,7 @@ const Style = css`
   padding-left: ${({ pl }) => (pl ? `${pl}px` : 0)};
 
   text-align: ${({ ta }) => (ta ? `${ta}` : "left")};
+  font-family: "Open Sans", sans-serif;
 `;
 
 export const PageTitle = styled.h1`
@@ -25,8 +26,7 @@ export const Title = styled.h2`
 export const SubTitle = styled.h3`
   ${Style}
 
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 20px;
 `;
 
 export const Text = styled.p`

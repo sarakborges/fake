@@ -21,7 +21,7 @@ const CreateNew = ({ type }) => {
 
   return (
     <>
-      <Text type='title' pb={32}>
+      <Text type='title' pb={16}>
         Criar novo {typeStr}
       </Text>
 

@@ -4,7 +4,7 @@ export const SettingsWrapper = styled.div`
   display: flex;
   flex-flow: column;
 
-  height: 100%;
+  flex: 1;
   padding: 32px;
 `;
 
