@@ -34,9 +34,9 @@ const GroupHeader = ({ group }) => {
         <S.GroupInfo>
           <S.Avatar>
             {group.avatar ? (
-              <Avatar size={128} img={group.avatar} bgColor={"bg"} />
+              <Avatar size={128} img={group.avatar} bgColor={"main"} />
             ) : (
-              <RoundIcon size={128} icon={faQuestion} bgColor={"bg"} />
+              <RoundIcon size={128} icon={faQuestion} bgColor={"main"} />
             )}
           </S.Avatar>
 

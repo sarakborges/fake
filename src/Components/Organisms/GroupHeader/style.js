@@ -39,7 +39,7 @@ export const GroupHead = styled.div`
 
   width: 100%;
   margin-bottom: 32px;
-  padding: 16px 32px;
+  padding: 32px;
 
   border-bottom: 1px solid var(--bg);
   background-color: var(--bgContrast);

@@ -26,9 +26,9 @@ const ProfileHeader = ({ profile }) => {
         <S.ProfileInfo>
           <S.Avatar>
             {profile.avatar ? (
-              <Avatar size={128} img={profile.avatar} bgColor={"bg"} />
+              <Avatar size={128} img={profile.avatar} bgColor={"main"} />
             ) : (
-              <RoundIcon size={128} icon={faQuestion} bgColor={"bg"} />
+              <RoundIcon size={128} icon={faQuestion} bgColor={"main"} />
             )}
           </S.Avatar>
 
