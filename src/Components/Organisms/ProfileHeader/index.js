@@ -16,7 +16,18 @@ import * as S from "./style";
 
 const ProfileHeader = ({ profile }) => {
   const date = new Date(profile.createdAt);
-  const dateStr = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+
+  if (day.length < 2) {
+    day = `0${day}`;
+  }
+
+  if (month.length < 2) {
+    month = `0${month}`;
+  }
+
+  const dateStr = `${day}/${month}/${date.getFullYear()}`;
 
   return (
     <>

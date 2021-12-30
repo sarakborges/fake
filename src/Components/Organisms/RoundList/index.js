@@ -39,7 +39,7 @@ const RoundList = ({
               >
                 <a>
                   {item.avatar ? (
-                    <Avatar img={item.avatar} size={40} />
+                    <Avatar img={item.avatar} size={40} bgColor='main' />
                   ) : (
                     <RoundIcon icon={faQuestion} size={40} bgColor='main' />
                   )}
