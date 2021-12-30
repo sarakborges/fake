@@ -6,6 +6,7 @@ export const GlobalStyle = createGlobalStyle`
 
   :root{
     --main: ${({ theme }) => theme.colors.main};
+    --mainVariation: ${({ theme }) => theme.colors.mainVariation};
     --bg: ${({ theme }) => theme.colors.bg};
     --bgContrast: ${({ theme }) => theme.colors.bgContrast};
     --bgInverted: ${({ theme }) => theme.colors.bgInverted};

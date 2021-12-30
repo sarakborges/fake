@@ -7,26 +7,30 @@ import * as S from "./style";
 import { useEffect, useState } from "react";
 
 // Template
-const File = ({ id, label, value, onChange }) => {
-  const nonHoverText = "Arraste o arquivo para cá";
-  const hoverText = "Solte o arquivo aqui";
-
-  const [text, setText] = useState(nonHoverText);
+const File = ({
+  id,
+  label,
+  value,
+  onChange,
+  placeholder,
+  placeholderHover,
+}) => {
+  const [text, setText] = useState(placeholder);
   const [valueImg, setValueImg] = useState();
 
   const handleDrag = (e) => {
     e.preventDefault();
-    setText(hoverText);
+    setText(placeholderHover);
   };
 
   const handleDragLeave = () => {
-    setText(nonHoverText);
+    setText(placeholder);
   };
 
   const handleDrop = (e) => {
     e.preventDefault();
 
-    setText(nonHoverText);
+    setText(placeholder);
 
     onChange({
       currentTarget: {
@@ -50,10 +54,13 @@ const File = ({ id, label, value, onChange }) => {
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
       >
-        <Text type='title' pb={32}>
+        <Text type='subtitle' pb={24} fw={600}>
           {text}
         </Text>
-        <S.LabelButton>Ou clique aqui para encontrar seu arquivo</S.LabelButton>
+
+        <S.LabelButton>
+          Ou clique aqui para procurar em seu dispostivo
+        </S.LabelButton>
 
         {valueImg && (
           <S.Preview>

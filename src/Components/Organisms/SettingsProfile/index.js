@@ -41,9 +41,11 @@ const SettingsProfile = () => {
 
   const baseForm = {
     avatar: { ...baseFormField },
+    cover: { ...baseFormField },
     name: { ...baseFormField },
     url: { ...baseFormField },
     isAdult: { ...baseFormField },
+    link: { ...baseFormField },
     about: { ...baseFormField },
   };
 
@@ -249,8 +251,10 @@ const SettingsProfile = () => {
       const newProfile = {
         ...profile,
         avatar: form.avatar.value,
+        cover: form.cover.value,
         name: form.name.value,
         about: form.about.value,
+        link: form.link.value,
         url,
         isAdult: form.isAdult.value,
       };
@@ -299,17 +303,30 @@ const SettingsProfile = () => {
           </Text>
 
           <Form onSubmit={handleSubmit}>
-            <File
-              id='avatar'
-              label='Avatar'
-              value={form.avatar.value}
-              onChange={handleChange}
-            />
+            <S.Row2Items>
+              <File
+                id='avatar'
+                placeholder='Arraste o arquivo do seu AVATAR para cá'
+                placeholderHover='Solte o arquivo do seu AVATAR aqui'
+                label='Avatar'
+                value={form.avatar.value}
+                onChange={handleChange}
+              />
 
-            <S.Row>
+              <File
+                id='cover'
+                placeholder='Arraste o arquivo da sua CAPA para cá'
+                placeholderHover='Solte o arquivo da sua CAPA aqui'
+                label='Capa'
+                value={form.cover.value}
+                onChange={handleChange}
+              />
+            </S.Row2Items>
+
+            <S.Row3Items>
               <LabeledInput
                 id='name'
-                placeholder='Insira o nome do seu perfil'
+                placeholder='Insira o nome a ser exibido'
                 label='Nome'
                 value={form.name.value}
                 onChange={handleChange}
@@ -317,12 +334,20 @@ const SettingsProfile = () => {
 
               <LabeledInput
                 id='url'
-                placeholder='Insira uma URL personalizada para o seu perfil'
+                placeholder='Insira uma URL personalizada'
                 label='URL (Caso fique em branco, será baseado no nome)'
                 value={form.url.value}
                 onChange={handleChange}
               />
-            </S.Row>
+
+              <LabeledInput
+                id='link'
+                placeholder='Insira um link para ser exibido'
+                label='Link'
+                value={form.link.value}
+                onChange={handleChange}
+              />
+            </S.Row3Items>
 
             <LabeledTextarea
               id='about'

@@ -11,7 +11,9 @@ const Text = ({ type, children, ...rest }) => {
 
       {type === "subtitle" && <S.SubTitle {...rest}>{children}</S.SubTitle>}
 
-      {type === "text" || (!type && <S.Text {...rest}>{children}</S.Text>)}
+      {type === "custom" && <S.Custom {...rest}>{children}</S.Custom>}
+
+      {(type === "text" || !type) && <S.Text {...rest}>{children}</S.Text>}
     </>
   );
 };

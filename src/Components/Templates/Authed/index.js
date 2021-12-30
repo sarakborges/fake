@@ -70,7 +70,9 @@ const AuthedTemplate = ({ children }) => {
         <Sidebar />
 
         <S.Content>
-          <S.PageContent>{children}</S.PageContent>
+          <S.PageContentWrapper>
+            <S.PageContent>{children}</S.PageContent>
+          </S.PageContentWrapper>
         </S.Content>
       </S.Container>
     </ThemeProvider>

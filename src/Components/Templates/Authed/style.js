@@ -16,9 +16,12 @@ export const Content = styled.div`
   background-color: var(--bgContrast);
 `;
 
+export const PageContentWrapper = styled.div`
+  min-height: 100vh;
+  overflow-y: auto;
+`;
+
 export const PageContent = styled.div`
   display: flex;
-
-  flex: 1;
-  overflow-y: auto;
+  min-height: 100vh;
 `;

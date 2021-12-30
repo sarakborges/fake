@@ -6,6 +6,9 @@ const Style = css`
   padding-left: ${({ pl }) => (pl ? `${pl}px` : 0)};
 
   text-align: ${({ ta }) => (ta ? `${ta}` : "left")};
+  font-size: ${({ fs }) => (fs ? `${fs}px` : "16px")};
+  font-weight: ${({ fw }) => (fw ? `${fw}` : "300")};
+  line-height: ${({ lh }) => (lh ? `${lh}` : 1)};
   font-family: "Open Sans", sans-serif;
 `;
 
@@ -33,6 +36,10 @@ export const Text = styled.p`
   ${Style}
 
   line-height: 1.6;
-  font-size: 16px;
   font-weight: 300;
+  font-size: 16px;
+`;
+
+export const Custom = styled.p`
+  ${Style}
 `;

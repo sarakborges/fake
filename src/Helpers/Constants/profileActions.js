@@ -1,8 +1,6 @@
-import { faComment } from "@fortawesome/free-regular-svg-icons";
 import {
-  faEllipsisH,
   faHome,
-  faSignOutAlt,
+  faComment,
   faUserFriends,
 } from "@fortawesome/free-solid-svg-icons";
 
