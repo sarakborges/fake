@@ -1,19 +1,30 @@
 // Dependencies
+import Head from "next/head";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 
 // APIs
 import GroupAPI from "Apis/Group";
-import ProfileAPI from "Apis/Profile";
+
+// Helpers
+import { ROUTES } from "Helpers/routes";
+import { SITE_NAME } from "Helpers/Constants";
+
+// Molecules
+import Tabs from "Components/Molecules/Tabs";
 
 // Organisms
+import GroupHeader from "Components/Organisms/GroupHeader";
 import InfoList from "Components/Organisms/InfoList";
 
 // Template
-import GroupMembers from "Components/Templates/GroupMembers";
+import AuthedTemplate from "Components/Templates/Authed";
+
+// Style
+import * as S from "./style";
 
 // Template
-const GroupMembersTemplate = () => {
+const GroupMembersOwnerTemplate = () => {
   const [group, setGroup] = useState();
 
   const router = useRouter();
@@ -21,16 +32,30 @@ const GroupMembersTemplate = () => {
     query: { url },
   } = router;
 
+  const getOwner = () => {
+    return group?.members.filter((item) => group.owner === item._id);
+  };
+
+  const tabs = [
+    {
+      link: ROUTES.GROUP_MEMBERS.MEMBERS.replace(":id", group?.url),
+      text: "Membros",
+    },
+
+    {
+      link: ROUTES.GROUP_MEMBERS.MODERATORS.replace(":id", group?.url),
+      text: "Moderadores",
+    },
+
+    {
+      link: ROUTES.GROUP_MEMBERS.OWNER.replace(":id", group?.url),
+      text: "Dono",
+    },
+  ];
+
   const getGroup = useCallback(
     async (groupUrl) => {
       const groupData = await GroupAPI.getGroupByUrl(groupUrl);
-
-      for (let memberItem in groupData.members) {
-        const profile = await ProfileAPI.getProfileById(
-          groupData.members[memberItem]
-        );
-        groupData.members[memberItem] = profile;
-      }
 
       if (groupData) {
         setGroup(groupData);
@@ -39,19 +64,31 @@ const GroupMembersTemplate = () => {
     [GroupAPI]
   );
 
-  const getOwner = () => {
-    return group?.members.filter((item) => group.owner === item._id);
-  };
-
   useEffect(() => {
     getGroup(url);
   }, [url, getGroup]);
 
   return (
-    <GroupMembers>
-      <InfoList type='profile' info={getOwner()} />
-    </GroupMembers>
+    <AuthedTemplate>
+      <Head>
+        <title>{`${SITE_NAME} - ${group?.name || "Grupo"} - Dono`}</title>
+      </Head>
+
+      {group && (
+        <S.Wrapper>
+          <GroupHeader group={group} />
+
+          <S.GroupBody>
+            <Tabs tabs={tabs} />
+
+            <S.List>
+              <InfoList type='profile' info={getOwner()} />
+            </S.List>
+          </S.GroupBody>
+        </S.Wrapper>
+      )}
+    </AuthedTemplate>
   );
 };
 
-export default GroupMembersTemplate;
+export default GroupMembersOwnerTemplate;

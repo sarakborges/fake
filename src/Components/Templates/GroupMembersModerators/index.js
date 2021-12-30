@@ -1,22 +1,33 @@
 // Dependencies
+import Head from "next/head";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 
 // APIs
 import GroupAPI from "Apis/Group";
-import ProfileAPI from "Apis/Profile";
+
+// Helpers
+import { ROUTES } from "Helpers/routes";
+import { SITE_NAME } from "Helpers/Constants";
 
 // Atoms
 import Text from "Components/Atoms/Text";
 
+// Molecules
+import Tabs from "Components/Molecules/Tabs";
+
 // Organisms
+import GroupHeader from "Components/Organisms/GroupHeader";
 import InfoList from "Components/Organisms/InfoList";
 
 // Template
-import GroupMembers from "Components/Templates/GroupMembers";
+import AuthedTemplate from "Components/Templates/Authed";
+
+// Style
+import * as S from "./style";
 
 // Template
-const GroupMembersTemplate = () => {
+const GroupMembersModeratorsTemplate = () => {
   const [group, setGroup] = useState();
 
   const router = useRouter();
@@ -24,16 +35,32 @@ const GroupMembersTemplate = () => {
     query: { url },
   } = router;
 
+  const getModerators = () => {
+    return group?.members.filter(
+      (item) => group.owner !== item._id && group.moderators.includes(item._id)
+    );
+  };
+
+  const tabs = [
+    {
+      link: ROUTES.GROUP_MEMBERS.MEMBERS.replace(":id", group?.url),
+      text: "Membros",
+    },
+
+    {
+      link: ROUTES.GROUP_MEMBERS.MODERATORS.replace(":id", group?.url),
+      text: "Moderadores",
+    },
+
+    {
+      link: ROUTES.GROUP_MEMBERS.OWNER.replace(":id", group?.url),
+      text: "Dono",
+    },
+  ];
+
   const getGroup = useCallback(
     async (groupUrl) => {
       const groupData = await GroupAPI.getGroupByUrl(groupUrl);
-
-      for (let memberItem in groupData.members) {
-        const profile = await ProfileAPI.getProfileById(
-          groupData.members[memberItem]
-        );
-        groupData.members[memberItem] = profile;
-      }
 
       if (groupData) {
         setGroup(groupData);
@@ -42,25 +69,39 @@ const GroupMembersTemplate = () => {
     [GroupAPI]
   );
 
-  const getModerators = () => {
-    return group?.members.filter(
-      (item) => group.owner !== item._id && group.moderators.includes(item._id)
-    );
-  };
-
   useEffect(() => {
     getGroup(url);
   }, [url, getGroup]);
 
   return (
-    <GroupMembers>
-      {getModerators()?.length ? (
-        <InfoList type='profile' info={getModerators()} />
-      ) : (
-        <Text>O grupo "{group?.name}" ainda não possui moderadores.</Text>
+    <AuthedTemplate>
+      <Head>
+        <title>{`${SITE_NAME} - ${
+          group?.name || "Grupo"
+        } - Moderadores`}</title>
+      </Head>
+
+      {group && (
+        <S.Wrapper>
+          <GroupHeader group={group} />
+
+          <S.GroupBody>
+            <Tabs tabs={tabs} />
+
+            <S.List>
+              {getModerators()?.length ? (
+                <InfoList type='profile' info={getModerators()} />
+              ) : (
+                <Text>
+                  O grupo "{group?.name}" ainda não possui moderadores.
+                </Text>
+              )}
+            </S.List>
+          </S.GroupBody>
+        </S.Wrapper>
       )}
-    </GroupMembers>
+    </AuthedTemplate>
   );
 };
 
-export default GroupMembersTemplate;
+export default GroupMembersModeratorsTemplate;

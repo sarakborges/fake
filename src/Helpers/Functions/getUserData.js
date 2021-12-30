@@ -1,6 +1,6 @@
 export const getUserData = () => {
-  // sessionStorage.clear();
-  const localData = sessionStorage.getItem("user");
+  // localStorage.clear();
+  const localData = localStorage.getItem("user");
   const localUserData = JSON.parse(localData);
   let userData;
 

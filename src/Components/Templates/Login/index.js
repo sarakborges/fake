@@ -137,7 +137,7 @@ const LoginTemplate = () => {
       return;
     }
 
-    sessionStorage.setItem("user", JSON.stringify({ user: { ...loginReq } }));
+    localStorage.setItem("user", JSON.stringify({ user: { ...loginReq } }));
     displaySuccessToast();
     router.push(ROUTES.HOME);
   };

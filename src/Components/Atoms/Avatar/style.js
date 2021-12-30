@@ -5,7 +5,7 @@ export const Avatar = styled.span`
   height: ${({ size }) => `${size}px`};
 
   border-radius: 100%;
-  background-color: var(--bgContrast);
+  background-color: ${({ bgColor }) => bgColor || `var(--bgContrast)`};
   background-image: url(${({ img }) => img});
   background-size: cover;
   background-position: center center;

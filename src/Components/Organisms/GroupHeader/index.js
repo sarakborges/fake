@@ -60,7 +60,7 @@ const GroupHeader = ({ group }) => {
             return item.id !== "more" || profile?._id === group.owner ? (
               <div key={item.id}>
                 {item.type === "button" ? (
-                  <Button style='transparent' size={16} onClick={item.action}>
+                  <Button style='primary' size={16} onClick={item.action}>
                     <FontAwesomeIcon icon={item.icon} />
                   </Button>
                 ) : (

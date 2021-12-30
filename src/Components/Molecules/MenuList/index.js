@@ -38,7 +38,7 @@ const MenuList = () => {
 
   const handleClick = (text) => {
     if (text === "Sair") {
-      sessionStorage.clear();
+      localStorage.clear();
 
       userDispatch({
         type: "SET_USER",

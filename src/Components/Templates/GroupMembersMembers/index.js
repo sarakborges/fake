@@ -1,53 +1,48 @@
 // Dependencies
+import Head from "next/head";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 
 // APIs
 import GroupAPI from "Apis/Group";
-import ProfileAPI from "Apis/Profile";
+
+// Helpers
+import { ROUTES } from "Helpers/routes";
+import { SITE_NAME } from "Helpers/Constants";
 
 // Atoms
 import Input from "Components/Atoms/Input";
-
-// Organisms
-import InfoList from "Components/Organisms/InfoList";
-
-// Templates
-import GroupMembers from "Components/Templates/GroupMembers";
-
-// Styles
-import * as S from "./style";
 import Text from "Components/Atoms/Text";
 
+// Molecules
+import Tabs from "Components/Molecules/Tabs";
+
+// Organisms
+import GroupHeader from "Components/Organisms/GroupHeader";
+import InfoList from "Components/Organisms/InfoList";
+
 // Template
-const GroupMembersTemplate = () => {
-  const [group, setGroup] = useState(undefined);
-  const [filter, setFilter] = useState("");
+import AuthedTemplate from "Components/Templates/Authed";
+
+// Style
+import * as S from "./style";
+
+// Template
+const GroupMembersMembersTemplate = () => {
+  const [group, setGroup] = useState();
 
   const router = useRouter();
   const {
     query: { url },
   } = router;
 
-  const getGroup = useCallback(
-    async (groupUrl) => {
-      const groupData = await GroupAPI.getGroupByUrl(groupUrl);
-
-      for (let memberItem in groupData.members) {
-        const profile = await ProfileAPI.getProfileById(
-          groupData.members[memberItem]
-        );
-        groupData.members[memberItem] = profile;
-      }
-
-      if (groupData) {
-        setGroup(groupData);
-      }
-    },
-    [GroupAPI]
-  );
+  const [filter, setFilter] = useState("");
 
   const getMembers = () => {
+    if (group?.members?.length < 0) {
+      return [];
+    }
+
     return group?.members.filter(
       (item) => group.owner !== item._id && !group.moderators.includes(item._id)
     );
@@ -69,30 +64,75 @@ const GroupMembersTemplate = () => {
     setFilter(e.currentTarget.value);
   };
 
+  const tabs = [
+    {
+      link: ROUTES.GROUP_MEMBERS.MEMBERS.replace(":id", group?.url),
+      text: "Membros",
+    },
+
+    {
+      link: ROUTES.GROUP_MEMBERS.MODERATORS.replace(":id", group?.url),
+      text: "Moderadores",
+    },
+
+    {
+      link: ROUTES.GROUP_MEMBERS.OWNER.replace(":id", group?.url),
+      text: "Dono",
+    },
+  ];
+
+  const getGroup = useCallback(
+    async (groupUrl) => {
+      const groupData = await GroupAPI.getGroupByUrl(groupUrl);
+
+      if (groupData) {
+        setGroup(groupData);
+      }
+    },
+    [GroupAPI]
+  );
+
   useEffect(() => {
     getGroup(url);
   }, [url, getGroup]);
 
   return (
-    <GroupMembers>
-      {getMembers()?.length ? (
-        <>
-          <S.Filter>
-            <Input
-              id='grou-members-filter'
-              placeholder='Digite o nome ou @ de quem quer encontrar'
-              value={filter}
-              onChange={handleFilterChange}
-            />
-          </S.Filter>
+    <AuthedTemplate>
+      <Head>
+        <title>{`${SITE_NAME} - ${group?.name || "Grupo"} - Membros`}</title>
+      </Head>
 
-          <InfoList type='profile' info={getFilteredMembers()} />
-        </>
-      ) : (
-        <Text>O grupo "{group?.name}" ainda não possui membros.</Text>
+      {group && (
+        <S.Wrapper>
+          <GroupHeader group={group} />
+
+          <S.GroupBody>
+            <Tabs tabs={tabs} />
+
+            <S.List>
+              {getMembers()?.length ? (
+                <>
+                  <S.Filter>
+                    <Input
+                      id='grou-members-filter'
+                      placeholder='Digite o nome ou @ de quem quer encontrar'
+                      value={filter}
+                      onChange={handleFilterChange}
+                      isBgInverted
+                    />
+                  </S.Filter>
+
+                  <InfoList type='profile' info={getFilteredMembers()} />
+                </>
+              ) : (
+                <Text>O grupo "{group?.name}" ainda não possui membros.</Text>
+              )}
+            </S.List>
+          </S.GroupBody>
+        </S.Wrapper>
       )}
-    </GroupMembers>
+    </AuthedTemplate>
   );
 };
 
-export default GroupMembersTemplate;
+export default GroupMembersMembersTemplate;

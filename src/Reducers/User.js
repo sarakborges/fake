@@ -3,7 +3,7 @@ export const UserReducer = (state, { type, data }) => {
     case "SET_USER": {
       const newData = { ...data };
 
-      sessionStorage.setItem("user", JSON.stringify(newData));
+      localStorage.setItem("user", JSON.stringify(newData));
 
       return newData;
     }
@@ -15,7 +15,7 @@ export const UserReducer = (state, { type, data }) => {
         profile: { ...data },
       };
 
-      sessionStorage.setItem("user", JSON.stringify(newData));
+      localStorage.setItem("user", JSON.stringify(newData));
 
       return newData;
     }
@@ -32,7 +32,7 @@ export const UserReducer = (state, { type, data }) => {
         profile: { ...data.profile },
       };
 
-      sessionStorage.setItem("user", JSON.stringify(newData));
+      localStorage.setItem("user", JSON.stringify(newData));
 
       return newData;
     }
@@ -53,7 +53,7 @@ export const UserReducer = (state, { type, data }) => {
         profile: { ...data },
       };
 
-      sessionStorage.setItem("user", JSON.stringify(newData));
+      localStorage.setItem("user", JSON.stringify(newData));
 
       return newData;
     }

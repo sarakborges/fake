@@ -164,10 +164,7 @@ const RegisterTemplate = () => {
       return;
     }
 
-    sessionStorage.setItem(
-      "user",
-      JSON.stringify({ user: { ...registerReq } })
-    );
+    localStorage.setItem("user", JSON.stringify({ user: { ...registerReq } }));
 
     displaySuccessToast();
     router.push(ROUTES.HOME);
