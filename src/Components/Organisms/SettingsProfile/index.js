@@ -207,21 +207,23 @@ const SettingsProfile = () => {
               onChange={handleChange}
             />
 
-            <LabeledInput
-              id='name'
-              placeholder='Insira o nome do seu perfil'
-              label='Nome'
-              value={form.name.value}
-              onChange={handleChange}
-            />
+            <S.Row>
+              <LabeledInput
+                id='name'
+                placeholder='Insira o nome do seu perfil'
+                label='Nome'
+                value={form.name.value}
+                onChange={handleChange}
+              />
 
-            <LabeledInput
-              id='url'
-              placeholder='Insira uma URL personalizada para o seu perfil'
-              label='URL (Caso fique em branco, será baseado no nome)'
-              value={form.url.value}
-              onChange={handleChange}
-            />
+              <LabeledInput
+                id='url'
+                placeholder='Insira uma URL personalizada para o seu perfil'
+                label='URL (Caso fique em branco, será baseado no nome)'
+                value={form.url.value}
+                onChange={handleChange}
+              />
+            </S.Row>
 
             <Checkbox
               id='isAdult'

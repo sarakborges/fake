@@ -27,11 +27,13 @@ const MenuList = () => {
   const { profile } = userState;
 
   const getIsActive = (item) => {
-    if (item.text === "Configurações") {
-      return pathname.includes("settings");
-    } else {
-      return item.link === pathname;
+    for (let route of item.activeOnRoutes) {
+      if (pathname.includes(route)) {
+        return true;
+      }
     }
+
+    return false;
   };
 
   const handleClick = (text) => {

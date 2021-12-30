@@ -132,11 +132,10 @@ const LoginTemplate = () => {
     const loginReq = await UserAPI.getUser(email.value, password.value);
 
     if (!loginReq?._id) {
+      setIsRequesting(false);
       displayErrorToast();
       return;
     }
-
-    setIsRequesting(false);
 
     sessionStorage.setItem("user", JSON.stringify({ user: { ...loginReq } }));
     displaySuccessToast();

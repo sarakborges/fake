@@ -54,19 +54,6 @@ const NewProfileTemplate = () => {
   const [form, setForm] = useState({ ...baseForm });
   const [isRequesting, setIsRequesting] = useState(false);
 
-  const handleChange = (e) => {
-    const tar = e.currentTarget;
-
-    setForm({
-      ...form,
-
-      [tar.name]: {
-        value: tar.files?.length ? tar.files[0] : tar.value,
-        error: "",
-      },
-    });
-  };
-
   const displaySuccessToast = () => {
     appDispatch({
       type: "SET_TOAST",
@@ -122,6 +109,19 @@ const NewProfileTemplate = () => {
         data: false,
       });
     }, 5000);
+  };
+
+  const handleChange = (e) => {
+    const tar = e.currentTarget;
+
+    setForm({
+      ...form,
+
+      [tar.name]: {
+        value: tar.files?.length ? tar.files[0] : tar.value,
+        error: "",
+      },
+    });
   };
 
   const handleSubmit = async () => {
@@ -238,36 +238,39 @@ const NewProfileTemplate = () => {
           </Text>
 
           <Form onSubmit={handleSubmit}>
-            <File
-              id='avatar'
-              label='Avatar'
-              value={form.avatar.value}
-              onChange={handleChange}
-            />
+            <S.Row>
+              <File
+                id='avatar'
+                label='Avatar'
+                value={form.avatar.value}
+                onChange={handleChange}
+              />
 
-            <LabeledInput
-              id='cover'
-              placeholder='Insira a URL para uma imagem para a capa do grupo'
-              label='Capa'
-              value={form.cover.value}
-              onChange={handleChange}
-            />
+              <File
+                id='cover'
+                label='Capa'
+                value={form.cover.value}
+                onChange={handleChange}
+              />
+            </S.Row>
 
-            <LabeledInput
-              id='name'
-              placeholder='Insira o nome do grupo'
-              label='Nome'
-              value={form.name.value}
-              onChange={handleChange}
-            />
+            <S.Row>
+              <LabeledInput
+                id='name'
+                placeholder='Insira o nome do grupo'
+                label='Nome'
+                value={form.name.value}
+                onChange={handleChange}
+              />
 
-            <LabeledInput
-              id='url'
-              placeholder='Insira uma URL personalizada para o grupo'
-              label='URL (Caso fique em branco, será baseado no nome)'
-              value={form.url.value}
-              onChange={handleChange}
-            />
+              <LabeledInput
+                id='url'
+                placeholder='Insira uma URL personalizada para o grupo'
+                label='URL (Caso fique em branco, será baseado no nome)'
+                value={form.url.value}
+                onChange={handleChange}
+              />
+            </S.Row>
 
             <LabeledTextarea
               id='about'

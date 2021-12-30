@@ -160,10 +160,9 @@ const RegisterTemplate = () => {
 
     if (!registerReq) {
       displayErrorToast();
+      setIsRequesting(false);
       return;
     }
-
-    setIsRequesting(false);
 
     sessionStorage.setItem(
       "user",
