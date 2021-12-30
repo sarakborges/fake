@@ -2,7 +2,7 @@
 
 This project is a social network idea I'm working on. Surely not the first. Hardly the last.
 
-It is a concotion of everything I think cool about social networks I have used, plus a few stuff I would like to exist on them.
+It is a concotion of everything I think cool about social networks I have used, plus a few stuff I would'd like them to have.
 
 As I worked totally alone, I had a bit of a hard time keeping gitflow. Seriosly, I work whenever I want, and end up forgetting to commit. When I see, I have a entire new project, basically.
 
