@@ -38,6 +38,10 @@ export const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
+  b{
+    font-weight: 600;
+  }
+
   html,
   body { 
     text-rendering: optimizeLegibility;

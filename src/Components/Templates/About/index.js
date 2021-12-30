@@ -39,8 +39,8 @@ const AboutTemplate = () => {
           <Text type='title'>Aviso!</Text>
 
           <Text>
-            Olá, caro usuário. Queremos deixa-lo avisado que este é um ambiente
-            de testes, onde coisas estranhas poderão ocorrer.
+            Olá, caro usuário. Este é um ambiente de testes, onde coisas
+            estranhas poderão ocorrer.
           </Text>
 
           <Text>
@@ -50,34 +50,39 @@ const AboutTemplate = () => {
           </Text>
 
           <Text>
-            Isso acontece porque, enquanto features são desenvolvidas, podemos
-            criar um volume muito grande de informações bugadas. Fica mais fácil
-            apagar um banco de dados inteiro, do que catar informação bugada
-            para ser apagada.
+            Isso acontece porque, enquanto features são desenvolvidas, cria-se
+            um volume muito grande de informações bugadas. Aí, deletar o banco
+            de dados passa a ser a solução mais rápida.
           </Text>
 
           <Text>
-            Agradecemos sua compreensão, a paciência, e a ajuda na hora de
-            testar o site. ♥
+            Fora isso; sua compreensão, paciência, e ajuda na hora de testar o
+            <b> {SITE_NAME}</b> são extremamente apreciadas. ♥
           </Text>
 
           <Text ta='center' pt={32}>
             <>Ir para </>
 
             <Link href={ROUTES.LOGIN}>
-              <a>Login</a>
+              <a>
+                <b>Login</b>
+              </a>
             </Link>
 
             <>, </>
 
             <Link href={ROUTES.REGISTER}>
-              <a>Cadastro</a>
+              <a>
+                <b>Cadastro</b>
+              </a>
             </Link>
 
             <>, ou </>
 
             <Link href={ROUTES.HOME}>
-              <a>Home</a>
+              <a>
+                <b>Home</b>
+              </a>
             </Link>
           </Text>
         </S.About>
