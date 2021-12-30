@@ -12,5 +12,5 @@ export const RoundIcon = styled.span`
   background-color: ${({ bgColor }) => (bgColor ? `var(--${bgColor})` : `bg`)};
 
   font-size: ${({ size }) => `${size / 2}px`};
-  color: var(--bgInverted);
+  color: var(--white);
 `;

@@ -87,9 +87,19 @@ export const ProfileActions = styled.div`
       place-items: center;
 
       font-size: 16px;
+      color: var(--white);
 
-      background-color: var(--bg);
+      border: 1px solid var(--main);
+      background-color: var(--main);
       border-radius: 8px;
+
+      transition: background-color 0.3s, color 0.3s;
+
+      &:hover {
+        color: var(--main);
+
+        background-color: var(--white);
+      }
     }
 
     > a,
@@ -97,6 +107,8 @@ export const ProfileActions = styled.div`
       width: 40px;
       height: 40px;
       padding: 0;
+
+      box-shadow: 2px 2px 3px var(--bgContrast);
     }
   }
 `;
