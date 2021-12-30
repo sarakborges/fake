@@ -44,22 +44,8 @@ const MenuList = () => {
         type: "SET_USER",
         data: {
           isLoggedIn: false,
-
-          user: {
-            _id: undefined,
-            email: undefined,
-            password: undefined,
-            activeProfile: undefined,
-            profiles: undefined,
-
-            profile: {
-              _id: undefined,
-              name: undefined,
-              url: undefined,
-              avatar: undefined,
-              isAdult: undefined,
-            },
-          },
+          user: undefined,
+          profile: undefined,
         },
       });
 
@@ -89,41 +75,53 @@ const MenuList = () => {
       {LEFT_MENU.map((item, key) => {
         return (
           <S.MenuList key={key}>
-            {item.map((subItem) => {
-              return (
-                <S.MenuItem key={subItem.text} active={getIsActive(subItem)}>
-                  {!subItem.link && (
-                    <Button
-                      onClick={() => {
-                        handleClick(subItem.text);
-                      }}
-                    >
-                      <S.MenuItemIcon>
-                        <FontAwesomeIcon icon={subItem.icon} />
-                      </S.MenuItemIcon>
+            {item
+              .filter((subItem) => {
+                if (subItem?.link?.includes(":id")) {
+                  if (profile?.url) {
+                    return subItem;
+                  } else {
+                    return false;
+                  }
+                }
 
-                      <span>{subItem.text}</span>
-                    </Button>
-                  )}
+                return subItem;
+              })
+              .map((subItem) => {
+                return (
+                  <S.MenuItem key={subItem.text} active={getIsActive(subItem)}>
+                    {!subItem.link && (
+                      <Button
+                        onClick={() => {
+                          handleClick(subItem.text);
+                        }}
+                      >
+                        <S.MenuItemIcon>
+                          <FontAwesomeIcon icon={subItem.icon} />
+                        </S.MenuItemIcon>
 
-                  {subItem.link && (
-                    <a
-                      href={
-                        subItem.link === ROUTES.PROFILE
-                          ? subItem.link.replace(":id", profile?.url)
-                          : subItem.link
-                      }
-                    >
-                      <S.MenuItemIcon>
-                        <FontAwesomeIcon icon={subItem.icon} />
-                      </S.MenuItemIcon>
+                        <span>{subItem.text}</span>
+                      </Button>
+                    )}
 
-                      <span>{subItem.text}</span>
-                    </a>
-                  )}
-                </S.MenuItem>
-              );
-            })}
+                    {subItem.link && (
+                      <a
+                        href={
+                          subItem.link === ROUTES.PROFILE
+                            ? subItem.link.replace(":id", profile?.url)
+                            : subItem.link
+                        }
+                      >
+                        <S.MenuItemIcon>
+                          <FontAwesomeIcon icon={subItem.icon} />
+                        </S.MenuItemIcon>
+
+                        <span>{subItem.text}</span>
+                      </a>
+                    )}
+                  </S.MenuItem>
+                );
+              })}
           </S.MenuList>
         );
       })}

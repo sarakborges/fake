@@ -56,9 +56,22 @@ const updateProfile = (data) => {
     .catch((err) => err);
 };
 
+const deleteProfile = (id) => {
+  if (!id) {
+    console.log("deleteProfile requires id param");
+    return;
+  }
+
+  return axios
+    .delete(`${process.env.NEXT_PUBLIC_REQUEST_URI}/profile/${id}`)
+    .then((res) => res.data)
+    .catch((err) => err);
+};
+
 export default {
   getProfileById,
   getProfileByUrl,
   createProfile,
   updateProfile,
+  deleteProfile,
 };

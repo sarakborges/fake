@@ -6,6 +6,7 @@ export const NoProfile = styled.div`
   place-content: center;
 
   height: 100%;
+  width: 100%;
   padding: 32px;
 `;
 

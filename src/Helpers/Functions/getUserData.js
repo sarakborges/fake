@@ -5,17 +5,18 @@ export const getUserData = () => {
   let userData;
 
   if (localUserData?.user) {
-    userData = localUserData.user;
+    userData = localUserData;
   } else {
     return false;
   }
 
   const profileData =
-    userData.profiles.find((item) => item._id === userData?.profile?._id) ||
-    userData.profiles[0];
+    userData.user.profiles.find(
+      (item) => item._id === userData?.profile?._id
+    ) || userData.user.profiles[0];
 
   return {
-    user: { ...userData },
+    user: { ...userData.user },
     profile: profileData,
   };
 };

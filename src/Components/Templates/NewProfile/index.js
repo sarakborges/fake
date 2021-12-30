@@ -1,6 +1,7 @@
 // Dependencies
 import { useContext, useState } from "react";
 import Head from "next/head";
+import { useRouter } from "next/dist/client/router";
 
 // APIS
 import ProfileAPI from "Apis/Profile";
@@ -9,6 +10,7 @@ import UserAPI from "Apis/User";
 // Helpers
 import { SITE_NAME } from "Helpers/Constants";
 import { slugify } from "Helpers/Functions";
+import { ROUTES } from "Helpers/routes";
 
 // Contexts
 import { AppContext } from "Contexts/App";
@@ -23,6 +25,7 @@ import Text from "Components/Atoms/Text";
 // Molecules
 import File from "Components/Molecules/File";
 import LabeledInput from "Components/Molecules/LabeledInput";
+import LabeledTextarea from "Components/Molecules/LabeledTextarea";
 
 // Template
 import AuthedTemplate from "Components/Templates/Authed";
@@ -32,6 +35,8 @@ import * as S from "./style";
 
 // Template
 const NewProfileTemplate = () => {
+  const router = useRouter();
+
   const { userDispatch, userState } = useContext(UserContext);
   const { appDispatch } = useContext(AppContext);
   const { user } = userState;
@@ -45,6 +50,7 @@ const NewProfileTemplate = () => {
     avatar: { ...baseFormField },
     name: { ...baseFormField },
     url: { ...baseFormField },
+    about: { ...baseFormField },
     isAdult: { ...baseFormField },
   };
 
@@ -136,12 +142,12 @@ const NewProfileTemplate = () => {
       const newProfile = {
         avatar: form.avatar.value,
         name: form.name.value,
+        about: form.about.value,
         url,
         isAdult: form.isAdult.value,
         createdAt: new Date(),
         connections: [],
         groups: [],
-        about: ``,
       };
 
       const insertedProfile = await ProfileAPI.createProfile(newProfile);
@@ -176,8 +182,9 @@ const NewProfileTemplate = () => {
         },
       });
 
-      setIsRequesting(false);
       displaySuccessToast();
+
+      router.push(ROUTES.PROFILE.replace(":id", newProfileData.url));
     } catch (e) {
       setIsRequesting(false);
       displayErrorToast();
@@ -222,6 +229,15 @@ const NewProfileTemplate = () => {
                 onChange={handleChange}
               />
             </S.Row>
+
+            <LabeledTextarea
+              id='about'
+              placeholder='Insira o HTML do about de seu perfil'
+              label='About'
+              value={form.about.value}
+              onChange={handleChange}
+              size={120}
+            />
 
             <Checkbox
               id='isAdult'

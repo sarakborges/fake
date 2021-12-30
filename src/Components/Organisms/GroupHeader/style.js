@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const GroupCover = styled.div`
+  width: 100%;
   height: 250px;
 
   background-image: url(${({ img }) => img});
@@ -29,8 +30,9 @@ export const GroupHead = styled.div`
   top: 0;
   z-index: 2;
 
-  margin: 0 32px 32px;
-  padding: 16px 0;
+  width: 100%;
+  margin-bottom: 32px;
+  padding: 16px 32px;
 
   border-bottom: 1px solid var(--bg);
   background-color: var(--bgContrast);

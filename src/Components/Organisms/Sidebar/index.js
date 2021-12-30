@@ -20,7 +20,7 @@ const Sidebar = () => {
     <S.Menu>
       <MenuList />
 
-      {profile && (
+      {profile?._id && (
         <S.InfoArea>
           <InfoArea info={profile} />
         </S.InfoArea>

@@ -32,8 +32,8 @@ export const LEFT_MENU = [
     {
       icon: faComment,
       text: "Mensagens",
-      link: "#",
-      activeOnRoutes: [],
+      link: ROUTES.MESSAGES,
+      activeOnRoutes: [ROUTES.MESSAGES.replace(":id", "[url]")],
     },
 
     {

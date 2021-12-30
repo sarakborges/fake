@@ -5,8 +5,8 @@ export const Textarea = styled.textarea`
   height: ${({ size }) => (size ? `${size}px` : `320px`)};
   padding: 16px;
 
-  border: 0;
-  border-bottom: 1px solid var(--bgInverted);
+  border: 1px solid var(--bgInverted);
+  border-bottom-color: var(--bgInverted);
   background-color: var(--bg);
   resize: none;
 
@@ -14,9 +14,9 @@ export const Textarea = styled.textarea`
   font-family: inherit;
   color: var(--bgInverted);
 
-  transition: border-bottom-color 0.3s;
+  transition: border-color 0.3s;
 
   &:focus {
-    border-bottom-color: var(--main);
+    border-color: var(--main);
   }
 `;

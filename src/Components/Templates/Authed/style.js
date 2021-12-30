@@ -17,6 +17,8 @@ export const Content = styled.div`
 `;
 
 export const PageContent = styled.div`
+  display: flex;
+
   flex: 1;
   overflow-y: auto;
 `;

@@ -50,7 +50,7 @@ export const UserReducer = (state, { type, data }) => {
               : [{ ...data }],
         },
 
-        profile: state.profile?._id ? { ...state.profile } : { ...data },
+        profile: { ...data },
       };
 
       sessionStorage.setItem("user", JSON.stringify(newData));

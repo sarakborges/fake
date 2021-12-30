@@ -55,7 +55,7 @@ const GroupTemplate = () => {
       </Head>
 
       {group && (
-        <>
+        <S.GroupWrapper>
           <GroupHeader group={group} />
 
           <S.GroupBody>
@@ -91,7 +91,7 @@ const GroupTemplate = () => {
               <LinkList title='Tags' list={group?.tags} hideEmpty />
             </Rightbar>
           </S.GroupBody>
-        </>
+        </S.GroupWrapper>
       )}
     </AuthedTemplate>
   );

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const NewProfileWrapper = styled.div`
+  width: 100%;
   padding: 32px;
 `;
 

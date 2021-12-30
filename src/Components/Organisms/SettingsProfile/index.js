@@ -1,8 +1,12 @@
 // Dependencies
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 // APIS
 import ProfileAPI from "Apis/Profile";
+import UserAPI from "Apis/User";
+
+// Helpers
+import { slugify } from "Helpers/Functions";
 
 // Contexts
 import { AppContext } from "Contexts/App";
@@ -16,6 +20,7 @@ import Button from "Components/Atoms/Button";
 
 // Molecules
 import LabeledInput from "Components/Molecules/LabeledInput";
+import LabeledTextarea from "Components/Molecules/LabeledTextarea";
 import File from "Components/Molecules/File";
 import NoProfile from "Components/Molecules/NoProfile";
 
@@ -39,6 +44,7 @@ const SettingsProfile = () => {
     name: { ...baseFormField },
     url: { ...baseFormField },
     isAdult: { ...baseFormField },
+    about: { ...baseFormField },
   };
 
   const [form, setForm] = useState({ ...baseForm });
@@ -50,6 +56,25 @@ const SettingsProfile = () => {
       data: {
         title: "Sucesso!",
         text: "Perfil editado com sucesso.",
+        type: "success",
+        isVisible: true,
+      },
+    });
+
+    setTimeout(() => {
+      appDispatch({
+        type: "TOGGLE_TOAST",
+        data: false,
+      });
+    }, 5000);
+  };
+
+  const displayDeleteSuccessToast = () => {
+    appDispatch({
+      type: "SET_TOAST",
+      data: {
+        title: "Sucesso!",
+        text: "Perfil excluído com sucesso.",
         type: "success",
         isVisible: true,
       },
@@ -101,6 +126,25 @@ const SettingsProfile = () => {
     }, 5000);
   };
 
+  const displayDeleteErrorToast = () => {
+    appDispatch({
+      type: "SET_TOAST",
+      data: {
+        title: "Erro!",
+        text: "Aconteceu algum erro ao tentar excluir seu perfil. Tente novamente.",
+        type: "error",
+        isVisible: true,
+      },
+    });
+
+    setTimeout(() => {
+      appDispatch({
+        type: "TOGGLE_TOAST",
+        data: false,
+      });
+    }, 5000);
+  };
+
   const handleChange = (e) => {
     const tar = e.currentTarget;
 
@@ -113,6 +157,82 @@ const SettingsProfile = () => {
       },
     });
   };
+
+  const handleDelete = async () => {
+    setIsRequesting(true);
+    const deleteReq = await ProfileAPI.deleteProfile(profile._id);
+
+    if (!deleteReq) {
+      displayDeleteErrorToast();
+      setIsRequesting(false);
+      return;
+    }
+
+    const filteredProfiles = profiles.filter(
+      (item) => item._id !== profile._id
+    );
+
+    const updateReq = await UserAPI.updateUser({
+      ...user,
+      profiles: [...filteredProfiles],
+    });
+
+    setIsRequesting(false);
+
+    if (!updateReq) {
+      displayDeleteErrorToast();
+      return;
+    }
+
+    displayDeleteSuccessToast();
+
+    userDispatch({
+      type: "SET_PROFILE",
+      data: {
+        profile:
+          filteredProfiles.length > 0 ? { ...filteredProfiles[0] } : undefined,
+        profiles: [...filteredProfiles],
+      },
+    });
+
+    clearProfileData();
+  };
+
+  const handleClear = () => {
+    getProfileData();
+  };
+
+  const clearProfileData = () => {
+    let newObj = { ...form };
+
+    for (let key of Object.keys(profile)) {
+      newObj = {
+        ...newObj,
+        [key]: {
+          value: "",
+          error: "",
+        },
+      };
+    }
+
+    setForm({ ...newObj });
+  };
+
+  const getProfileData = useCallback(() => {
+    let newObj = { ...form };
+
+    for (let key of Object.keys(profile)) {
+      newObj = {
+        ...newObj,
+        [key]: {
+          value: profile[key],
+          error: "",
+        },
+      };
+    }
+
+    setForm({ ...newObj });
+  }, [profile, setForm]);
 
   const handleSubmit = async () => {
     try {
@@ -130,6 +250,7 @@ const SettingsProfile = () => {
         ...profile,
         avatar: form.avatar.value,
         name: form.name.value,
+        about: form.about.value,
         url,
         isAdult: form.isAdult.value,
       };
@@ -164,36 +285,14 @@ const SettingsProfile = () => {
       return;
     }
 
-    const { avatar, name, url, isAdult } = profile;
-
-    setForm({
-      avatar: {
-        value: avatar,
-        error: "",
-      },
-
-      name: {
-        value: name,
-        error: "",
-      },
-
-      url: {
-        value: url,
-        error: "",
-      },
-
-      isAdult: {
-        value: isAdult,
-        error: "",
-      },
-    });
-  }, [userState]);
+    getProfileData();
+  }, [userState, getProfileData]);
 
   return (
     <S.SettingsWrapper>
       {!profile?._id && <NoProfile />}
 
-      {profile && (
+      {profile?._id && (
         <>
           <Text type='title' pb={16}>
             Configurações do seu perfil
@@ -225,6 +324,15 @@ const SettingsProfile = () => {
               />
             </S.Row>
 
+            <LabeledTextarea
+              id='about'
+              placeholder='Insira o HTML do about de seu perfil'
+              label='About'
+              value={form.about.value}
+              onChange={handleChange}
+              size={120}
+            />
+
             <Checkbox
               id='isAdult'
               label='Seu perfil possui conteúdo adulto (+18)?'
@@ -233,12 +341,12 @@ const SettingsProfile = () => {
             />
 
             <S.Buttons>
-              <Button style='warning' size={16}>
+              <Button style='warning' size={16} onClick={handleDelete}>
                 Excluir perfil
               </Button>
 
               <S.ButtonsSave>
-                <Button style='secondary' size={16}>
+                <Button style='secondary' size={16} onClick={handleClear}>
                   Descartar alterações
                 </Button>
 

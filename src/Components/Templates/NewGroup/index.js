@@ -1,6 +1,7 @@
 // Dependencies
 import { useContext, useState } from "react";
 import Head from "next/head";
+import { useRouter } from "next/dist/client/router";
 
 // APIS
 import GroupAPI from "Apis/Group";
@@ -9,6 +10,7 @@ import ProfileAPI from "Apis/Profile";
 // Helpers
 import { SITE_NAME } from "Helpers/Constants";
 import { slugify } from "Helpers/Functions";
+import { ROUTES } from "Helpers/routes";
 
 // Contexts
 import { AppContext } from "Contexts/App";
@@ -33,6 +35,8 @@ import * as S from "./style";
 
 // Template
 const NewProfileTemplate = () => {
+  const router = useRouter();
+
   const { userDispatch, userState } = useContext(UserContext);
   const { appDispatch } = useContext(AppContext);
   const { user, profile } = userState;
@@ -210,14 +214,14 @@ const NewProfileTemplate = () => {
         profile: { ...newProfileData },
       };
 
-      setIsRequesting(false);
-
       userDispatch({
         type: "SET_USER",
         data: newData,
       });
 
       displaySuccessToast();
+
+      router.push(ROUTES.GROUP.replace(":id", newGroupData.url));
     } catch (e) {
       setIsRequesting(false);
       displayErrorToast();

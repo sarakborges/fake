@@ -1,14 +1,7 @@
 // Dependencies
 import Head from "next/head";
-import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEllipsisH,
-  faLink,
-  faQuestion,
-} from "@fortawesome/free-solid-svg-icons";
 
 // APIs
 import ProfileAPI from "Apis/Profile";
@@ -18,11 +11,11 @@ import { SITE_NAME } from "Helpers/Constants";
 import { ROUTES } from "Helpers/routes";
 
 // Atoms
-import Avatar from "Components/Atoms/Avatar";
-import RoundIcon from "Components/Atoms/RoundIcon";
+import Rightbar from "Components/Atoms/Rightbar";
 
 // Organisms
 import ProfileHeader from "Components/Organisms/ProfileHeader";
+import RoundList from "Components/Organisms/RoundList";
 
 // Template
 import AuthedTemplate from "Components/Templates/Authed";
@@ -61,7 +54,7 @@ const ProfileTemplate = () => {
       </Head>
 
       {profile && (
-        <>
+        <S.ProfileWrapper>
           <ProfileHeader profile={profile} />
 
           <S.ProfileBody>
@@ -69,97 +62,31 @@ const ProfileTemplate = () => {
               <div dangerouslySetInnerHTML={{ __html: profile.about }} />
             </S.About>
 
-            <S.RightBar>
-              {profile?.connections?.length > 0 && (
-                <div>
-                  <S.RightBarTitle>Conexões</S.RightBarTitle>
+            <Rightbar>
+              <RoundList
+                type='profile'
+                title='Conexões'
+                emptyTitle='Ainda não possui conexões'
+                list={profile?.connections}
+                extraItemLink={ROUTES.PROFILE_CONNECTIONS.replace(
+                  ":id",
+                  profile.url
+                )}
+              />
 
-                  <S.BubbleList>
-                    {profile?.connections?.slice(0, 5).map((item) => {
-                      return (
-                        <Link
-                          key={item._id}
-                          href={ROUTES.PROFILE.replace(":id", item.url)}
-                        >
-                          <a>
-                            {item.avatar ? (
-                              <Avatar img={item.avatar} size={40} />
-                            ) : (
-                              <RoundIcon
-                                icon={faQuestion}
-                                size={40}
-                                bgColor='main'
-                              />
-                            )}
-                          </a>
-                        </Link>
-                      );
-                    })}
-
-                    <Link
-                      href={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
-                        ":id",
-                        profile.url
-                      )}
-                    >
-                      <a>
-                        <RoundIcon
-                          icon={faEllipsisH}
-                          size={40}
-                          bgColor='main'
-                        />
-                      </a>
-                    </Link>
-                  </S.BubbleList>
-                </div>
-              )}
-
-              {profile?.groups?.length > 0 && (
-                <div>
-                  <S.RightBarTitle>Grupos</S.RightBarTitle>
-
-                  <S.BubbleList>
-                    {profile.groups.slice(0, 5).map((item) => {
-                      return (
-                        <Link
-                          key={item._id}
-                          href={ROUTES.GROUP.replace(":id", item.url)}
-                        >
-                          <a>
-                            <Avatar img={item.avatar} size={48} />
-                          </a>
-                        </Link>
-                      );
-                    })}
-                  </S.BubbleList>
-                </div>
-              )}
-
-              {profile?.tags?.length > 0 && (
-                <div>
-                  <S.RightBarTitle>Tags</S.RightBarTitle>
-
-                  <S.TextList>
-                    {profile.tags.map((item) => {
-                      return (
-                        <a
-                          key={item}
-                          href={`${ROUTES.GROUP.replace(
-                            ":id",
-                            profile.url
-                          )}/tags/${item}`}
-                          target='_blank'
-                        >
-                          {item}
-                        </a>
-                      );
-                    })}
-                  </S.TextList>
-                </div>
-              )}
-            </S.RightBar>
+              <RoundList
+                type='group'
+                title='Grupos'
+                emptyTitle='Ainda não participa de grupos'
+                list={profile?.groups}
+                extraItemLink={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
+                  ":id",
+                  profile.url
+                )}
+              />
+            </Rightbar>
           </S.ProfileBody>
-        </>
+        </S.ProfileWrapper>
       )}
     </AuthedTemplate>
   );

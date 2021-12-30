@@ -4,7 +4,7 @@ export const RightBar = styled.div`
   display: flex;
   flex-flow: column;
   place-items: flex-end;
-  gap: 48px;
+  gap: 32px;
 
   width: 336px;
   margin: 0 16px;

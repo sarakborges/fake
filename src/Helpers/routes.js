@@ -9,6 +9,7 @@ export const ROUTES = {
 
   GROUP: "/group/:id",
   PROFILE: "/profile/:id",
+  MESSAGES: "/messages/:id",
 
   GROUPS: "/groups",
   CONNECTIONS: "/connections",
