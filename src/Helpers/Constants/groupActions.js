@@ -17,17 +17,17 @@ export const GROUP_ACTIONS = [
   },
 
   {
-    id: "forum",
-    type: "link",
-    icon: faList,
-    to: "#",
-  },
-
-  {
     id: "members",
     type: "link",
     icon: faUsers,
     to: ROUTES.GROUP_MEMBERS.MEMBERS,
+  },
+
+  {
+    id: "forum",
+    type: "link",
+    icon: faList,
+    to: "#",
   },
 
   {

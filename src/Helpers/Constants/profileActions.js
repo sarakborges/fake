@@ -15,16 +15,16 @@ export const PROFILE_ACTIONS = [
   },
 
   {
-    id: "messages",
-    type: "link",
-    icon: faComment,
-    to: "#",
-  },
-
-  {
     id: "connections",
     type: "link",
     icon: faUserFriends,
     to: ROUTES.PROFILE_CONNECTIONS,
+  },
+
+  {
+    id: "messages",
+    type: "link",
+    icon: faComment,
+    to: "#",
   },
 ];

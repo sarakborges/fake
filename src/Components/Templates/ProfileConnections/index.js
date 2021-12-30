@@ -68,7 +68,7 @@ const ProfileConnectionsTemplate = ({ children }) => {
       </Head>
 
       {profile && (
-        <>
+        <S.ProfileWrapper>
           <ProfileHeader profile={profile} />
 
           <S.ProfileBody>
@@ -86,10 +86,12 @@ const ProfileConnectionsTemplate = ({ children }) => {
                 <InfoList type='profile' info={getFilteredConnections()} />
               </>
             ) : (
-              <Text>{profile?.name} ainda não possui conexões.</Text>
+              <Text type='subtitle'>
+                <b>{profile?.name}</b> ainda não possui conexões.
+              </Text>
             )}
           </S.ProfileBody>
-        </>
+        </S.ProfileWrapper>
       )}
     </AuthedTemplate>
   );

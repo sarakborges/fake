@@ -92,8 +92,8 @@ const GroupMembersModeratorsTemplate = () => {
               {getModerators()?.length ? (
                 <InfoList type='profile' info={getModerators()} />
               ) : (
-                <Text>
-                  O grupo "{group?.name}" ainda não possui moderadores.
+                <Text type='subtitle'>
+                  O grupo <b>{group?.name}</b> ainda não possui moderadores.
                 </Text>
               )}
             </S.List>

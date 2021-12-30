@@ -16,7 +16,7 @@ const InfoArea = ({ info, side, isBox, highlighted }) => {
         {info?.icon || !info?.avatar ? (
           <RoundIcon icon={info?.icon || faQuestion} size={48} bgColor='main' />
         ) : (
-          <Avatar img={info?.avatar} size={48} />
+          <Avatar img={info?.avatar} size={48} bgColor='main' />
         )}
       </>
     );

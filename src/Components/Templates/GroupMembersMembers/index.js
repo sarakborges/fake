@@ -125,7 +125,9 @@ const GroupMembersMembersTemplate = () => {
                   <InfoList type='profile' info={getFilteredMembers()} />
                 </>
               ) : (
-                <Text>O grupo "{group?.name}" ainda não possui membros.</Text>
+                <Text type='subtitle'>
+                  O grupo <b>{group?.name}</b> ainda não possui membros.
+                </Text>
               )}
             </S.List>
           </S.GroupBody>
