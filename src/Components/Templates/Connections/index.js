@@ -1,12 +1,15 @@
 // Dependencies
-import { UserContext } from "Contexts/User";
+import { useCallback, useContext, useEffect, useState } from "react";
 import Head from "next/head";
+
+// APIs
+import ProfileAPI from "Apis/Profile";
 
 // Helpers
 import { SITE_NAME } from "Helpers/Constants";
 
 // Contexts
-import { useContext, useState } from "react";
+import { UserContext } from "Contexts/User";
 
 // Atoms
 import Input from "Components/Atoms/Input";
@@ -30,13 +33,36 @@ const ConnectionsTemplate = () => {
   const { profile } = userState;
 
   const [filter, setFilter] = useState("");
+  const [profileData, setProfileData] = useState();
+
+  const getProfileData = useCallback(async () => {
+    if (!profile?._id) {
+      return;
+    }
+
+    const profileData = await ProfileAPI.getProfileByUrl(profile.url);
+
+    if (profileData) {
+      setProfileData(profileData);
+    }
+  }, [profile, ProfileAPI]);
+
+  const getApprovedConnections = () => {
+    return profileData?.connections?.map?.((item) => {
+      if (item.status === "connected") {
+        return { ...item.user };
+      } else {
+        return false;
+      }
+    });
+  };
 
   const getFilteredConnections = () => {
     if (!filter) {
-      return profile?.connections;
+      return getApprovedConnections();
     }
 
-    return profile?.connections.filter(
+    return getApprovedConnections().filter(
       (item) =>
         item.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()) ||
         `@${item.url}`.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
@@ -47,6 +73,10 @@ const ConnectionsTemplate = () => {
     setFilter(e.currentTarget.value);
   };
 
+  useEffect(() => {
+    getProfileData();
+  }, [getProfileData]);
+
   return (
     <AuthedTemplate>
       <Head>
@@ -55,36 +85,28 @@ const ConnectionsTemplate = () => {
 
       {!profile?._id && <NoProfile />}
 
-      {profile && (
+      {profile?._id && (
         <S.ProfilesListWrapper>
-          {profile?.connections?.length > 0 ? (
-            <>
-              <S.Header>
-                <Text type='title' pb={16}>
-                  Suas conexões
-                </Text>
+          <S.Header>
+            <Text type='title' pb={16}>
+              Suas conexões
+            </Text>
 
-                <Input
-                  id='connections-filter'
-                  placeholder='Digite o nome ou @ de quem quer encontrar'
-                  value={filter}
-                  onChange={handleFilterChange}
-                  isBgInverted
-                />
-              </S.Header>
+            {getApprovedConnections()?.length > 0 ? (
+              <Input
+                id='connections-filter'
+                placeholder='Digite o nome ou @ de quem quer encontrar'
+                value={filter}
+                onChange={handleFilterChange}
+                isBgInverted
+              />
+            ) : (
+              <Text>Você ainda não possui conexões.</Text>
+            )}
+          </S.Header>
 
-              <InfoList info={getFilteredConnections()} type='profile' />
-            </>
-          ) : (
-            <>
-              <Text type='title' pb={16}>
-                Você ainda não possui conexões
-              </Text>
-
-              <Text>
-                Explore um pouco, que você encontrará conexões rapidinho!
-              </Text>
-            </>
+          {getApprovedConnections()?.length > 0 && (
+            <InfoList info={getFilteredConnections()} type='profile' />
           )}
         </S.ProfilesListWrapper>
       )}

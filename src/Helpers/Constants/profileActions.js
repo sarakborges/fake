@@ -33,6 +33,7 @@ export const PROFILE_ACTIONS = [
     id: "add",
     type: "button",
     icon: faUserPlus,
-    condition: "isNotSelf",
+    condition: "isNotConnected",
+    action: "connectTo",
   },
 ];

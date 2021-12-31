@@ -11,9 +11,11 @@ import { SITE_NAME } from "Helpers/Constants";
 
 // Atoms
 import Text from "Components/Atoms/Text";
+import Input from "Components/Atoms/Input";
 
 // Organisms
 import InfoHeader from "Components/Organisms/InfoHeader";
+import InfoList from "Components/Organisms/InfoList";
 
 // Template
 import AuthedTemplate from "Components/Templates/Authed";
@@ -22,8 +24,9 @@ import AuthedTemplate from "Components/Templates/Authed";
 import * as S from "./style";
 
 // Template
-const ProfileConnectionsTemplate = ({ children }) => {
+const ProfileConnectionsTemplate = () => {
   const [profile, setProfile] = useState();
+  const [filter, setFilter] = useState("");
 
   const router = useRouter();
   const {
@@ -41,12 +44,22 @@ const ProfileConnectionsTemplate = ({ children }) => {
     [ProfileAPI]
   );
 
+  const getApprovedConnections = () => {
+    return profile?.connections?.map?.((item) => {
+      if (item.status === "connected") {
+        return { ...item.user };
+      } else {
+        return false;
+      }
+    });
+  };
+
   const getFilteredConnections = () => {
     if (!filter) {
-      return profile?.connections;
+      return getApprovedConnections();
     }
 
-    return profile?.connections.filter(
+    return getApprovedConnections().filter(
       (item) =>
         item.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()) ||
         `@${item.url}`.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
@@ -72,7 +85,7 @@ const ProfileConnectionsTemplate = ({ children }) => {
           <InfoHeader info={profile} type='profile' />
 
           <S.ProfileBody>
-            {profile?.connections?.length ? (
+            {getApprovedConnections()?.length ? (
               <>
                 <S.Filter>
                   <Input
@@ -80,6 +93,7 @@ const ProfileConnectionsTemplate = ({ children }) => {
                     placeholder='Digite o nome ou @ de quem quer encontrar'
                     value={filter}
                     onChange={handleFilterChange}
+                    isBgInverted
                   />
                 </S.Filter>
 

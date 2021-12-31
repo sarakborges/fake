@@ -43,6 +43,16 @@ const ProfileTemplate = () => {
     [ProfileAPI]
   );
 
+  const getApprovedConnections = () => {
+    return profile?.connections?.map?.((item) => {
+      if (item.status === "connected") {
+        return { ...item.user };
+      } else {
+        return false;
+      }
+    });
+  };
+
   useEffect(() => {
     getProfile(url);
   }, [url, getProfile]);
@@ -67,7 +77,7 @@ const ProfileTemplate = () => {
                 type='profile'
                 title='Conexões'
                 emptyTitle='Ainda não possui conexões'
-                list={profile?.connections}
+                list={getApprovedConnections()?.slice(0, 5)}
                 extraItemLink={ROUTES.PROFILE_CONNECTIONS.replace(
                   ":id",
                   profile.url
@@ -78,7 +88,7 @@ const ProfileTemplate = () => {
                 type='group'
                 title='Grupos'
                 emptyTitle='Ainda não participa de grupos'
-                list={profile?.groups}
+                list={profile?.groups.slice(0, 5)}
                 extraItemLink={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
                   ":id",
                   profile.url
