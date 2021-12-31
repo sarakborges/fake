@@ -83,7 +83,9 @@ const InfoHeader = ({ info, type }) => {
 
             {info?.link && (
               <Text type='custom'>
-                <a href='#'>{info.link}</a>
+                <a href={info.link} target='_blank'>
+                  {info.link}
+                </a>
               </Text>
             )}
           </div>
