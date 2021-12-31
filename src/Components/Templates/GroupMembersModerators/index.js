@@ -17,7 +17,7 @@ import Text from "Components/Atoms/Text";
 import Tabs from "Components/Molecules/Tabs";
 
 // Organisms
-import GroupHeader from "Components/Organisms/GroupHeader";
+import InfoHeader from "Components/Organisms/InfoHeader";
 import InfoList from "Components/Organisms/InfoList";
 
 // Template
@@ -83,7 +83,7 @@ const GroupMembersModeratorsTemplate = () => {
 
       {group && (
         <S.Wrapper>
-          <GroupHeader group={group} />
+          <InfoHeader info={group} type='group' />
 
           <S.GroupBody>
             <Tabs tabs={tabs} />

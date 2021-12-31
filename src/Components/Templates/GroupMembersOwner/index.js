@@ -14,7 +14,7 @@ import { SITE_NAME } from "Helpers/Constants";
 import Tabs from "Components/Molecules/Tabs";
 
 // Organisms
-import GroupHeader from "Components/Organisms/GroupHeader";
+import InfoHeader from "Components/Organisms/InfoHeader";
 import InfoList from "Components/Organisms/InfoList";
 
 // Template
@@ -76,7 +76,7 @@ const GroupMembersOwnerTemplate = () => {
 
       {group && (
         <S.Wrapper>
-          <GroupHeader group={group} />
+          <InfoHeader info={group} type='group' />
 
           <S.GroupBody>
             <Tabs tabs={tabs} />

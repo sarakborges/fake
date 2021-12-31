@@ -14,7 +14,7 @@ import { ROUTES } from "Helpers/routes";
 import Rightbar from "Components/Atoms/Rightbar";
 
 // Organisms
-import GroupHeader from "Components/Organisms/GroupHeader";
+import InfoHeader from "Components/Organisms/InfoHeader";
 import RoundList from "Components/Organisms/RoundList";
 import LinkList from "Components/Organisms/LinkList";
 
@@ -56,7 +56,7 @@ const GroupTemplate = () => {
 
       {group && (
         <S.GroupWrapper>
-          <GroupHeader group={group} />
+          <InfoHeader info={group} type='group' />
 
           <S.GroupBody>
             <S.About>

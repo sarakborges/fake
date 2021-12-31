@@ -139,7 +139,7 @@ const NewProfileTemplate = () => {
 
       setIsRequesting(true);
 
-      const url = slugify(form.url.value || form.name.value);
+      const url = slugify(form.url.value) || slugify(form.name.value);
 
       const newProfile = {
         avatar: form.avatar.value,
@@ -177,7 +177,9 @@ const NewProfileTemplate = () => {
             : [{ ...newProfileData }],
       });
 
-      setForm({ ...baseForm });
+      router.push(ROUTES.SELECT_PROFILE);
+
+      displaySuccessToast();
 
       userDispatch({
         type: "SET_NEW_PROFILE",
@@ -185,10 +187,6 @@ const NewProfileTemplate = () => {
           ...newProfileData,
         },
       });
-
-      displaySuccessToast();
-
-      router.push(ROUTES.PROFILE.replace(":id", newProfileData.url));
     } catch (e) {
       setIsRequesting(false);
       displayErrorToast();

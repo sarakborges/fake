@@ -13,7 +13,7 @@ import { SITE_NAME } from "Helpers/Constants";
 import Text from "Components/Atoms/Text";
 
 // Organisms
-import ProfileHeader from "Components/Organisms/ProfileHeader";
+import InfoHeader from "Components/Organisms/InfoHeader";
 
 // Template
 import AuthedTemplate from "Components/Templates/Authed";
@@ -69,7 +69,7 @@ const ProfileConnectionsTemplate = ({ children }) => {
 
       {profile && (
         <S.ProfileWrapper>
-          <ProfileHeader profile={profile} />
+          <InfoHeader info={profile} type='profile' />
 
           <S.ProfileBody>
             {profile?.connections?.length ? (

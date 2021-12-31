@@ -48,11 +48,13 @@ const RoundList = ({
             );
           })}
 
-          <Link href={extraItemLink}>
-            <a>
-              <RoundIcon icon={faEllipsisH} size={40} bgColor='main' />
-            </a>
-          </Link>
+          {list.length > 4 && (
+            <Link href={extraItemLink}>
+              <a>
+                <RoundIcon icon={faEllipsisH} size={40} bgColor='main' />
+              </a>
+            </Link>
+          )}
         </S.List>
       ) : (
         <S.EmptyTitle>

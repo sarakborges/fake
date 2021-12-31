@@ -1,5 +1,6 @@
 // Dependencies
 import { useCallback, useContext, useEffect, useState } from "react";
+import { useRouter } from "next/dist/client/router";
 
 // APIS
 import ProfileAPI from "Apis/Profile";
@@ -7,6 +8,7 @@ import UserAPI from "Apis/User";
 
 // Helpers
 import { slugify } from "Helpers/Functions";
+import { ROUTES } from "Helpers/routes";
 
 // Contexts
 import { AppContext } from "Contexts/App";
@@ -29,6 +31,8 @@ import * as S from "./style";
 
 // Template
 const SettingsProfile = () => {
+  const router = useRouter();
+
   const { userState, userDispatch } = useContext(UserContext);
   const { appDispatch } = useContext(AppContext);
   const { user, profile } = userState;
@@ -188,16 +192,15 @@ const SettingsProfile = () => {
 
     displayDeleteSuccessToast();
 
+    router.push(ROUTES.SELECT_PROFILE);
+
     userDispatch({
       type: "SET_PROFILE",
       data: {
-        profile:
-          filteredProfiles.length > 0 ? { ...filteredProfiles[0] } : undefined,
+        profile: undefined,
         profiles: [...filteredProfiles],
       },
     });
-
-    clearProfileData();
   };
 
   const handleClear = () => {

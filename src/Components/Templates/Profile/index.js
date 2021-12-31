@@ -14,7 +14,7 @@ import { ROUTES } from "Helpers/routes";
 import Rightbar from "Components/Atoms/Rightbar";
 
 // Organisms
-import ProfileHeader from "Components/Organisms/ProfileHeader";
+import InfoHeader from "Components/Organisms/InfoHeader";
 import RoundList from "Components/Organisms/RoundList";
 
 // Template
@@ -55,7 +55,7 @@ const ProfileTemplate = () => {
 
       {profile && (
         <S.ProfileWrapper>
-          <ProfileHeader profile={profile} />
+          <InfoHeader info={profile} type='profile' />
 
           <S.ProfileBody>
             <S.About>

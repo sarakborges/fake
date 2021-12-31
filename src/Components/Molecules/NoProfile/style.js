@@ -7,6 +7,7 @@ export const NoProfile = styled.div`
 
   height: 100%;
   width: 100%;
+  flex: 1;
   padding: 32px;
 `;
 

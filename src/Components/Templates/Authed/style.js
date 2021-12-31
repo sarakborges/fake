@@ -23,5 +23,6 @@ export const PageContentWrapper = styled.div`
 
 export const PageContent = styled.div`
   display: flex;
+  flex-flow: column;
   min-height: 100vh;
 `;

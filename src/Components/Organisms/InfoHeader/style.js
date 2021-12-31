@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ProfileCover = styled.div`
+export const InfoCover = styled.div`
   width: 100%;
   height: 100%;
 
@@ -27,7 +27,7 @@ export const ProfileCover = styled.div`
   }
 `;
 
-export const ProfileHead = styled.div`
+export const InfoHead = styled.div`
   display: flex;
   place-items: center;
   place-content: space-between;
@@ -38,13 +38,14 @@ export const ProfileHead = styled.div`
   z-index: 2;
 
   width: 100%;
-  padding: 32px;
   margin-bottom: 32px;
+  padding: 32px;
 
+  border-bottom: 1px solid var(--bg);
   background-color: var(--bgContrast);
 `;
 
-export const ProfileInfo = styled.div`
+export const InfoInfo = styled.div`
   display: flex;
   gap: 32px;
   place-items: center;
@@ -71,7 +72,7 @@ export const Avatar = styled.div`
   display: flex;
 `;
 
-export const ProfileActions = styled.div`
+export const InfoActions = styled.div`
   display: flex;
   place-items: center;
   gap: 16px;

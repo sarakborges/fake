@@ -2,6 +2,7 @@ import {
   faHome,
   faComment,
   faUserFriends,
+  faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { ROUTES } from "Helpers/routes";
@@ -26,5 +27,12 @@ export const PROFILE_ACTIONS = [
     type: "link",
     icon: faComment,
     to: "#",
+  },
+
+  {
+    id: "add",
+    type: "button",
+    icon: faUserPlus,
+    condition: "isNotSelf",
   },
 ];
