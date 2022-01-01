@@ -49,6 +49,16 @@ const HomeTemplate = () => {
     setProfileData(profileReq);
   }, [profile, ProfileAPI]);
 
+  const getApprovedConnections = () => {
+    return profileData?.connections?.filter?.((item) => {
+      if (item.status === "connected") {
+        return item;
+      } else {
+        return false;
+      }
+    });
+  };
+
   useEffect(() => {
     getProfileData();
   }, [profile, getProfileData]);
@@ -112,7 +122,9 @@ const HomeTemplate = () => {
               title='Suas conexões'
               emptyTitle='Você ainda não possui conexões'
               extraItemLink={ROUTES.CONNECTIONS}
-              list={profileData?.connections?.slice?.(0, 5)}
+              list={getApprovedConnections()
+                ?.slice?.(0, 5)
+                .map((item) => item.user)}
             />
 
             <RoundList

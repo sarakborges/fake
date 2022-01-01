@@ -48,9 +48,9 @@ const ConnectionsTemplate = () => {
   }, [profile, ProfileAPI]);
 
   const getApprovedConnections = () => {
-    return profileData?.connections?.map?.((item) => {
+    return profileData?.connections?.filter?.((item) => {
       if (item.status === "connected") {
-        return { ...item.user };
+        return item;
       } else {
         return false;
       }
@@ -106,7 +106,10 @@ const ConnectionsTemplate = () => {
           </S.Header>
 
           {getApprovedConnections()?.length > 0 && (
-            <InfoList info={getFilteredConnections()} type='profile' />
+            <InfoList
+              info={getFilteredConnections().map((item) => item.user)}
+              type='profile'
+            />
           )}
         </S.ProfilesListWrapper>
       )}

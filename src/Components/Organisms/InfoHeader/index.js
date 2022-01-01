@@ -10,6 +10,7 @@ import ProfileAPI from "Apis/Profile";
 // Helpers
 import { GROUP_ACTIONS } from "Helpers/Constants";
 import { PROFILE_ACTIONS } from "Helpers/Constants";
+import { getTimeString } from "Helpers/Functions";
 
 // Contexsts
 import { UserContext } from "Contexts/User";
@@ -24,7 +25,7 @@ import Text from "Components/Atoms/Text";
 // Style
 import * as S from "./style";
 
-const InfoHeader = ({ info, type }) => {
+const InfoHeader = ({ info, type, setInfo }) => {
   const { userState, userDispatch } = useContext(UserContext);
   const { appDispatch } = useContext(AppContext);
   const { user, profile } = userState;
@@ -40,34 +41,12 @@ const InfoHeader = ({ info, type }) => {
       info.connections?.find?.((item) => item.user._id === profile._id),
   };
 
-  const date = new Date(info.createdAt);
-
-  let time = {
-    day: date.getDate(),
-    month: date.getMonth() + 1,
-    minute: date.getMinutes(),
-    hour: date.getHours(),
-    year: date.getFullYear(),
-  };
-
-  for (let item of Object.keys(time)) {
-    let val = time[item];
-
-    time = {
-      ...time,
-      [item]: `${val}`.length < 2 ? `0${val}` : val,
-    };
-  }
-
-  const { day, month, year, minute, hour } = time;
-  const dateStr = `${day}/${month}/${year}, às ${hour}:${minute}`;
-
   const displaySuccessToast = () => {
     appDispatch({
       type: "SET_TOAST",
       data: {
         title: "Sucesso!",
-        text: `Conectado com ${profile.name}.`,
+        text: `Solicitada conexão com ${info.name}.`,
         type: "success",
         isVisible: true,
       },
@@ -110,7 +89,7 @@ const InfoHeader = ({ info, type }) => {
           avatar: info.avatar,
         },
 
-        status: "connected",
+        status: "sent",
         connectedAt: new Date(),
       };
 
@@ -143,24 +122,28 @@ const InfoHeader = ({ info, type }) => {
           avatar: profile.avatar,
         },
 
-        status: "connected",
+        status: "pending",
         connectedAt: new Date(),
       };
 
-      const updateProfileReq = await ProfileAPI.updateProfile({
+      const newInfo = {
         ...info,
 
         connections:
           info?.connections?.length > 0
             ? [...info.connections, { ...profileNewConnection }]
             : [{ ...profileNewConnection }],
-      });
+      };
+
+      const updateProfileReq = await ProfileAPI.updateProfile({ ...newInfo });
 
       if (!updateProfileReq) {
         displayErrorToast();
         setIsRequesting(false);
         return;
       }
+
+      setInfo(newInfo);
 
       setIsRequesting(false);
 
@@ -171,7 +154,7 @@ const InfoHeader = ({ info, type }) => {
             ...user,
 
             profiles: [
-              ...user.profiles.filter((item) => {
+              ...user.profiles.map((item) => {
                 if (item._id === profile._id) {
                   return { ...newProfile };
                 } else {
@@ -215,7 +198,7 @@ const InfoHeader = ({ info, type }) => {
             <Text type='custom' pt={16}>
               {`${
                 type === "profile" ? "Perfil" : "Grupo"
-              } criado em: ${dateStr}`}
+              } criado em: ${getTimeString(info.createdAt)}`}
             </Text>
 
             {info?.link && (

@@ -28,7 +28,7 @@ const MenuList = () => {
 
   const getIsActive = (item) => {
     for (let route of item.activeOnRoutes) {
-      if (pathname.includes(route)) {
+      if (pathname === route) {
         return true;
       }
     }

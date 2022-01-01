@@ -18,6 +18,7 @@ export const MenuItem = styled.li`
     display: flex;
     place-items: center;
     place-content: flex-start;
+    gap: 16px;
 
     height: 48px;
     padding: 0 16px;
@@ -47,6 +48,4 @@ export const MenuItemIcon = styled.div`
 
   width: 24px;
   height: 24px;
-
-  margin-right: 16px;
 `;

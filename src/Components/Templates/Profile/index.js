@@ -44,9 +44,9 @@ const ProfileTemplate = () => {
   );
 
   const getApprovedConnections = () => {
-    return profile?.connections?.map?.((item) => {
+    return profile?.connections?.filter?.((item) => {
       if (item.status === "connected") {
-        return { ...item.user };
+        return item;
       } else {
         return false;
       }
@@ -65,7 +65,7 @@ const ProfileTemplate = () => {
 
       {profile && (
         <S.ProfileWrapper>
-          <InfoHeader info={profile} type='profile' />
+          <InfoHeader info={profile} type='profile' setInfo={setProfile} />
 
           <S.ProfileBody>
             <S.About>
@@ -77,7 +77,9 @@ const ProfileTemplate = () => {
                 type='profile'
                 title='Conexões'
                 emptyTitle='Ainda não possui conexões'
-                list={getApprovedConnections()?.slice(0, 5)}
+                list={getApprovedConnections()
+                  ?.slice(0, 5)
+                  .map((item) => item.user)}
                 extraItemLink={ROUTES.PROFILE_CONNECTIONS.replace(
                   ":id",
                   profile.url

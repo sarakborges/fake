@@ -31,6 +31,27 @@ const TransparentButton = css`
   }
 `;
 
+const SuccessButton = css`
+  border: 1px solid var(--green);
+  background-color: var(--green);
+  color: var(--white);
+
+  &:not(:disabled):hover {
+    background-color: var(--white);
+    color: var(--green);
+  }
+`;
+
+const SuccessSecondaryButton = css`
+  border: 1px solid var(--green);
+  background-color: transparent;
+  color: var(--green);
+
+  &:not(:disabled):hover {
+    background-color: var(--white);
+  }
+`;
+
 const WarningButton = css`
   border: 1px solid var(--red);
   background-color: var(--red);
@@ -56,6 +77,7 @@ export const Button = styled.button`
   display: flex;
   place-items: center;
   place-content: center;
+  gap: 8px;
 
   height: ${({ size }) => `${size * 3}px`};
   padding: 0 16px;
@@ -74,6 +96,9 @@ export const Button = styled.button`
   ${({ buttonStyle }) => buttonStyle === "warning" && WarningButton}
   ${({ buttonStyle }) =>
     buttonStyle === "warning-secondary" && WarningSecondaryButton}
+  ${({ buttonStyle }) => buttonStyle === "success" && SuccessButton}
+  ${({ buttonStyle }) =>
+    buttonStyle === "success-secondary" && SuccessSecondaryButton}
 
   &:disabled {
     opacity: 0.6;

@@ -17,9 +17,15 @@ export const Text = styled.span`
 `;
 
 export const Name = styled.span`
+  width: 100%;
+  overflow: hidden;
+
   line-height: 32px;
   font-size: 20px;
   color: var(--main);
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 export const Url = styled.span`
@@ -29,6 +35,7 @@ export const Url = styled.span`
   line-height: 32px;
   font-size: 16px;
   color: var(--bgInverted);
+
   text-overflow: ellipsis;
   white-space: nowrap;
 `;

@@ -26,7 +26,10 @@ export const LEFT_MENU = [
       icon: faUser,
       text: "Perfil",
       link: ROUTES.PROFILE,
-      activeOnRoutes: [ROUTES.PROFILE.replace(":id", "[url]")],
+      activeOnRoutes: [
+        ROUTES.PROFILE.replace(":id", "[url]"),
+        ROUTES.PROFILE_CONNECTIONS.replace(":id", "[url]"),
+      ],
     },
 
     {
@@ -39,8 +42,8 @@ export const LEFT_MENU = [
     {
       icon: faBell,
       text: "Notificações",
-      link: "#",
-      activeOnRoutes: [],
+      link: ROUTES.NOTIFICATIONS,
+      activeOnRoutes: [ROUTES.NOTIFICATIONS],
     },
 
     {

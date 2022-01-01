@@ -10,6 +10,7 @@ export const Content = styled.div`
   display: flex;
   flex-flow: column;
 
+  max-width: calc(100% - 320px);
   flex: 1;
 
   border-radius: 32px 0 0 32px;
