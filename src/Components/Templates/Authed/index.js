@@ -30,9 +30,9 @@ const AuthedTemplate = ({ children }) => {
 
   const { theme, toast } = appState;
 
-  const setUserData = useCallback(() => {
+  const setUserData = useCallback(async () => {
     try {
-      const userReq = getUserData();
+      const userReq = await getUserData();
 
       if (!userReq?.user) {
         router.push(ROUTES.LOGIN);

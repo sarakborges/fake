@@ -8,9 +8,9 @@ export const NotificationsWrapper = styled.div`
 export const NotificationsList = styled.ul`
   display: flex;
   flex-flow: column;
-  gap: 32px;
+  gap: 16px;
 
-  padding-top: 32px;
+  padding-top: 16px;
 `;
 
 export const NotificationsItem = styled.li`
@@ -23,6 +23,10 @@ export const NotificationsItem = styled.li`
   box-shadow: 2px 2px 3px 2px var(--bg);
   background-color: var(--bg);
   border-radius: 16px;
+
+  > a {
+    display: flex;
+  }
 `;
 
 export const NotificationText = styled.div`
@@ -33,12 +37,13 @@ export const NotificationText = styled.div`
     display: flex;
     gap: 6px;
 
-    > b {
+    > a {
       max-width: calc(100% - 280px);
 
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      font-weight: 600;
     }
   }
 `;

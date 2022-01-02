@@ -1,6 +1,9 @@
 // Dependencies
 import { useContext } from "react";
 
+// APIs
+import ProfileAPI from "Apis/Profile";
+
 // Contexts
 import { AppContext } from "Contexts/App";
 import { UserContext } from "Contexts/User";
@@ -16,11 +19,13 @@ const SelectProfilesList = ({ profiles, activeProfile }) => {
   const { userDispatch } = useContext(UserContext);
   const { appDispatch } = useContext(AppContext);
 
-  const handleProfileChange = (newProfile) => {
+  const handleProfileChange = async (newProfile) => {
     try {
+      const profileData = await ProfileAPI.getProfileById(newProfile._id);
+
       userDispatch({
         type: "SET_ACTIVE_PROFILE",
-        data: profiles.find((item) => item._id === newProfile._id),
+        data: { ...profileData },
       });
 
       appDispatch({

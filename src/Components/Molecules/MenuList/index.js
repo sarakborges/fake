@@ -36,6 +36,22 @@ const MenuList = () => {
     return false;
   };
 
+  const getPendingConnections = () => {
+    return (
+      profile?.connections?.filter?.((item) => {
+        if (item.status === "pending") {
+          return item;
+        } else {
+          return false;
+        }
+      }) || []
+    );
+  };
+
+  const getNotificationsNumber = () => {
+    return [...getPendingConnections()].length;
+  };
+
   const handleClick = (text) => {
     if (text === "Sair") {
       localStorage.clear();
@@ -77,7 +93,7 @@ const MenuList = () => {
           <S.MenuList key={key}>
             {item
               .filter((subItem) => {
-                if (subItem?.link?.includes(":id")) {
+                if (subItem?.needsProfile) {
                   if (profile?.url) {
                     return subItem;
                   } else {
@@ -117,6 +133,11 @@ const MenuList = () => {
                         </S.MenuItemIcon>
 
                         <span>{subItem.text}</span>
+
+                        {subItem.link === ROUTES.NOTIFICATIONS &&
+                          getNotificationsNumber() > 0 && (
+                            <S.Counter>{getNotificationsNumber()}</S.Counter>
+                          )}
                       </a>
                     )}
                   </S.MenuItem>

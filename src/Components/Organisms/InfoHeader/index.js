@@ -1,5 +1,5 @@
 // Dependencies
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
@@ -32,14 +32,7 @@ const InfoHeader = ({ info, type, setInfo }) => {
 
   const [isRequesting, setIsRequesting] = useState(false);
 
-  const actionConditions = {
-    hasToOwn: profile._id !== info.owner,
-    hasToNotOwn: profile._id === info.owner,
-    isNotSelf: profile._id === info._id,
-    isNotConnected:
-      profile._id === info._id ||
-      info.connections?.find?.((item) => item.user._id === profile._id),
-  };
+  const [actionConditions, setActionConditions] = useState();
 
   const displaySuccessToast = () => {
     appDispatch({
@@ -172,6 +165,21 @@ const InfoHeader = ({ info, type, setInfo }) => {
     },
   };
 
+  useEffect(() => {
+    if (!profile?._id) {
+      return;
+    }
+
+    setActionConditions({
+      hasToOwn: profile._id !== info.owner,
+      hasToNotOwn: profile._id === info.owner,
+      isNotSelf: profile._id === info._id,
+      isNotConnected:
+        profile._id === info._id ||
+        info.connections?.find?.((item) => item.user._id === profile._id),
+    });
+  }, [profile]);
+
   return (
     <>
       <S.InfoHead>
@@ -213,7 +221,7 @@ const InfoHeader = ({ info, type, setInfo }) => {
 
         <S.InfoActions>
           {(type === "group" ? GROUP_ACTIONS : PROFILE_ACTIONS).map((item) => {
-            if (item.condition && actionConditions[item.condition]) {
+            if (item.condition && actionConditions?.[item.condition]) {
               return false;
             }
 

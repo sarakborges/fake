@@ -26,6 +26,7 @@ export const LEFT_MENU = [
       icon: faUser,
       text: "Perfil",
       link: ROUTES.PROFILE,
+      needsProfile: true,
       activeOnRoutes: [
         ROUTES.PROFILE.replace(":id", "[url]"),
         ROUTES.PROFILE_CONNECTIONS.replace(":id", "[url]"),
@@ -36,6 +37,7 @@ export const LEFT_MENU = [
       icon: faComment,
       text: "Mensagens",
       link: ROUTES.MESSAGES,
+      needsProfile: true,
       activeOnRoutes: [ROUTES.MESSAGES.replace(":id", "[url]")],
     },
 
@@ -43,6 +45,7 @@ export const LEFT_MENU = [
       icon: faBell,
       text: "Notificações",
       link: ROUTES.NOTIFICATIONS,
+      needsProfile: true,
       activeOnRoutes: [ROUTES.NOTIFICATIONS],
     },
 
@@ -50,6 +53,7 @@ export const LEFT_MENU = [
       icon: faUserFriends,
       text: "Conexões",
       link: ROUTES.CONNECTIONS,
+      needsProfile: true,
       activeOnRoutes: [ROUTES.CONNECTIONS],
     },
 
@@ -57,6 +61,7 @@ export const LEFT_MENU = [
       icon: faUsers,
       text: "Grupos",
       link: ROUTES.GROUPS,
+      needsProfile: true,
       activeOnRoutes: [
         ROUTES.GROUPS,
         ROUTES.GROUP.replace(":id", "[url]"),

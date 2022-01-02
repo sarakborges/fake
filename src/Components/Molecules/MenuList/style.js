@@ -49,3 +49,18 @@ export const MenuItemIcon = styled.div`
   width: 24px;
   height: 24px;
 `;
+
+export const Counter = styled.span`
+  display: flex;
+  place-content: center;
+  place-items: center;
+
+  width: 20px;
+  height: 20px;
+
+  font-size: 12px;
+  color: var(--white);
+
+  background-color: var(--main);
+  border-radius: 100%;
+`;

@@ -1,9 +1,6 @@
 // Dependencies
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Head from "next/head";
-
-// APIs
-import ProfileAPI from "Apis/Profile";
 
 // Helpers
 import { SITE_NAME } from "Helpers/Constants";
@@ -33,22 +30,9 @@ const ConnectionsTemplate = () => {
   const { profile } = userState;
 
   const [filter, setFilter] = useState("");
-  const [profileData, setProfileData] = useState();
-
-  const getProfileData = useCallback(async () => {
-    if (!profile?._id) {
-      return;
-    }
-
-    const profileData = await ProfileAPI.getProfileByUrl(profile.url);
-
-    if (profileData) {
-      setProfileData(profileData);
-    }
-  }, [profile, ProfileAPI]);
 
   const getApprovedConnections = () => {
-    return profileData?.connections?.filter?.((item) => {
+    return profile?.connections?.filter?.((item) => {
       if (item.status === "connected") {
         return item;
       } else {
@@ -72,10 +56,6 @@ const ConnectionsTemplate = () => {
   const handleFilterChange = (e) => {
     setFilter(e.currentTarget.value);
   };
-
-  useEffect(() => {
-    getProfileData();
-  }, [getProfileData]);
 
   return (
     <AuthedTemplate>

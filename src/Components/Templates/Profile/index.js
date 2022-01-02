@@ -63,7 +63,7 @@ const ProfileTemplate = () => {
         <title>{`${SITE_NAME} - ${profile?.name || "Perfil"}`}</title>
       </Head>
 
-      {profile && (
+      {profile?._id && (
         <S.ProfileWrapper>
           <InfoHeader info={profile} type='profile' setInfo={setProfile} />
 
