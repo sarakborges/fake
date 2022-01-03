@@ -34,13 +34,13 @@ export const GROUP_ACTIONS = [
     id: "leave",
     type: "button",
     icon: faSignOutAlt,
-    condition: "hasToNotOwn",
+    hideCondition: "isOwner",
   },
 
   {
     id: "more",
     type: "button",
     icon: faEllipsisH,
-    condition: "hasToOwn",
+    hideCondition: "isNotOwner",
   },
 ];

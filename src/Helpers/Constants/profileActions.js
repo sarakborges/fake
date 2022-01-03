@@ -3,6 +3,9 @@ import {
   faComment,
   faUserFriends,
   faUserPlus,
+  faUserAltSlash,
+  faUnlockAlt,
+  faLock,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { ROUTES } from "Helpers/routes";
@@ -11,6 +14,7 @@ export const PROFILE_ACTIONS = [
   {
     id: "home",
     type: "link",
+    title: "Perfil",
     icon: faHome,
     to: ROUTES.PROFILE,
   },
@@ -18,6 +22,7 @@ export const PROFILE_ACTIONS = [
   {
     id: "connections",
     type: "link",
+    title: "Conexões",
     icon: faUserFriends,
     to: ROUTES.PROFILE_CONNECTIONS,
   },
@@ -25,6 +30,7 @@ export const PROFILE_ACTIONS = [
   {
     id: "messages",
     type: "link",
+    title: "Mensagens",
     icon: faComment,
     to: "#",
   },
@@ -32,8 +38,36 @@ export const PROFILE_ACTIONS = [
   {
     id: "add",
     type: "button",
+    title: "Solicitar conexão",
     icon: faUserPlus,
-    condition: "isNotConnected",
+    hideCondition: "isNotConnected",
     action: "connectTo",
+  },
+
+  {
+    id: "remove",
+    type: "button",
+    title: "Remover conexão",
+    icon: faUserAltSlash,
+    hideCondition: "hasAnyConnectionStatus",
+    action: "removeConnection",
+  },
+
+  {
+    id: "block",
+    type: "button",
+    title: "Bloquear",
+    icon: faLock,
+    hideCondition: "isBlocked",
+    action: "blockUser",
+  },
+
+  {
+    id: "block",
+    type: "button",
+    title: "Desbloquear",
+    icon: faUnlockAlt,
+    hideCondition: "isNotBlocked",
+    action: "unBlockUser",
   },
 ];

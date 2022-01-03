@@ -1,5 +1,9 @@
 // Dependencies
 import { useContext } from "react";
+import Link from "next/link";
+
+// Helpers
+import { ROUTES } from "Helpers/routes";
 
 // Contexts
 import { UserContext } from "Contexts/User";
@@ -21,9 +25,13 @@ const Sidebar = () => {
       <MenuList />
 
       {profile?._id && (
-        <S.InfoArea>
-          <InfoArea info={profile} />
-        </S.InfoArea>
+        <Link href={ROUTES.PROFILE.replace(":id", profile.url)}>
+          <a>
+            <S.InfoArea>
+              <InfoArea info={profile} isBox />
+            </S.InfoArea>
+          </a>
+        </Link>
       )}
     </S.Menu>
   );

@@ -12,6 +12,7 @@ import { ROUTES } from "Helpers/routes";
 
 // Atoms
 import Rightbar from "Components/Atoms/Rightbar";
+import InfoAbout from "Components/Atoms/InfoAbout";
 
 // Organisms
 import InfoHeader from "Components/Organisms/InfoHeader";
@@ -59,9 +60,9 @@ const GroupTemplate = () => {
           <InfoHeader info={group} type='group' />
 
           <S.GroupBody>
-            <S.About>
+            <InfoAbout>
               <div dangerouslySetInnerHTML={{ __html: group.about }} />
-            </S.About>
+            </InfoAbout>
 
             <Rightbar>
               <RoundList

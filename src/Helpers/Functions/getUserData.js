@@ -1,3 +1,4 @@
+import UserAPI from "Apis/User";
 import ProfileAPI from "Apis/Profile";
 
 export const getUserData = async () => {
@@ -7,7 +8,14 @@ export const getUserData = async () => {
   let userData;
 
   if (localUserData?.user) {
-    userData = localUserData;
+    const { email, password } = localUserData.user;
+    const userReq = await UserAPI.getUser(email, password);
+
+    if (!userReq?._id) {
+      return false;
+    } else {
+      userData = { ...localUserData, ...userReq };
+    }
   } else {
     return false;
   }

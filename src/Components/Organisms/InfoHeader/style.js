@@ -81,6 +81,8 @@ export const InfoActions = styled.div`
     place-content: center;
     place-items: center;
 
+    position: relative;
+
     > a {
       display: flex;
       place-content: center;
@@ -110,5 +112,30 @@ export const InfoActions = styled.div`
 
       box-shadow: 2px 2px 3px var(--bgContrast);
     }
+  }
+`;
+
+export const ActionTitle = styled.p`
+  position: absolute;
+  right: 0;
+  top: calc(100% + 16px);
+  z-index: 3;
+
+  padding: 8px;
+
+  background-color: var(--main);
+  border-radius: 8px;
+  opacity: 0;
+  visibility: hidden;
+
+  color: var(--white);
+  font-size: 12px;
+  white-space: nowrap;
+
+  transition: opacity 0.3s, visibility 0.3s;
+
+  ${InfoActions} > div:hover & {
+    opacity: 1;
+    visibility: visible;
   }
 `;

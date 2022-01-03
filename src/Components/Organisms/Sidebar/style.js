@@ -10,5 +10,5 @@ export const Menu = styled.div`
 `;
 
 export const InfoArea = styled.div`
-  padding: 16px 48px;
+  padding: 0 32px;
 `;
