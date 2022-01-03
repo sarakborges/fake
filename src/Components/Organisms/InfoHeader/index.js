@@ -337,13 +337,20 @@ const InfoHeader = ({ info, type, setInfo }) => {
     blockUser: async () => {
       setIsRequesting(true);
 
+      const newBlocked = {
+        _id: info._id,
+        avatar: info.avatar,
+        name: info.name,
+        url: info.url,
+      };
+
       const newProfile = {
         ...profile,
 
         blockedUsers:
           profile?.blockedUsers?.length > 0
-            ? [...profile.blockedUsers, info._id]
-            : [info._id],
+            ? [...profile.blockedUsers, { ...newBlocked }]
+            : [{ ...newBlocked }],
       };
 
       const updateCurrentUserReq = await ProfileAPI.updateProfile({
@@ -390,7 +397,7 @@ const InfoHeader = ({ info, type, setInfo }) => {
 
         blockedUsers:
           profile?.blockedUsers?.length > 0
-            ? [...profile.blockedUsers.filter((item) => item !== info._id)]
+            ? [...profile.blockedUsers.filter((item) => item._id !== info._id)]
             : [],
       };
 
@@ -447,10 +454,12 @@ const InfoHeader = ({ info, type, setInfo }) => {
         !info.connections?.find?.((item) => item.user._id === profile._id),
 
       isNotBlocked:
-        isSelf || !profile.blockedUsers?.find?.((item) => item === info._id),
+        isSelf ||
+        !profile.blockedUsers?.find?.((item) => item?._id === info._id),
 
       isBlocked:
-        isSelf || profile.blockedUsers?.find?.((item) => item === info._id),
+        isSelf ||
+        profile.blockedUsers?.find?.((item) => item?._id === info._id),
     };
 
     return conditions[condition];

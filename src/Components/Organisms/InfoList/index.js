@@ -15,10 +15,10 @@ const InfoList = ({ info, type }) => {
       {info &&
         info.map((item) => {
           return (
-            <S.InfoItem key={item.url}>
-              {item.url ? (
+            <S.InfoItem key={item?.url}>
+              {item?.url ? (
                 <Link
-                  href={ROUTES[type.toUpperCase()].replace(":id", item.url)}
+                  href={ROUTES[type.toUpperCase()].replace(":id", item?.url)}
                 >
                   <a>
                     <InfoArea info={item} isBox />

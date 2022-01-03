@@ -53,6 +53,18 @@ const ConnectionsTemplate = () => {
     );
   };
 
+  const getFilteredBlocked = () => {
+    if (!filter) {
+      return profile.blockedUsers;
+    }
+
+    return profile.blockedUsers.filter(
+      (item) =>
+        item.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()) ||
+        `@${item.url}`.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+    );
+  };
+
   const handleFilterChange = (e) => {
     setFilter(e.currentTarget.value);
   };
@@ -66,32 +78,54 @@ const ConnectionsTemplate = () => {
       {!profile?._id && <NoProfile />}
 
       {profile?._id && (
-        <S.ProfilesListWrapper>
-          <S.Header>
-            <Text type='title' pb={16}>
-              Suas conexões
-            </Text>
+        <>
+          <S.ProfilesListWrapper>
+            <S.Header>
+              <Text type='title' pb={16}>
+                Suas conexões
+              </Text>
 
-            {getApprovedConnections()?.length > 0 ? (
-              <Input
-                id='connections-filter'
-                placeholder='Digite o nome ou @ de quem quer encontrar'
-                value={filter}
-                onChange={handleFilterChange}
-                isBgInverted
+              {getApprovedConnections()?.length > 0 ? (
+                <Input
+                  id='connections-filter'
+                  placeholder='Digite o nome ou @ de quem quer encontrar'
+                  value={filter}
+                  onChange={handleFilterChange}
+                  isBgInverted
+                />
+              ) : (
+                <Text>Você ainda não possui conexões.</Text>
+              )}
+            </S.Header>
+
+            {getApprovedConnections()?.length > 0 && (
+              <InfoList
+                info={getFilteredConnections().map((item) => item.user)}
+                type='profile'
               />
-            ) : (
-              <Text>Você ainda não possui conexões.</Text>
             )}
-          </S.Header>
+          </S.ProfilesListWrapper>
 
-          {getApprovedConnections()?.length > 0 && (
-            <InfoList
-              info={getFilteredConnections().map((item) => item.user)}
-              type='profile'
-            />
+          {profile.blockedUsers?.length > 0 && (
+            <S.ProfilesListWrapper>
+              <S.Header>
+                <Text type='title' pb={16}>
+                  Perfis bloqueados
+                </Text>
+
+                <Input
+                  id='blocked-filter'
+                  placeholder='Digite o nome ou @ de quem quer encontrar'
+                  value={filter}
+                  onChange={handleFilterChange}
+                  isBgInverted
+                />
+              </S.Header>
+
+              <InfoList info={getFilteredBlocked()} type='profile' />
+            </S.ProfilesListWrapper>
           )}
-        </S.ProfilesListWrapper>
+        </>
       )}
     </AuthedTemplate>
   );
