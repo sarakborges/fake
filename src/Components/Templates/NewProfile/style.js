@@ -9,7 +9,7 @@ export const NewProfileContent = styled.div`
   form {
     display: flex;
     flex-flow: column;
-    gap: 32px;
+    gap: 24px;
 
     padding: 24px;
 

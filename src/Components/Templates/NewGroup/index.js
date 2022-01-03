@@ -135,12 +135,17 @@ const NewProfileTemplate = () => {
         return;
       }
 
+      setIsRequesting(true);
+
+      const avatarUploaded = await ProfileAPI.uploadFile(form.avatar.value);
+      const coverUploaded = await ProfileAPI.uploadFile(form.cover.value);
+
       const url = slugify(form.url.value || form.name.value);
 
       const newGroup = {
         owner: profile._id,
-        avatar: form.avatar.value,
-        cover: form.cover.value,
+        avatar: avatarUploaded.url,
+        cover: coverUploaded.url,
         name: form.name.value,
         url,
         about: form.about.value,
@@ -159,8 +164,6 @@ const NewProfileTemplate = () => {
         tags: [],
         importantLinks: [],
       };
-
-      setIsRequesting(true);
 
       const newId = await GroupAPI.createGroup(newGroup);
 
@@ -245,6 +248,8 @@ const NewProfileTemplate = () => {
             <S.Row>
               <File
                 id='avatar'
+                placeholder='Arraste o arquivo do seu AVATAR para cá'
+                placeholderHover='Solte o arquivo do seu AVATAR aqui'
                 label='Avatar'
                 value={form.avatar.value}
                 onChange={handleChange}
@@ -252,6 +257,8 @@ const NewProfileTemplate = () => {
 
               <File
                 id='cover'
+                placeholder='Arraste o arquivo da sua CAPA para cá'
+                placeholderHover='Solte o arquivo da sua CAPA aqui'
                 label='Capa'
                 value={form.cover.value}
                 onChange={handleChange}

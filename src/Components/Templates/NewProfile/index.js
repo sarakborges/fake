@@ -139,11 +139,14 @@ const NewProfileTemplate = () => {
 
       setIsRequesting(true);
 
+      const avatarUploaded = await ProfileAPI.uploadFile(form.avatar.value);
+      const coverUploaded = await ProfileAPI.uploadFile(form.cover.value);
+
       const url = slugify(form.url.value) || slugify(form.name.value);
 
       const newProfile = {
-        avatar: form.avatar.value,
-        cover: form.cover.value,
+        avatar: avatarUploaded.url,
+        cover: coverUploaded.url,
         name: form.name.value,
         about: form.about.value,
         link: form.link.value,
@@ -156,15 +159,15 @@ const NewProfileTemplate = () => {
 
       const insertedProfile = await ProfileAPI.createProfile(newProfile);
 
-      if (!insertedProfile.newId) {
+      if (!insertedProfile) {
         setIsRequesting(false);
         displayErrorToast();
         return;
       }
 
       const newProfileData = {
-        _id: insertedProfile.newId,
-        avatar: insertedProfile.avatar,
+        _id: insertedProfile,
+        avatar: newProfile.avatar,
         name: newProfile.name,
         url,
       };

@@ -30,16 +30,8 @@ const createProfile = (data) => {
     return;
   }
 
-  const formData = new FormData();
-
-  Object.keys(data).forEach((key) => formData.append(key, data[key]));
-
   return axios
-    .post(`${process.env.NEXT_PUBLIC_REQUEST_URI}/profile`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
+    .post(`${process.env.NEXT_PUBLIC_REQUEST_URI}/profile`, { ...data })
     .then((res) => res.data)
     .catch((err) => err);
 };
@@ -96,6 +88,25 @@ const acceptConnection = (info) => {
     .catch((err) => err);
 };
 
+const uploadFile = (avatar) => {
+  const formData = new FormData();
+  formData.append("image", avatar);
+
+  return axios
+    .post(
+      "https://api.imgbb.com/1/upload?key=f268fffd080754b05f5498a1a56d7da2",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    )
+    .then((res) => res.data)
+    .then((res) => res.data)
+    .catch((err) => err);
+};
+
 export default {
   getProfileById,
   getProfileByUrl,
@@ -104,4 +115,5 @@ export default {
   deleteProfile,
   deleteConnection,
   acceptConnection,
+  uploadFile,
 };

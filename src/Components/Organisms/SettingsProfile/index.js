@@ -28,6 +28,7 @@ import NoProfile from "Components/Molecules/NoProfile";
 
 // Style
 import * as S from "./style";
+import axios from "axios";
 
 // Template
 const SettingsProfile = () => {
@@ -207,22 +208,6 @@ const SettingsProfile = () => {
     getProfileData();
   };
 
-  const clearProfileData = () => {
-    let newObj = { ...form };
-
-    for (let key of Object.keys(profile)) {
-      newObj = {
-        ...newObj,
-        [key]: {
-          value: "",
-          error: "",
-        },
-      };
-    }
-
-    setForm({ ...newObj });
-  };
-
   const getProfileData = useCallback(() => {
     let newObj = { ...form };
 
@@ -249,12 +234,15 @@ const SettingsProfile = () => {
 
       setIsRequesting(true);
 
+      const avatarUploaded = await ProfileAPI.uploadFile(form.avatar.value);
+      const coverUploaded = await ProfileAPI.uploadFile(form.cover.value);
+
       const url = slugify(form.url.value || form.name.value);
 
       const newProfile = {
         ...profile,
-        avatar: form.avatar.value,
-        cover: form.cover.value,
+        avatar: avatarUploaded.url,
+        cover: coverUploaded.url,
         name: form.name.value,
         about: form.about.value,
         link: form.link.value,
