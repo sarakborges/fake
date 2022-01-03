@@ -41,7 +41,6 @@ export const InfoHead = styled.div`
   margin-bottom: 32px;
   padding: 32px;
 
-  border-bottom: 1px solid var(--bg);
   background-color: var(--bgContrast);
 `;
 
