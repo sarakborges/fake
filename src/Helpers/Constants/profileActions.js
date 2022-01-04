@@ -40,7 +40,7 @@ export const PROFILE_ACTIONS = [
     type: "button",
     title: "Solicitar conexão",
     icon: faUserPlus,
-    hideCondition: "isNotConnected",
+    hideCondition: "hasAnyConnectionStatus",
     action: "connectTo",
   },
 
@@ -49,7 +49,25 @@ export const PROFILE_ACTIONS = [
     type: "button",
     title: "Remover conexão",
     icon: faUserAltSlash,
-    hideCondition: "hasAnyConnectionStatus",
+    hideCondition: "isNotConnected",
+    action: "removeConnection",
+  },
+
+  {
+    id: "cancel",
+    type: "button",
+    title: "Cancelar solicitação de conexão",
+    icon: faUserAltSlash,
+    hideCondition: "isNotPending",
+    action: "removeConnection",
+  },
+
+  {
+    id: "refuse",
+    type: "button",
+    title: "Recusar solicitação de conexão",
+    icon: faUserAltSlash,
+    hideCondition: "isNotSent",
     action: "removeConnection",
   },
 

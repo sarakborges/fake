@@ -1,6 +1,6 @@
 export const slugify = (str) => {
   return str
-    .toLowerCase()
+    .toLocaleLowerCase("pt-BR")
     .replace(/[^\w ]+/g, "")
     .replace(/ +/g, "-")
     .trim();

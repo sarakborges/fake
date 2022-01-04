@@ -1,7 +1,8 @@
 import {
-  faEllipsisH,
   faHome,
   faList,
+  faPencilAlt,
+  faSignInAlt,
   faSignOutAlt,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +13,7 @@ export const GROUP_ACTIONS = [
   {
     id: "home",
     type: "link",
+    title: "Grupo",
     icon: faHome,
     to: ROUTES.GROUP,
   },
@@ -19,6 +21,7 @@ export const GROUP_ACTIONS = [
   {
     id: "members",
     type: "link",
+    title: "Membros",
     icon: faUsers,
     to: ROUTES.GROUP_MEMBERS.MEMBERS,
   },
@@ -26,21 +29,32 @@ export const GROUP_ACTIONS = [
   {
     id: "forum",
     type: "link",
+    title: "Fórum",
     icon: faList,
     to: "#",
   },
 
   {
-    id: "leave",
+    id: "enter",
     type: "button",
-    icon: faSignOutAlt,
-    hideCondition: "isOwner",
+    title: "Entrar no grupo",
+    icon: faSignInAlt,
+    hideCondition: "isMember",
   },
 
   {
-    id: "more",
+    id: "leave",
     type: "button",
-    icon: faEllipsisH,
+    title: "Sair do grupo",
+    icon: faSignOutAlt,
+    hideCondition: "isNotMember",
+  },
+
+  {
+    id: "edit",
+    type: "button",
+    title: "Editar grupo",
+    icon: faPencilAlt,
     hideCondition: "isNotOwner",
   },
 ];

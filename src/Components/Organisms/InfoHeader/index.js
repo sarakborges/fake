@@ -32,127 +32,61 @@ const InfoHeader = ({ info, type, setInfo }) => {
 
   const [isRequesting, setIsRequesting] = useState(false);
 
-  const displayConnectSuccessToast = () => {
-    appDispatch({
-      type: "SET_TOAST",
-      data: {
-        title: "Sucesso!",
-        text: `Conexão solicitada.`,
+  const displayToast = (toast) => {
+    const toasts = {
+      connectSuccess: {
+        title: "Successo",
+        text: "Conexão solicitada",
         type: "success",
-        isVisible: true,
       },
-    });
 
-    setTimeout(() => {
-      appDispatch({
-        type: "TOGGLE_TOAST",
-        data: false,
-      });
-    }, 5000);
-  };
-
-  const displayConnectErrorToast = () => {
-    appDispatch({
-      type: "SET_TOAST",
-      data: {
+      connectError: {
         title: "Erro!",
         text: `Aconteceu algum erro ao tentar solicitar conexão. Tente novamente.`,
         type: "error",
-        isVisible: true,
       },
-    });
 
-    setTimeout(() => {
-      appDispatch({
-        type: "TOGGLE_TOAST",
-        data: false,
-      });
-    }, 5000);
-  };
-
-  const displayRemoveConnectionSuccessToast = () => {
-    appDispatch({
-      type: "SET_TOAST",
-      data: {
+      removeConnectionSuccess: {
         title: "Sucesso!",
         text: `Conexão removida.`,
         type: "success",
-        isVisible: true,
       },
-    });
 
-    setTimeout(() => {
-      appDispatch({
-        type: "TOGGLE_TOAST",
-        data: false,
-      });
-    }, 5000);
-  };
-
-  const displayRemoveConnectionErrorToast = () => {
-    appDispatch({
-      type: "SET_TOAST",
-      data: {
+      removeConnectionError: {
         title: "Erro!",
         text: `Aconteceu algum erro ao tentar remover a conexão. Tente novamente.`,
         type: "error",
-        isVisible: true,
       },
-    });
 
-    setTimeout(() => {
-      appDispatch({
-        type: "TOGGLE_TOAST",
-        data: false,
-      });
-    }, 5000);
-  };
-
-  const displayBlockSuccessToast = () => {
-    appDispatch({
-      type: "SET_TOAST",
-      data: {
+      blockSuccess: {
         title: "Sucesso!",
         text: `Perfil bloqueado.`,
         type: "success",
-        isVisible: true,
       },
-    });
 
-    setTimeout(() => {
-      appDispatch({
-        type: "TOGGLE_TOAST",
-        data: false,
-      });
-    }, 5000);
-  };
-
-  const displayBlockErrorToast = () => {
-    appDispatch({
-      type: "SET_TOAST",
-      data: {
+      blockError: {
         title: "Erro!",
         text: `Aconteceu algum erro ao tentar bloquear o perfil. Tente novamente.`,
         type: "error",
-        isVisible: true,
       },
-    });
 
-    setTimeout(() => {
-      appDispatch({
-        type: "TOGGLE_TOAST",
-        data: false,
-      });
-    }, 5000);
-  };
-
-  const displayUnblockSuccessToast = () => {
-    appDispatch({
-      type: "SET_TOAST",
-      data: {
+      unblockSuccess: {
         title: "Sucesso!",
         text: `Perfil desbloqueado.`,
         type: "success",
+      },
+
+      unblockError: {
+        title: "Erro!",
+        text: `Aconteceu algum erro ao tentar desbloquear o perfil. Tente novamente.`,
+        type: "error",
+      },
+    };
+
+    appDispatch({
+      type: "SET_TOAST",
+      data: {
+        ...toasts[toast],
         isVisible: true,
       },
     });
@@ -165,23 +99,27 @@ const InfoHeader = ({ info, type, setInfo }) => {
     }, 5000);
   };
 
-  const displayUnblockErrorToast = () => {
-    appDispatch({
-      type: "SET_TOAST",
+  const updateLocalUser = (newProfile) => {
+    userDispatch({
+      type: "SET_USER",
       data: {
-        title: "Erro!",
-        text: `Aconteceu algum erro ao tentar desbloquear o perfil. Tente novamente.`,
-        type: "error",
-        isVisible: true,
+        user: {
+          ...user,
+
+          profiles: [
+            ...user.profiles.map((item) => {
+              if (item._id === profile._id) {
+                return { ...newProfile };
+              } else {
+                return item;
+              }
+            }),
+          ],
+        },
+
+        profile: { ...newProfile },
       },
     });
-
-    setTimeout(() => {
-      appDispatch({
-        type: "TOGGLE_TOAST",
-        data: false,
-      });
-    }, 5000);
   };
 
   const buttonActions = {
@@ -214,7 +152,7 @@ const InfoHeader = ({ info, type, setInfo }) => {
       });
 
       if (!updateCurrentUserReq) {
-        displayConnectErrorToast();
+        displayToast("connectError");
         setIsRequesting(false);
         return;
       }
@@ -243,94 +181,45 @@ const InfoHeader = ({ info, type, setInfo }) => {
       const updateProfileReq = await ProfileAPI.updateProfile({ ...newInfo });
 
       if (!updateProfileReq) {
-        displayConnectErrorToast();
+        displayToast("connectError");
         setIsRequesting(false);
         return;
       }
 
       setInfo(newInfo);
+      updateLocalUser({ ...newProfile });
 
       setIsRequesting(false);
-
-      userDispatch({
-        type: "SET_USER",
-        data: {
-          user: {
-            ...user,
-
-            profiles: [
-              ...user.profiles.map((item) => {
-                if (item._id === profile._id) {
-                  return { ...newProfile };
-                } else {
-                  return item;
-                }
-              }),
-            ],
-          },
-
-          profile: { ...newProfile },
-        },
-      });
-
-      displayConnectSuccessToast();
+      displayToast("connectSuccess");
     },
 
     removeConnection: async () => {
       setIsRequesting(true);
 
-      const newProfile = {
+      const deleteConnectionReq = await ProfileAPI.deleteConnection({
+        ids: [profile._id, info._id],
+      });
+
+      if (deleteConnectionReq?.error) {
+        displayToast("removeConnectionError");
+        setIsRequesting(false);
+      }
+
+      updateLocalUser({
         ...profile,
         connections: profile?.connections?.filter?.(
           (item) => item.user._id !== info._id
         ),
-      };
+      });
 
-      const profileReq = await ProfileAPI.updateProfile({ ...newProfile });
-
-      if (!profileReq) {
-        displayRemoveConnectionErrorToast();
-        setIsRequesting(false);
-      }
-
-      const newInfo = {
+      setInfo({
         ...info,
         connections: info?.connections?.filter?.(
           (item) => item.user._id !== profile._id
         ),
-      };
-
-      const targetReq = await ProfileAPI.updateProfile({ ...newInfo });
-
-      if (!targetReq) {
-        displayRemoveConnectionErrorToast();
-        setIsRequesting(false);
-      }
-
-      userDispatch({
-        type: "SET_USER",
-        data: {
-          user: {
-            ...user,
-
-            profiles: [
-              ...user.profiles.map((item) => {
-                if (item._id === profile._id) {
-                  return { ...newProfile };
-                } else {
-                  return item;
-                }
-              }),
-            ],
-          },
-
-          profile: { ...newProfile },
-        },
       });
 
-      setInfo(newInfo);
-
-      displayRemoveConnectionSuccessToast();
+      displayToast("removeConnectionSuccess");
       setIsRequesting(false);
     },
 
@@ -358,35 +247,15 @@ const InfoHeader = ({ info, type, setInfo }) => {
       });
 
       if (!updateCurrentUserReq) {
-        displayBlockErrorToast();
+        displayToast("blockError");
         setIsRequesting(false);
         return;
       }
 
+      updateLocalUser({ ...newProfile });
+
       setIsRequesting(false);
-
-      userDispatch({
-        type: "SET_USER",
-        data: {
-          user: {
-            ...user,
-
-            profiles: [
-              ...user.profiles.map((item) => {
-                if (item._id === profile._id) {
-                  return { ...newProfile };
-                } else {
-                  return item;
-                }
-              }),
-            ],
-          },
-
-          profile: { ...newProfile },
-        },
-      });
-
-      displayBlockSuccessToast();
+      displayToast("blockSuccess");
     },
 
     unBlockUser: async () => {
@@ -406,52 +275,53 @@ const InfoHeader = ({ info, type, setInfo }) => {
       });
 
       if (!updateCurrentUserReq) {
-        displayUnblockErrorToast();
+        displayToast("unblockError");
         setIsRequesting(false);
         return;
       }
 
+      updateLocalUser({ ...newProfile });
+
       setIsRequesting(false);
-
-      userDispatch({
-        type: "SET_USER",
-        data: {
-          user: {
-            ...user,
-
-            profiles: [
-              ...user.profiles.map((item) => {
-                if (item._id === profile._id) {
-                  return { ...newProfile };
-                } else {
-                  return item;
-                }
-              }),
-            ],
-          },
-
-          profile: { ...newProfile },
-        },
-      });
-
-      displayUnblockSuccessToast();
+      displayToast("unblockSuccess");
     },
   };
 
   const getCodition = (condition) => {
     const isSelf = profile._id === info._id;
+    const isOwner = profile._id === info.owner;
 
     const conditions = {
-      isOwner: profile._id !== info.owner,
-      isNotOwner: profile._id === info.owner,
-
-      isNotConnected:
-        isSelf ||
-        info.connections?.find?.((item) => item.user._id === profile._id),
+      isOwner: isOwner,
+      isNotOwner: !isOwner,
 
       hasAnyConnectionStatus:
         isSelf ||
-        !info.connections?.find?.((item) => item.user._id === profile._id),
+        info.connections?.find?.((item) => item.user._id === profile._id),
+
+      isNotConnected:
+        isSelf ||
+        !info.connections?.find?.(
+          (item) => item.status === "connected" && item.user._id === profile._id
+        ),
+
+      isNotPending:
+        isSelf ||
+        !info.connections?.find?.(
+          (item) => item.status === "pending" && item.user._id === profile._id
+        ),
+
+      isNotSent:
+        isSelf ||
+        !info.connections?.find?.(
+          (item) => item.status === "sent" && item.user._id === profile._id
+        ),
+
+      isNotMember:
+        isOwner || !info.members?.find?.((item) => item._id === profile._id),
+
+      isMember:
+        isOwner || info.members?.find?.((item) => item._id === profile._id),
 
       isNotBlocked:
         isSelf ||

@@ -43,51 +43,37 @@ const NotificationsTemplate = () => {
 
   const { appDispatch } = useContext(AppContext);
 
-  const displayAcceptSuccessToast = () => {
-    appDispatch({
-      type: "SET_TOAST",
-      data: {
-        title: "Sucesso!",
+  const displayToast = (toast) => {
+    const toasts = {
+      acceptConnectionSuccess: {
+        title: "Successo",
         text: `Conexão aceita!`,
         type: "success",
-        isVisible: true,
       },
-    });
 
-    setTimeout(() => {
-      appDispatch({
-        type: "TOGGLE_TOAST",
-        data: false,
-      });
-    }, 5000);
-  };
-
-  const displayAcceptErrorToast = () => {
-    appDispatch({
-      type: "SET_TOAST",
-      data: {
-        title: "Erro!",
+      acceptConnectionError: {
+        title: "Erro",
         text: `Aconteceu algum erro ao tentar aceitar a conexão. Tente novamente.`,
         type: "error",
-        isVisible: true,
       },
-    });
 
-    setTimeout(() => {
-      appDispatch({
-        type: "TOGGLE_TOAST",
-        data: false,
-      });
-    }, 5000);
-  };
-
-  const displayRefuseSuccessToast = () => {
-    appDispatch({
-      type: "SET_TOAST",
-      data: {
-        title: "Sucesso!",
+      refuseConnectionSuccess: {
+        title: "Successo",
         text: `Conexão recusada.`,
         type: "success",
+      },
+
+      refuseConnectionError: {
+        title: "Erro",
+        text: `Aconteceu algum erro ao tentar recusar a conexão. Tente novamente.`,
+        type: "error",
+      },
+    };
+
+    appDispatch({
+      type: "SET_TOAST",
+      data: {
+        ...toasts[toast],
         isVisible: true,
       },
     });
@@ -100,23 +86,27 @@ const NotificationsTemplate = () => {
     }, 5000);
   };
 
-  const displayRefuseErrorToast = () => {
-    appDispatch({
-      type: "SET_TOAST",
+  const updateLocalUser = (newProfile) => {
+    userDispatch({
+      type: "SET_USER",
       data: {
-        title: "Erro!",
-        text: `Aconteceu algum erro ao tentar recusar a conexão. Tente novamente.`,
-        type: "error",
-        isVisible: true,
+        user: {
+          ...user,
+
+          profiles: [
+            ...user.profiles.map((item) => {
+              if (item._id === profile._id) {
+                return { ...newProfile };
+              } else {
+                return item;
+              }
+            }),
+          ],
+        },
+
+        profile: { ...newProfile },
       },
     });
-
-    setTimeout(() => {
-      appDispatch({
-        type: "TOGGLE_TOAST",
-        data: false,
-      });
-    }, 5000);
   };
 
   const getPendingConnections = () => {
@@ -152,7 +142,7 @@ const NotificationsTemplate = () => {
     const profileReq = await ProfileAPI.updateProfile({ ...newProfile });
 
     if (!profileReq) {
-      displayAcceptErrorToast();
+      displayToast("acceptConnectionError");
       setIsRequesting(false);
     }
 
@@ -162,37 +152,27 @@ const NotificationsTemplate = () => {
     });
 
     if (!targetReq) {
-      displayAcceptErrorToast();
+      displayToast("acceptConnectionError");
       setIsRequesting(false);
     }
 
-    userDispatch({
-      type: "SET_USER",
-      data: {
-        user: {
-          ...user,
+    updateLocalUser({ ...newProfile });
 
-          profiles: [
-            ...user.profiles.map((item) => {
-              if (item._id === profile._id) {
-                return { ...newProfile };
-              } else {
-                return item;
-              }
-            }),
-          ],
-        },
-
-        profile: { ...newProfile },
-      },
-    });
-
-    displayAcceptSuccessToast();
+    displayToast("acceptConnectionSuccess");
     setIsRequesting(false);
   };
 
   const refuseConnection = async (target) => {
     setIsRequesting(true);
+
+    const deleteConnectionReq = await ProfileAPI.deleteConnection({
+      ids: [profile._id, target],
+    });
+
+    if (deleteConnectionReq?.error) {
+      displayToast("refuseConnectionError");
+      setIsRequesting(false);
+    }
 
     const newProfile = {
       ...profile,
@@ -201,45 +181,9 @@ const NotificationsTemplate = () => {
       ),
     };
 
-    const profileReq = await ProfileAPI.updateProfile({ ...newProfile });
+    updateLocalUser({ ...newProfile });
 
-    if (!profileReq) {
-      displayRefuseErrorToast();
-      setIsRequesting(false);
-    }
-
-    const targetReq = await ProfileAPI.deleteConnection({
-      _id: target,
-      connectionId: profile._id,
-    });
-
-    if (!targetReq) {
-      displayRefuseErrorToast();
-      setIsRequesting(false);
-    }
-
-    userDispatch({
-      type: "SET_USER",
-      data: {
-        user: {
-          ...user,
-
-          profiles: [
-            ...user.profiles.map((item) => {
-              if (item._id === profile._id) {
-                return { ...newProfile };
-              } else {
-                return item;
-              }
-            }),
-          ],
-        },
-
-        profile: { ...newProfile },
-      },
-    });
-
-    displayRefuseSuccessToast();
+    displayToast("refuseConnectionSuccess");
     setIsRequesting(false);
   };
 
