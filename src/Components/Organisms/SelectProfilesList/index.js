@@ -9,7 +9,7 @@ import { AppContext } from "Contexts/App";
 import { UserContext } from "Contexts/User";
 
 // Molecules
-import InfoArea from "Components/Molecules/InfoArea";
+import DetailedInfoArea from "Components/Molecules/DetailedInfoArea";
 
 // Style
 import * as S from "./style";
@@ -77,10 +77,11 @@ const SelectProfilesList = ({ profiles, activeProfile }) => {
                 }
               }}
             >
-              <InfoArea
+              <DetailedInfoArea
                 info={item}
                 isBox
                 highlighted={item._id === activeProfile}
+                side='left'
               />
             </li>
           );

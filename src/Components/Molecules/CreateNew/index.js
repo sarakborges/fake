@@ -26,18 +26,11 @@ const CreateNew = ({ type }) => {
       </Text>
 
       <S.Wrapper>
-        <S.CreateNew>
-          <Link
-            href={type === "profile" ? ROUTES.NEW_PROFILE : ROUTES.NEW_GROUP}
-          >
-            <a>
-              <InfoArea
-                info={{ name: `Novo ${typeStr}`, icon: faPlus }}
-                isBox
-              />
-            </a>
-          </Link>
-        </S.CreateNew>
+        <Link href={type === "profile" ? ROUTES.NEW_PROFILE : ROUTES.NEW_GROUP}>
+          <a>
+            <InfoArea info={{ name: `Novo ${typeStr}`, icon: faPlus }} isBox />
+          </a>
+        </Link>
       </S.Wrapper>
     </>
   );
