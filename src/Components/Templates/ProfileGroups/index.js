@@ -26,7 +26,7 @@ import AuthedTemplate from "Components/Templates/Authed";
 import * as S from "./style";
 
 // Template
-const ProfileConnectionsTemplate = () => {
+const ProfileGroupsTemplate = () => {
   const [profileData, setProfileData] = useState();
 
   const { userState } = useContext(UserContext);
@@ -48,13 +48,29 @@ const ProfileConnectionsTemplate = () => {
     [ProfileAPI]
   );
 
-  const getApprovedConnections = () => {
-    return profileData?.connections?.filter?.((item) => {
-      if (item.status === "connected") {
-        return item;
-      } else {
-        return false;
-      }
+  const getOwnedGroups = () => {
+    if (profileData?.groups?.length < 1) {
+      return [];
+    }
+
+    return profileData?.groups?.filter((item) => {
+      return (
+        item.owner === profileData._id ||
+        item.moderators.includes(profileData._id)
+      );
+    });
+  };
+
+  const getNonOwnedGroups = () => {
+    if (profileData?.groups?.length < 1) {
+      return [];
+    }
+
+    return profileData?.groups?.filter((item) => {
+      return (
+        item.owner !== profileData._id &&
+        !item.moderators.includes(profileData._id)
+      );
     });
   };
 
@@ -65,8 +81,8 @@ const ProfileConnectionsTemplate = () => {
   return (
     <AuthedTemplate>
       <Head>
-        <title>{`${SITE_NAME} - Conexões de ${
-          profileData?.name || "Conexões"
+        <title>{`${SITE_NAME} - Grupos de ${
+          profileData?.name || "Grupos"
         }`}</title>
       </Head>
 
@@ -82,30 +98,30 @@ const ProfileConnectionsTemplate = () => {
 
             <S.ProfileBody>
               <FilteredList
-                info={getApprovedConnections().map((item) => item.user)}
-                id='profile-connections-filter'
-                placeholder='Digite o nome ou @ de quem quer encontrar'
-                type='profile'
-                title={
-                  profile?._id === profileData._id
-                    ? "Suas conexões:"
-                    : `Conexões de ${profileData.name}:`
-                }
+                info={getNonOwnedGroups()}
+                id='non-owned-groups-filter'
+                type='group'
+                placeholder='Digite o nome ou @ do grupo que quer encontrar'
+                title={`Grupos que ${
+                  profile?._id === profileData._id ? "você" : profileData.name
+                } participa:`}
                 noInfoText={`${
                   profile?._id === profileData._id ? "Você" : profileData.name
-                } ainda não possui nenhuma conexão.`}
+                } ainda não participa de nenhum grupo.`}
               />
 
-              {profile?._id === profileData._id && (
-                <FilteredList
-                  info={profileData?.blockedUsers}
-                  id='profile-banned-filter'
-                  placeholder='Digite o nome ou @ de quem quer encontrar'
-                  type='profile'
-                  title='Perfis bloqueados por você:'
-                  noInfoText='Você ainda não bloqueou nenhum perfil.'
-                />
-              )}
+              <FilteredList
+                info={getOwnedGroups()}
+                id='non-groups-filter'
+                type='group'
+                placeholder='Digite o nome ou @ do grupo que quer encontrar'
+                title={`Grupos que ${
+                  profile?._id === profileData._id ? "você" : profileData.name
+                } administra:`}
+                noInfoText={`${
+                  profile?._id === profileData._id ? "Você" : profileData.name
+                } ainda não administra de nenhum grupo.`}
+              />
             </S.ProfileBody>
           </S.ProfileWrapper>
         )}
@@ -113,4 +129,4 @@ const ProfileConnectionsTemplate = () => {
   );
 };
 
-export default ProfileConnectionsTemplate;
+export default ProfileGroupsTemplate;

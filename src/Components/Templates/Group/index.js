@@ -57,7 +57,7 @@ const GroupTemplate = () => {
 
       {group && (
         <S.GroupWrapper>
-          <InfoHeader info={group} type='group' />
+          <InfoHeader info={group} type='group' setInfo={setGroup} />
 
           <S.GroupBody>
             <InfoAbout>

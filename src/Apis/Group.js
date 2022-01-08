@@ -36,4 +36,16 @@ const createGroup = (data) => {
     .catch((err) => err);
 };
 
-export default { getGroupById, getGroupByUrl, createGroup };
+const updateGroup = (data) => {
+  if (!data) {
+    console.log("updateGroup requires data param");
+    return;
+  }
+
+  return axios
+    .put(`${process.env.NEXT_PUBLIC_REQUEST_URI}/group`, { ...data })
+    .then((res) => res.data)
+    .catch((err) => err);
+};
+
+export default { getGroupById, getGroupByUrl, createGroup, updateGroup };

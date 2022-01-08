@@ -314,7 +314,7 @@ const SettingsProfile = () => {
               />
             </S.Row2Items>
 
-            <S.Row3Items>
+            <S.Row2Items>
               <LabeledInput
                 id='name'
                 placeholder='Insira o nome a ser exibido'
@@ -330,15 +330,15 @@ const SettingsProfile = () => {
                 value={form.url.value}
                 onChange={handleChange}
               />
+            </S.Row2Items>
 
-              <LabeledInput
-                id='link'
-                placeholder='Insira um link para ser exibido'
-                label='Link'
-                value={form.link.value}
-                onChange={handleChange}
-              />
-            </S.Row3Items>
+            <LabeledInput
+              id='link'
+              placeholder='Insira um link para ser exibido'
+              label='Link'
+              value={form.link.value}
+              onChange={handleChange}
+            />
 
             <LabeledTextarea
               id='about'

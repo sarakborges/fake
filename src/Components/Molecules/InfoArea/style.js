@@ -2,8 +2,16 @@ import styled from "styled-components";
 
 export const InfoArea = styled.span`
   display: flex;
+  flex-flow: ${({ side }) => (side === "left" ? "row" : "row-reverse")};
   place-items: center;
-  gap: 16px;
+  gap: ${({ infoGap }) => (infoGap ? `${infoGap}px` : "16px")};
+`;
+
+export const TextWrapper = styled.span`
+  display: block;
+
+  max-width: calc(100% - 64px);
+  flex: 1;
 `;
 
 export const Text = styled.span`
@@ -11,8 +19,7 @@ export const Text = styled.span`
   place-content: center;
   flex-flow: column;
 
-  max-width: calc(100% - 64px);
-  height: 64px;
+  width: 100%;
   flex: 1;
 `;
 
@@ -40,11 +47,57 @@ export const Url = styled.span`
   white-space: nowrap;
 `;
 
+export const CounterList = styled.span`
+  display: flex;
+  gap: 24px;
+
+  width: 100%;
+  flex: 1;
+`;
+
+export const Counter = styled.span`
+  display: flex;
+  place-items: center;
+  gap: 8px;
+
+  line-height: 32px;
+  font-size: 16px;
+  color: var(--bgInverted);
+`;
+
+export const CounterIcon = styled.span`
+  display: flex;
+  place-content: center;
+  place-items: center;
+
+  width: 20px;
+  height: 20px;
+
+  font-size: 12px;
+  color: var(--white);
+
+  background-color: var(--main);
+  border-radius: 100%;
+`;
+
+export const Link = styled.span`
+  display: flex;
+  place-items: center;
+  place-content: center;
+
+  width: 32px;
+
+  color: var(--main);
+
+  border-radius: 12px;
+  transition: background-color 0.3s;
+`;
+
 export const InfoAreaBox = styled.div`
   padding: 16px;
 
   background-color: var(--bg);
-  border-radius: 16px;
+  border-radius: ${({ squaredBox }) => (squaredBox ? "none" : "16px")};
   box-shadow: ${({ highlighted }) =>
     highlighted ? "0 0 5px -1px var(--main)" : "0 0 3px 3px var(--bg);"};
   cursor: ${({ highlighted }) => (highlighted ? "default" : "pointer")};

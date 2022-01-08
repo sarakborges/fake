@@ -36,6 +36,10 @@ export const FeedItem = styled.li`
 export const FeedItemHeader = styled.div`
   display: flex;
   place-content: space-between;
+
+  > div {
+    flex: 1;
+  }
 `;
 
 export const FeedItemTime = styled.p`

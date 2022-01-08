@@ -6,6 +6,7 @@ import Link from "next/link";
 
 // APIs
 import ProfileAPI from "Apis/Profile";
+import GroupAPI from "Apis/Group";
 
 // Helpers
 import { GROUP_ACTIONS } from "Helpers/Constants";
@@ -284,6 +285,68 @@ const InfoHeader = ({ info, type, setInfo }) => {
 
       setIsRequesting(false);
       displayToast("unblockSuccess");
+    },
+
+    enterGroup: async () => {
+      setIsRequesting(true);
+
+      const newGroupData = {
+        _id: info._id,
+        name: info.name,
+        url: info.url,
+        avatar: info.avatar,
+        owner: info.owner,
+        moderators: info.moderators,
+      };
+
+      const newProfile = {
+        ...profile,
+
+        groups:
+          profile?.groups?.length > 0
+            ? [...profile.groups, { ...newGroupData }]
+            : [{ ...newGroupData }],
+      };
+
+      const updateCurrentUserReq = await ProfileAPI.updateProfile({
+        ...newProfile,
+      });
+
+      if (!updateCurrentUserReq) {
+        displayToast("enterGroupError");
+        setIsRequesting(false);
+        return;
+      }
+
+      const newGroupInfo = {
+        ...info,
+        members: [
+          ...info?.members,
+
+          {
+            _id: profile._id,
+            avatar: profile.avatar,
+            name: profile.name,
+            url: profile.url,
+          },
+        ],
+      };
+
+      const updateGroupReq = await GroupAPI.updateGroup({
+        ...newGroupInfo,
+      });
+
+      if (!updateGroupReq) {
+        displayToast("enterGroupError");
+        setIsRequesting(false);
+        return;
+      }
+
+      updateLocalUser({ ...newProfile });
+      setInfo({ ...newGroupInfo });
+
+      setIsRequesting(false);
+      displayToast("enterGroupSuccess");
     },
   };
 

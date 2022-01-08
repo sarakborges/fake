@@ -121,13 +121,7 @@ const MenuList = () => {
                     )}
 
                     {subItem.link && (
-                      <a
-                        href={
-                          subItem.link === ROUTES.PROFILE
-                            ? subItem.link.replace(":id", profile?.url)
-                            : subItem.link
-                        }
-                      >
+                      <a href={subItem.link.replace(":id", profile?.url)}>
                         <S.MenuItemIcon>
                           <FontAwesomeIcon icon={subItem.icon} />
                         </S.MenuItemIcon>

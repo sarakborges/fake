@@ -6,6 +6,7 @@ import {
   faUserAltSlash,
   faUnlockAlt,
   faLock,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { ROUTES } from "Helpers/routes";
@@ -25,6 +26,14 @@ export const PROFILE_ACTIONS = [
     title: "Conexões",
     icon: faUserFriends,
     to: ROUTES.PROFILE_CONNECTIONS,
+  },
+
+  {
+    id: "groups",
+    type: "link",
+    title: "Grupos",
+    icon: faUsers,
+    to: ROUTES.PROFILE_GROUPS,
   },
 
   {

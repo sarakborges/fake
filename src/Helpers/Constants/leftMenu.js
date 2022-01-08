@@ -9,6 +9,7 @@ import {
   faUserFriends,
   faSignOutAlt,
   faExclamation,
+  faPlusCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { ROUTES } from "Helpers/routes";
@@ -27,10 +28,23 @@ export const LEFT_MENU = [
       text: "Perfil",
       link: ROUTES.PROFILE,
       needsProfile: true,
-      activeOnRoutes: [
-        ROUTES.PROFILE.replace(":id", "[url]"),
-        ROUTES.PROFILE_CONNECTIONS.replace(":id", "[url]"),
-      ],
+      activeOnRoutes: [ROUTES.PROFILE.replace(":id", "[url]")],
+    },
+
+    {
+      icon: faUserFriends,
+      text: "Conexões",
+      link: ROUTES.PROFILE_CONNECTIONS,
+      needsProfile: true,
+      activeOnRoutes: [ROUTES.PROFILE_CONNECTIONS.replace(":id", "[url]")],
+    },
+
+    {
+      icon: faUsers,
+      text: "Grupos",
+      link: ROUTES.PROFILE_GROUPS,
+      needsProfile: true,
+      activeOnRoutes: [ROUTES.PROFILE_GROUPS.replace(":id", "[url]")],
     },
 
     {
@@ -48,34 +62,14 @@ export const LEFT_MENU = [
       needsProfile: true,
       activeOnRoutes: [ROUTES.NOTIFICATIONS],
     },
-
-    {
-      icon: faUserFriends,
-      text: "Conexões",
-      link: ROUTES.CONNECTIONS,
-      needsProfile: true,
-      activeOnRoutes: [ROUTES.CONNECTIONS],
-    },
-
-    {
-      icon: faUsers,
-      text: "Grupos",
-      link: ROUTES.GROUPS,
-      needsProfile: true,
-      activeOnRoutes: [
-        ROUTES.GROUPS,
-        ROUTES.GROUP.replace(":id", "[url]"),
-        ROUTES.NEW_GROUP,
-      ],
-    },
   ],
 
   [
     {
-      icon: faIdCard,
-      text: "Escolher perfil",
-      link: ROUTES.SELECT_PROFILE,
-      activeOnRoutes: [ROUTES.SELECT_PROFILE, ROUTES.NEW_PROFILE],
+      icon: faPlusCircle,
+      text: "Criar grupo",
+      link: ROUTES.NEW_GROUP,
+      activeOnRoutes: [ROUTES.NEW_GROUP],
     },
 
     {

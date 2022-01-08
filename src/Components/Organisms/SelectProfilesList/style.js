@@ -1,7 +1,15 @@
 import styled from "styled-components";
 
 export const ProfilesList = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+  width: 100%;
+  max-height: calc(112px * 3);
+  overflow: hidden;
+  overflow-y: auto;
+
+  border: 0 solid var(--bgContrast);
+  border-width: 4px 0;
+
+  & > li {
+    width: 100%;
+  }
 `;

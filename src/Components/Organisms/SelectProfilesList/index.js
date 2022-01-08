@@ -1,66 +1,78 @@
 // Dependencies
 import { useContext } from "react";
 
-// APIs
-import ProfileAPI from "Apis/Profile";
-
 // Contexts
 import { AppContext } from "Contexts/App";
 import { UserContext } from "Contexts/User";
 
 // Molecules
-import DetailedInfoArea from "Components/Molecules/DetailedInfoArea";
+import InfoArea from "Components/Molecules/InfoArea";
 
 // Style
 import * as S from "./style";
 
 // Template
-const SelectProfilesList = ({ profiles, activeProfile }) => {
+const SelectProfilesList = ({ profiles }) => {
   const { userDispatch } = useContext(UserContext);
   const { appDispatch } = useContext(AppContext);
 
+  const getPendingConnections = (profile) => {
+    return (
+      profile?.connections
+        ?.filter?.((item) => {
+          if (item.status === "pending") {
+            return item;
+          } else {
+            return false;
+          }
+        })
+        .map((item) => {
+          return { connectionRequest: { ...item } };
+        }) || []
+    ).length;
+  };
+
+  const displayToast = (toast) => {
+    const toasts = {
+      selectProfileSuccess: {
+        title: "Sucesso!",
+        text: `Perfil selecionado com sucesso.`,
+        type: "success",
+      },
+
+      selectProfileError: {
+        title: "Erro!",
+        text: "Aconteceu algum erro ao trocar de perfil. Tente novamente.",
+        type: "error",
+      },
+    };
+
+    appDispatch({
+      type: "SET_TOAST",
+      data: {
+        ...toasts[toast],
+        isVisible: true,
+      },
+    });
+
+    setTimeout(() => {
+      appDispatch({
+        type: "TOGGLE_TOAST",
+        data: false,
+      });
+    }, 5000);
+  };
+
   const handleProfileChange = async (newProfile) => {
     try {
-      const profileData = await ProfileAPI.getProfileById(newProfile._id);
-
       userDispatch({
         type: "SET_ACTIVE_PROFILE",
-        data: { ...profileData },
+        data: { ...newProfile },
       });
 
-      appDispatch({
-        type: "SET_TOAST",
-        data: {
-          title: "Sucesso!",
-          text: `Perfil "${newProfile.name}" selecionado com sucesso.`,
-          type: "success",
-          isVisible: true,
-        },
-      });
-
-      setTimeout(() => {
-        appDispatch({
-          type: "TOGGLE_TOAST",
-          data: false,
-        });
-      }, 5000);
+      displayToast("selectProfileSuccess");
     } catch (e) {
-      appDispatch({
-        type: "SET_TOAST",
-        data: {
-          title: "Erro!",
-          text: "Aconteceu algum erro ao trocar de perfil. Tente novamente.",
-          type: "error",
-          isVisible: true,
-        },
-      });
-
-      setTimeout(() => {
-        appDispatch({
-          type: "TOGGLE_TOAST",
-          data: false,
-        });
-      }, 5000);
+      displayToast("selectProfileError");
     }
   };
 
@@ -72,16 +84,19 @@ const SelectProfilesList = ({ profiles, activeProfile }) => {
             <li
               key={item.url}
               onClick={() => {
-                if (handleProfileChange && item._id !== activeProfile) {
-                  handleProfileChange(item);
-                }
+                handleProfileChange(item);
               }}
             >
-              <DetailedInfoArea
+              <InfoArea
                 info={item}
-                isBox
-                highlighted={item._id === activeProfile}
+                infoGap={24}
+                avatarSize={64}
+                messages={0}
+                notifications={getPendingConnections()}
                 side='left'
+                displayCounters
+                isBox
+                squaredBox
               />
             </li>
           );

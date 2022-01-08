@@ -40,6 +40,7 @@ export const GROUP_ACTIONS = [
     title: "Entrar no grupo",
     icon: faSignInAlt,
     hideCondition: "isMember",
+    action: "enterGroup",
   },
 
   {

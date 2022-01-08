@@ -1,5 +1,6 @@
 // Dependencies
-import { faQuestion } from "@fortawesome/free-solid-svg-icons";
+import { faLink, faQuestion } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Atoms
 import Avatar from "Components/Atoms/Avatar";
@@ -9,36 +10,63 @@ import RoundIcon from "Components/Atoms/RoundIcon";
 import * as S from "./style";
 
 // Template
-const InfoArea = ({ info, side, isBox, highlighted }) => {
-  const AvatarWrapper = () => {
-    return (
-      <>
-        {info?.icon || !info?.avatar ? (
-          <RoundIcon icon={info?.icon || faQuestion} size={48} bgColor='main' />
-        ) : (
-          <Avatar img={info?.avatar} size={48} bgColor='main' />
-        )}
-      </>
-    );
-  };
-
+const InfoArea = ({
+  info,
+  side,
+  isBox,
+  hasLink,
+  avatarSize,
+  infoGap,
+  displayCounters,
+  notifications,
+  messages,
+  squaredBox,
+}) => {
   const Content = () => {
     return (
-      <S.InfoArea>
-        {side === "left" && <AvatarWrapper />}
+      <S.InfoArea side={side} infoGap={infoGap}>
+        {info?.icon || !info?.avatar ? (
+          <RoundIcon
+            icon={info?.icon || faQuestion}
+            size={avatarSize || 48}
+            bgColor='main'
+          />
+        ) : (
+          <Avatar img={info?.avatar} size={avatarSize || 48} bgColor='main' />
+        )}
 
-        <S.Text>
-          <S.Name>{info?.name || "Não encontrado"}</S.Name>
-          <S.Url>{info?.url ? `@${info?.url}` : ""}</S.Url>
-        </S.Text>
+        <S.TextWrapper>
+          <S.Text>
+            <S.Name>{info?.name || "Não encontrado"}</S.Name>
+            <S.Url>{info?.url ? `@${info?.url}` : ""}</S.Url>
+          </S.Text>
 
-        {(!side || side === "right") && <AvatarWrapper />}
+          {displayCounters && (
+            <S.CounterList>
+              <S.Counter>
+                <S.CounterIcon>{notifications}</S.CounterIcon>
+                <>{notifications === 1 ? "Notificação" : "Notificações"}</>
+              </S.Counter>
+
+              <S.Counter>
+                <S.CounterIcon>{messages}</S.CounterIcon>
+                <>{messages === 1 ? "Mensagem" : "Mensagens"}</>
+              </S.Counter>
+            </S.CounterList>
+          )}
+        </S.TextWrapper>
+
+        {hasLink && (
+          <S.Link>
+            <FontAwesomeIcon icon={faLink} />
+          </S.Link>
+        )}
       </S.InfoArea>
     );
   };
 
   return isBox ? (
-    <S.InfoAreaBox highlighted={highlighted}>
+    <S.InfoAreaBox squaredBox={squaredBox}>
       <Content />
     </S.InfoAreaBox>
   ) : (
