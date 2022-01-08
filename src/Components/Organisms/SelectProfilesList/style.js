@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ProfilesList = styled.ul`
   width: 100%;
-  max-height: calc(112px * 3);
+  max-height: calc(128px * 3);
   overflow: hidden;
   overflow-y: auto;
 

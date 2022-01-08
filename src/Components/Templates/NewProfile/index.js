@@ -180,7 +180,7 @@ const NewProfileTemplate = () => {
             : [{ ...newProfileData }],
       });
 
-      router.push(ROUTES.SELECT_PROFILE);
+      router.push(ROUTES.HOME);
 
       displaySuccessToast();
 
