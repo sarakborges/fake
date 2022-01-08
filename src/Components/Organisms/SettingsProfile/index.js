@@ -193,7 +193,7 @@ const SettingsProfile = () => {
 
     displayDeleteSuccessToast();
 
-    router.push(ROUTES.SELECT_PROFILE);
+    router.push(ROUTES.HOME);
 
     userDispatch({
       type: "SET_PROFILE",

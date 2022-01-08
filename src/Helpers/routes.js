@@ -16,7 +16,6 @@ export const ROUTES = {
 
   PROFILE_CONNECTIONS: "/profile/:id/connections",
   PROFILE_GROUPS: "/profile/:id/groups",
-  SELECT_PROFILE: "/select-profile",
 
   GROUP_MEMBERS: {
     OWNER: "/group/:id/members/owner",
