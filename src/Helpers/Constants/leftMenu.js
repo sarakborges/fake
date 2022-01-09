@@ -4,12 +4,11 @@ import {
   faUsers,
   faBell,
   faCog,
-  faIdCard,
   faUser,
   faUserFriends,
   faSignOutAlt,
-  faExclamation,
   faPlusCircle,
+  faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { ROUTES } from "Helpers/routes";
@@ -44,7 +43,14 @@ export const LEFT_MENU = [
       text: "Grupos",
       link: ROUTES.PROFILE_GROUPS,
       needsProfile: true,
-      activeOnRoutes: [ROUTES.PROFILE_GROUPS.replace(":id", "[url]")],
+      activeOnRoutes: [
+        ROUTES.GROUP.replace(":id", "[url]"),
+        ROUTES.PROFILE_GROUPS.replace(":id", "[url]"),
+        ROUTES.GROUP_MEMBERS.ALL.replace(":id", "[url]"),
+        ROUTES.GROUP_MEMBERS.MEMBERS.replace(":id", "[url]"),
+        ROUTES.GROUP_MEMBERS.MODERATORS.replace(":id", "[url]"),
+        ROUTES.GROUP_MEMBERS.OWNER.replace(":id", "[url]"),
+      ],
     },
 
     {
@@ -66,6 +72,13 @@ export const LEFT_MENU = [
 
   [
     {
+      icon: faInfoCircle,
+      text: "Sobre",
+      link: ROUTES.ABOUT,
+      activeOnRoutes: [],
+    },
+
+    {
       icon: faPlusCircle,
       text: "Criar grupo",
       link: ROUTES.NEW_GROUP,
@@ -81,13 +94,6 @@ export const LEFT_MENU = [
         ROUTES.SETTINGS.PROFILE,
         ROUTES.SETTINGS.SITE,
       ],
-    },
-
-    {
-      icon: faExclamation,
-      text: "Sobre",
-      link: ROUTES.ABOUT,
-      activeOnRoutes: [],
     },
 
     {
