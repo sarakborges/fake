@@ -52,7 +52,7 @@ const AboutTemplate = () => {
           <Text>
             Aqui, os usuários poderão interagir através da criação de ilimitados
             perfis em sua conta. Dessa forma, por exemplo: se você tem seu
-            perfil pessoa, e deseja criar um perfil para sua marca, não terá
+            perfil pessoal, e deseja criar um perfil para sua marca, não terá
             necessidade de criar duas contas. Apenas dois prefis.
           </Text>
 
