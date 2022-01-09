@@ -5,7 +5,7 @@ export const AboutWrapper = styled.div`
   flex-flow: column;
   place-content: center;
   place-items: center;
-  gap: 16px;
+  gap: 48px;
 
   min-height: 100vh;
   padding: 32px;
@@ -19,7 +19,6 @@ export const About = styled.div`
   width: 960px;
   max-width: 100%;
   padding: 32px;
-  margin-top: 32px;
 
   background-color: var(--bgContrast);
   border-radius: 16px;
