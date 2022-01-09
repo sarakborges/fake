@@ -67,7 +67,7 @@ const AboutTemplate = () => {
           <Text type='title'>Período de testes</Text>
 
           <Text>
-            Durante o de testes, onde coisas estranhas poderão ocorrer.
+            Durante o período de testes, onde coisas estranhas poderão ocorrer.
           </Text>
 
           <Text>
