@@ -85,7 +85,7 @@ export const LEFT_MENU = [
 
     {
       icon: faExclamation,
-      text: "Aviso sobre BETA",
+      text: "Sobre",
       link: ROUTES.ABOUT,
       activeOnRoutes: [],
     },
