@@ -67,7 +67,7 @@ const AboutTemplate = () => {
           <Text type='title'>Período de testes</Text>
 
           <Text>
-            Durante o período de testes, onde coisas estranhas poderão ocorrer.
+            Durante o período de testes, coisas estranhas poderão ocorrer.
           </Text>
 
           <Text>
@@ -98,9 +98,9 @@ const AboutTemplate = () => {
 
           <Text>
             Eu sou uma desenvolvedora front-end, sem muito conhecimento em UI,
-            UX, ou back-end. Logo, o back-end (nem o banco de dados) não está
-            otimizado; e a interface está sendo desenvolvida de acordo com o que
-            eu entendo ser melhor, sem conhecimento técnico.
+            UX, ou back-end. Logo, o back-end não está otimizado (nem o banco de
+            dados), e a interface está sendo desenvolvida de acordo com o que eu
+            entendo ser melhor, sem conhecimento técnico.
           </Text>
 
           <Text>
