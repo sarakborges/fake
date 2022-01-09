@@ -4,11 +4,12 @@ export const Textarea = styled.textarea`
   width: 100%;
   height: ${({ size }) => (size ? `${size}px` : `320px`)};
   padding: 16px;
+  resize: none;
 
   border: 1px solid var(--bgInverted);
-  border-bottom-color: var(--bgInverted);
-  background-color: var(--bg);
-  resize: none;
+  border-radius: 8px;
+  background-color: ${({ isBgContrast }) =>
+    !isBgContrast ? "var(--bg)" : "var(--bgContrast)"};
 
   font-size: 16px;
   font-family: inherit;

@@ -15,6 +15,8 @@ export const UserReducer = (state, { type, data }) => {
         profile: { ...data },
       };
 
+      console.log(newData);
+
       localStorage.setItem("user", JSON.stringify(newData));
 
       return newData;

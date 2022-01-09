@@ -21,7 +21,7 @@ const InfoList = ({ info, type }) => {
                   href={ROUTES[type.toUpperCase()].replace(":id", item?.url)}
                 >
                   <a>
-                    <InfoArea info={item} isBox />
+                    <InfoArea info={item} isBox isBgContrast side='left' />
                   </a>
                 </Link>
               ) : (

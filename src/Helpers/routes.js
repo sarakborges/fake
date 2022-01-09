@@ -18,9 +18,10 @@ export const ROUTES = {
   PROFILE_GROUPS: "/profile/:id/groups",
 
   GROUP_MEMBERS: {
+    ALL: "/group/:id/members/all",
     OWNER: "/group/:id/members/owner",
     MODERATORS: "/group/:id/members/moderators",
-    MEMBERS: "/group/:id/members",
+    MEMBERS: "/group/:id/members/members",
   },
 
   SETTINGS: {

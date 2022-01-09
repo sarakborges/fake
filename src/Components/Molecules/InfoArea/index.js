@@ -13,14 +13,15 @@ import * as S from "./style";
 const InfoArea = ({
   info,
   side,
-  isBox,
   hasLink,
-  avatarSize,
-  infoGap,
   displayCounters,
   notifications,
   messages,
+  isBox,
+  avatarSize,
+  infoGap,
   squaredBox,
+  isBgContrast,
 }) => {
   const Content = () => {
     return (
@@ -66,7 +67,7 @@ const InfoArea = ({
   };
 
   return isBox ? (
-    <S.InfoAreaBox squaredBox={squaredBox}>
+    <S.InfoAreaBox squaredBox={squaredBox} isBgContrast={isBgContrast}>
       <Content />
     </S.InfoAreaBox>
   ) : (

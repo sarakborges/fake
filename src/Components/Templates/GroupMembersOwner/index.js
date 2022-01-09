@@ -7,8 +7,10 @@ import { useRouter } from "next/dist/client/router";
 import GroupAPI from "Apis/Group";
 
 // Helpers
-import { ROUTES } from "Helpers/routes";
-import { SITE_NAME } from "Helpers/Constants";
+import { SITE_NAME, GROUP_MEMBERS_TABS } from "Helpers/Constants";
+
+// Atoms
+import Text from "Components/Atoms/Text";
 
 // Molecules
 import Tabs from "Components/Molecules/Tabs";
@@ -36,23 +38,6 @@ const GroupMembersOwnerTemplate = () => {
     return group?.members.filter((item) => group.owner === item._id);
   };
 
-  const tabs = [
-    {
-      link: ROUTES.GROUP_MEMBERS.MEMBERS.replace(":id", group?.url),
-      text: "Membros",
-    },
-
-    {
-      link: ROUTES.GROUP_MEMBERS.MODERATORS.replace(":id", group?.url),
-      text: "Moderadores",
-    },
-
-    {
-      link: ROUTES.GROUP_MEMBERS.OWNER.replace(":id", group?.url),
-      text: "Dono",
-    },
-  ];
-
   const getGroup = useCallback(
     async (groupUrl) => {
       const groupData = await GroupAPI.getGroupByUrl(groupUrl);
@@ -76,12 +61,20 @@ const GroupMembersOwnerTemplate = () => {
 
       {group && (
         <S.Wrapper>
-          <InfoHeader info={group} type='group' />
+          <InfoHeader info={group} type='group' setInfo={setGroup} />
 
           <S.GroupBody>
-            <Tabs tabs={tabs} />
+            <Tabs
+              tabs={GROUP_MEMBERS_TABS.map((item) => {
+                return { ...item, link: item.link.replace(":id", group.url) };
+              })}
+            />
 
             <S.List>
+              <Text type='title' pb={16}>
+                Dono de {group.name}
+              </Text>
+
               <InfoList type='profile' info={getOwner()} />
             </S.List>
           </S.GroupBody>

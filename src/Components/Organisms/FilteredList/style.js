@@ -1,8 +1,13 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
+  padding: 24px;
+
+  background-color: var(--bg);
+  border-radius: 16px;
+
   &:not(:last-child) {
-    padding-bottom: 96px;
+    margin-bottom: 48px;
   }
 `;
 

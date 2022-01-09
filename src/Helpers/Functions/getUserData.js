@@ -14,7 +14,9 @@ export const getUserData = async () => {
     if (!userReq?._id) {
       return false;
     } else {
-      userData = { ...localUserData, ...userReq };
+      userData = { ...userReq, profile: { ...localUserData.profile } };
+
+      console.log({ localUserData, userReq });
     }
   } else {
     return false;

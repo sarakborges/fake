@@ -5,13 +5,16 @@ export const Wrapper = styled.div`
 `;
 
 export const GroupBody = styled.div`
+  display: flex;
+  flex-flow: column;
+  gap: 48px;
+
   padding: 0 32px;
 `;
 
 export const List = styled.div`
-  padding: 32px 0;
-`;
+  padding: 24px;
 
-export const Filter = styled.div`
-  padding-bottom: 32px;
+  background-color: var(--bg);
+  border-radius: 16px;
 `;

@@ -12,7 +12,7 @@ const LabeledInput = ({
   label,
   value,
   onChange,
-  isBgInverted,
+  isBgContrast,
 }) => {
   return (
     <S.Wrapper>
@@ -21,7 +21,7 @@ const LabeledInput = ({
         type={type || "text"}
         placeholder={placeholder}
         value={value}
-        isBgInverted={isBgInverted}
+        isBgContrast={isBgContrast}
         onChange={onChange}
       />
 

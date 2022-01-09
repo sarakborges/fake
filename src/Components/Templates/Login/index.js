@@ -163,7 +163,6 @@ const LoginTemplate = () => {
               placeholder='Digite seu email aqui'
               value={form.email.value}
               onChange={handleChange}
-              isBgInverted
             />
 
             <LabeledInput
@@ -173,7 +172,6 @@ const LoginTemplate = () => {
               placeholder='Digite sua senha aqui'
               value={form.password.value}
               onChange={handleChange}
-              isBgInverted
             />
 
             <Button

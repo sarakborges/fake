@@ -51,7 +51,9 @@ const AuthedTemplate = ({ children }) => {
   const setAppData = useCallback(async () => {
     appDispatch({
       type: "SET_THEME",
-      data: { ...getAppData({ ...appState }) },
+      data: {
+        ...getAppData(appState.theme.slug),
+      },
     });
   }, [appDispatch]);
 

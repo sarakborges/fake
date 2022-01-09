@@ -96,16 +96,17 @@ export const Link = styled.span`
 export const InfoAreaBox = styled.div`
   padding: 16px;
 
-  background-color: var(--bg);
+  background-color: ${({ isBgContrast }) =>
+    isBgContrast ? "var(--bgContrast)" : "var(--bg)"};
   border-radius: ${({ squaredBox }) => (squaredBox ? "none" : "16px")};
-  box-shadow: ${({ highlighted }) =>
-    highlighted ? "0 0 5px -1px var(--main)" : "0 0 3px 3px var(--bg);"};
-  cursor: ${({ highlighted }) => (highlighted ? "default" : "pointer")};
+  cursor: pointer;
 
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, box-shadow 0.3s;
 
   &:hover {
-    background-color: ${({ highlighted }) =>
-      !highlighted ? "var(--bgContrast)" : "var(--bg)"};
+    background-color: var(--bgContrast);
+
+    box-shadow: ${({ isBgContrast }) =>
+      isBgContrast ? "0 0 5px var(--main)" : "none"};
   }
 `;

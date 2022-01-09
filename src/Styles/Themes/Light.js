@@ -1,13 +1,13 @@
 export default {
   slug: "light",
-  thumb: "#e6deff",
+  thumb: "#e3def2",
 
   colors: {
     main: "#6447bd",
 
-    bg: "#ddd3fd",
-    bgContrast: "#e6deff",
+    bg: "#e3def2",
+    bgContrast: "#f0edf7",
 
-    bgInverted: "#16141c",
+    bgInverted: "#222",
   },
 };

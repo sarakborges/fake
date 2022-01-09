@@ -2,7 +2,7 @@
 import * as S from "./style";
 
 // Template
-const Input = ({ id, type, placeholder, value, onChange, isBgInverted }) => {
+const Input = ({ id, type, placeholder, value, onChange, isBgContrast }) => {
   return (
     <S.Input
       id={id}
@@ -10,7 +10,7 @@ const Input = ({ id, type, placeholder, value, onChange, isBgInverted }) => {
       type={type || "text"}
       placeholder={placeholder}
       value={value}
-      isBgInverted={isBgInverted}
+      isBgContrast={isBgContrast}
       onChange={onChange}
     />
   );

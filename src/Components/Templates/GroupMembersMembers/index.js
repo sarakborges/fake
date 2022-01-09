@@ -7,19 +7,14 @@ import { useRouter } from "next/dist/client/router";
 import GroupAPI from "Apis/Group";
 
 // Helpers
-import { ROUTES } from "Helpers/routes";
-import { SITE_NAME } from "Helpers/Constants";
-
-// Atoms
-import Input from "Components/Atoms/Input";
-import Text from "Components/Atoms/Text";
+import { SITE_NAME, GROUP_MEMBERS_TABS } from "Helpers/Constants";
 
 // Molecules
 import Tabs from "Components/Molecules/Tabs";
 
 // Organisms
 import InfoHeader from "Components/Organisms/InfoHeader";
-import InfoList from "Components/Organisms/InfoList";
+import FilteredList from "Components/Organisms/FilteredList";
 
 // Template
 import AuthedTemplate from "Components/Templates/Authed";
@@ -36,8 +31,6 @@ const GroupMembersMembersTemplate = () => {
     query: { url },
   } = router;
 
-  const [filter, setFilter] = useState("");
-
   const getMembers = () => {
     if (group?.members?.length < 0) {
       return [];
@@ -47,39 +40,6 @@ const GroupMembersMembersTemplate = () => {
       (item) => group.owner !== item._id && !group.moderators.includes(item._id)
     );
   };
-
-  const getFilteredMembers = () => {
-    if (!filter) {
-      return getMembers();
-    }
-
-    return getMembers().filter(
-      (item) =>
-        item.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()) ||
-        `@${item.url}`.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
-    );
-  };
-
-  const handleFilterChange = (e) => {
-    setFilter(e.currentTarget.value);
-  };
-
-  const tabs = [
-    {
-      link: ROUTES.GROUP_MEMBERS.MEMBERS.replace(":id", group?.url),
-      text: "Membros",
-    },
-
-    {
-      link: ROUTES.GROUP_MEMBERS.MODERATORS.replace(":id", group?.url),
-      text: "Moderadores",
-    },
-
-    {
-      link: ROUTES.GROUP_MEMBERS.OWNER.replace(":id", group?.url),
-      text: "Dono",
-    },
-  ];
 
   const getGroup = useCallback(
     async (groupUrl) => {
@@ -104,32 +64,23 @@ const GroupMembersMembersTemplate = () => {
 
       {group && (
         <S.Wrapper>
-          <InfoHeader info={group} type='group' />
+          <InfoHeader info={group} type='group' setInfo={setGroup} />
 
           <S.GroupBody>
-            <Tabs tabs={tabs} />
+            <Tabs
+              tabs={GROUP_MEMBERS_TABS.map((item) => {
+                return { ...item, link: item.link.replace(":id", group.url) };
+              })}
+            />
 
-            <S.List>
-              {getMembers()?.length ? (
-                <>
-                  <S.Filter>
-                    <Input
-                      id='grou-members-filter'
-                      placeholder='Digite o nome ou @ de quem quer encontrar'
-                      value={filter}
-                      onChange={handleFilterChange}
-                      isBgInverted
-                    />
-                  </S.Filter>
-
-                  <InfoList type='profile' info={getFilteredMembers()} />
-                </>
-              ) : (
-                <Text type='subtitle'>
-                  O grupo <b>{group?.name}</b> ainda não possui membros.
-                </Text>
-              )}
-            </S.List>
+            <FilteredList
+              info={getMembers()}
+              id='group-members-filter'
+              placeholder='Digite o nome ou @ de quem quer encontrar'
+              type='profile'
+              title={`Membros de ${group.name}:`}
+              noInfoText={`${group.name} ainda não possui membros.`}
+            />
           </S.GroupBody>
         </S.Wrapper>
       )}

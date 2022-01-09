@@ -36,7 +36,7 @@ const FilteredList = ({ info, id, placeholder, title, noInfoText, type }) => {
       {info?.length ? (
         <>
           <S.Header>
-            <Text type='title' pb={8}>
+            <Text type='title' pb={16}>
               {title}
             </Text>
 
@@ -45,7 +45,7 @@ const FilteredList = ({ info, id, placeholder, title, noInfoText, type }) => {
               placeholder={placeholder}
               value={filter}
               onChange={handleFilterChange}
-              isBgInverted
+              isBgContrast
             />
           </S.Header>
 

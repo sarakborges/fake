@@ -23,7 +23,7 @@ export const GROUP_ACTIONS = [
     type: "link",
     title: "Membros",
     icon: faUsers,
-    to: ROUTES.GROUP_MEMBERS.MEMBERS,
+    to: ROUTES.GROUP_MEMBERS.ALL,
   },
 
   {

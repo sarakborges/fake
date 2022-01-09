@@ -2,6 +2,8 @@
 import Head from "next/head";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCrown } from "@fortawesome/free-solid-svg-icons";
 
 // APIs
 import GroupAPI from "Apis/Group";
@@ -23,7 +25,7 @@ import AuthedTemplate from "Components/Templates/Authed";
 import * as S from "./style";
 
 // Template
-const GroupMembersModeratorsTemplate = () => {
+const GroupMembersAllTemplate = () => {
   const [group, setGroup] = useState();
 
   const router = useRouter();
@@ -31,18 +33,44 @@ const GroupMembersModeratorsTemplate = () => {
     query: { url },
   } = router;
 
-  const getModerators = () => {
-    return group?.members.filter(
-      (item) => group.owner !== item._id && group.moderators.includes(item._id)
-    );
+  const getMembers = () => {
+    if (group?.members?.length < 0) {
+      return [];
+    }
+
+    return group?.members.map((item) => {
+      if (group.owner === item._id) {
+        return {
+          ...item,
+          name: (
+            <S.Owner>
+              <span>{item.name}</span>
+              <FontAwesomeIcon icon={faCrown} />
+            </S.Owner>
+          ),
+        };
+      } else if (group.moderators.includes(item._id)) {
+        return {
+          ...item,
+          name: (
+            <S.Moderator>
+              <span>{item.name}</span>
+              <FontAwesomeIcon icon={faCrown} />
+            </S.Moderator>
+          ),
+        };
+      } else {
+        return { ...item };
+      }
+    });
   };
 
   const getGroup = useCallback(
     async (groupUrl) => {
-      const groupData = await GroupAPI.getGroupByUrl(groupUrl);
+      const groupReq = await GroupAPI.getGroupByUrl(groupUrl);
 
-      if (groupData) {
-        setGroup(groupData);
+      if (groupReq) {
+        setGroup(groupReq);
       }
     },
     [GroupAPI]
@@ -55,9 +83,7 @@ const GroupMembersModeratorsTemplate = () => {
   return (
     <AuthedTemplate>
       <Head>
-        <title>{`${SITE_NAME} - ${
-          group?.name || "Grupo"
-        } - Moderadores`}</title>
+        <title>{`${SITE_NAME} - ${group?.name || "Grupo"} - Membros`}</title>
       </Head>
 
       {group && (
@@ -72,12 +98,12 @@ const GroupMembersModeratorsTemplate = () => {
             />
 
             <FilteredList
-              info={getModerators()}
-              id='group-moderators-filter'
+              info={getMembers()}
+              id='group-members-filter'
               placeholder='Digite o nome ou @ de quem quer encontrar'
               type='profile'
-              title={`Moderadores de ${group.name}:`}
-              noInfoText={`${group.name} ainda não possui moderadores.`}
+              title={`Membros de ${group.name}:`}
+              noInfoText={`${group.name} ainda não possui membros.`}
             />
           </S.GroupBody>
         </S.Wrapper>
@@ -86,4 +112,4 @@ const GroupMembersModeratorsTemplate = () => {
   );
 };
 
-export default GroupMembersModeratorsTemplate;
+export default GroupMembersAllTemplate;
