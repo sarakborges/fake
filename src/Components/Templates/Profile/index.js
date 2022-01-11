@@ -88,15 +88,17 @@ const ProfileTemplate = () => {
             />
 
             <S.ProfileBody>
-              <InfoAbout>
-                <div dangerouslySetInnerHTML={{ __html: profileData.about }} />
-              </InfoAbout>
+              <S.ProfileLeft>
+                <InfoAbout about={profileData.about} />
+              </S.ProfileLeft>
 
               <Rightbar>
                 <RoundList
                   type='profile'
                   title='Conexões'
-                  emptyTitle='Ainda não possui conexões'
+                  emptyTitle={`${
+                    profile?._id === profileData._id ? "Você" : profileData.name
+                  } ainda não possui conexões.`}
                   list={getApprovedConnections()
                     ?.slice(0, 5)
                     .map((item) => item.user)}
@@ -109,7 +111,9 @@ const ProfileTemplate = () => {
                 <RoundList
                   type='group'
                   title='Grupos'
-                  emptyTitle='Ainda não participa de grupos'
+                  emptyTitle={`${
+                    profile?._id === profileData._id ? "Você" : profileData.name
+                  } ainda não participa de grupos.`}
                   list={profileData?.groups.slice(0, 5)}
                   extraItemLink={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
                     ":id",

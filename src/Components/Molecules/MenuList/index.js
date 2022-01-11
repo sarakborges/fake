@@ -4,8 +4,9 @@ import { useRouter } from "next/dist/client/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Helpers
-import { LEFT_MENU } from "Helpers/Constants";
 import { ROUTES } from "Helpers/routes";
+import { LEFT_MENU } from "Helpers/Constants";
+import { isLinkActive } from "Helpers/Functions";
 
 // Contexts
 import { UserContext } from "Contexts/User";
@@ -25,16 +26,6 @@ const MenuList = () => {
   const { userState, userDispatch } = useContext(UserContext);
   const { appDispatch } = useContext(AppContext);
   const { profile } = userState;
-
-  const getIsActive = (item) => {
-    for (let route of item.activeOnRoutes) {
-      if (pathname === route) {
-        return true;
-      }
-    }
-
-    return false;
-  };
 
   const getPendingConnections = () => {
     return (
@@ -105,7 +96,10 @@ const MenuList = () => {
               })
               .map((subItem) => {
                 return (
-                  <S.MenuItem key={subItem.text} active={getIsActive(subItem)}>
+                  <S.MenuItem
+                    key={subItem.text}
+                    active={isLinkActive(subItem, pathname)}
+                  >
                     {!subItem.link && (
                       <Button
                         onClick={() => {

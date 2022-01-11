@@ -62,5 +62,5 @@ export const NewProfile = styled.div`
 export const InfoArea = styled.div`
   position: relative;
 
-  padding: 0 16px;
+  padding: 32px 16px 0;
 `;

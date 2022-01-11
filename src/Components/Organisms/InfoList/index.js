@@ -1,12 +1,8 @@
-// Dependencies
-import Link from "next/link";
-
 // Molecules
-import InfoArea from "Components/Molecules/InfoArea";
+import InfoCard from "Components/Molecules/InfoCardVertical";
 
 // Style
 import * as S from "./style";
-import { ROUTES } from "Helpers/routes";
 
 // Template
 const InfoList = ({ info, type }) => {
@@ -15,19 +11,9 @@ const InfoList = ({ info, type }) => {
       {info &&
         info.map((item) => {
           return (
-            <S.InfoItem key={item?.url}>
-              {item?.url ? (
-                <Link
-                  href={ROUTES[type.toUpperCase()].replace(":id", item?.url)}
-                >
-                  <a>
-                    <InfoArea info={item} isBox isBgContrast side='left' />
-                  </a>
-                </Link>
-              ) : (
-                <InfoArea info={item} isBox />
-              )}
-            </S.InfoItem>
+            <li key={item?.url}>
+              <InfoCard info={item} type={type} />
+            </li>
           );
         })}
     </S.InfoList>

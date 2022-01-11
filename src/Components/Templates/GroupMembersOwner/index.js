@@ -70,13 +70,13 @@ const GroupMembersOwnerTemplate = () => {
               })}
             />
 
-            <S.List>
-              <Text type='title' pb={16}>
+            <div>
+              <Text type='title' pb={32}>
                 Dono de {group.name}
               </Text>
 
               <InfoList type='profile' info={getOwner()} />
-            </S.List>
+            </div>
           </S.GroupBody>
         </S.Wrapper>
       )}

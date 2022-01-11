@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const InfoCover = styled.div`
+export const Cover = styled.div`
   width: 100%;
   height: 100%;
 
@@ -27,10 +27,10 @@ export const InfoCover = styled.div`
   }
 `;
 
-export const InfoHead = styled.div`
+export const Head = styled.div`
   display: flex;
-  place-items: center;
-  place-content: space-between;
+  flex-flow: column;
+  gap: 32px;
 
   position: sticky;
   left: 0;
@@ -40,41 +40,49 @@ export const InfoHead = styled.div`
   width: 100%;
   margin-bottom: 32px;
   padding: 32px;
+  overflow: hidden;
 
   background-color: var(--bgContrast);
+  border-radius: 32px 0 0 0;
 `;
 
-export const InfoInfo = styled.div`
+export const Center = styled.div`
+  flex: 1;
+`;
+
+export const Info = styled.div`
   display: flex;
   gap: 32px;
-  place-items: center;
 
   flex: 1;
-  max-width: calc(100% - 152px);
-  padding-right: 32px;
+`;
 
-  > div {
-    display: flex;
-    flex-flow: column;
-    gap: 8px;
+export const MainInfo = styled.div`
+  display: flex;
+  flex-flow: column;
+  gap: 12px;
 
-    text-shadow: 2px 2px 3px var(--bgContrast);
-    color: var(--white);
+  text-shadow: 2px 2px 3px var(--bgContrast);
+  color: var(--white);
 
-    a {
-      color: var(--mainVariation);
-    }
+  a {
+    color: var(--mainVariation);
+    font-size: 12px;
   }
 `;
 
 export const Avatar = styled.div`
   display: flex;
+
+  > span {
+    box-shadow: 2px 2px 3px var(--bgContrast);
+  }
 `;
 
-export const InfoActions = styled.div`
+export const Actions = styled.div`
   display: flex;
   place-items: center;
-  gap: 16px;
+  gap: 24px;
 
   > div {
     display: flex;
@@ -87,13 +95,16 @@ export const InfoActions = styled.div`
       display: flex;
       place-content: center;
       place-items: center;
+      gap: 8px;
+
+      height: 48px;
 
       font-size: 16px;
       color: var(--white);
 
-      border: 1px solid var(--main);
+      border: 2px solid var(--main);
       background-color: var(--main);
-      border-radius: 8px;
+      border-radius: 4px;
 
       transition: background-color 0.3s, color 0.3s;
 
@@ -106,36 +117,9 @@ export const InfoActions = styled.div`
 
     > a,
     > button {
-      width: 40px;
-      height: 40px;
-      padding: 0;
+      padding: 12px;
 
       box-shadow: 2px 2px 3px var(--bgContrast);
     }
-  }
-`;
-
-export const ActionTitle = styled.p`
-  position: absolute;
-  right: 0;
-  top: calc(100% + 16px);
-  z-index: 3;
-
-  padding: 8px;
-
-  background-color: var(--main);
-  border-radius: 8px;
-  opacity: 0;
-  visibility: hidden;
-
-  color: var(--white);
-  font-size: 12px;
-  white-space: nowrap;
-
-  transition: opacity 0.3s, visibility 0.3s;
-
-  ${InfoActions} > div:hover & {
-    opacity: 1;
-    visibility: visible;
   }
 `;

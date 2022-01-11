@@ -9,5 +9,5 @@ export const GroupBody = styled.div`
   flex-flow: column;
   gap: 48px;
 
-  padding: 0 32px;
+  padding: 0 32px 32px;
 `;

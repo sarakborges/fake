@@ -10,3 +10,7 @@ export const ProfileBody = styled.div`
   width: 100%;
   padding-right: 16px;
 `;
+
+export const ProfileLeft = styled.div`
+  flex: 1;
+`;

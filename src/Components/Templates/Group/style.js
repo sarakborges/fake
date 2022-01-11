@@ -20,3 +20,7 @@ export const About = styled.div`
     max-width: 100%;
   }
 `;
+
+export const GroupLeft = styled.div`
+  flex: 1;
+`;

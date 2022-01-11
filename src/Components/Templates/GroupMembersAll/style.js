@@ -9,7 +9,7 @@ export const GroupBody = styled.div`
   flex-flow: column;
   gap: 48px;
 
-  padding: 0 32px;
+  padding: 0 32px 32px;
 `;
 
 const CrownCss = css`
@@ -18,7 +18,7 @@ const CrownCss = css`
   gap: 16px;
 `;
 
-export const Owner = styled.div`
+export const Owner = styled.span`
   ${CrownCss}
 
   > svg {
@@ -26,7 +26,7 @@ export const Owner = styled.div`
   }
 `;
 
-export const Moderator = styled.div`
+export const Moderator = styled.span`
   ${CrownCss}
 
   > svg {

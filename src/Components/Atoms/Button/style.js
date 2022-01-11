@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 const PrimaryButton = css`
-  border: 1px solid var(--main);
+  border: 2px solid var(--main);
   background-color: var(--main);
   color: var(--offWhite);
 
@@ -12,7 +12,7 @@ const PrimaryButton = css`
 `;
 
 const SecondaryButton = css`
-  border: 1px solid var(--main);
+  border: 2px solid var(--main);
   background-color: var(--bg);
   color: var(--main);
 
@@ -22,7 +22,7 @@ const SecondaryButton = css`
 `;
 
 const TransparentButton = css`
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   background-color: var(--bg);
   color: var(--main);
 
@@ -32,7 +32,7 @@ const TransparentButton = css`
 `;
 
 const SuccessButton = css`
-  border: 1px solid var(--green);
+  border: 2px solid var(--green);
   background-color: var(--green);
   color: var(--white);
 
@@ -43,7 +43,7 @@ const SuccessButton = css`
 `;
 
 const SuccessSecondaryButton = css`
-  border: 1px solid var(--green);
+  border: 2px solid var(--green);
   background-color: transparent;
   color: var(--green);
 
@@ -53,7 +53,7 @@ const SuccessSecondaryButton = css`
 `;
 
 const WarningButton = css`
-  border: 1px solid var(--red);
+  border: 2px solid var(--red);
   background-color: var(--red);
   color: var(--white);
 
@@ -64,7 +64,7 @@ const WarningButton = css`
 `;
 
 const WarningSecondaryButton = css`
-  border: 1px solid var(--red);
+  border: 2px solid var(--red);
   background-color: transparent;
   color: var(--red);
 
@@ -82,7 +82,7 @@ export const Button = styled.button`
   height: ${({ size }) => `${size * 3}px`};
   padding: 0 16px;
 
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
 
   font-size: ${({ size }) => `${size}px`};

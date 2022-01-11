@@ -60,9 +60,9 @@ const GroupTemplate = () => {
           <InfoHeader info={group} type='group' setInfo={setGroup} />
 
           <S.GroupBody>
-            <InfoAbout>
-              <div dangerouslySetInnerHTML={{ __html: group.about }} />
-            </InfoAbout>
+            <S.GroupLeft>
+              <InfoAbout about={group.about} />
+            </S.GroupLeft>
 
             <Rightbar>
               <RoundList

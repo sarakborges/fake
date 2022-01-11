@@ -5,7 +5,7 @@ export const ProfileWrapper = styled.div`
 `;
 
 export const ProfileBody = styled.div`
-  padding: 0 32px;
+  padding: 0 32px 32px;
 `;
 
 export const Filter = styled.div`
