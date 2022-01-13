@@ -100,7 +100,7 @@ const ProfileTemplate = () => {
                     profile?._id === profileData._id ? "Você" : profileData.name
                   } ainda não possui conexões.`}
                   list={getApprovedConnections()
-                    ?.slice(0, 5)
+                    ?.slice?.(0, 5)
                     .map((item) => item.user)}
                   extraItemLink={ROUTES.PROFILE_CONNECTIONS.replace(
                     ":id",
@@ -114,7 +114,7 @@ const ProfileTemplate = () => {
                   emptyTitle={`${
                     profile?._id === profileData._id ? "Você" : profileData.name
                   } ainda não participa de grupos.`}
-                  list={profileData?.groups.slice(0, 5)}
+                  list={profileData?.groups?.slice?.(0, 5)}
                   extraItemLink={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
                     ":id",
                     profileData.url

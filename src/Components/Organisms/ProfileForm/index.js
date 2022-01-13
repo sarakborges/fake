@@ -180,6 +180,7 @@ const SettingsProfile = ({ id, form, setForm, getProfileData }) => {
       if (!id) {
         const newId = await ProfileAPI.createProfile({
           ...newProfile,
+          createdAt: new Date(),
         });
 
         await UserAPI.updateUser({

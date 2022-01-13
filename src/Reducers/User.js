@@ -38,18 +38,23 @@ export const UserReducer = (state, { type, data }) => {
     }
 
     case "SET_NEW_PROFILE": {
+      const profiles =
+        state.user.profiles.length > 0 ? [...state.user.profiles] : [];
+      profiles.push({ ...data });
+
       const newData = {
         ...state,
 
         user: {
           ...state.user,
-
-          profiles:
-            state.user.profiles?.length > 0
-              ? [...state.user.profiles, { ...data }]
-              : [{ ...data }],
+          profiles,
         },
+
+        profile:
+          profiles.length === 1 ? { ...profiles[0] } : { ...state.profile },
       };
+
+      console.log(newData);
 
       localStorage.setItem("user", JSON.stringify(newData));
 
