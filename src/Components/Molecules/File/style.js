@@ -43,7 +43,7 @@ export const LabelButton = styled.div`
 
   background-color: var(--main);
   color: var(--offWhite);
-  border-radius: 8px;
+  border-radius: 4px;
 
   font-size: 16px;
 `;

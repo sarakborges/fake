@@ -1,5 +1,4 @@
 import UserAPI from "Apis/User";
-import ProfileAPI from "Apis/Profile";
 
 export const getUserData = async () => {
   // localStorage.clear();
@@ -15,8 +14,6 @@ export const getUserData = async () => {
       return false;
     } else {
       userData = { ...userReq, profile: { ...localUserData.profile } };
-
-      console.log({ localUserData, userReq });
     }
   } else {
     return false;
