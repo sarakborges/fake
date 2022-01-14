@@ -34,6 +34,28 @@ const AboutTemplate = () => {
         <title>{SITE_NAME} - Sobre</title>
       </Head>
 
+      <S.Topbar>
+        <span>Ir para:</span>
+
+        <Link href={ROUTES.HOME}>
+          <a>
+            <b>Home</b>
+          </a>
+        </Link>
+
+        <Link href={ROUTES.LOGIN}>
+          <a>
+            <b>Login</b>
+          </a>
+        </Link>
+
+        <Link href={ROUTES.REGISTER}>
+          <a>
+            <b>Cadastro</b>
+          </a>
+        </Link>
+      </S.Topbar>
+
       <S.AboutWrapper>
         <S.About>
           <Text type='pagetitle'>Sobre o {SITE_NAME}</Text>
@@ -145,34 +167,6 @@ const AboutTemplate = () => {
             <a href='https://twitter.com/YoggSaritosa' target='_blank'>
               <b>Twitter</b>
             </a>
-          </Text>
-        </S.About>
-
-        <S.About>
-          <Text ta='center'>
-            <>Ir para </>
-
-            <Link href={ROUTES.LOGIN}>
-              <a>
-                <b>Login</b>
-              </a>
-            </Link>
-
-            <>, </>
-
-            <Link href={ROUTES.REGISTER}>
-              <a>
-                <b>Cadastro</b>
-              </a>
-            </Link>
-
-            <>, ou </>
-
-            <Link href={ROUTES.HOME}>
-              <a>
-                <b>Home</b>
-              </a>
-            </Link>
           </Text>
         </S.About>
       </S.AboutWrapper>

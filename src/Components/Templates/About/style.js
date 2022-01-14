@@ -1,5 +1,23 @@
 import styled from "styled-components";
 
+export const Topbar = styled.nav`
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2;
+
+  display: flex;
+  place-content: center;
+  place-items: center;
+  gap: 48px;
+
+  width: 100%;
+  height: 72px;
+  padding: 0 44px;
+
+  background-color: var(--bgContrast);
+`;
+
 export const AboutWrapper = styled.div`
   display: flex;
   flex-flow: column;
@@ -7,8 +25,7 @@ export const AboutWrapper = styled.div`
   place-items: center;
   gap: 48px;
 
-  min-height: 100vh;
-  padding: 32px;
+  padding: calc(72px + 48px) 48px 48px;
 `;
 
 export const About = styled.div`
