@@ -33,7 +33,9 @@ const GroupMembersModeratorsTemplate = () => {
 
   const getModerators = () => {
     return group?.members.filter(
-      (item) => group.owner !== item._id && group.moderators.includes(item._id)
+      (item) =>
+        group.owner !== item.profile._id &&
+        group.moderators.includes(item.profile._id)
     );
   };
 
@@ -72,10 +74,15 @@ const GroupMembersModeratorsTemplate = () => {
             />
 
             <FilteredList
-              info={getModerators()}
+              info={getModerators().map((item) => {
+                return {
+                  ...item.profile,
+                  joinedAt: item.joinedAt,
+                };
+              })}
               id='group-moderators-filter'
               placeholder='Digite o nome ou @ de quem quer encontrar'
-              type='profile'
+              type='member'
               title={`Moderadores de ${group.name}:`}
               noInfoText={`${group.name} ainda não possui moderadores.`}
             />

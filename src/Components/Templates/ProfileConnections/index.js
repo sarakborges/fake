@@ -82,7 +82,12 @@ const ProfileConnectionsTemplate = () => {
 
             <S.ProfileBody>
               <FilteredList
-                info={getApprovedConnections().map((item) => item.user)}
+                info={getApprovedConnections().map((item) => {
+                  return {
+                    ...item.user,
+                    connectedAt: item.connectedAt,
+                  };
+                })}
                 id='profile-connections-filter'
                 placeholder='Digite o nome ou @ de quem quer encontrar'
                 type='profile'

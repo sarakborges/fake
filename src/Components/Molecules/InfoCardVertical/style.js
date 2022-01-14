@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const InfoCard = styled.div`
   display: flex;
@@ -66,5 +66,28 @@ export const CardButtons = styled.div`
 
       background-color: var(--white);
     }
+  }
+`;
+
+const CrownCss = css`
+  display: flex;
+  place-items: center;
+  place-content: center;
+  gap: 16px;
+`;
+
+export const Owner = styled.span`
+  ${CrownCss}
+
+  > svg {
+    color: var(--golden);
+  }
+`;
+
+export const Moderator = styled.span`
+  ${CrownCss}
+
+  > svg {
+    color: var(--silver);
   }
 `;

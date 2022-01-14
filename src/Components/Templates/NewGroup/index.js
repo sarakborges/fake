@@ -153,10 +153,9 @@ const NewProfileTemplate = () => {
         createdAt: new Date(),
         members: [
           {
-            _id: profile._id,
-            avatar: profile.avatar,
-            name: profile.name,
-            url: profile.url,
+            profile: profile._id,
+            status: "member",
+            joinedAt: new Date(),
           },
         ],
         moderators: [],
@@ -183,9 +182,7 @@ const NewProfileTemplate = () => {
       await ProfileAPI.updateProfile({
         ...profile,
         groups:
-          profile.groups?.length > 0
-            ? [...profile.groups, { ...newGroupData }]
-            : [{ ...newGroupData }],
+          profile.groups?.length > 0 ? [...profile.groups, newId] : [newId],
       });
 
       setForm({ ...baseForm });

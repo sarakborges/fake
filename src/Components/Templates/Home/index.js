@@ -1,9 +1,6 @@
 // Dependencies
 import { useCallback, useContext, useEffect, useState } from "react";
 import Head from "next/head";
-import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 
 // APIs
 import ProfileAPI from "Apis/Profile";
@@ -16,12 +13,10 @@ import { SITE_NAME } from "Helpers/Constants";
 import { ROUTES } from "Helpers/routes";
 
 // Atoms
-import Button from "Components/Atoms/Button";
-import Textarea from "Components/Atoms/Textarea";
+import Text from "Components/Atoms/Text";
 import Rightbar from "Components/Atoms/Rightbar";
 
 // Molecules
-import InfoArea from "Components/Molecules/InfoArea";
 import NoProfile from "Components/Molecules/NoProfile";
 
 // Organisms
@@ -40,28 +35,49 @@ const HomeTemplate = () => {
   const { userState } = useContext(UserContext);
   const { profile } = userState;
 
-  const getProfileData = useCallback(async () => {
+  const getProfile = useCallback(async () => {
     if (!profile?._id) {
       return;
     }
 
     const profileReq = await ProfileAPI.getProfileById(profile._id);
-    setProfileData(profileReq);
+
+    if (profileReq) {
+      setProfileData(profileReq);
+    }
   }, [profile, ProfileAPI]);
 
   const getApprovedConnections = () => {
-    return profileData?.connections?.filter?.((item) => {
-      if (item.status === "connected") {
-        return item;
-      } else {
-        return false;
-      }
-    });
+    return (
+      profileData?.connections?.filter?.((item) => {
+        if (item.status === "connected") {
+          return item;
+        } else {
+          return false;
+        }
+      }) || []
+    );
+  };
+
+  const getApprovedMembership = () => {
+    return (
+      profileData?.groups?.filter?.((item) => {
+        const member = item?.members?.find(
+          (groupItem) => groupItem.profile === profile._id
+        );
+
+        if (member?.status === "member") {
+          return item;
+        } else {
+          return false;
+        }
+      }) || []
+    );
   };
 
   useEffect(() => {
-    getProfileData();
-  }, [profile, getProfileData]);
+    getProfile();
+  }, [profile, getProfile]);
 
   return (
     <AuthedTemplate>
@@ -71,50 +87,13 @@ const HomeTemplate = () => {
 
       {!profile?._id && <NoProfile />}
 
-      {profileData && (
+      {profile?._id && (
         <S.HomeWrapper>
-          <S.FeedWrapper>
-            <S.NewFeedItem>
-              <Textarea
-                id='new-feed-item'
-                size={120}
-                placeholder='Faça uma nova publicação'
-              />
-            </S.NewFeedItem>
-
-            <S.FeedItem>
-              <S.FeedItemHeader>
-                <div>
-                  <Link href='#'>
-                    <a>
-                      <InfoArea
-                        side='left'
-                        info={{
-                          name: "Yogg'Sara",
-                          url: "yogg-sara",
-                          avatar: `http://pm1.narvii.com/6280/2d5ef40edeab7884d64508563b7cb0d5b6321595_00.jpg`,
-                        }}
-                      />
-                    </a>
-                  </Link>
-                </div>
-
-                <Button style='transparent' size={16}>
-                  <FontAwesomeIcon icon={faEllipsisH} />
-                </Button>
-              </S.FeedItemHeader>
-
-              <S.FeedItemTime>1 hora atrás</S.FeedItemTime>
-
-              <S.FeedItemContent>
-                <img
-                  src={`https://i.pinimg.com/originals/bc/7f/ff/bc7fff0f4fec8297bf46ae5fb5c52f9f.jpg`}
-                />
-              </S.FeedItemContent>
-
-              <div>1289 curtidas - 156 comentários</div>
-            </S.FeedItem>
-          </S.FeedWrapper>
+          <S.FeedPlaceholder>
+            <Text type='title'>
+              Aqui vai ter o Feed. Mas ainda não tem nada.
+            </Text>
+          </S.FeedPlaceholder>
 
           <Rightbar>
             <RoundList
@@ -132,7 +111,7 @@ const HomeTemplate = () => {
               title='Seus grupos'
               emptyTitle='Você ainda não participa de grupos'
               extraItemLink={ROUTES.GROUPS}
-              list={profileData?.groups?.slice?.(0, 5)}
+              list={getApprovedMembership().slice?.(0, 5)}
             />
           </Rightbar>
         </S.HomeWrapper>

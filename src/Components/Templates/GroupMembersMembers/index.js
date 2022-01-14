@@ -37,7 +37,9 @@ const GroupMembersMembersTemplate = () => {
     }
 
     return group?.members.filter(
-      (item) => group.owner !== item._id && !group.moderators.includes(item._id)
+      (item) =>
+        group.owner !== item.profile._id &&
+        !group.moderators.includes(item.profile._id)
     );
   };
 
@@ -74,11 +76,16 @@ const GroupMembersMembersTemplate = () => {
             />
 
             <FilteredList
-              info={getMembers()}
+              info={getMembers().map((item) => {
+                return {
+                  ...item.profile,
+                  joinedAt: item.joinedAt,
+                };
+              })}
               id='group-members-filter'
               placeholder='Digite o nome ou @ de quem quer encontrar'
-              type='profile'
-              title={`Membros de ${group.name}:`}
+              type='member'
+              title={`Participantes de ${group.name}:`}
               noInfoText={`${group.name} ainda não possui membros.`}
             />
           </S.GroupBody>

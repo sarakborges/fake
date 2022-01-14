@@ -23,7 +23,12 @@ export const GROUP_HEADER = {
       type: "link",
       title: "Participantes",
       to: ROUTES.GROUP_MEMBERS.ALL,
-      activeOnRoutes: [ROUTES.GROUP_MEMBERS.ALL.replace(":id", "[url]")],
+      activeOnRoutes: [
+        ROUTES.GROUP_MEMBERS.ALL.replace(":id", "[url]"),
+        ROUTES.GROUP_MEMBERS.MEMBERS.replace(":id", "[url]"),
+        ROUTES.GROUP_MEMBERS.MODERATORS.replace(":id", "[url]"),
+        ROUTES.GROUP_MEMBERS.OWNER.replace(":id", "[url]"),
+      ],
     },
   ],
 

@@ -35,7 +35,7 @@ const GroupMembersOwnerTemplate = () => {
   } = router;
 
   const getOwner = () => {
-    return group?.members.filter((item) => group.owner === item._id);
+    return group?.members.filter((item) => group.owner === item.profile._id);
   };
 
   const getGroup = useCallback(
@@ -75,7 +75,15 @@ const GroupMembersOwnerTemplate = () => {
                 Dono de {group.name}
               </Text>
 
-              <InfoList type='profile' info={getOwner()} />
+              <InfoList
+                type='member'
+                info={getOwner().map((item) => {
+                  return {
+                    ...item.profile,
+                    joinedAt: item.joinedAt,
+                  };
+                })}
+              />
             </div>
           </S.GroupBody>
         </S.Wrapper>

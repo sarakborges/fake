@@ -7,8 +7,8 @@ import {
   faUser,
   faUserFriends,
   faSignOutAlt,
-  faPlusCircle,
-  faInfoCircle,
+  faExclamation,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { ROUTES } from "Helpers/routes";
@@ -72,14 +72,7 @@ export const LEFT_MENU = [
 
   [
     {
-      icon: faInfoCircle,
-      text: "Sobre",
-      link: ROUTES.ABOUT,
-      activeOnRoutes: [],
-    },
-
-    {
-      icon: faPlusCircle,
+      icon: faPlus,
       text: "Criar grupo",
       link: ROUTES.NEW_GROUP,
       activeOnRoutes: [ROUTES.NEW_GROUP],
@@ -94,6 +87,13 @@ export const LEFT_MENU = [
         ROUTES.SETTINGS.PROFILE,
         ROUTES.SETTINGS.SITE,
       ],
+    },
+
+    {
+      icon: faExclamation,
+      text: "Sobre",
+      link: ROUTES.ABOUT,
+      activeOnRoutes: [],
     },
 
     {

@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { faLink, faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCrown } from "@fortawesome/free-solid-svg-icons";
 
 // Helpers
 import { ROUTES } from "Helpers/routes";
@@ -17,10 +18,9 @@ import * as S from "./style";
 
 // Template
 const InfoCard = ({ info, type }) => {
-  const link = (type === "profile" ? ROUTES.PROFILE : ROUTES.GROUP).replace(
-    ":id",
-    info?.url
-  );
+  const link = (
+    type === "profile" || type === "member" ? ROUTES.PROFILE : ROUTES.GROUP
+  ).replace(":id", info?.url);
 
   return (
     <>
@@ -46,7 +46,19 @@ const InfoCard = ({ info, type }) => {
             <Link href={link}>
               <a>
                 <Text type='title' ta='center'>
-                  {info?.name}
+                  {info?.isOwner ? (
+                    <S.Owner>
+                      <span>{info?.name}</span>
+                      <FontAwesomeIcon icon={faCrown} />
+                    </S.Owner>
+                  ) : info?.isModerator ? (
+                    <S.Moderator>
+                      <span>{info?.name}</span>
+                      <FontAwesomeIcon icon={faCrown} />
+                    </S.Moderator>
+                  ) : (
+                    info?.name
+                  )}
                 </Text>
               </a>
             </Link>
@@ -55,15 +67,21 @@ const InfoCard = ({ info, type }) => {
           <Text type='subtitle' pt={12} ta='center'>{`@${info?.url}`}</Text>
 
           {type === "group" && (
-            <>
-              <Text type='custom' fs={12} pt={16}>
-                Criado em: {getTimeString(new Date())}
-              </Text>
+            <Text type='custom' fs={12} pt={16}>
+              Criado em: {getTimeString(info?.createdAt)}
+            </Text>
+          )}
 
-              <Text type='custom' fs={12} pt={16}>
-                Participa desde: {getTimeString(new Date())}
-              </Text>
-            </>
+          {type === "member" && (
+            <Text type='custom' fs={12} pt={16}>
+              Participa desde: {getTimeString(info?.joinedAt)}
+            </Text>
+          )}
+
+          {type === "profile" && (
+            <Text type='custom' fs={12} pt={16}>
+              Conexão desde: {getTimeString(info?.connectedAt)}
+            </Text>
           )}
         </S.TextWrapper>
 
@@ -71,7 +89,10 @@ const InfoCard = ({ info, type }) => {
           <Link href={link}>
             <a>
               <FontAwesomeIcon icon={faLink} />
-              <span>Visitar {type === "profile" ? "perfil" : "grupo"}</span>
+              <span>
+                Visitar{" "}
+                {type === "profile" || type === "member" ? "perfil" : "grupo"}
+              </span>
             </a>
           </Link>
         </S.CardButtons>

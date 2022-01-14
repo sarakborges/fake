@@ -8,7 +8,7 @@ export const GROUP_MEMBERS_TABS = [
 
   {
     link: ROUTES.GROUP_MEMBERS.MEMBERS,
-    text: "Apenas membros",
+    text: "Apenas participantes",
   },
 
   {

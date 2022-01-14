@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -10,26 +10,4 @@ export const GroupBody = styled.div`
   gap: 48px;
 
   padding: 0 32px 32px;
-`;
-
-const CrownCss = css`
-  display: flex;
-  place-items: center;
-  gap: 16px;
-`;
-
-export const Owner = styled.span`
-  ${CrownCss}
-
-  > svg {
-    color: var(--golden);
-  }
-`;
-
-export const Moderator = styled.span`
-  ${CrownCss}
-
-  > svg {
-    color: var(--silver);
-  }
 `;

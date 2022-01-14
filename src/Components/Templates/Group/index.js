@@ -68,7 +68,7 @@ const GroupTemplate = () => {
               <RoundList
                 type='profile'
                 title='Membros'
-                list={group.members.slice(0, 5)}
+                list={group.members.slice(0, 5).map((item) => item.profile)}
                 extraItemLink={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
                   ":id",
                   group.url
