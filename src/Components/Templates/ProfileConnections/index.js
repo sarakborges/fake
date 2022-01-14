@@ -101,16 +101,16 @@ const ProfileConnectionsTemplate = () => {
                 } ainda não possui nenhuma conexão.`}
               />
 
-              {profile?._id === profileData._id && (
-                <FilteredList
-                  info={profileData?.blockedUsers}
-                  id='profile-banned-filter'
-                  placeholder='Digite o nome ou @ de quem quer encontrar'
-                  type='profile'
-                  title='Perfis bloqueados por você:'
-                  noInfoText='Você ainda não bloqueou nenhum perfil.'
-                />
-              )}
+              {profile?._id === profileData._id &&
+                profileData?.blockedUsers?.length > 0 && (
+                  <FilteredList
+                    info={profileData?.blockedUsers}
+                    id='profile-blocked-filter'
+                    placeholder='Digite o nome ou @ de quem quer encontrar'
+                    type='profile'
+                    title='Perfis bloqueados por você:'
+                  />
+                )}
             </S.ProfileBody>
           </S.ProfileWrapper>
         )}

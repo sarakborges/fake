@@ -46,6 +46,40 @@ export const Head = styled.div`
   border-radius: 32px 0 0 0;
 `;
 
+export const DropdownMenu = styled.div`
+  position: absolute;
+  right: 32px;
+  top: 32px;
+  z-index: 6;
+
+  > button {
+    padding: 0 8px;
+    aspect-ratio: 1;
+
+    box-shadow: 2px 2px 3px var(--bgContrast);
+  }
+`;
+
+export const Dropdown = styled.div`
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 1;
+
+  overflow: hidden;
+
+  border-radius: 4px;
+  background-color: var(--bg);
+  box-shadow: 2px 2px 3px var(--bgContrast);
+
+  white-space: nowrap;
+
+  opacity: ${({ displayMenu }) => (displayMenu ? 1 : 0)};
+  visibility: ${({ displayMenu }) => (displayMenu ? "visible" : "hidden")};
+
+  transition: opacity 0.3s, visibility 0.3s;
+`;
+
 export const Center = styled.div`
   flex: 1;
 `;

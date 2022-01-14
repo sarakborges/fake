@@ -1,8 +1,7 @@
 // Dependencies
 import Link from "next/link";
-import { useRouter } from "next/dist/client/router";
-import { useContext, useState } from "react";
-import { faQuestion } from "@fortawesome/free-solid-svg-icons";
+import { useContext, useEffect, useRef, useState } from "react";
+import { faEllipsisH, faQuestion } from "@fortawesome/free-solid-svg-icons";
 
 // APIs
 import ProfileAPI from "Apis/Profile";
@@ -25,12 +24,14 @@ import InfoLinks from "Components/Atoms/InfoLinks";
 
 // Style
 import * as S from "./style";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const InfoHeader = ({ info, type, setInfo }) => {
-  const router = useRouter();
-  const { pathname } = router;
-
   const [isRequesting, setIsRequesting] = useState(false);
+  const [displayMenu, setDisplayMenu] = useState(false);
+
+  const dropdownRef = useRef();
+  const headerType = type === "group" ? GROUP_HEADER : PROFILE_HEADER;
 
   const { userState, userDispatch } = useContext(UserContext);
   const { appDispatch } = useContext(AppContext);
@@ -51,6 +52,10 @@ const InfoHeader = ({ info, type, setInfo }) => {
         data: false,
       });
     }, 5000);
+  };
+
+  const toggleMenu = () => {
+    setDisplayMenu(!displayMenu);
   };
 
   const updateLocalUser = (newProfile) => {
@@ -306,29 +311,39 @@ const InfoHeader = ({ info, type, setInfo }) => {
   const getCodition = (condition) => {
     const isSelf = profile._id === info._id;
     const isOwner = profile._id === info.owner;
+    const isBlocked = profile.blockedUsers?.find?.(
+      (item) => item?._id === info._id
+    );
 
     const conditions = {
       isOwner: isOwner,
       isNotOwner: !isOwner,
 
+      isSelf: isSelf,
+      isNotSelf: !isSelf,
+
       hasAnyConnectionStatus:
         isSelf ||
+        isBlocked ||
         info.connections?.find?.((item) => item.user._id === profile._id),
 
       isNotConnected:
         isSelf ||
+        isBlocked ||
         !info.connections?.find?.(
           (item) => item.status === "connected" && item.user._id === profile._id
         ),
 
       isNotPending:
         isSelf ||
+        isBlocked ||
         !info.connections?.find?.(
           (item) => item.status === "pending" && item.user._id === profile._id
         ),
 
       isNotSent:
         isSelf ||
+        isBlocked ||
         !info.connections?.find?.(
           (item) => item.status === "sent" && item.user._id === profile._id
         ),
@@ -339,22 +354,66 @@ const InfoHeader = ({ info, type, setInfo }) => {
       isMember:
         isOwner || info.members?.find?.((item) => item._id === profile._id),
 
-      isNotBlocked:
-        isSelf ||
-        !profile.blockedUsers?.find?.((item) => item?._id === info._id),
+      isNotBlocked: isSelf || !isBlocked,
 
-      isBlocked:
-        isSelf ||
-        profile.blockedUsers?.find?.((item) => item?._id === info._id),
+      isBlocked: isSelf || isBlocked,
     };
 
     return conditions[condition];
   };
 
+  useEffect(() => {
+    document.addEventListener("click", (e) => {
+      if (!dropdownRef?.current?.contains(e.target)) {
+        setDisplayMenu(false);
+      }
+    });
+  }, []);
+
   return (
     <>
       <S.Head>
         <S.Cover img={info.cover} />
+
+        {profile?._id &&
+          headerType.MORE_ACTIONS.filter(
+            (item) => !getCodition(item.hideCondition)
+          ).length > 0 && (
+            <S.DropdownMenu ref={dropdownRef}>
+              <Button style='transparent' size={12} onClick={toggleMenu}>
+                <FontAwesomeIcon icon={faEllipsisH} />
+              </Button>
+
+              <S.Dropdown displayMenu={displayMenu}>
+                {headerType.MORE_ACTIONS.filter(
+                  (item) => !getCodition(item.hideCondition)
+                ).map((item) => {
+                  if (!profile?._id || getCodition(item.hideCondition)) {
+                    return false;
+                  }
+
+                  return (
+                    <div key={item.id}>
+                      {item.type === "button" ? (
+                        <Button
+                          style='transparent'
+                          size={16}
+                          onClick={buttonActions[item.action]}
+                          disabled={isRequesting}
+                        >
+                          {item.title}
+                        </Button>
+                      ) : (
+                        <Link href={item.to.replace(":id", info.url)}>
+                          <a>{item.title}</a>
+                        </Link>
+                      )}
+                    </div>
+                  );
+                })}
+              </S.Dropdown>
+            </S.DropdownMenu>
+          )}
 
         <S.Info>
           <S.Avatar>
@@ -389,34 +448,35 @@ const InfoHeader = ({ info, type, setInfo }) => {
             <InfoLinks info={info} type={type} />
           </S.Center>
 
-          <S.Actions>
-            {(type === "group" ? GROUP_HEADER : PROFILE_HEADER).ACTIONS.map(
-              (item) => {
-                if (!profile?._id || getCodition(item.hideCondition)) {
-                  return false;
-                }
-
-                return (
-                  <div key={item.id}>
-                    {item.type === "button" ? (
-                      <Button
-                        style='primary'
-                        size={16}
-                        onClick={buttonActions[item.action]}
-                        disabled={isRequesting}
-                      >
-                        {item.title}
-                      </Button>
-                    ) : (
-                      <Link href={item.to.replace(":id", info.url)}>
-                        <a>{item.title}</a>
-                      </Link>
-                    )}
-                  </div>
-                );
-              }
+          {profile?._id &&
+            headerType.ACTIONS.filter(
+              (item) => !getCodition(item.hideCondition)
+            ).length > 0 && (
+              <S.Actions>
+                {headerType.ACTIONS.filter(
+                  (item) => !getCodition(item.hideCondition)
+                ).map((item) => {
+                  return (
+                    <div key={item.id}>
+                      {item.type === "button" ? (
+                        <Button
+                          style='primary'
+                          size={16}
+                          onClick={buttonActions[item.action]}
+                          disabled={isRequesting}
+                        >
+                          {item.title}
+                        </Button>
+                      ) : (
+                        <Link href={item.to.replace(":id", info.url)}>
+                          <a>{item.title}</a>
+                        </Link>
+                      )}
+                    </div>
+                  );
+                })}
+              </S.Actions>
             )}
-          </S.Actions>
         </S.Info>
       </S.Head>
     </>
