@@ -1,5 +1,5 @@
 // Dependencies
-import { useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
@@ -37,6 +37,7 @@ import * as S from "./style";
 // Template
 const NotificationsTemplate = () => {
   const [isRequesting, setIsRequesting] = useState(false);
+  const [profileData, setProfileData] = useState(false);
 
   const { userState, userDispatch } = useContext(UserContext);
   const { profile, user } = userState;
@@ -86,6 +87,18 @@ const NotificationsTemplate = () => {
     }, 5000);
   };
 
+  const getProfile = useCallback(async () => {
+    if (!profile?._id) {
+      return;
+    }
+
+    const profileReq = await ProfileAPI.getProfileById(profile._id);
+
+    if (profileReq) {
+      setProfileData(profileReq);
+    }
+  }, [profile, ProfileAPI]);
+
   const updateLocalUser = (newProfile) => {
     userDispatch({
       type: "SET_USER",
@@ -111,81 +124,65 @@ const NotificationsTemplate = () => {
 
   const getPendingConnections = () => {
     return (
-      profile?.connections
-        ?.filter?.((item) => {
-          if (item.status === "pending") {
-            return item;
-          } else {
-            return false;
-          }
-        })
-        .map((item) => {
-          return { connectionRequest: { ...item } };
-        }) || []
+      profileData?.connections?.filter?.((item) => {
+        if (item.status === "pending") {
+          return item;
+        } else {
+          return false;
+        }
+      }) || []
     );
   };
 
+  const updateUsers = (req) => {
+    const newLocalUser = req.find((item) => item._id === profile._id);
+
+    updateLocalUser({ ...newLocalUser });
+  };
+
   const acceptConnection = async (target) => {
-    setIsRequesting(true);
+    try {
+      setIsRequesting(true);
 
-    const newProfile = {
-      ...profile,
-      connections: profile?.connections?.map?.((item) => {
-        if (item.user._id === target) {
-          return { ...item, status: "connected" };
-        } else {
-          return item;
-        }
-      }),
-    };
+      const updatedProfiles = await ProfileAPI.updateConnection({
+        ids: [target, profile._id],
+        status: "accept",
+      });
 
-    const profileReq = await ProfileAPI.updateProfile({ ...newProfile });
+      updateUsers([...updatedProfiles]);
 
-    if (!profileReq) {
+      displayToast("acceptConnectionSuccess");
+      setIsRequesting(false);
+    } catch (e) {
       displayToast("acceptConnectionError");
       setIsRequesting(false);
+      console.log(e);
     }
-
-    const targetReq = await ProfileAPI.acceptConnection({
-      _id: target,
-      connectionId: profile._id,
-    });
-
-    if (!targetReq) {
-      displayToast("acceptConnectionError");
-      setIsRequesting(false);
-    }
-
-    updateLocalUser({ ...newProfile });
-
-    displayToast("acceptConnectionSuccess");
-    setIsRequesting(false);
   };
 
   const refuseConnection = async (target) => {
-    setIsRequesting(true);
+    try {
+      setIsRequesting(true);
 
-    const deleteConnectionReq = await ProfileAPI.deleteConnection({
-      ids: [profile._id, target],
-    });
+      const updatedProfiles = await ProfileAPI.updateConnection({
+        ids: [profile._id, target],
+        status: "remove",
+      });
 
-    if (deleteConnectionReq?.error) {
+      updateUsers([...updatedProfiles]);
+
+      displayToast("refuseConnectionSuccess");
+      setIsRequesting(false);
+    } catch (e) {
       displayToast("refuseConnectionError");
       setIsRequesting(false);
+      console.log(e);
     }
-
-    const newProfile = {
-      ...profile,
-      connections: profile?.connections?.filter?.(
-        (item) => item.user._id !== target
-      ),
-    };
-
-    updateLocalUser({ ...newProfile });
-
-    displayToast("refuseConnectionSuccess");
-    setIsRequesting(false);
   };
+
+  useEffect(() => {
+    getProfile();
+  }, [profile, getProfile]);
 
   return (
     <AuthedTemplate>
@@ -193,9 +190,9 @@ const NotificationsTemplate = () => {
         <title>{SITE_NAME} - Notificações</title>
       </Head>
 
-      {!profile?._id && <NoProfile />}
+      {!profileData?._id && <NoProfile />}
 
-      {profile?._id && (
+      {profileData?._id && (
         <S.NotificationsWrapper>
           {getPendingConnections()?.length < 1 && (
             <>
@@ -218,15 +215,10 @@ const NotificationsTemplate = () => {
                 {getPendingConnections().map((item, key) => {
                   return (
                     <S.NotificationsItem key={`notification-${key}`}>
-                      <Link
-                        href={ROUTES.PROFILE.replace(
-                          ":id",
-                          item.connectionRequest.user.url
-                        )}
-                      >
+                      <Link href={ROUTES.PROFILE.replace(":id", item.user.url)}>
                         <a>
                           <Avatar
-                            img={item.connectionRequest.user.avatar}
+                            img={item.user.avatar}
                             size={48}
                             bgColor='main'
                           />
@@ -236,28 +228,21 @@ const NotificationsTemplate = () => {
                       <S.NotificationText>
                         <Text>
                           <Link
-                            href={ROUTES.PROFILE.replace(
-                              ":id",
-                              item.connectionRequest.user.url
-                            )}
+                            href={ROUTES.PROFILE.replace(":id", item.user.url)}
                           >
-                            <a>{item.connectionRequest.user.name}</a>
+                            <a>{item.user.name}</a>
                           </Link>{" "}
                           enviou uma solicitação de conexão.
                         </Text>
 
-                        <Text pt={4}>
-                          {getTimeString(item.connectionRequest.connectedAt)}
-                        </Text>
+                        <Text pt={4}>{getTimeString(item.connectedAt)}</Text>
                       </S.NotificationText>
 
                       <S.NotificationActions>
                         <Button
                           style='success-secondary'
                           size={16}
-                          onClick={() =>
-                            acceptConnection(item.connectionRequest.user._id)
-                          }
+                          onClick={() => acceptConnection(item.user._id)}
                           disabled={isRequesting}
                         >
                           <FontAwesomeIcon icon={faCheckCircle} />
@@ -267,9 +252,7 @@ const NotificationsTemplate = () => {
                         <Button
                           style='warning-secondary'
                           size={16}
-                          onClick={() =>
-                            refuseConnection(item.connectionRequest.user._id)
-                          }
+                          onClick={() => refuseConnection(item.user._id)}
                           disabled={isRequesting}
                         >
                           <FontAwesomeIcon icon={faTimesCircle} />

@@ -11,6 +11,18 @@ export const TOASTS = {
     type: "error",
   },
 
+  acceptConnectionSuccess: {
+    title: "Sucesso!",
+    text: `Conexão aceita.`,
+    type: "success",
+  },
+
+  acceptConnectionError: {
+    title: "Erro!",
+    text: `Aconteceu algum erro ao tentar aceitar a conexão. Tente novamente.`,
+    type: "error",
+  },
+
   removeConnectionSuccess: {
     title: "Sucesso!",
     text: `Conexão removida.`,

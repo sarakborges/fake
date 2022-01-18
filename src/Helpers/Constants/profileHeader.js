@@ -55,15 +55,23 @@ export const PROFILE_HEADER = {
     {
       id: "cancel",
       type: "button",
-      title: "Cancelar solicitação de conexão",
+      title: "Cancelar solicitação",
       hideCondition: "isNotPending",
       action: "removeConnection",
     },
 
     {
+      id: "accept",
+      type: "button",
+      title: "Aceitar conexão",
+      hideCondition: "isNotSent",
+      action: "acceptConnection",
+    },
+
+    {
       id: "refuse",
       type: "button",
-      title: "Recusar solicitação de conexão",
+      title: "Recusar conexão",
       hideCondition: "isNotSent",
       action: "removeConnection",
     },

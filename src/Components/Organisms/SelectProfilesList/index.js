@@ -1,6 +1,9 @@
 // Dependencies
 import { useContext } from "react";
 
+// APIs
+import ProfileAPI from "Apis/Profile";
+
 // Contexts
 import { AppContext } from "Contexts/App";
 import { UserContext } from "Contexts/User";
@@ -65,9 +68,11 @@ const SelectProfilesList = ({ profiles }) => {
 
   const handleProfileChange = async (newProfile) => {
     try {
+      const fullProfile = await ProfileAPI.getProfileById(newProfile._id);
+
       userDispatch({
         type: "SET_ACTIVE_PROFILE",
-        data: { ...newProfile },
+        data: { ...fullProfile },
       });
 
       displayToast("selectProfileSuccess");

@@ -60,28 +60,28 @@ const deleteProfile = (id) => {
     .catch((err) => err);
 };
 
-const deleteConnection = (info) => {
+const updateConnection = (info) => {
   if (!info) {
-    console.log("deleteConnection requires info param");
+    console.log("updateConnection requires info param");
     return;
   }
 
   return axios
-    .put(`${process.env.NEXT_PUBLIC_REQUEST_URI}/profile/connection/refuse`, {
+    .put(`${process.env.NEXT_PUBLIC_REQUEST_URI}/profile/connection/update`, {
       ...info,
     })
     .then((res) => res.data)
     .catch((err) => err);
 };
 
-const acceptConnection = (info) => {
+const createConnection = (info) => {
   if (!info) {
-    console.log("acceptConnection requires info param");
+    console.log("createConnection requires info param");
     return;
   }
 
   return axios
-    .put(`${process.env.NEXT_PUBLIC_REQUEST_URI}/profile/connection/accept`, {
+    .put(`${process.env.NEXT_PUBLIC_REQUEST_URI}/profile/connection/create`, {
       ...info,
     })
     .then((res) => res.data)
@@ -113,7 +113,7 @@ export default {
   createProfile,
   updateProfile,
   deleteProfile,
-  deleteConnection,
-  acceptConnection,
+  updateConnection,
+  createConnection,
   uploadFile,
 };

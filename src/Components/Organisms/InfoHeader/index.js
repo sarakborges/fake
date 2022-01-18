@@ -66,13 +66,9 @@ const InfoHeader = ({ info, type, setInfo }) => {
           ...user,
 
           profiles: [
-            ...user.profiles.map((item) => {
-              if (item._id === profile._id) {
-                return { ...newProfile };
-              } else {
-                return item;
-              }
-            }),
+            ...user.profiles.map((item) =>
+              item._id === profile._id ? { ...newProfile } : item
+            ),
           ],
         },
 
@@ -81,140 +77,104 @@ const InfoHeader = ({ info, type, setInfo }) => {
     });
   };
 
-  const buttonActions = {
-    connectTo: async () => {
-      const newConnection = {
-        user: {
-          _id: info._id,
-          name: info.name,
-          url: info.url,
-          avatar: info.avatar,
-        },
+  const updateUsers = (req) => {
+    const newLocalUser = req.find((item) => item._id === profile._id);
+    const newInfo = req.find((item) => item._id === info._id);
 
-        status: "sent",
-        connectedAt: new Date(),
-      };
+    updateLocalUser({ ...newLocalUser });
+    setInfo({ ...newInfo });
+  };
 
+  const updateConnection = async (status) => {
+    try {
       setIsRequesting(true);
 
-      const newProfile = {
-        ...profile,
-
-        connections:
-          profile?.connections?.length > 0
-            ? [...profile.connections, { ...newConnection }]
-            : [{ ...newConnection }],
-      };
-
-      const updateCurrentUserReq = await ProfileAPI.updateProfile({
-        ...newProfile,
+      const updateConnectinoReq = await ProfileAPI.updateConnection({
+        ids: [profile._id, info._id],
+        status: status,
       });
 
-      if (!updateCurrentUserReq) {
-        displayToast("connectError");
-        setIsRequesting(false);
-        return;
-      }
-
-      const profileNewConnection = {
-        user: {
-          _id: profile._id,
-          name: profile.name,
-          url: profile.url,
-          avatar: profile.avatar,
-        },
-
-        status: "pending",
-        connectedAt: new Date(),
-      };
-
-      const newInfo = {
-        ...info,
-
-        connections:
-          info?.connections?.length > 0
-            ? [...info.connections, { ...profileNewConnection }]
-            : [{ ...profileNewConnection }],
-      };
-
-      const updateProfileReq = await ProfileAPI.updateProfile({ ...newInfo });
-
-      if (!updateProfileReq) {
-        displayToast("connectError");
-        setIsRequesting(false);
-        return;
-      }
-
-      setInfo(newInfo);
-      updateLocalUser({ ...newProfile });
+      updateUsers(updateConnectinoReq);
 
       setIsRequesting(false);
-      displayToast("connectSuccess");
+    } catch (e) {
+      console.log(e);
+      setIsRequesting(false);
+    }
+  };
+
+  const buttonActions = {
+    connectTo: async () => {
+      try {
+        setIsRequesting(true);
+
+        const createConnectinoReq = await ProfileAPI.createConnection({
+          ids: [profile._id, info._id],
+        });
+
+        updateUsers(createConnectinoReq);
+
+        setIsRequesting(false);
+        displayToast("connectSuccess");
+      } catch (e) {
+        console.log(e);
+        setIsRequesting(false);
+        displayToast("connectError");
+      }
+    },
+
+    acceptConnection: async () => {
+      try {
+        await updateConnection("accept");
+        displayToast("acceptConnectionSuccess");
+      } catch (e) {
+        console.log(e);
+        setIsRequesting(false);
+        displayToast("acceptConnectionError");
+      }
     },
 
     removeConnection: async () => {
-      setIsRequesting(true);
-
-      const deleteConnectionReq = await ProfileAPI.deleteConnection({
-        ids: [profile._id, info._id],
-      });
-
-      if (deleteConnectionReq?.error) {
-        displayToast("removeConnectionError");
+      try {
+        await updateConnection("remove");
+        displayToast("removeConnectionSuccess");
+      } catch (e) {
+        console.log(e);
         setIsRequesting(false);
+        displayToast("removeConnectionError");
       }
-
-      updateLocalUser({
-        ...profile,
-        connections: profile?.connections?.filter?.(
-          (item) => item.user._id !== info._id
-        ),
-      });
-
-      setInfo({
-        ...info,
-        connections: info?.connections?.filter?.(
-          (item) => item.user._id !== profile._id
-        ),
-      });
-
-      displayToast("removeConnectionSuccess");
-      setIsRequesting(false);
     },
 
     blockUser: async () => {
-      setIsRequesting(true);
+      try {
+        setIsRequesting(true);
 
-      const newBlocked = {
-        _id: info._id,
-        avatar: info.avatar,
-        name: info.name,
-        url: info.url,
-      };
+        const newProfile = {
+          ...profile,
 
-      const newProfile = {
-        ...profile,
+          blockedUsers:
+            profile?.blockedUsers?.length > 0
+              ? [...profile.blockedUsers, info._id]
+              : [info._id],
+        };
 
-        blockedUsers:
-          profile?.blockedUsers?.length > 0
-            ? [...profile.blockedUsers, { ...newBlocked }]
-            : [{ ...newBlocked }],
-      };
+        await ProfileAPI.updateProfile({
+          ...newProfile,
+        });
 
-      const updateCurrentUserReq = await ProfileAPI.updateProfile({
-        ...newProfile,
-      });
+        await ProfileAPI.deleteConnection({
+          ids: [profile._id, info._id],
+        });
 
-      if (!updateCurrentUserReq) {
-        displayToast("blockError");
+        updateLocalUser({ ...newProfile });
+
         setIsRequesting(false);
-        return;
+        displayToast("blockSuccess");
+      } catch (e) {
+        setIsRequesting(false);
+        displayToast("blockError");
+        console.log(e);
       }
-
-      updateLocalUser({ ...newProfile });
-
-      setIsRequesting(false);
-      displayToast("blockSuccess");
     },
 
     unBlockUser: async () => {
@@ -225,7 +185,7 @@ const InfoHeader = ({ info, type, setInfo }) => {
 
         blockedUsers:
           profile?.blockedUsers?.length > 0
-            ? [...profile.blockedUsers.filter((item) => item._id !== info._id)]
+            ? [...profile.blockedUsers.filter((item) => item !== info._id)]
             : [],
       };
 
@@ -249,12 +209,9 @@ const InfoHeader = ({ info, type, setInfo }) => {
       setIsRequesting(true);
 
       const newGroupData = {
-        _id: info._id,
-        name: info.name,
-        url: info.url,
-        avatar: info.avatar,
-        owner: info.owner,
-        moderators: info.moderators,
+        profile: info._id,
+        status: "member",
+        joinedAt: new Date(),
       };
 
       const newProfile = {
