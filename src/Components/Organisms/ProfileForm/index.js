@@ -264,7 +264,7 @@ const SettingsProfile = ({ id, form, setForm, getProfileData }) => {
             <LabeledInput
               id='url'
               placeholder='Insira uma URL personalizada'
-              label='URL (Caso fique em branco, será baseado no nome)'
+              label='URL personalizada (Caso fique em branco, será baseado no nome)'
               value={form.url.value}
               onChange={handleChange}
             />

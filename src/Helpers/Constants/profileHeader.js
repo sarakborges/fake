@@ -53,6 +53,16 @@ export const PROFILE_HEADER = {
     },
 
     {
+      id: "block",
+      type: "button",
+      title: "Desbloquear",
+      hideCondition: "isNotBlocked",
+      action: "unBlockUser",
+    },
+  ],
+
+  MORE_ACTIONS: [
+    {
       id: "cancel",
       type: "button",
       title: "Cancelar solicitação",
@@ -75,23 +85,6 @@ export const PROFILE_HEADER = {
       hideCondition: "isNotSent",
       action: "removeConnection",
     },
-
-    {
-      id: "block",
-      type: "button",
-      title: "Desbloquear",
-      hideCondition: "isNotBlocked",
-      action: "unBlockUser",
-    },
-  ],
-
-  MORE_ACTIONS: [
-    // {
-    //   id: "edit",
-    //   type: "button",
-    //   title: "Editar perfil",
-    //   hideCondition: "isNotSelf",
-    // },
 
     {
       id: "block",

@@ -274,7 +274,7 @@ const NewProfileTemplate = () => {
               <LabeledInput
                 id='url'
                 placeholder='Insira uma URL personalizada para o grupo'
-                label='URL (Caso fique em branco, será baseado no nome)'
+                label='URL personalizada (Caso fique em branco, será baseado no nome)'
                 value={form.url.value}
                 onChange={handleChange}
               />

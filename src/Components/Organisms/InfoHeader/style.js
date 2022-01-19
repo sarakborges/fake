@@ -57,6 +57,59 @@ export const DropdownMenu = styled.div`
     aspect-ratio: 1;
 
     box-shadow: 2px 2px 3px var(--bgContrast);
+
+    > span {
+      position: absolute;
+      right: -12px;
+      top: -12px;
+      z-index: 1;
+
+      aspect-ratio: 1;
+      padding: 0 8px;
+
+      display: flex;
+      place-items: center;
+      place-content: center;
+
+      border-radius: 100%;
+      background-color: var(--red);
+
+      color: var(--white);
+      font-size: 12px;
+    }
+  }
+`;
+
+export const EditLink = styled.div`
+  position: absolute;
+  right: 32px;
+  top: 32px;
+  z-index: 6;
+
+  > a {
+    display: flex;
+    place-items: center;
+    place-content: center;
+    gap: 8px;
+
+    aspect-ratio: 1;
+    padding: 0 8px;
+
+    border-radius: 4px;
+    border: 2px solid transparent;
+    background-color: var(--bg);
+    box-shadow: 2px 2px 3px var(--bgContrast);
+    cursor: pointer;
+
+    color: var(--main);
+    font-size: 16px;
+    font-family: inherit;
+
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+      background-color: var(--bgContrast);
+    }
   }
 `;
 
@@ -78,6 +131,11 @@ export const Dropdown = styled.div`
   visibility: ${({ displayMenu }) => (displayMenu ? "visible" : "hidden")};
 
   transition: opacity 0.3s, visibility 0.3s;
+
+  > button {
+    place-content: flex-start;
+    width: 100%;
+  }
 `;
 
 export const Center = styled.div`

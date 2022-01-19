@@ -1,13 +1,19 @@
 // Dependencies
 import Link from "next/link";
 import { useContext, useEffect, useRef, useState } from "react";
-import { faEllipsisH, faQuestion } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEllipsisH,
+  faExclamation,
+  faPencilAlt,
+  faQuestion,
+} from "@fortawesome/free-solid-svg-icons";
 
 // APIs
 import ProfileAPI from "Apis/Profile";
 import GroupAPI from "Apis/Group";
 
 // Helpers
+import { ROUTES } from "Helpers/routes";
 import { PROFILE_HEADER, GROUP_HEADER, TOASTS } from "Helpers/Constants";
 import { getTimeString } from "Helpers/Functions";
 
@@ -332,6 +338,16 @@ const InfoHeader = ({ info, type, setInfo }) => {
       <S.Head>
         <S.Cover img={info.cover} />
 
+        {!getCodition("isNotSelf") && (
+          <S.EditLink>
+            <Link href={ROUTES.SETTINGS.PROFILE}>
+              <a>
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </a>
+            </Link>
+          </S.EditLink>
+        )}
+
         {profile?._id &&
           headerType.MORE_ACTIONS.filter(
             (item) => !getCodition(item.hideCondition)
@@ -339,6 +355,12 @@ const InfoHeader = ({ info, type, setInfo }) => {
             <S.DropdownMenu ref={dropdownRef}>
               <Button style='transparent' size={12} onClick={toggleMenu}>
                 <FontAwesomeIcon icon={faEllipsisH} />
+
+                {!getCodition("isNotSent") && (
+                  <span>
+                    <FontAwesomeIcon icon={faExclamation} />
+                  </span>
+                )}
               </Button>
 
               <S.Dropdown displayMenu={displayMenu}>
@@ -350,22 +372,15 @@ const InfoHeader = ({ info, type, setInfo }) => {
                   }
 
                   return (
-                    <div key={item.id}>
-                      {item.type === "button" ? (
-                        <Button
-                          style='transparent'
-                          size={16}
-                          onClick={buttonActions[item.action]}
-                          disabled={isRequesting}
-                        >
-                          {item.title}
-                        </Button>
-                      ) : (
-                        <Link href={item.to.replace(":id", info.url)}>
-                          <a>{item.title}</a>
-                        </Link>
-                      )}
-                    </div>
+                    <Button
+                      key={item.id}
+                      style='transparent'
+                      size={16}
+                      onClick={buttonActions[item.action]}
+                      disabled={isRequesting}
+                    >
+                      {item.title}
+                    </Button>
                   );
                 })}
               </S.Dropdown>
