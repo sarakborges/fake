@@ -23,8 +23,32 @@ export const Cover = styled.div`
     background-image: ${({ img }) =>
       img
         ? `linear-gradient(transparent, var(--bgContrast))`
-        : `linear-gradient(transparent, var(--bg))`};
+        : `linear-gradient(var(--bg), var(--bgContrast))`};
   }
+`;
+
+export const PendingAction = styled.div`
+  display: flex;
+  place-items: center;
+  place-content: center;
+  gap: 32px;
+
+  padding: 16px 32px;
+`;
+
+export const PendingText = styled.div`
+  flex: 1;
+
+  b {
+    color: var(--white);
+  }
+`;
+
+export const PendingButtons = styled.div`
+  display: flex;
+  place-items: center;
+  place-content: center;
+  gap: 16px;
 `;
 
 export const Head = styled.div`
@@ -43,7 +67,6 @@ export const Head = styled.div`
   overflow: hidden;
 
   background-color: var(--bgContrast);
-  border-radius: 32px 0 0 0;
 `;
 
 export const DropdownMenu = styled.div`
@@ -57,26 +80,6 @@ export const DropdownMenu = styled.div`
     aspect-ratio: 1;
 
     box-shadow: 2px 2px 3px var(--bgContrast);
-
-    > span {
-      position: absolute;
-      right: -12px;
-      top: -12px;
-      z-index: 1;
-
-      aspect-ratio: 1;
-      padding: 0 8px;
-
-      display: flex;
-      place-items: center;
-      place-content: center;
-
-      border-radius: 100%;
-      background-color: var(--red);
-
-      color: var(--white);
-      font-size: 12px;
-    }
   }
 `;
 
@@ -93,7 +96,7 @@ export const EditLink = styled.div`
     gap: 8px;
 
     aspect-ratio: 1;
-    padding: 0 8px;
+    padding: 0 16px;
 
     border-radius: 4px;
     border: 2px solid transparent;

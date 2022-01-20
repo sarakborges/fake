@@ -13,7 +13,6 @@ export const Content = styled.div`
   max-width: calc(100% - 320px);
   flex: 1;
 
-  border-radius: 32px 0 0 32px;
   background-color: var(--bgContrast);
 `;
 

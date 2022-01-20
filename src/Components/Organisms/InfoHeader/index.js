@@ -2,10 +2,12 @@
 import Link from "next/link";
 import { useContext, useEffect, useRef, useState } from "react";
 import {
+  faCheckCircle,
   faEllipsisH,
   faExclamation,
   faPencilAlt,
   faQuestion,
+  faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
 // APIs
@@ -271,7 +273,11 @@ const InfoHeader = ({ info, type, setInfo }) => {
     },
   };
 
-  const getCodition = (condition) => {
+  const getCondition = (condition) => {
+    if (!profile) {
+      return false;
+    }
+
     const isSelf = profile._id === info._id;
     const isOwner = profile._id === info.owner;
     const isBlocked = profile.blockedUsers?.find?.(
@@ -335,10 +341,43 @@ const InfoHeader = ({ info, type, setInfo }) => {
 
   return (
     <>
+      {!getCondition("isNotSent") && (
+        <S.PendingAction>
+          <S.PendingText>
+            <b>Ação pendente:</b>
+            <> Deseja conectar-se a </>
+            <b>{info?.name}</b>
+            <>?</>
+          </S.PendingText>
+
+          <S.PendingButtons>
+            <Button
+              style='success-secondary'
+              size={16}
+              disabled={isRequesting}
+              onClick={buttonActions.acceptConnection}
+            >
+              <FontAwesomeIcon icon={faCheckCircle} />
+              Aceitar
+            </Button>
+
+            <Button
+              style='warning-secondary'
+              size={16}
+              disabled={isRequesting}
+              onClick={buttonActions.removeConnection}
+            >
+              <FontAwesomeIcon icon={faTimesCircle} />
+              Recusar
+            </Button>
+          </S.PendingButtons>
+        </S.PendingAction>
+      )}
+
       <S.Head>
         <S.Cover img={info.cover} />
 
-        {!getCodition("isNotSelf") && (
+        {!getCondition("isNotSelf") && (
           <S.EditLink>
             <Link href={ROUTES.SETTINGS.PROFILE}>
               <a>
@@ -350,24 +389,18 @@ const InfoHeader = ({ info, type, setInfo }) => {
 
         {profile?._id &&
           headerType.MORE_ACTIONS.filter(
-            (item) => !getCodition(item.hideCondition)
+            (item) => !getCondition(item.hideCondition)
           ).length > 0 && (
             <S.DropdownMenu ref={dropdownRef}>
-              <Button style='transparent' size={12} onClick={toggleMenu}>
+              <Button style='transparent' size={16} onClick={toggleMenu}>
                 <FontAwesomeIcon icon={faEllipsisH} />
-
-                {!getCodition("isNotSent") && (
-                  <span>
-                    <FontAwesomeIcon icon={faExclamation} />
-                  </span>
-                )}
               </Button>
 
               <S.Dropdown displayMenu={displayMenu}>
                 {headerType.MORE_ACTIONS.filter(
-                  (item) => !getCodition(item.hideCondition)
+                  (item) => !getCondition(item.hideCondition)
                 ).map((item) => {
-                  if (!profile?._id || getCodition(item.hideCondition)) {
+                  if (!profile?._id || getCondition(item.hideCondition)) {
                     return false;
                   }
 
@@ -422,11 +455,11 @@ const InfoHeader = ({ info, type, setInfo }) => {
 
           {profile?._id &&
             headerType.ACTIONS.filter(
-              (item) => !getCodition(item.hideCondition)
+              (item) => !getCondition(item.hideCondition)
             ).length > 0 && (
               <S.Actions>
                 {headerType.ACTIONS.filter(
-                  (item) => !getCodition(item.hideCondition)
+                  (item) => !getCondition(item.hideCondition)
                 ).map((item) => {
                   return (
                     <div key={item.id}>

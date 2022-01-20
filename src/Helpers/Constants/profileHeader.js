@@ -45,6 +45,14 @@ export const PROFILE_HEADER = {
     },
 
     {
+      id: "cancel",
+      type: "button",
+      title: "Cancelar solicitação",
+      hideCondition: "isNotPending",
+      action: "removeConnection",
+    },
+
+    {
       id: "remove",
       type: "button",
       title: "Remover conexão",
@@ -62,30 +70,6 @@ export const PROFILE_HEADER = {
   ],
 
   MORE_ACTIONS: [
-    {
-      id: "cancel",
-      type: "button",
-      title: "Cancelar solicitação",
-      hideCondition: "isNotPending",
-      action: "removeConnection",
-    },
-
-    {
-      id: "accept",
-      type: "button",
-      title: "Aceitar conexão",
-      hideCondition: "isNotSent",
-      action: "acceptConnection",
-    },
-
-    {
-      id: "refuse",
-      type: "button",
-      title: "Recusar conexão",
-      hideCondition: "isNotSent",
-      action: "removeConnection",
-    },
-
     {
       id: "block",
       type: "button",
