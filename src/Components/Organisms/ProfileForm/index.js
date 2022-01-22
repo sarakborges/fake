@@ -4,10 +4,11 @@ import { useRouter } from "next/dist/client/router";
 
 // APIS
 import ProfileAPI from "Apis/Profile";
-import UserAPI from "Apis/User";
+import ImageAPI from "Apis/Image";
 
 // Helpers
 import { slugify } from "Helpers/Functions";
+import { TOASTS } from "Helpers/Constants";
 import { ROUTES } from "Helpers/routes";
 
 // Contexts
@@ -40,44 +41,10 @@ const SettingsProfile = ({ id, form, setForm, getProfileData }) => {
   const [isRequesting, setIsRequesting] = useState(false);
 
   const displayToast = (toast) => {
-    const toasts = {
-      success: {
-        title: "Sucesso!",
-        text: `Perfil ${id ? "editado" : "criado"} com sucesso.`,
-        type: "success",
-      },
-
-      warning: {
-        title: "Cuidado!",
-        text: "Todos os campos precisam ser preenchidos, antes de continuarmos.",
-        type: "warning",
-      },
-
-      error: {
-        title: "Erro!",
-        text: `Aconteceu algum erro ao tentar ${
-          id ? "editar" : "criar"
-        } seu perfil. Tente novamente.`,
-        type: "error",
-      },
-
-      deleteSuccess: {
-        title: "Sucesso!",
-        text: "Perfil excluído com sucesso.",
-        type: "success",
-      },
-
-      deleteError: {
-        title: "Erro!",
-        text: "Aconteceu algum erro ao tentar excluir seu perfil. Tente novamente.",
-        type: "error",
-      },
-    };
-
     appDispatch({
       type: "SET_TOAST",
       data: {
-        ...toasts[toast],
+        ...TOASTS[toast],
         isVisible: true,
       },
     });
@@ -104,47 +71,39 @@ const SettingsProfile = ({ id, form, setForm, getProfileData }) => {
   };
 
   const handleDelete = async () => {
-    if (!id) {
-      displayToast("deleteError");
-      return;
-    }
+    try {
+      if (!id) {
+        displayToast("deleteProfileError");
+        return;
+      }
 
-    setIsRequesting(true);
-    const deleteReq = await ProfileAPI.deleteProfile(id);
+      setIsRequesting(true);
 
-    if (!deleteReq) {
-      displayToast("deleteError");
+      await ProfileAPI.deleteProfile({
+        user: user._id,
+        profile: profile._id,
+      });
+
+      const filteredProfiles = profiles.filter(
+        (item) => item._id !== profile._id
+      );
+
+      userDispatch({
+        type: "SET_PROFILE",
+        data: {
+          profile: undefined,
+          profiles: [...filteredProfiles],
+        },
+      });
+
       setIsRequesting(false);
-      return;
+      displayToast("deleteProfileSuccess");
+      router.push(ROUTES.HOME);
+    } catch (e) {
+      console.log(e);
+      displayToast("deleteProfileError");
+      setIsRequesting(false);
     }
-
-    const filteredProfiles = profiles.filter(
-      (item) => item._id !== profile._id
-    );
-
-    const updateReq = await UserAPI.updateUser({
-      ...user,
-      profiles: [...filteredProfiles],
-    });
-
-    setIsRequesting(false);
-
-    if (!updateReq) {
-      displayToast("deleteError");
-      return;
-    }
-
-    displayToast("deleteSuccess");
-
-    router.push(ROUTES.HOME);
-
-    userDispatch({
-      type: "SET_PROFILE",
-      data: {
-        profile: undefined,
-        profiles: [...filteredProfiles],
-      },
-    });
   };
 
   const handleClear = () => {
@@ -154,15 +113,15 @@ const SettingsProfile = ({ id, form, setForm, getProfileData }) => {
   const handleSubmit = async () => {
     try {
       if (!form.name.value) {
-        displayToast("warning");
+        displayToast(id ? "editProfileWarning" : "createProfileWarning");
 
         return;
       }
 
       setIsRequesting(true);
 
-      const avatarUploaded = await ProfileAPI.uploadFile(form.avatar.value);
-      const coverUploaded = await ProfileAPI.uploadFile(form.cover.value);
+      const avatarUploaded = await ImageAPI.uploadFile(form.avatar.value);
+      const coverUploaded = await ImageAPI.uploadFile(form.cover.value);
 
       const url = slugify(form.url.value || form.name.value);
 
@@ -179,16 +138,12 @@ const SettingsProfile = ({ id, form, setForm, getProfileData }) => {
 
       if (!id) {
         const newId = await ProfileAPI.createProfile({
-          ...newProfile,
-          createdAt: new Date(),
-        });
+          profile: {
+            ...newProfile,
+            createdAt: new Date(),
+          },
 
-        await UserAPI.updateUser({
-          ...user,
-          profiles:
-            user.profiles?.length > 0
-              ? [...user.profiles.map((item) => item._id), newId]
-              : [newId],
+          user: user._id,
         });
 
         userDispatch({
@@ -216,10 +171,10 @@ const SettingsProfile = ({ id, form, setForm, getProfileData }) => {
       }
 
       setIsRequesting(false);
-      displayToast("success");
+      displayToast(id ? "editProfileSuccess" : "createProfileSuccess");
     } catch (e) {
       setIsRequesting(false);
-      displayToast("error");
+      displayToast(id ? "editProfileError" : "createProfileError");
       console.log(e);
     }
   };

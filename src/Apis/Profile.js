@@ -48,14 +48,14 @@ const updateProfile = (data) => {
     .catch((err) => err);
 };
 
-const deleteProfile = (id) => {
-  if (!id) {
-    console.log("deleteProfile requires id param");
+const deleteProfile = (data) => {
+  if (!data) {
+    console.log("deleteProfile requires data param");
     return;
   }
 
   return axios
-    .delete(`${process.env.NEXT_PUBLIC_REQUEST_URI}/profile/${id}`)
+    .post(`${process.env.NEXT_PUBLIC_REQUEST_URI}/profile/delete`, { ...data })
     .then((res) => res.data)
     .catch((err) => err);
 };

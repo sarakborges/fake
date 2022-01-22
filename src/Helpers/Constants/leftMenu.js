@@ -73,6 +73,13 @@ export const LEFT_MENU = [
   [
     {
       icon: faPlus,
+      text: "Criar perfil",
+      link: ROUTES.NEW_PROFILE,
+      activeOnRoutes: [ROUTES.NEW_PROFILE],
+    },
+
+    {
+      icon: faPlus,
       text: "Criar grupo",
       link: ROUTES.NEW_GROUP,
       activeOnRoutes: [ROUTES.NEW_GROUP],

@@ -79,13 +79,13 @@ const Sidebar = () => {
               <S.NewProfile>
                 <Link href={ROUTES.NEW_PROFILE}>
                   <a>
-                    <Text type='custom' fw={600}>
-                      Novo perfil
-                    </Text>
-
                     <span>
                       <FontAwesomeIcon icon={faPlus} />
                     </span>
+
+                    <Text type='custom' fw={600}>
+                      Novo perfil
+                    </Text>
                   </a>
                 </Link>
               </S.NewProfile>
