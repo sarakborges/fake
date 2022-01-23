@@ -34,20 +34,17 @@ const GroupTemplate = () => {
     query: { url },
   } = router;
 
-  const getGroup = useCallback(
-    async (groupUrl) => {
-      const groupData = await GroupAPI.getGroupByUrl(groupUrl);
+  const getGroup = useCallback(async () => {
+    const groupData = await GroupAPI.getGroupByUrl(url);
 
-      if (groupData) {
-        setGroup(groupData);
-      }
-    },
-    [GroupAPI]
-  );
+    if (groupData) {
+      setGroup(groupData);
+    }
+  }, [url, GroupAPI]);
 
   useEffect(() => {
-    getGroup(url);
-  }, [url, getGroup]);
+    getGroup();
+  }, [getGroup]);
 
   return (
     <AuthedTemplate>

@@ -1,5 +1,5 @@
 // Dependencies
-import { useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 
 // APIS
@@ -30,13 +30,15 @@ import File from "Components/Molecules/File";
 import * as S from "./style";
 
 // Template
-const SettingsProfile = ({ id, form, setForm, getProfileData }) => {
+const SettingsProfile = ({ form, setForm, originalData }) => {
   const router = useRouter();
 
   const { userState, userDispatch } = useContext(UserContext);
   const { appDispatch } = useContext(AppContext);
-  const { user, profile } = userState;
-  const { profiles } = user || undefined;
+  const { user } = userState;
+
+  const profiles = user?.profiles;
+  const _id = originalData?._id;
 
   const [isRequesting, setIsRequesting] = useState(false);
 
@@ -57,6 +59,26 @@ const SettingsProfile = ({ id, form, setForm, getProfileData }) => {
     }, 5000);
   };
 
+  const getFormData = useCallback(() => {
+    if (!_id) {
+      return;
+    }
+
+    let newObj = { ...form };
+
+    for (let key of Object.keys(form)) {
+      newObj = {
+        ...newObj,
+        [key]: {
+          value: originalData[key],
+          error: "",
+        },
+      };
+    }
+
+    setForm({ ...newObj });
+  }, [_id, setForm]);
+
   const handleChange = (e) => {
     const tar = e.currentTarget;
 
@@ -72,7 +94,7 @@ const SettingsProfile = ({ id, form, setForm, getProfileData }) => {
 
   const handleDelete = async () => {
     try {
-      if (!id) {
+      if (!_id) {
         displayToast("deleteProfileError");
         return;
       }
@@ -81,11 +103,11 @@ const SettingsProfile = ({ id, form, setForm, getProfileData }) => {
 
       await ProfileAPI.deleteProfile({
         user: user._id,
-        profile: profile._id,
+        profile: originalData._id,
       });
 
       const filteredProfiles = profiles.filter(
-        (item) => item._id !== profile._id
+        (item) => item._id !== originalData._id
       );
 
       userDispatch({
@@ -107,39 +129,39 @@ const SettingsProfile = ({ id, form, setForm, getProfileData }) => {
   };
 
   const handleClear = () => {
-    getProfileData();
+    getFormData();
   };
 
   const handleSubmit = async () => {
     try {
       if (!form.name.value) {
-        displayToast(id ? "editProfileWarning" : "createProfileWarning");
+        displayToast(_id ? "editProfileWarning" : "createProfileWarning");
 
         return;
       }
 
       setIsRequesting(true);
 
-      const avatarUploaded = await ImageAPI.uploadFile(form.avatar.value);
-      const coverUploaded = await ImageAPI.uploadFile(form.cover.value);
-
       const url = slugify(form.url.value || form.name.value);
 
       const newProfile = {
-        _id: id,
-        avatar: avatarUploaded.url,
-        cover: coverUploaded.url,
+        _id,
         name: form.name.value,
-        about: form.about.value,
-        link: form.link.value,
         url,
+        link: form.link.value,
+        about: form.about.value,
         isAdult: form.isAdult.value,
       };
 
-      if (!id) {
+      if (!_id) {
+        const avatarUploaded = await ImageAPI.uploadFile(form.avatar.value);
+        const coverUploaded = await ImageAPI.uploadFile(form.cover.value);
+
         const newId = await ProfileAPI.createProfile({
           profile: {
             ...newProfile,
+            avatar: avatarUploaded.url,
+            cover: coverUploaded.url,
             createdAt: new Date(),
           },
 
@@ -150,11 +172,24 @@ const SettingsProfile = ({ id, form, setForm, getProfileData }) => {
           type: "SET_NEW_PROFILE",
           data: { ...newProfile, _id: newId },
         });
-
-        getProfileData();
       } else {
+        let avatar = originalData.avatar;
+        let cover = originalData.cover;
+
+        if (originalData.avatar !== form.avatar.value) {
+          const avatarUploaded = await ImageAPI.uploadFile(form.avatar.value);
+          avatar = avatarUploaded.url;
+        }
+
+        if (originalData.cover !== form.cover.value) {
+          const coverUploaded = await ImageAPI.uploadFile(form.cover.value);
+          cover = coverUploaded.url;
+        }
+
         await ProfileAPI.updateProfile({
           ...newProfile,
+          avatar,
+          cover,
         });
 
         userDispatch({
@@ -163,7 +198,7 @@ const SettingsProfile = ({ id, form, setForm, getProfileData }) => {
             profile: { ...newProfile },
             profiles: [
               ...profiles.map((item) =>
-                item._id === profile._id ? newProfile : item
+                item._id === originalData._id ? newProfile : item
               ),
             ],
           },
@@ -171,19 +206,25 @@ const SettingsProfile = ({ id, form, setForm, getProfileData }) => {
       }
 
       setIsRequesting(false);
-      displayToast(id ? "editProfileSuccess" : "createProfileSuccess");
+      displayToast(_id ? "editProfileSuccess" : "createProfileSuccess");
+
+      router.push(ROUTES.PROFILE.replace(":id", url));
     } catch (e) {
       setIsRequesting(false);
-      displayToast(id ? "editProfileError" : "createProfileError");
+      displayToast(_id ? "editProfileError" : "createProfileError");
       console.log(e);
     }
   };
+
+  useEffect(() => {
+    getFormData();
+  }, [getFormData]);
 
   return (
     <S.SettingsWrapper>
       <>
         <Text type='title' pb={16}>
-          {id ? "Configurações do seu perfil" : "Criar novo perfil"}
+          {_id ? "Configurações do seu perfil" : "Criar novo perfil"}
         </Text>
 
         <Form onSubmit={handleSubmit}>
@@ -251,7 +292,7 @@ const SettingsProfile = ({ id, form, setForm, getProfileData }) => {
 
           <S.Buttons>
             <div>
-              {id && (
+              {_id && (
                 <Button style='warning' size={16} onClick={handleDelete}>
                   Excluir perfil
                 </Button>
@@ -259,7 +300,7 @@ const SettingsProfile = ({ id, form, setForm, getProfileData }) => {
             </div>
 
             <S.ButtonsSave>
-              {id && (
+              {_id && (
                 <Button style='secondary' size={16} onClick={handleClear}>
                   Descartar alterações
                 </Button>
@@ -271,7 +312,7 @@ const SettingsProfile = ({ id, form, setForm, getProfileData }) => {
                 size={16}
                 disabled={isRequesting}
               >
-                {id ? "Salvar alterações" : "Criar perfil"}
+                {_id ? "Salvar alterações" : "Criar perfil"}
               </Button>
             </S.ButtonsSave>
           </S.Buttons>

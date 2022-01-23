@@ -388,6 +388,16 @@ const InfoHeader = ({ info, type, setInfo }) => {
           </S.EditLink>
         )}
 
+        {!getCondition("isNotOwner") && (
+          <S.EditLink>
+            <Link href={ROUTES.SETTINGS.GROUP.replace(":id", info.url)}>
+              <a>
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </a>
+            </Link>
+          </S.EditLink>
+        )}
+
         {profile?._id &&
           headerType.MORE_ACTIONS.filter(
             (item) => !getCondition(item.hideCondition)

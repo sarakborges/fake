@@ -1,5 +1,5 @@
 // Dependencies
-import { useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 
 // APIS
@@ -30,12 +30,14 @@ import LabeledTextarea from "Components/Molecules/LabeledTextarea";
 import * as S from "./style";
 
 // Template
-const GroupForm = ({ id, form, setForm }) => {
+const GroupForm = ({ form, setForm, originalData }) => {
   const router = useRouter();
 
-  const { userDispatch, userState } = useContext(UserContext);
+  const { userState } = useContext(UserContext);
   const { appDispatch } = useContext(AppContext);
-  const { user, profile } = userState;
+  const { profile } = userState;
+
+  const _id = originalData?._id;
 
   const [isRequesting, setIsRequesting] = useState(false);
 
@@ -56,6 +58,26 @@ const GroupForm = ({ id, form, setForm }) => {
     }, 5000);
   };
 
+  const getFormData = useCallback(() => {
+    if (!_id) {
+      return;
+    }
+
+    let newObj = { ...form };
+
+    for (let key of Object.keys(form)) {
+      newObj = {
+        ...newObj,
+        [key]: {
+          value: originalData[key],
+          error: "",
+        },
+      };
+    }
+
+    setForm({ ...newObj });
+  }, [_id, setForm]);
+
   const handleChange = (e) => {
     const tar = e.currentTarget;
 
@@ -69,90 +91,83 @@ const GroupForm = ({ id, form, setForm }) => {
     });
   };
 
+  const handleDelete = () => {};
+
+  const handleClear = () => {
+    getFormData();
+  };
+
   const handleSubmit = async () => {
     try {
       if (!form.name.value) {
-        displayToast(id ? "editGroupWarning" : "createGroupWarning");
+        displayToast(_id ? "editGroupWarning" : "createGroupWarning");
         return;
       }
 
       setIsRequesting(true);
 
-      const avatarUploaded = await ImageAPI.uploadFile(form.avatar.value);
-      const coverUploaded = await ImageAPI.uploadFile(form.cover.value);
-
       const url = slugify(form.url.value || form.name.value);
 
       const newGroup = {
-        owner: profile._id,
-        avatar: avatarUploaded.url,
-        cover: coverUploaded.url,
         name: form.name.value,
-        url,
         about: form.about.value,
         isAdult: form.isAdult.value,
-        createdAt: new Date(),
-        members: [
-          {
-            profile: profile._id,
-            status: "member",
-            joinedAt: new Date(),
-          },
-        ],
-        moderators: [],
-        relatedGroups: [],
-        tags: [],
-        importantLinks: [],
-      };
-
-      const newId = await GroupAPI.createGroup({
-        group: { ...newGroup },
-        profile: profile._id,
-      });
-
-      const newGroupData = {
-        _id: newId,
-        name: newGroup.name,
         url,
-        avatar: newGroup.avatar,
-        owner: newGroup.owner,
-        moderators: newGroup.moderators,
       };
 
-      const newProfileData = {
-        ...profile,
+      if (!_id) {
+        const avatarUploaded = await ImageAPI.uploadFile(form.avatar.value);
+        const coverUploaded = await ImageAPI.uploadFile(form.cover.value);
 
-        groups:
-          profile.groups?.length > 0
-            ? [...profile.groups, { ...newGroupData }]
-            : [{ ...newGroupData }],
-      };
+        await GroupAPI.createGroup({
+          group: {
+            ...newGroup,
+            avatar: avatarUploaded.url,
+            cover: coverUploaded.url,
+          },
+          profile: profile._id,
+        });
+      } else {
+        let avatar = originalData.avatar;
+        let cover = originalData.cover;
 
-      const newData = {
-        user: { ...user },
-        profile: { ...newProfileData },
-      };
+        if (originalData.avatar !== form.avatar.value) {
+          const avatarUploaded = await ImageAPI.uploadFile(form.avatar.value);
+          avatar = avatarUploaded.url;
+        }
 
-      userDispatch({
-        type: "SET_USER",
-        data: newData,
-      });
+        if (originalData.cover !== form.cover.value) {
+          const coverUploaded = await ImageAPI.uploadFile(form.cover.value);
+          cover = coverUploaded.url;
+        }
 
-      displayToast(id ? "editGroupSuccess" : "createGroupSuccess");
+        await GroupAPI.updateGroup({
+          ...originalData,
+          ...newGroup,
+          avatar,
+          cover,
+        });
+      }
 
-      router.push(ROUTES.GROUP.replace(":id", newGroupData.url));
+      displayToast(_id ? "editGroupSuccess" : "createGroupSuccess");
+
+      router.push(ROUTES.GROUP.replace(":id", url));
     } catch (e) {
       setIsRequesting(false);
-      displayToast(id ? "editGroupError" : "createGroupError");
+      displayToast(_id ? "editGroupError" : "createGroupError");
       console.log(e);
     }
   };
+
+  useEffect(() => {
+    getFormData();
+  }, [getFormData]);
 
   return (
     <S.FormWrapper>
       <S.FormContent>
         <Text type='title' pb={32}>
-          {id ? "Configurações do seu grupo" : "Criar novo grupo"}
+          {_id ? "Configurações do seu grupo" : "Criar novo grupo"}
         </Text>
 
         <Form onSubmit={handleSubmit}>
@@ -210,16 +225,32 @@ const GroupForm = ({ id, form, setForm }) => {
             onChange={handleChange}
           />
 
-          <S.FormSave>
-            <Button
-              type='submit'
-              style='primary'
-              size={16}
-              disabled={isRequesting}
-            >
-              Criar grupo
-            </Button>
-          </S.FormSave>
+          <S.Buttons>
+            <div>
+              {_id && (
+                <Button style='warning' size={16} onClick={handleDelete}>
+                  Excluir grupo
+                </Button>
+              )}
+            </div>
+
+            <S.ButtonsSave>
+              {_id && (
+                <Button style='secondary' size={16} onClick={handleClear}>
+                  Descartar alterações
+                </Button>
+              )}
+
+              <Button
+                type='submit'
+                style='primary'
+                size={16}
+                disabled={isRequesting}
+              >
+                {`${_id ? "Salvar alterações" : "Criar grupo"}`}
+              </Button>
+            </S.ButtonsSave>
+          </S.Buttons>
         </Form>
       </S.FormContent>
     </S.FormWrapper>

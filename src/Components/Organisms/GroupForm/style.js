@@ -18,9 +18,17 @@ export const FormContent = styled.div`
   }
 `;
 
-export const FormSave = styled.div`
+export const Buttons = styled.div`
+  display: flex;
+  place-content: space-between;
+
+  padding-top: 16px;
+`;
+
+export const ButtonsSave = styled.div`
   display: flex;
   place-content: flex-end;
+  gap: 16px;
 `;
 
 export const Row = styled.div`

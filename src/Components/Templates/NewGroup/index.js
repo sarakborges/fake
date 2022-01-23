@@ -5,17 +5,11 @@ import Head from "next/head";
 // Helpers
 import { SITE_NAME } from "Helpers/Constants";
 
-// Atoms
-import Text from "Components/Atoms/Text";
-
 // Organisms
 import GroupForm from "Components/Organisms/GroupForm";
 
 // Template
 import AuthedTemplate from "Components/Templates/Authed";
-
-// Style
-import * as S from "./style";
 
 // Template
 const NewProfileTemplate = () => {

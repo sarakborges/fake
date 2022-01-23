@@ -93,6 +93,7 @@ export const LEFT_MENU = [
         ROUTES.SETTINGS.ACCOUNT,
         ROUTES.SETTINGS.PROFILE,
         ROUTES.SETTINGS.SITE,
+        ROUTES.SETTINGS.GROUP.replace(":id", "[url]"),
       ],
     },
 

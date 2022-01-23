@@ -28,5 +28,6 @@ export const ROUTES = {
     PROFILE: "/settings/profile",
     ACCOUNT: "/settings/account",
     SITE: "/settings/site",
+    GROUP: "/settings/group/:id",
   },
 };

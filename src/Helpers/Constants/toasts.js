@@ -115,7 +115,7 @@ export const TOASTS = {
 
   editGroupSuccess: {
     title: "Sucesso!",
-    text: "Grupo criado com sucesso.",
+    text: "Grupo editado com sucesso.",
     type: "success",
   },
 
@@ -139,7 +139,7 @@ export const TOASTS = {
 
   editGroupError: {
     title: "Erro!",
-    text: "Aconteceu algum erro ao tentar criar o grupo. Tente novamente.",
+    text: "Aconteceu algum erro ao tentar editar o grupo. Tente novamente.",
     type: "error",
   },
 

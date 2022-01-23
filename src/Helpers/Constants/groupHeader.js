@@ -50,12 +50,5 @@ export const GROUP_HEADER = {
     },
   ],
 
-  MORE_ACTIONS: [
-    {
-      id: "edit",
-      type: "button",
-      title: "Editar grupo",
-      hideCondition: "isNotOwner",
-    },
-  ],
+  MORE_ACTIONS: [],
 };
