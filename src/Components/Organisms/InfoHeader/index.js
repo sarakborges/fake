@@ -4,7 +4,6 @@ import { useContext, useEffect, useRef, useState } from "react";
 import {
   faCheckCircle,
   faEllipsisH,
-  faExclamation,
   faPencilAlt,
   faQuestion,
   faTimesCircle,
@@ -166,12 +165,14 @@ const InfoHeader = ({ info, type, setInfo }) => {
               : [info._id],
         };
 
-        await ProfileAPI.updateProfile({
-          ...newProfile,
+        await ProfileAPI.blockProfile({
+          ids: [profile._id, info._id],
+          status: "blocked",
         });
 
-        await ProfileAPI.deleteConnection({
+        await ProfileAPI.updateConnection({
           ids: [profile._id, info._id],
+          status: "remove",
         });
 
         updateLocalUser({ ...newProfile });
@@ -186,90 +187,90 @@ const InfoHeader = ({ info, type, setInfo }) => {
     },
 
     unBlockUser: async () => {
-      setIsRequesting(true);
+      try {
+        setIsRequesting(true);
 
-      const newProfile = {
-        ...profile,
+        const newProfile = {
+          ...profile,
 
-        blockedUsers:
-          profile?.blockedUsers?.length > 0
-            ? [...profile.blockedUsers.filter((item) => item !== info._id)]
-            : [],
-      };
+          blockedUsers:
+            profile?.blockedUsers?.length > 0
+              ? [...profile.blockedUsers.filter((item) => item !== info._id)]
+              : [],
+        };
 
-      const updateCurrentUserReq = await ProfileAPI.updateProfile({
-        ...newProfile,
-      });
+        await ProfileAPI.blockProfile({
+          ids: [profile._id, info._id],
+          status: "unblocked",
+        });
 
-      if (!updateCurrentUserReq) {
+        updateLocalUser({ ...newProfile });
+
+        setIsRequesting(false);
+        displayToast("unblockSuccess");
+      } catch (e) {
+        console.log(e);
         displayToast("unblockError");
         setIsRequesting(false);
-        return;
       }
-
-      updateLocalUser({ ...newProfile });
-
-      setIsRequesting(false);
-      displayToast("unblockSuccess");
     },
 
     enterGroup: async () => {
-      setIsRequesting(true);
+      try {
+        setIsRequesting(true);
 
-      const newGroupData = {
-        profile: info._id,
-        status: "member",
-        joinedAt: new Date(),
-      };
+        const joinReq = await GroupAPI.joinGroup({
+          profile: profile._id,
+          group: info._id,
+        });
 
-      const newProfile = {
-        ...profile,
+        updateLocalUser({
+          ...profile,
 
-        groups:
-          profile?.groups?.length > 0
-            ? [...profile.groups, { ...newGroupData }]
-            : [{ ...newGroupData }],
-      };
+          groups:
+            profile?.groups?.length > 0
+              ? [...profile.groups, { ...joinReq.profile }]
+              : [{ ...joinReq.profile }],
+        });
 
-      const updateCurrentUserReq = await ProfileAPI.updateProfile({
-        ...newProfile,
-      });
+        setInfo({ ...joinReq.group });
 
-      if (!updateCurrentUserReq) {
+        setIsRequesting(false);
+        displayToast("enterGroupSuccess");
+      } catch (e) {
+        console.log(e);
         displayToast("enterGroupError");
         setIsRequesting(false);
-        return;
       }
+    },
 
-      const newGroupInfo = {
-        ...info,
-        members: [
-          ...info?.members,
+    leaveGroup: async () => {
+      try {
+        setIsRequesting(true);
 
-          {
-            _id: profile._id,
-            avatar: profile.avatar,
-            name: profile.name,
-            url: profile.url,
-          },
-        ],
-      };
+        const leaveReq = await GroupAPI.leaveGroup({
+          profile: profile._id,
+          group: info._id,
+        });
 
-      const updateGroupReq = await GroupAPI.updateGroup({
-        ...newGroupInfo,
-      });
+        updateLocalUser({
+          ...profile,
 
-      if (!updateGroupReq) {
+          groups:
+            profile?.groups?.length > 0
+              ? [...profile.groups.filter((item) => item !== info._id)]
+              : [],
+        });
+
+        setInfo({ ...leaveReq });
+
+        setIsRequesting(false);
+        displayToast("enterGroupSuccess");
+      } catch (e) {
+        console.log(e);
         displayToast("enterGroupError");
         setIsRequesting(false);
-        return;
       }
-
-      updateLocalUser({ ...newProfile });
-      setInfo({ ...newGroupInfo });
-
-      setIsRequesting(false);
-      displayToast("enterGroupSuccess");
     },
   };
 
@@ -280,9 +281,7 @@ const InfoHeader = ({ info, type, setInfo }) => {
 
     const isSelf = profile._id === info._id;
     const isOwner = profile._id === info.owner;
-    const isBlocked = profile.blockedUsers?.find?.(
-      (item) => item?._id === info._id
-    );
+    const isBlocked = profile.blockedUsers?.find?.((item) => item === info._id);
 
     const conditions = {
       isOwner: isOwner,
@@ -318,10 +317,12 @@ const InfoHeader = ({ info, type, setInfo }) => {
         ),
 
       isNotMember:
-        isOwner || !info.members?.find?.((item) => item._id === profile._id),
+        isOwner ||
+        !info.members?.find?.((item) => item.profile._id === profile._id),
 
       isMember:
-        isOwner || info.members?.find?.((item) => item._id === profile._id),
+        isOwner ||
+        info.members?.find?.((item) => item.profile._id === profile._id),
 
       isNotBlocked: isSelf || !isBlocked,
 

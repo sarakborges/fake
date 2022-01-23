@@ -46,6 +46,7 @@ export const GROUP_HEADER = {
       type: "button",
       title: "Deixar de participar",
       hideCondition: "isNotMember",
+      action: "leaveGroup",
     },
   ],
 

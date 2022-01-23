@@ -74,6 +74,20 @@ const updateConnection = (info) => {
     .catch((err) => err);
 };
 
+const blockProfile = (info) => {
+  if (!info) {
+    console.log("blockProfile requires info param");
+    return;
+  }
+
+  return axios
+    .put(`${process.env.NEXT_PUBLIC_REQUEST_URI}/profile/block`, {
+      ...info,
+    })
+    .then((res) => res.data)
+    .catch((err) => err);
+};
+
 const createConnection = (info) => {
   if (!info) {
     console.log("createConnection requires info param");
@@ -88,25 +102,6 @@ const createConnection = (info) => {
     .catch((err) => err);
 };
 
-const uploadFile = (avatar) => {
-  const formData = new FormData();
-  formData.append("image", avatar);
-
-  return axios
-    .post(
-      "https://api.imgbb.com/1/upload?key=f268fffd080754b05f5498a1a56d7da2",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    )
-    .then((res) => res.data)
-    .then((res) => res.data)
-    .catch((err) => err);
-};
-
 export default {
   getProfileById,
   getProfileByUrl,
@@ -115,5 +110,5 @@ export default {
   deleteProfile,
   updateConnection,
   createConnection,
-  uploadFile,
+  blockProfile,
 };

@@ -48,4 +48,39 @@ const updateGroup = (data) => {
     .catch((err) => err);
 };
 
-export default { getGroupById, getGroupByUrl, createGroup, updateGroup };
+const joinGroup = (info) => {
+  if (!info) {
+    console.log("joinGroup requires info param");
+    return;
+  }
+
+  return axios
+    .put(`${process.env.NEXT_PUBLIC_REQUEST_URI}/group/join`, {
+      ...info,
+    })
+    .then((res) => res.data)
+    .catch((err) => err);
+};
+
+const leaveGroup = (info) => {
+  if (!info) {
+    console.log("leaveGroup requires info param");
+    return;
+  }
+
+  return axios
+    .put(`${process.env.NEXT_PUBLIC_REQUEST_URI}/group/leave`, {
+      ...info,
+    })
+    .then((res) => res.data)
+    .catch((err) => err);
+};
+
+export default {
+  getGroupById,
+  getGroupByUrl,
+  createGroup,
+  updateGroup,
+  joinGroup,
+  leaveGroup,
+};
