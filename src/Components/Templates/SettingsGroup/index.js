@@ -31,6 +31,7 @@ const NewGroupTemplate = () => {
     avatar: { ...baseFormField },
     name: { ...baseFormField },
     url: { ...baseFormField },
+    link: { ...baseFormField },
     isAdult: { ...baseFormField },
     about: { ...baseFormField },
     cover: { ...baseFormField },

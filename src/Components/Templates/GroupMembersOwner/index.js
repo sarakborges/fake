@@ -14,6 +14,8 @@ import Text from "Components/Atoms/Text";
 
 // Molecules
 import Tabs from "Components/Molecules/Tabs";
+import InfoNotFound from "Components/Molecules/InfoNotFound";
+import AdultWarning from "Components/Molecules/AdultWarning";
 
 // Organisms
 import InfoHeader from "Components/Organisms/InfoHeader";
@@ -28,6 +30,7 @@ import * as S from "./style";
 // Template
 const GroupMembersOwnerTemplate = () => {
   const [group, setGroup] = useState();
+  const [displayAdult, setDisplayAdult] = useState(false);
 
   const router = useRouter();
   const {
@@ -59,34 +62,45 @@ const GroupMembersOwnerTemplate = () => {
         <title>{`${SITE_NAME} - ${group?.name || "Grupo"} - Dono`}</title>
       </Head>
 
-      {group && (
-        <S.Wrapper>
-          <InfoHeader info={group} type='group' setInfo={setGroup} />
+      {!group?._id && <InfoNotFound type='group' />}
 
-          <S.GroupBody>
-            <Tabs
-              tabs={GROUP_MEMBERS_TABS.map((item) => {
-                return { ...item, link: item.link.replace(":id", group.url) };
-              })}
-            />
+      {group?._id && (
+        <>
+          {!displayAdult && group?.isAdult ? (
+            <AdultWarning setDisplayAdult={setDisplayAdult} type='group' />
+          ) : (
+            <S.Wrapper>
+              <InfoHeader info={group} type='group' setInfo={setGroup} />
 
-            <div>
-              <Text type='title' pb={32}>
-                Dono de {group.name}:
-              </Text>
+              <S.GroupBody>
+                <Tabs
+                  tabs={GROUP_MEMBERS_TABS.map((item) => {
+                    return {
+                      ...item,
+                      link: item.link.replace(":id", group.url),
+                    };
+                  })}
+                />
 
-              <InfoList
-                type='member'
-                info={getOwner().map((item) => {
-                  return {
-                    ...item.profile,
-                    joinedAt: item.joinedAt,
-                  };
-                })}
-              />
-            </div>
-          </S.GroupBody>
-        </S.Wrapper>
+                <div>
+                  <Text type='title' pb={32}>
+                    Dono de {group.name}:
+                  </Text>
+
+                  <InfoList
+                    type='member'
+                    info={getOwner().map((item) => {
+                      return {
+                        ...item.profile,
+                        joinedAt: item.joinedAt,
+                      };
+                    })}
+                  />
+                </div>
+              </S.GroupBody>
+            </S.Wrapper>
+          )}
+        </>
       )}
     </AuthedTemplate>
   );

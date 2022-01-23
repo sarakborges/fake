@@ -5,7 +5,7 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import * as S from "./style";
 
 // Template
-const Checkbox = ({ id, label, value, onChange }) => {
+const Checkbox = ({ id, label, checked, onChange }) => {
   return (
     <S.CheckboxWrapper>
       <S.Label htmlFor={id}>
@@ -15,7 +15,7 @@ const Checkbox = ({ id, label, value, onChange }) => {
           id={id}
           name={id}
           type='checkbox'
-          value={value}
+          checked={checked}
           onChange={onChange}
         />
 

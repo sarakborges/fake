@@ -70,7 +70,7 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
       newObj = {
         ...newObj,
         [key]: {
-          value: originalData[key],
+          value: originalData[key] || "",
           error: "",
         },
       };
@@ -87,6 +87,19 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
 
       [tar.name]: {
         value: tar.files?.length ? tar.files[0] : tar.value,
+        error: "",
+      },
+    });
+  };
+
+  const handleCheck = (e) => {
+    const tar = e.currentTarget;
+
+    setForm({
+      ...form,
+
+      [tar.name]: {
+        value: !form[tar.name].value,
         error: "",
       },
     });
@@ -150,7 +163,7 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
         url,
         link: form.link.value,
         about: form.about.value,
-        isAdult: form.isAdult.value,
+        isAdult: !!form.isAdult.value,
       };
 
       if (!_id) {
@@ -268,7 +281,7 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
 
           <LabeledInput
             id='link'
-            placeholder='Insira um link para ser exibido'
+            placeholder='Insira um link para ser exibido no cabeçalho do perfil'
             label='Link'
             value={form.link.value}
             onChange={handleChange}
@@ -286,8 +299,8 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
           <Checkbox
             id='isAdult'
             label='Seu perfil possui conteúdo adulto (+18)?'
-            value={form.url.value}
-            onChange={handleChange}
+            checked={form.isAdult.value}
+            onChange={handleCheck}
           />
 
           <S.Buttons>

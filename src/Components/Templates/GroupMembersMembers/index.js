@@ -11,6 +11,8 @@ import { SITE_NAME, GROUP_MEMBERS_TABS } from "Helpers/Constants";
 
 // Molecules
 import Tabs from "Components/Molecules/Tabs";
+import InfoNotFound from "Components/Molecules/InfoNotFound";
+import AdultWarning from "Components/Molecules/AdultWarning";
 
 // Organisms
 import InfoHeader from "Components/Organisms/InfoHeader";
@@ -25,6 +27,7 @@ import * as S from "./style";
 // Template
 const GroupMembersMembersTemplate = () => {
   const [group, setGroup] = useState();
+  const [displayAdult, setDisplayAdult] = useState(false);
 
   const router = useRouter();
   const {
@@ -64,32 +67,43 @@ const GroupMembersMembersTemplate = () => {
         <title>{`${SITE_NAME} - ${group?.name || "Grupo"} - Membros`}</title>
       </Head>
 
-      {group && (
-        <S.Wrapper>
-          <InfoHeader info={group} type='group' setInfo={setGroup} />
+      {!group?._id && <InfoNotFound type='group' />}
 
-          <S.GroupBody>
-            <Tabs
-              tabs={GROUP_MEMBERS_TABS.map((item) => {
-                return { ...item, link: item.link.replace(":id", group.url) };
-              })}
-            />
+      {group?._id && (
+        <>
+          {!displayAdult && group?.isAdult ? (
+            <AdultWarning setDisplayAdult={setDisplayAdult} type='group' />
+          ) : (
+            <S.Wrapper>
+              <InfoHeader info={group} type='group' setInfo={setGroup} />
 
-            <FilteredList
-              info={getMembers().map((item) => {
-                return {
-                  ...item.profile,
-                  joinedAt: item.joinedAt,
-                };
-              })}
-              id='group-members-filter'
-              placeholder='Digite o nome ou @ de quem quer encontrar'
-              type='member'
-              title={`Participantes de ${group.name}:`}
-              noInfoText={`${group.name} ainda não possui membros.`}
-            />
-          </S.GroupBody>
-        </S.Wrapper>
+              <S.GroupBody>
+                <Tabs
+                  tabs={GROUP_MEMBERS_TABS.map((item) => {
+                    return {
+                      ...item,
+                      link: item.link.replace(":id", group.url),
+                    };
+                  })}
+                />
+
+                <FilteredList
+                  info={getMembers().map((item) => {
+                    return {
+                      ...item.profile,
+                      joinedAt: item.joinedAt,
+                    };
+                  })}
+                  id='group-members-filter'
+                  placeholder='Digite o nome ou @ de quem quer encontrar'
+                  type='member'
+                  title={`Participantes de ${group.name}:`}
+                  noInfoText={`${group.name} ainda não possui membros.`}
+                />
+              </S.GroupBody>
+            </S.Wrapper>
+          )}
+        </>
       )}
     </AuthedTemplate>
   );

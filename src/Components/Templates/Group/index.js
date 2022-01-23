@@ -14,6 +14,10 @@ import { ROUTES } from "Helpers/routes";
 import Rightbar from "Components/Atoms/Rightbar";
 import InfoAbout from "Components/Atoms/InfoAbout";
 
+// Molecules
+import InfoNotFound from "Components/Molecules/InfoNotFound";
+import AdultWarning from "Components/Molecules/AdultWarning";
+
 // Organisms
 import InfoHeader from "Components/Organisms/InfoHeader";
 import RoundList from "Components/Organisms/RoundList";
@@ -28,6 +32,7 @@ import * as S from "./style";
 // Template
 const GroupTemplate = () => {
   const [group, setGroup] = useState();
+  const [displayAdult, setDisplayAdult] = useState(false);
 
   const router = useRouter();
   const {
@@ -52,44 +57,52 @@ const GroupTemplate = () => {
         <title>{`${SITE_NAME} - ${group?.name || "Grupo"}`}</title>
       </Head>
 
-      {group && (
-        <S.GroupWrapper>
-          <InfoHeader info={group} type='group' setInfo={setGroup} />
+      {!group?._id && <InfoNotFound type='group' />}
 
-          <S.GroupBody>
-            <S.GroupLeft>
-              <InfoAbout about={group.about} />
-            </S.GroupLeft>
+      {group?._id && (
+        <>
+          {!displayAdult && group?.isAdult ? (
+            <AdultWarning setDisplayAdult={setDisplayAdult} type='group' />
+          ) : (
+            <S.GroupWrapper>
+              <InfoHeader info={group} type='group' setInfo={setGroup} />
 
-            <Rightbar>
-              <RoundList
-                type='profile'
-                title='Membros'
-                list={group.members.slice(0, 5).map((item) => item.profile)}
-                extraItemLink={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
-                  ":id",
-                  group.url
-                )}
-              />
+              <S.GroupBody>
+                <S.GroupLeft>
+                  <InfoAbout about={group.about} />
+                </S.GroupLeft>
 
-              <RoundList
-                type='group'
-                title='Grupos relacionados'
-                list={group?.relatedGroups?.slice?.(0, 5)}
-                extraItemLink='#'
-                hideEmpty
-              />
+                <Rightbar>
+                  <RoundList
+                    type='profile'
+                    title='Membros'
+                    list={group.members.slice(0, 5).map((item) => item.profile)}
+                    extraItemLink={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
+                      ":id",
+                      group.url
+                    )}
+                  />
 
-              <LinkList
-                title='Links importantes'
-                list={group?.importantLinks}
-                hideEmpty
-              />
+                  <RoundList
+                    type='group'
+                    title='Grupos relacionados'
+                    list={group?.relatedGroups?.slice?.(0, 5)}
+                    extraItemLink='#'
+                    hideEmpty
+                  />
 
-              <LinkList title='Tags' list={group?.tags} hideEmpty />
-            </Rightbar>
-          </S.GroupBody>
-        </S.GroupWrapper>
+                  <LinkList
+                    title='Links importantes'
+                    list={group?.importantLinks}
+                    hideEmpty
+                  />
+
+                  <LinkList title='Tags' list={group?.tags} hideEmpty />
+                </Rightbar>
+              </S.GroupBody>
+            </S.GroupWrapper>
+          )}
+        </>
       )}
     </AuthedTemplate>
   );

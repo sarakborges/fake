@@ -69,7 +69,7 @@ const GroupForm = ({ form, setForm, originalData }) => {
       newObj = {
         ...newObj,
         [key]: {
-          value: originalData[key],
+          value: originalData[key] || "",
           error: "",
         },
       };
@@ -86,6 +86,19 @@ const GroupForm = ({ form, setForm, originalData }) => {
 
       [tar.name]: {
         value: tar.files?.length ? tar.files[0] : tar.value,
+        error: "",
+      },
+    });
+  };
+
+  const handleCheck = (e) => {
+    const tar = e.currentTarget;
+
+    setForm({
+      ...form,
+
+      [tar.name]: {
+        value: !form[tar.name].value,
         error: "",
       },
     });
@@ -110,9 +123,10 @@ const GroupForm = ({ form, setForm, originalData }) => {
 
       const newGroup = {
         name: form.name.value,
-        about: form.about.value,
-        isAdult: form.isAdult.value,
         url,
+        link: form.link.value,
+        about: form.about.value,
+        isAdult: !!form.isAdult.value,
       };
 
       if (!_id) {
@@ -142,8 +156,8 @@ const GroupForm = ({ form, setForm, originalData }) => {
         }
 
         await GroupAPI.updateGroup({
-          ...originalData,
           ...newGroup,
+          _id,
           avatar,
           cover,
         });
@@ -209,6 +223,14 @@ const GroupForm = ({ form, setForm, originalData }) => {
             />
           </S.Row>
 
+          <LabeledInput
+            id='link'
+            placeholder='Insira um link para ser exibido no cabeçalho do grupo'
+            label='Link'
+            value={form.link.value}
+            onChange={handleChange}
+          />
+
           <LabeledTextarea
             id='about'
             placeholder='Insira o HTML do about de seu grupo'
@@ -221,8 +243,8 @@ const GroupForm = ({ form, setForm, originalData }) => {
           <Checkbox
             id='isAdult'
             label='O grupo possui conteúdo adulto (+18)?'
-            value={form.url.value}
-            onChange={handleChange}
+            checked={form.isAdult.value}
+            onChange={handleCheck}
           />
 
           <S.Buttons>

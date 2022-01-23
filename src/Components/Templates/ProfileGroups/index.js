@@ -14,6 +14,7 @@ import { UserContext } from "Contexts/User";
 
 // Molecules
 import InfoNotFound from "Components/Molecules/InfoNotFound";
+import AdultWarning from "Components/Molecules/AdultWarning";
 
 // Organisms
 import InfoHeader from "Components/Organisms/InfoHeader";
@@ -28,6 +29,7 @@ import * as S from "./style";
 // Template
 const ProfileGroupsTemplate = () => {
   const [profileData, setProfileData] = useState();
+  const [displayAdult, setDisplayAdult] = useState(false);
 
   const { userState } = useContext(UserContext);
   const { profile } = userState;
@@ -93,37 +95,53 @@ const ProfileGroupsTemplate = () => {
 
       {profileData?._id &&
         !profileData?.blockedUsers?.includes?.(profile?._id) && (
-          <S.ProfileWrapper>
-            <InfoHeader info={profileData} type='profile' />
+          <>
+            {profileData?._id !== profile?._id &&
+            !displayAdult &&
+            profileData?.isAdult ? (
+              <AdultWarning setDisplayAdult={setDisplayAdult} type='profile' />
+            ) : (
+              <S.ProfileWrapper>
+                <InfoHeader info={profileData} type='profile' />
 
-            <S.ProfileBody>
-              <FilteredList
-                info={getNonOwnedGroups()}
-                id='non-owned-groups-filter'
-                type='group'
-                placeholder='Digite o nome ou @ do grupo que quer encontrar'
-                title={`Grupos que ${
-                  profile?._id === profileData._id ? "você" : profileData.name
-                } participa:`}
-                noInfoText={`${
-                  profile?._id === profileData._id ? "Você" : profileData.name
-                } ainda não participa de nenhum grupo.`}
-              />
+                <S.ProfileBody>
+                  <FilteredList
+                    info={getNonOwnedGroups()}
+                    id='non-owned-groups-filter'
+                    type='group'
+                    placeholder='Digite o nome ou @ do grupo que quer encontrar'
+                    title={`Grupos que ${
+                      profile?._id === profileData._id
+                        ? "você"
+                        : profileData.name
+                    } participa:`}
+                    noInfoText={`${
+                      profile?._id === profileData._id
+                        ? "Você"
+                        : profileData.name
+                    } ainda não participa de nenhum grupo.`}
+                  />
 
-              <FilteredList
-                info={getOwnedGroups()}
-                id='non-groups-filter'
-                type='group'
-                placeholder='Digite o nome ou @ do grupo que quer encontrar'
-                title={`Grupos que ${
-                  profile?._id === profileData._id ? "você" : profileData.name
-                } administra:`}
-                noInfoText={`${
-                  profile?._id === profileData._id ? "Você" : profileData.name
-                } ainda não administra de nenhum grupo.`}
-              />
-            </S.ProfileBody>
-          </S.ProfileWrapper>
+                  <FilteredList
+                    info={getOwnedGroups()}
+                    id='non-groups-filter'
+                    type='group'
+                    placeholder='Digite o nome ou @ do grupo que quer encontrar'
+                    title={`Grupos que ${
+                      profile?._id === profileData._id
+                        ? "você"
+                        : profileData.name
+                    } administra:`}
+                    noInfoText={`${
+                      profile?._id === profileData._id
+                        ? "Você"
+                        : profileData.name
+                    } ainda não administra de nenhum grupo.`}
+                  />
+                </S.ProfileBody>
+              </S.ProfileWrapper>
+            )}
+          </>
         )}
     </AuthedTemplate>
   );

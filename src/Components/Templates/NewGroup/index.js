@@ -21,6 +21,7 @@ const NewProfileTemplate = () => {
   const baseForm = {
     avatar: { ...baseFormField },
     name: { ...baseFormField },
+    link: { ...baseFormField },
     url: { ...baseFormField },
     isAdult: { ...baseFormField },
     about: { ...baseFormField },
