@@ -56,7 +56,7 @@ const ProfileGroupsTemplate = () => {
     return profileData?.groups?.filter((item) => {
       return (
         item.owner === profileData._id ||
-        item.moderators.includes(profileData._id)
+        item?.moderators?.includes?.(profileData._id)
       );
     });
   };
@@ -68,8 +68,8 @@ const ProfileGroupsTemplate = () => {
 
     return profileData?.groups?.filter((item) => {
       return (
-        item.owner !== profileData._id &&
-        !item.moderators.includes(profileData._id)
+        item?.owner !== profileData._id &&
+        !item?.moderators?.includes?.(profileData._id)
       );
     });
   };

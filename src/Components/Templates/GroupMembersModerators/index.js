@@ -35,7 +35,7 @@ const GroupMembersModeratorsTemplate = () => {
     return group?.members.filter(
       (item) =>
         group.owner !== item.profile._id &&
-        group.moderators.includes(item.profile._id)
+        group?.moderators?.includes?.(item.profile._id)
     );
   };
 

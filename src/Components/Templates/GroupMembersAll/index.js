@@ -77,7 +77,7 @@ const GroupMembersAllTemplate = () => {
                   ...item.profile,
                   joinedAt: item.joinedAt,
                   isOwner: item.profile._id === group.owner,
-                  isModerator: group.moderators.includes(item.profile._id),
+                  isModerator: group?.moderators?.includes?.(item.profile._id),
                 };
               })}
               id='group-members-filter'
