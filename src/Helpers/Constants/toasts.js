@@ -145,13 +145,25 @@ export const TOASTS = {
 
   enterGroupSuccess: {
     title: "Sucesso!",
-    text: "Você agora faz parte deste grupo!",
+    text: "Você agora faz parte deste grupo.",
     type: "success",
   },
 
   enterGroupError: {
     title: "Erro!",
     text: "Aconteceu algum erro ao tentar participar do grupo. Tente novamente.",
+    type: "error",
+  },
+
+  leaveGroupSuccess: {
+    title: "Sucesso!",
+    text: "Você saiu deste grupo.",
+    type: "success",
+  },
+
+  leaveGroupError: {
+    title: "Erro!",
+    text: "Aconteceu algum erro ao tentar sair do grupo. Tente novamente.",
     type: "error",
   },
 };

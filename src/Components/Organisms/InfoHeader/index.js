@@ -265,10 +265,10 @@ const InfoHeader = ({ info, type, setInfo }) => {
         setInfo({ ...leaveReq });
 
         setIsRequesting(false);
-        displayToast("enterGroupSuccess");
+        displayToast("leaveGroupSuccess");
       } catch (e) {
         console.log(e);
-        displayToast("enterGroupError");
+        displayToast("leaveGroupError");
         setIsRequesting(false);
       }
     },
