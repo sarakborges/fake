@@ -72,7 +72,7 @@ const GroupMembersOwnerTemplate = () => {
 
             <div>
               <Text type='title' pb={32}>
-                Dono de {group.name}
+                Dono de {group.name}:
               </Text>
 
               <InfoList
