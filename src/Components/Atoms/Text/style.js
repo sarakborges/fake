@@ -9,6 +9,7 @@ const Style = css`
   font-size: ${({ fs }) => (fs ? `${fs}px` : "16px")};
   font-weight: ${({ fw }) => (fw ? `${fw}` : "300")};
   line-height: ${({ lh }) => (lh ? `${lh}` : 1)};
+  color: ${({ fc }) => (fc ? `var(--${fc})` : "inherit")};
   font-family: "Open Sans", sans-serif;
 `;
 

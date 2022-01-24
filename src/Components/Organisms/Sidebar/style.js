@@ -7,13 +7,12 @@ export const Sidebar = styled.div`
   min-width: 320px;
   height: 100vh;
   padding: 32px 0;
-  overflow: hidden;
 
   transition: min-width 0.3s, width 0.3s;
 
   @media (max-width: 1140px) {
-    min-width: ${({ display }) => (display ? "320px" : "0")};
-    width: ${({ display }) => (display ? "320px" : "0")};
+    min-width: ${({ displaySidebar }) => (displaySidebar ? "320px" : "0")};
+    width: ${({ displaySidebar }) => (displaySidebar ? "320px" : "0")};
     height: calc(100vh - 60px);
   }
 `;
