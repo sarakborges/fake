@@ -83,6 +83,14 @@ export const MessageAvatar = styled.div`
   padding-top: 32px;
 `;
 
+export const MessageContent = styled.div`
+  display: flex;
+  flex-flow: column;
+  place-items: flex-start;
+
+  width: 100%;
+`;
+
 export const MessageSender = styled.div`
   display: flex;
   place-items: flex-end;
