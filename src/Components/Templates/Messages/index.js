@@ -36,6 +36,7 @@ import { getTimeString } from "Helpers/Functions";
 // Template
 const MessagesTemplate = () => {
   const [messages, setMessages] = useState();
+  const [orderedMessages, setOrderedMessages] = useState();
   const [focusedMessages, setFocusedMessages] = useState();
 
   const router = useRouter();
@@ -74,17 +75,46 @@ const MessagesTemplate = () => {
     }
   };
 
+  const getOrderedMessages = (chat, reversed) => {
+    if (!chat?.messages) {
+      return undefined;
+    }
+
+    if (chat.messages.length < 2) {
+      return [...chat.messages];
+    }
+
+    const orderedMessages = [...chat.messages];
+    orderedMessages.sort((a, b) => (a.sentAt < b.sentAt ? 1 : -1));
+
+    if (reversed) {
+      return orderedMessages.reverse();
+    }
+
+    return orderedMessages;
+  };
+
   useEffect(() => {
     getMessages();
-  }, [profile, getMessages]);
+  }, [url, getMessages]);
 
   useEffect(() => {
     if (!messages) {
       return;
     }
 
-    setFocusedMessages(getMessagesOnFocus());
-  }, [url]);
+    const messagesOnFocusRet = getMessagesOnFocus();
+    setFocusedMessages(messagesOnFocusRet);
+  }, [messages]);
+
+  useEffect(() => {
+    if (!focusedMessages) {
+      return;
+    }
+
+    const orderedMessagesRet = getOrderedMessages(focusedMessages);
+    setOrderedMessages(orderedMessagesRet);
+  }, [focusedMessages]);
 
   return (
     <AuthedTemplate>
@@ -132,8 +162,28 @@ const MessagesTemplate = () => {
                                   {item.user.name}
                                 </Text>
 
-                                <Text type='custom' fc='bgInverted' lh={1.6}>
+                                <Text
+                                  type='custom'
+                                  fc='bgInverted'
+                                  lh={1.6}
+                                  pt={4}
+                                >
                                   @{item.user.url}
+                                </Text>
+
+                                <Text
+                                  type='custom'
+                                  fc='bgInverted'
+                                  lh={1.6}
+                                  fs={12}
+                                  pt={4}
+                                >
+                                  <>Última mensagem em: </>
+                                  {getTimeString(
+                                    orderedMessages?.length > 0
+                                      ? orderedMessages?.[0]?.sentAt
+                                      : undefined
+                                  )}
                                 </Text>
                               </div>
                             </S.PersonWrapper>
@@ -147,8 +197,8 @@ const MessagesTemplate = () => {
 
               <S.MessageWrapper>
                 <S.MessagesList>
-                  {getMessagesOnFocus() &&
-                    focusedMessages?.messages?.map?.((item, key) => {
+                  {orderedMessages?.length > 0 &&
+                    orderedMessages.reverse().map((item, key) => {
                       return (
                         <S.MessageItem key={`message-item-${key}`}>
                           <S.MessageAvatar>
