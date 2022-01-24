@@ -1,4 +1,4 @@
-export const getTimeString = (date) => {
+export const getTimeString = (date, inverted) => {
   date = new Date(date);
 
   let time = {
@@ -19,5 +19,10 @@ export const getTimeString = (date) => {
   }
 
   const { day, month, year, minute, hour } = time;
+
+  if (inverted) {
+    return `às ${hour}:${minute} de ${day}/${month}/${year}`;
+  }
+
   return `${day}/${month}/${year}, às ${hour}:${minute}`;
 };

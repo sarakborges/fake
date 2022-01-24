@@ -31,6 +31,7 @@ import Input from "Components/Atoms/Input";
 import Button from "Components/Atoms/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { getTimeString } from "Helpers/Functions";
 
 // Template
 const MessagesTemplate = () => {
@@ -145,39 +146,52 @@ const MessagesTemplate = () => {
               </S.PeopleWrapper>
 
               <S.MessageWrapper>
-                <S.SenderHeader img={focusedMessages?.user?.cover}>
-                  <Avatar
-                    img={focusedMessages?.user?.avatar}
-                    size={48}
-                    bgColor='main'
-                  />
-
-                  <div>
-                    <Text type='custom' fw={400} lh={1.6} fc='white'>
-                      {focusedMessages?.user?.name}
-                    </Text>
-
-                    <Text type='custom' fw={300} lh={1.6} fc='white'>
-                      @{focusedMessages?.user?.url}
-                    </Text>
-                  </div>
-                </S.SenderHeader>
-
                 <S.MessagesList>
                   {getMessagesOnFocus() &&
                     focusedMessages?.messages?.map?.((item, key) => {
                       return (
-                        <S.MessageItem
-                          key={`message-item-${key}`}
-                          isSelf={item.user === profile._id}
-                        >
-                          <Avatar
-                            img={getAvatar(item)}
-                            color='main'
-                            size={48}
-                          />
+                        <S.MessageItem key={`message-item-${key}`}>
+                          <S.MessageAvatar>
+                            {focusedMessages?.messages[key - 1]?.user !==
+                              focusedMessages?.messages[key]?.user && (
+                              <Avatar
+                                img={getAvatar(item)}
+                                color='main'
+                                size={32}
+                              />
+                            )}
+                          </S.MessageAvatar>
 
-                          <Text>{item.text}</Text>
+                          <div>
+                            {focusedMessages?.messages[key - 1]?.user !==
+                              focusedMessages?.messages[key]?.user && (
+                              <S.MessageSender>
+                                <Text
+                                  type='custom'
+                                  fc='white'
+                                  lh={1.6}
+                                  fw={600}
+                                >
+                                  {item.user === profile._id
+                                    ? profile.name
+                                    : focusedMessages.user.name}
+                                </Text>
+
+                                <Text
+                                  type='custom'
+                                  fc='bgInverted'
+                                  lh={1.6}
+                                  fs={12}
+                                >
+                                  {getTimeString(item.sentAt, true)}
+                                </Text>
+                              </S.MessageSender>
+                            )}
+
+                            <Text pt={4} fc='white'>
+                              {item.text}
+                            </Text>
+                          </div>
                         </S.MessageItem>
                       );
                     })}

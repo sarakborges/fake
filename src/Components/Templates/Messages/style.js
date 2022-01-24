@@ -62,76 +62,33 @@ export const MessageWrapper = styled.div`
   border-left: 2px solid var(--bg);
 `;
 
-export const SenderHeader = styled.div`
-  display: flex;
-  place-items: center;
-  gap: 24px;
-
-  padding: 0 24px;
-  height: 100px;
-
-  position: relative;
-
-  background-image: url(${({ img }) => img});
-  background-position: center;
-  background-size: cover;
-
-  &:before {
-    content: "";
-
-    display: block;
-
-    width: 100%;
-    height: 100%;
-
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 1;
-
-    background-image: ${({ img }) =>
-      img
-        ? `linear-gradient(transparent, var(--bgContrast))`
-        : `linear-gradient(var(--bg), var(--bgContrast))`};
-  }
-
-  > :is(div, span) {
-    position: relative;
-    z-index: 2;
-  }
-
-  > span {
-    box-shadow: 2px 2px 3px var(--bgContrast);
-  }
-
-  p {
-    text-shadow: 2px 2px 3px var(--bgContrast);
-  }
-`;
-
 export const MessagesList = styled.ul`
   display: flex;
   flex-flow: column;
   flex: 1;
-  gap: 24px;
 
-  padding: 32px 24px 24px;
+  padding: 0 24px 24px;
 `;
 
 export const MessageItem = styled.li`
   display: flex;
-  place-items: center;
-  flex-flow: ${({ isSelf }) => (isSelf ? "row-reverse" : "row")};
+  place-items: flex-start;
   gap: 16px;
+`;
 
-  > p {
-    padding: 8px 12px;
+export const MessageAvatar = styled.div`
+  display: flex;
 
-    color: var(--white);
+  width: 32px;
+  padding-top: 32px;
+`;
 
-    border-radius: 8px;
-    background-color: ${({ isSelf }) => (isSelf ? "var(--main)" : "var(--bg)")};
-  }
+export const MessageSender = styled.div`
+  display: flex;
+  place-items: flex-end;
+  gap: 8px;
+
+  padding-top: 24px;
 `;
 
 export const NewMessage = styled.div`
