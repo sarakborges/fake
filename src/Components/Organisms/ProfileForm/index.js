@@ -145,6 +145,24 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
     getFormData();
   };
 
+  const handleUrlError = (req) => {
+    if (req?.error === "urlExists") {
+      setForm({
+        ...form,
+        url: {
+          value: form.url.value,
+          error: "URL em uso",
+        },
+      });
+
+      displayToast("urlExists");
+      setIsRequesting(false);
+      return true;
+    }
+
+    return false;
+  };
+
   const handleSubmit = async () => {
     try {
       if (!form.name.value) {
@@ -170,7 +188,7 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
         const avatarUploaded = await ImageAPI.uploadFile(form.avatar.value);
         const coverUploaded = await ImageAPI.uploadFile(form.cover.value);
 
-        const newId = await ProfileAPI.createProfile({
+        const profileReq = await ProfileAPI.createProfile({
           profile: {
             ...newProfile,
             avatar: avatarUploaded.url,
@@ -181,9 +199,13 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
           user: user._id,
         });
 
+        if (handleUrlError(profileReq)) {
+          return;
+        }
+
         userDispatch({
           type: "SET_NEW_PROFILE",
-          data: { ...newProfile, _id: newId },
+          data: { ...newProfile, _id: profileReq },
         });
       } else {
         let avatar = originalData.avatar;
@@ -199,11 +221,15 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
           cover = coverUploaded.url;
         }
 
-        await ProfileAPI.updateProfile({
+        const profileReq = await ProfileAPI.updateProfile({
           ...newProfile,
           avatar,
           cover,
         });
+
+        if (handleUrlError(profileReq)) {
+          return;
+        }
 
         userDispatch({
           type: "SET_PROFILE",
@@ -275,6 +301,7 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
               placeholder='Insira uma URL personalizada'
               label='URL personalizada (Caso fique em branco, será baseado no nome)'
               value={form.url.value}
+              error={form.url.error}
               onChange={handleChange}
             />
           </S.Row2Items>

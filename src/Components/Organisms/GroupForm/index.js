@@ -131,6 +131,25 @@ const GroupForm = ({ form, setForm, originalData }) => {
     getFormData();
   };
 
+  const handleUrlError = (req) => {
+    console.log(req);
+    if (req?.error === "urlExists") {
+      setForm({
+        ...form,
+        url: {
+          value: form.url.value,
+          error: "URL em uso",
+        },
+      });
+
+      displayToast("urlExists");
+      setIsRequesting(false);
+      return true;
+    }
+
+    return false;
+  };
+
   const handleSubmit = async () => {
     try {
       if (!form.name.value) {
@@ -154,7 +173,7 @@ const GroupForm = ({ form, setForm, originalData }) => {
         const avatarUploaded = await ImageAPI.uploadFile(form.avatar.value);
         const coverUploaded = await ImageAPI.uploadFile(form.cover.value);
 
-        await GroupAPI.createGroup({
+        const groupReq = await GroupAPI.createGroup({
           group: {
             ...newGroup,
             avatar: avatarUploaded.url,
@@ -162,6 +181,10 @@ const GroupForm = ({ form, setForm, originalData }) => {
           },
           profile: profile._id,
         });
+
+        if (handleUrlError(groupReq)) {
+          return;
+        }
       } else {
         let avatar = originalData.avatar;
         let cover = originalData.cover;
@@ -176,12 +199,16 @@ const GroupForm = ({ form, setForm, originalData }) => {
           cover = coverUploaded.url;
         }
 
-        await GroupAPI.updateGroup({
+        const groupReq = await GroupAPI.updateGroup({
           ...newGroup,
           _id,
           avatar,
           cover,
         });
+
+        if (handleUrlError(groupReq)) {
+          return;
+        }
       }
 
       displayToast(_id ? "editGroupSuccess" : "createGroupSuccess");
@@ -240,6 +267,7 @@ const GroupForm = ({ form, setForm, originalData }) => {
               placeholder='Insira uma URL personalizada para o grupo'
               label='URL personalizada (Caso fique em branco, será baseado no nome)'
               value={form.url.value}
+              error={form.url.error}
               onChange={handleChange}
             />
           </S.Row>

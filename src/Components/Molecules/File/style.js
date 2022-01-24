@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const File = styled.div`
+  width: 100%;
   padding-bottom: 16px;
 
   > input {

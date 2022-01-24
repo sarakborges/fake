@@ -19,3 +19,18 @@ export const Input = styled.input`
     border-color: var(--main);
   }
 `;
+
+export const Error = styled.label`
+  padding-top: 8px;
+
+  font-size: 12px;
+  color: var(--red);
+
+  & ~ ${Input} {
+    border-color: var(--red);
+  }
+
+  & ~ label {
+    color: var(--red);
+  }
+`;

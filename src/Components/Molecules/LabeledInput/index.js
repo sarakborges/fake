@@ -11,6 +11,7 @@ const LabeledInput = ({
   placeholder,
   label,
   value,
+  error,
   onChange,
   isBgContrast,
 }) => {
@@ -21,6 +22,7 @@ const LabeledInput = ({
         type={type || "text"}
         placeholder={placeholder}
         value={value}
+        error={error}
         isBgContrast={isBgContrast}
         onChange={onChange}
       />

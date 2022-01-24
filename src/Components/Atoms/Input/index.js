@@ -2,17 +2,29 @@
 import * as S from "./style";
 
 // Template
-const Input = ({ id, type, placeholder, value, onChange, isBgContrast }) => {
+const Input = ({
+  id,
+  type,
+  placeholder,
+  value,
+  error,
+  onChange,
+  isBgContrast,
+}) => {
   return (
-    <S.Input
-      id={id}
-      name={id}
-      type={type || "text"}
-      placeholder={placeholder}
-      value={value}
-      isBgContrast={isBgContrast}
-      onChange={onChange}
-    />
+    <>
+      {error && <S.Error>{error}</S.Error>}
+
+      <S.Input
+        id={id}
+        name={id}
+        type={type || "text"}
+        placeholder={placeholder}
+        value={value}
+        isBgContrast={isBgContrast}
+        onChange={onChange}
+      />
+    </>
   );
 };
 

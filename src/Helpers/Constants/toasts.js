@@ -178,4 +178,10 @@ export const TOASTS = {
     text: "Aconteceu algum erro ao tentar deletar o grupo. Tente novamente.",
     type: "error",
   },
+
+  urlExists: {
+    title: "Cuidado!",
+    text: "A URL que você tentou utilizar, já está em uso.",
+    type: "warning",
+  },
 };

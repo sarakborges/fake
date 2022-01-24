@@ -29,11 +29,13 @@ export const ButtonsSave = styled.div`
 export const Row2Items = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  place-items: flex-start;
   gap: 32px;
 `;
 
 export const Row3Items = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  place-items: flex-start;
   gap: 32px;
 `;

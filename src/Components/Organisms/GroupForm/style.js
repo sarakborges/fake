@@ -34,5 +34,6 @@ export const ButtonsSave = styled.div`
 export const Row = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  place-items: flex-start;
   gap: 32px;
 `;
