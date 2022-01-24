@@ -76,6 +76,20 @@ const leaveGroup = (info) => {
     .catch((err) => err);
 };
 
+const deleteGroup = (info) => {
+  if (!info) {
+    console.log("deleteGroup requires info param");
+    return;
+  }
+
+  return axios
+    .post(`${process.env.NEXT_PUBLIC_REQUEST_URI}/group/delete`, {
+      ...info,
+    })
+    .then((res) => res.data)
+    .catch((err) => err);
+};
+
 export default {
   getGroupById,
   getGroupByUrl,
@@ -83,4 +97,5 @@ export default {
   updateGroup,
   joinGroup,
   leaveGroup,
+  deleteGroup,
 };

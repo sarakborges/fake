@@ -166,4 +166,16 @@ export const TOASTS = {
     text: "Aconteceu algum erro ao tentar sair do grupo. Tente novamente.",
     type: "error",
   },
+
+  deleteGroupSuccess: {
+    title: "Sucesso!",
+    text: "Grupo deletado.",
+    type: "success",
+  },
+
+  deleteGroupError: {
+    title: "Erro!",
+    text: "Aconteceu algum erro ao tentar deletar o grupo. Tente novamente.",
+    type: "error",
+  },
 };

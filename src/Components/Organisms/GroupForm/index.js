@@ -104,7 +104,28 @@ const GroupForm = ({ form, setForm, originalData }) => {
     });
   };
 
-  const handleDelete = () => {};
+  const handleDelete = async () => {
+    try {
+      if (!_id) {
+        displayToast("deleteGroupError");
+        return;
+      }
+
+      setIsRequesting(true);
+
+      await GroupAPI.deleteGroup({
+        id: _id,
+      });
+
+      setIsRequesting(false);
+      displayToast("deleteGroupSuccess");
+      router.push(ROUTES.HOME);
+    } catch (e) {
+      console.log(e);
+      displayToast("deleteGroupError");
+      setIsRequesting(false);
+    }
+  };
 
   const handleClear = () => {
     getFormData();
