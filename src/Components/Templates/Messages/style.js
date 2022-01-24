@@ -45,13 +45,68 @@ export const PersonWrapper = styled.span`
 `;
 
 export const PeopleFilter = styled.div`
-  padding: 32px 16px;
+  display: flex;
+  place-items: center;
+
+  padding: 0 16px;
+  height: 100px;
+
+  background-color: var(--bg);
 `;
 
 export const MessageWrapper = styled.div`
   display: flex;
   flex-flow: column;
   flex: 1;
+
+  border-left: 2px solid var(--bg);
+`;
+
+export const SenderHeader = styled.div`
+  display: flex;
+  place-items: center;
+  gap: 24px;
+
+  padding: 0 24px;
+  height: 100px;
+
+  position: relative;
+
+  background-image: url(${({ img }) => img});
+  background-position: center;
+  background-size: cover;
+
+  &:before {
+    content: "";
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+
+    background-image: ${({ img }) =>
+      img
+        ? `linear-gradient(transparent, var(--bgContrast))`
+        : `linear-gradient(var(--bg), var(--bgContrast))`};
+  }
+
+  > :is(div, span) {
+    position: relative;
+    z-index: 2;
+  }
+
+  > span {
+    box-shadow: 2px 2px 3px var(--bgContrast);
+  }
+
+  p {
+    text-shadow: 2px 2px 3px var(--bgContrast);
+  }
 `;
 
 export const MessagesList = styled.ul`
@@ -60,9 +115,7 @@ export const MessagesList = styled.ul`
   flex: 1;
   gap: 24px;
 
-  padding: 24px;
-
-  border-left: 2px solid var(--bg);
+  padding: 32px 24px 24px;
 `;
 
 export const MessageItem = styled.li`
@@ -83,10 +136,10 @@ export const MessageItem = styled.li`
 
 export const NewMessage = styled.div`
   display: flex;
-  place-content: center;
+  place-items: flex-end;
   gap: 32px;
 
-  padding: 24px 16px;
+  padding: 16px 16px 24px;
 
-  border-left: 2px solid var(--bg);
+  border-top: 2px solid var(--bg);
 `;

@@ -30,15 +30,12 @@ import { ROUTES } from "Helpers/routes";
 import Input from "Components/Atoms/Input";
 import Button from "Components/Atoms/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEnvelope,
-  faForward,
-  faPaperPlane,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 // Template
 const MessagesTemplate = () => {
   const [messages, setMessages] = useState();
+  const [focusedMessages, setFocusedMessages] = useState();
 
   const router = useRouter();
   const {
@@ -62,7 +59,7 @@ const MessagesTemplate = () => {
 
   const getMessagesOnFocus = () => {
     if (messages?.length < 1) {
-      return false;
+      return undefined;
     }
 
     return messages.find((item) => item.user.url === url);
@@ -72,13 +69,21 @@ const MessagesTemplate = () => {
     if (message.user === profile._id) {
       return profile.avatar;
     } else {
-      return getMessagesOnFocus().user.avatar;
+      return focusedMessages?.user?.avatar;
     }
   };
 
   useEffect(() => {
     getMessages();
   }, [profile, getMessages]);
+
+  useEffect(() => {
+    if (!messages) {
+      return;
+    }
+
+    setFocusedMessages(getMessagesOnFocus());
+  }, [url]);
 
   return (
     <AuthedTemplate>
@@ -93,6 +98,14 @@ const MessagesTemplate = () => {
           {messages?.length > 0 && (
             <>
               <S.PeopleWrapper>
+                <S.PeopleFilter>
+                  <LabeledInput
+                    id='messages-people-filter'
+                    placeholder='Digite o nome ou @ de quem quer encontrar'
+                    label='Procurar pessoa'
+                  />
+                </S.PeopleFilter>
+
                 <S.PeopleList>
                   {messages.map((item) => {
                     return (
@@ -129,20 +142,30 @@ const MessagesTemplate = () => {
                     );
                   })}
                 </S.PeopleList>
-
-                <S.PeopleFilter>
-                  <LabeledInput
-                    id='messages-people-filter'
-                    placeholder='Digite o nome ou @ de quem quer encontrar'
-                    label='Procurar pessoa'
-                  />
-                </S.PeopleFilter>
               </S.PeopleWrapper>
 
               <S.MessageWrapper>
+                <S.SenderHeader img={focusedMessages?.user?.cover}>
+                  <Avatar
+                    img={focusedMessages?.user?.avatar}
+                    size={48}
+                    bgColor='main'
+                  />
+
+                  <div>
+                    <Text type='custom' fw={400} lh={1.6} fc='white'>
+                      {focusedMessages?.user?.name}
+                    </Text>
+
+                    <Text type='custom' fw={300} lh={1.6} fc='white'>
+                      @{focusedMessages?.user?.url}
+                    </Text>
+                  </div>
+                </S.SenderHeader>
+
                 <S.MessagesList>
                   {getMessagesOnFocus() &&
-                    getMessagesOnFocus().messages.map((item, key) => {
+                    focusedMessages?.messages?.map?.((item, key) => {
                       return (
                         <S.MessageItem
                           key={`message-item-${key}`}
@@ -166,8 +189,9 @@ const MessagesTemplate = () => {
                     placeholder='Digite sua mensagem'
                   />
 
-                  <Button style='primary' size={16}>
+                  <Button style='primary' size={12}>
                     <FontAwesomeIcon icon={faPaperPlane} />
+                    <span>Enviar</span>
                   </Button>
                 </S.NewMessage>
               </S.MessageWrapper>

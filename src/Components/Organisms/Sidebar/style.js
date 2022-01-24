@@ -5,6 +5,7 @@ export const Sidebar = styled.div`
   flex-flow: column;
 
   min-width: 320px;
+  max-width: 320px;
   height: 100vh;
   padding: 32px 0;
 
