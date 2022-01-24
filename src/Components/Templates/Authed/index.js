@@ -1,7 +1,9 @@
 // Dependencies
-import { useCallback, useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { ThemeProvider } from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 // Helpers
 import { getUserData, getAppData } from "Helpers/Functions";
@@ -10,6 +12,9 @@ import { ROUTES } from "Helpers/routes";
 // Contexts
 import { AppContext } from "Contexts/App";
 import { UserContext } from "Contexts/User";
+
+// Atoms
+import Button from "Components/Atoms/Button";
 
 // Molecules
 import Toast from "Components/Molecules/Toast";
@@ -29,6 +34,8 @@ const AuthedTemplate = ({ children }) => {
   const { userDispatch } = useContext(UserContext);
 
   const { theme, toast } = appState;
+
+  const [displaySidebar, setDisplaySidebar] = useState(false);
 
   const setUserData = useCallback(async () => {
     try {
@@ -68,8 +75,18 @@ const AuthedTemplate = ({ children }) => {
 
       {<Toast {...toast} />}
 
+      <S.Topbar>
+        <Button
+          style='transparent'
+          onClick={() => setDisplaySidebar(!displaySidebar)}
+          size={20}
+        >
+          <FontAwesomeIcon icon={faBars} />
+        </Button>
+      </S.Topbar>
+
       <S.Container>
-        <Sidebar />
+        <Sidebar display={displaySidebar} />
 
         <S.Content>
           <S.PageContentWrapper>

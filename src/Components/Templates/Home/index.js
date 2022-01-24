@@ -90,7 +90,7 @@ const HomeTemplate = () => {
       {profile?._id && (
         <S.HomeWrapper>
           <S.FeedPlaceholder>
-            <Text type='title'>
+            <Text type='title' ta='center'>
               Aqui vai ter o Feed. Mas ainda não tem nada.
             </Text>
           </S.FeedPlaceholder>

@@ -6,6 +6,7 @@ export const InfoCard = styled.div`
   place-items: center;
   gap: 24px;
 
+  width: 356px;
   padding: 32px;
 
   border-radius: 16px;

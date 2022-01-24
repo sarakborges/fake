@@ -24,7 +24,7 @@ import SelectProfilesList from "Components/Organisms/SelectProfilesList";
 import * as S from "./style";
 
 // Template
-const Sidebar = () => {
+const Sidebar = ({ display }) => {
   const { userState } = useContext(UserContext);
   const { user, profile } = userState;
 
@@ -44,7 +44,7 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <S.Menu>
+    <S.Sidebar display={display}>
       <MenuList />
 
       {profile?._id && (
@@ -97,7 +97,7 @@ const Sidebar = () => {
           </S.InfoArea>
         </S.InfoAreaWrapper>
       )}
-    </S.Menu>
+    </S.Sidebar>
   );
 };
 

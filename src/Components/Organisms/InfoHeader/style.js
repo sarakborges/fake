@@ -157,12 +157,23 @@ export const MainInfo = styled.div`
   flex-flow: column;
   gap: 12px;
 
+  max-width: calc(100% - 80px);
+
   text-shadow: 2px 2px 3px var(--bgContrast);
   color: var(--white);
 
   a {
     color: var(--mainVariation);
     font-size: 12px;
+  }
+
+  > :is(p, h3) {
+    width: 100%;
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    line-height: 1.4;
   }
 `;
 

@@ -16,4 +16,8 @@ export const RightBar = styled.div`
     background-color: var(--bg);
     border-radius: 16px;
   }
+
+  @media (max-width: 760px) {
+    display: none;
+  }
 `;

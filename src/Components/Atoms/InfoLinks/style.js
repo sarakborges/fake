@@ -5,6 +5,10 @@ export const Sections = styled.div`
   gap: 64px;
 
   padding-top: 48px;
+
+  @media (max-width: 640px) {
+    gap: 32px;
+  }
 `;
 
 export const SectionLink = styled.div`
@@ -14,5 +18,9 @@ export const SectionLink = styled.div`
     text-shadow: 2px 2px 3px var(--bgContrast);
 
     transition: color 0.3s;
+
+    @media (max-width: 520px) {
+      font-size: 16px;
+    }
   }
 `;
