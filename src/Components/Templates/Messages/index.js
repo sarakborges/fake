@@ -1,4 +1,6 @@
 // Dependencies
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
@@ -6,14 +8,21 @@ import Link from "next/link";
 
 // APIs
 import MessageAPI from "Apis/Message";
+import ProfileAPI from "Apis/Profile";
 
 // Contexts
 import { UserContext } from "Contexts/User";
 
 // Helpers
+import { getTimeString } from "Helpers/Functions";
+import { ROUTES } from "Helpers/routes";
 import { SITE_NAME } from "Helpers/Constants";
 
 // Atoms
+import Form from "Components/Atoms/Form";
+import Text from "Components/Atoms/Text";
+import Input from "Components/Atoms/Input";
+import Button from "Components/Atoms/Button";
 import Avatar from "Components/Atoms/Avatar";
 
 // Molecules
@@ -25,18 +34,13 @@ import AuthedTemplate from "Components/Templates/Authed";
 
 // Styles
 import * as S from "./style";
-import Text from "Components/Atoms/Text";
-import { ROUTES } from "Helpers/routes";
-import Input from "Components/Atoms/Input";
-import Button from "Components/Atoms/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import { getTimeString } from "Helpers/Functions";
 
 // Template
 const MessagesTemplate = () => {
   const [chatUsers, setChatUsers] = useState();
+  const [tempUser, setTempUser] = useState();
   const [messages, setMessages] = useState();
+  const [newMessage, setNewMessage] = useState("");
 
   const router = useRouter();
   const {
@@ -45,6 +49,33 @@ const MessagesTemplate = () => {
 
   const { userState } = useContext(UserContext);
   const { profile } = userState;
+
+  const handleSubmit = async () => {
+    try {
+      const sentProfile = messages?.profile?._id || tempUser?._id;
+
+      if (!sentProfile) {
+        return;
+      }
+
+      await MessageAPI.sendMessage({
+        users: [profile._id, sentProfile],
+        message: newMessage,
+        sender: profile._id,
+      });
+
+      await getMessages();
+      await getChatUsers();
+
+      setNewMessage("");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleChange = (e) => {
+    setNewMessage(e.currentTarget.value);
+  };
 
   const getChatUsers = useCallback(async () => {
     if (!profile?._id) {
@@ -58,14 +89,24 @@ const MessagesTemplate = () => {
     }
   }, [profile, MessageAPI]);
 
+  const getTempUser = async () => {
+    const profileReq = await ProfileAPI.getProfileByUrl(url);
+
+    if (profileReq?._id) {
+      setTempUser(profileReq);
+      setMessages(undefined);
+    }
+  };
+
   const getMessages = useCallback(async () => {
-    if (!profile?._id || !url || !chatUsers?.length) {
+    if (!profile?._id || !url) {
       return;
     }
 
-    const user = chatUsers.find((item) => item.user.url === url);
+    const user = chatUsers?.find?.((item) => item.user.url === url);
 
     if (!user?.user?._id) {
+      await getTempUser();
       return;
     }
 
@@ -117,6 +158,45 @@ const MessagesTemplate = () => {
                 </S.PeopleFilter>
 
                 <S.PeopleList>
+                  {tempUser?._id &&
+                    !chatUsers?.find?.((item) => item.user.url === url) && (
+                      <li>
+                        <Link
+                          href={ROUTES.MESSAGES.replace(":id", tempUser.url)}
+                        >
+                          <a>
+                            <S.PersonWrapper selected={tempUser.url === url}>
+                              <Avatar
+                                img={tempUser.avatar}
+                                size={48}
+                                bgColor='main'
+                              />
+
+                              <div>
+                                <Text
+                                  type='custom'
+                                  fc='bgInverted'
+                                  fw={400}
+                                  lh={1.6}
+                                >
+                                  {tempUser.name}
+                                </Text>
+
+                                <Text
+                                  type='custom'
+                                  fc='bgInverted'
+                                  lh={1.6}
+                                  pt={4}
+                                >
+                                  @{tempUser.url}
+                                </Text>
+                              </div>
+                            </S.PersonWrapper>
+                          </a>
+                        </Link>
+                      </li>
+                    )}
+
                   {chatUsers.map((item) => {
                     return (
                       <li key={item.user._id}>
@@ -237,15 +317,24 @@ const MessagesTemplate = () => {
                 </S.MessagesList>
 
                 <S.NewMessage>
-                  <Input
-                    id='messages-new-message'
-                    placeholder='Digite sua mensagem'
-                  />
+                  <Form onSubmit={handleSubmit}>
+                    <Input
+                      id='messages-new-message'
+                      placeholder='Digite sua mensagem'
+                      value={newMessage}
+                      onChange={handleChange}
+                    />
 
-                  <Button style='primary' size={12}>
-                    <FontAwesomeIcon icon={faPaperPlane} />
-                    <span>Enviar</span>
-                  </Button>
+                    <Button
+                      type='submit'
+                      style='primary'
+                      size={12}
+                      disabled={!newMessage}
+                    >
+                      <FontAwesomeIcon icon={faPaperPlane} />
+                      <span>Enviar</span>
+                    </Button>
+                  </Form>
                 </S.NewMessage>
               </S.MessageWrapper>
             </>

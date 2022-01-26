@@ -14,7 +14,15 @@ const getAllMessages = (user) => {
     .catch((err) => err);
 };
 
+const sendMessage = (data) => {
+  return axios
+    .post(`${process.env.NEXT_PUBLIC_REQUEST_URI}/messages/new`, { ...data })
+    .then((res) => res.data)
+    .catch((err) => err);
+};
+
 export default {
   getMessages,
   getAllMessages,
+  sendMessage,
 };

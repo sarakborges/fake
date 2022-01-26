@@ -88,7 +88,7 @@ export const Button = styled.button`
   font-size: ${({ size }) => `${size}px`};
   font-family: inherit;
 
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s, color 0.3s, opacity 0.3s;
 
   ${({ buttonStyle }) => buttonStyle === "primary" && PrimaryButton}
   ${({ buttonStyle }) => buttonStyle === "secondary" && SecondaryButton}

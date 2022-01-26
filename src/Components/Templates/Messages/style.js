@@ -97,14 +97,17 @@ export const MessageSender = styled.div`
   gap: 8px;
 
   padding-top: 24px;
+  padding-bottom: 8px;
 `;
 
 export const NewMessage = styled.div`
-  display: flex;
-  place-items: flex-end;
-  gap: 32px;
+  > form {
+    display: flex;
+    place-items: flex-end;
+    gap: 32px;
 
-  padding: 16px 16px 24px;
+    padding: 16px 16px 24px;
 
-  border-top: 2px solid var(--bg);
+    border-top: 2px solid var(--bg);
+  }
 `;
