@@ -30,21 +30,24 @@ const RoundList = ({
         <S.List>
           {list.map((item) => {
             return (
-              <Link
-                key={item._id}
-                href={(type === "profile"
-                  ? ROUTES.PROFILE
-                  : ROUTES.GROUP
-                ).replace(":id", item.url)}
-              >
-                <a>
-                  {item.avatar ? (
-                    <Avatar img={item.avatar} size={40} bgColor='main' />
-                  ) : (
-                    <RoundIcon icon={faQuestion} size={40} bgColor='main' />
-                  )}
-                </a>
-              </Link>
+              <S.LinkWrapper key={item._id}>
+                <Link
+                  href={(type === "profile"
+                    ? ROUTES.PROFILE
+                    : ROUTES.GROUP
+                  ).replace(":id", item.url)}
+                >
+                  <a>
+                    {item.avatar ? (
+                      <Avatar img={item.avatar} size={40} bgColor='main' />
+                    ) : (
+                      <RoundIcon icon={faQuestion} size={40} bgColor='main' />
+                    )}
+                  </a>
+                </Link>
+
+                <S.Tooltip>{item.name}</S.Tooltip>
+              </S.LinkWrapper>
             );
           })}
 
