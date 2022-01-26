@@ -44,6 +44,12 @@ export const PersonWrapper = styled.span`
   }
 `;
 
+export const PersonAvatar = styled.div`
+  display: flex;
+
+  min-width: 48px;
+`;
+
 export const PeopleFilter = styled.div`
   display: flex;
   place-items: center;
@@ -52,6 +58,17 @@ export const PeopleFilter = styled.div`
   height: 100px;
 
   background-color: var(--bg);
+`;
+
+export const PersonTextWrapper = styled.div`
+  overflow: hidden;
+
+  > p {
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 `;
 
 export const MessageWrapper = styled.div`
@@ -79,7 +96,7 @@ export const MessageItem = styled.li`
 export const MessageAvatar = styled.div`
   display: flex;
 
-  width: 32px;
+  min-width: 32px;
   padding-top: 32px;
 `;
 

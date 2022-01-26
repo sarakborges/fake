@@ -166,29 +166,22 @@ const MessagesTemplate = () => {
                         >
                           <a>
                             <S.PersonWrapper selected={tempUser.url === url}>
-                              <Avatar
-                                img={tempUser.avatar}
-                                size={48}
-                                bgColor='main'
-                              />
+                              <S.PersonAvatar>
+                                <Avatar
+                                  img={tempUser.avatar}
+                                  size={48}
+                                  bgColor='main'
+                                />
+                              </S.PersonAvatar>
 
                               <div>
                                 <Text
                                   type='custom'
-                                  fc='bgInverted'
+                                  fc='white'
                                   fw={400}
                                   lh={1.6}
                                 >
-                                  {tempUser.name}
-                                </Text>
-
-                                <Text
-                                  type='custom'
-                                  fc='bgInverted'
-                                  lh={1.6}
-                                  pt={4}
-                                >
-                                  @{tempUser.url}
+                                  {`${tempUser.name} (@${tempUser.url})`}
                                 </Text>
                               </div>
                             </S.PersonWrapper>
@@ -205,20 +198,22 @@ const MessagesTemplate = () => {
                         >
                           <a>
                             <S.PersonWrapper selected={item.user.url === url}>
-                              <Avatar
-                                img={item.user.avatar}
-                                size={48}
-                                bgColor='main'
-                              />
+                              <S.PersonAvatar>
+                                <Avatar
+                                  img={item.user.avatar}
+                                  size={48}
+                                  bgColor='main'
+                                />
+                              </S.PersonAvatar>
 
-                              <div>
+                              <S.PersonTextWrapper>
                                 <Text
                                   type='custom'
-                                  fc='bgInverted'
+                                  fc='white'
                                   fw={400}
                                   lh={1.6}
                                 >
-                                  {item.user.name}
+                                  {`${item.user.name} (@${item.user.url})`}
                                 </Text>
 
                                 <Text
@@ -227,7 +222,7 @@ const MessagesTemplate = () => {
                                   lh={1.6}
                                   pt={4}
                                 >
-                                  @{item.user.url}
+                                  {item.latestMessage.text}
                                 </Text>
 
                                 <Text
@@ -238,9 +233,9 @@ const MessagesTemplate = () => {
                                   pt={4}
                                 >
                                   <>Última mensagem em: </>
-                                  {getTimeString(item.latestMessage)}
+                                  {getTimeString(item.latestMessage.sentAt)}
                                 </Text>
-                              </div>
+                              </S.PersonTextWrapper>
                             </S.PersonWrapper>
                           </a>
                         </Link>
