@@ -159,7 +159,9 @@ const MessagesTemplate = () => {
 
                 <S.PeopleList>
                   {tempUser?._id &&
-                    !chatUsers?.find?.((item) => item.user.url === url) && (
+                    !chatUsers?.find?.(
+                      (item) => item.user.url === tempUser.url
+                    ) && (
                       <li>
                         <Link
                           href={ROUTES.MESSAGES.replace(":id", tempUser.url)}
