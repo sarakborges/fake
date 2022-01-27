@@ -146,196 +146,171 @@ const MessagesTemplate = () => {
 
       {profile?._id && (
         <S.MessagesWrapper>
-          {chatUsers?.length > 0 && (
-            <>
-              <S.PeopleWrapper>
-                <S.PeopleFilter>
-                  <LabeledInput
-                    id='messages-people-filter'
-                    placeholder='Digite o nome ou @ de quem quer encontrar'
-                    label='Procurar pessoa'
-                  />
-                </S.PeopleFilter>
+          <S.PeopleWrapper>
+            <S.PeopleFilter>
+              <LabeledInput
+                id='messages-people-filter'
+                placeholder='Digite o nome ou @ de quem quer encontrar'
+                label='Procurar pessoa'
+              />
+            </S.PeopleFilter>
 
-                <S.PeopleList>
-                  {tempUser?._id &&
-                    !chatUsers?.find?.(
-                      (item) => item.user.url === tempUser.url
-                    ) && (
-                      <li>
-                        <Link
-                          href={ROUTES.MESSAGES.replace(":id", tempUser.url)}
-                        >
-                          <a>
-                            <S.PersonWrapper selected={tempUser.url === url}>
-                              <S.PersonAvatar>
-                                <Avatar
-                                  img={tempUser.avatar}
-                                  size={48}
-                                  bgColor='main'
-                                />
-                              </S.PersonAvatar>
+            <S.PeopleList>
+              {tempUser?._id &&
+                !chatUsers?.find?.(
+                  (item) => item.user.url === tempUser.url
+                ) && (
+                  <li>
+                    <Link href={ROUTES.MESSAGES.replace(":id", tempUser.url)}>
+                      <a>
+                        <S.PersonWrapper selected={tempUser.url === url}>
+                          <S.PersonAvatar>
+                            <Avatar
+                              img={tempUser.avatar}
+                              size={48}
+                              bgColor='main'
+                            />
+                          </S.PersonAvatar>
 
-                              <div>
-                                <Text
-                                  type='custom'
-                                  fc='white'
-                                  fw={400}
-                                  lh={1.6}
-                                >
-                                  {`${tempUser.name} (@${tempUser.url})`}
-                                </Text>
-                              </div>
-                            </S.PersonWrapper>
-                          </a>
-                        </Link>
-                      </li>
-                    )}
+                          <div>
+                            <Text type='custom' fc='white' fw={400} lh={1.6}>
+                              {`${tempUser.name} (@${tempUser.url})`}
+                            </Text>
+                          </div>
+                        </S.PersonWrapper>
+                      </a>
+                    </Link>
+                  </li>
+                )}
 
-                  {chatUsers.map((item) => {
-                    return (
-                      <li key={item.user._id}>
-                        <Link
-                          href={ROUTES.MESSAGES.replace(":id", item.user.url)}
-                        >
-                          <a>
-                            <S.PersonWrapper selected={item.user.url === url}>
-                              <S.PersonAvatar>
-                                <Avatar
-                                  img={item.user.avatar}
-                                  size={48}
-                                  bgColor='main'
-                                />
-                              </S.PersonAvatar>
-
-                              <S.PersonTextWrapper>
-                                <Text
-                                  type='custom'
-                                  fc='white'
-                                  fw={400}
-                                  lh={1.6}
-                                >
-                                  {`${item.user.name} (@${item.user.url})`}
-                                </Text>
-
-                                <Text
-                                  type='custom'
-                                  fc='bgInverted'
-                                  lh={1.6}
-                                  pt={4}
-                                >
-                                  {item.latestMessage.text}
-                                </Text>
-
-                                <Text
-                                  type='custom'
-                                  fc='bgInverted'
-                                  lh={1.6}
-                                  fs={12}
-                                  pt={4}
-                                >
-                                  <>Última mensagem em: </>
-                                  {getTimeString(item.latestMessage.sentAt)}
-                                </Text>
-                              </S.PersonTextWrapper>
-                            </S.PersonWrapper>
-                          </a>
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </S.PeopleList>
-              </S.PeopleWrapper>
-
-              <S.MessageWrapper>
-                <S.MessagesList>
-                  {messages?.messages?.length > 0 &&
-                    messages?.messages.map((item, key) => {
-                      return (
-                        <S.MessageItem key={`message-item-${key}`}>
-                          <S.MessageAvatar>
-                            {messages?.messages[key - 1]?.user !==
-                              messages?.messages[key]?.user && (
+              {chatUsers?.length > 0 &&
+                chatUsers.map((item) => {
+                  return (
+                    <li key={item.user._id}>
+                      <Link
+                        href={ROUTES.MESSAGES.replace(":id", item.user.url)}
+                      >
+                        <a>
+                          <S.PersonWrapper selected={item.user.url === url}>
+                            <S.PersonAvatar>
                               <Avatar
-                                img={getAvatar(item)}
-                                color='main'
-                                size={32}
+                                img={item.user.avatar}
+                                size={48}
+                                bgColor='main'
                               />
-                            )}
-                          </S.MessageAvatar>
+                            </S.PersonAvatar>
 
-                          <S.MessageContent>
-                            {messages?.messages[key - 1]?.user !==
-                              messages?.messages[key]?.user && (
-                              <S.MessageSender>
-                                <Text
-                                  type='custom'
-                                  fc='white'
-                                  lh={1.6}
-                                  fw={600}
-                                >
-                                  {item.user === profile._id
-                                    ? profile.name
-                                    : messages?.profile?.name}
-                                </Text>
+                            <S.PersonTextWrapper>
+                              <Text type='custom' fc='white' fw={400} lh={1.6}>
+                                {`${item.user.name} (@${item.user.url})`}
+                              </Text>
 
-                                <Text
-                                  type='custom'
-                                  fc='white'
-                                  lh={1.6}
-                                  fw={600}
-                                >
-                                  (@
-                                  {item.user === profile._id
-                                    ? profile.url
-                                    : messages?.profile?.url}
-                                  )
-                                </Text>
-                              </S.MessageSender>
-                            )}
+                              <Text
+                                type='custom'
+                                fc='bgInverted'
+                                lh={1.6}
+                                pt={4}
+                              >
+                                {item.latestMessage.text}
+                              </Text>
 
-                            <Text type='custom' fc='white' lh={1.6}>
-                              {item.text}
+                              <Text
+                                type='custom'
+                                fc='bgInverted'
+                                lh={1.6}
+                                fs={12}
+                                pt={4}
+                              >
+                                <>Última mensagem em: </>
+                                {getTimeString(item.latestMessage.sentAt)}
+                              </Text>
+                            </S.PersonTextWrapper>
+                          </S.PersonWrapper>
+                        </a>
+                      </Link>
+                    </li>
+                  );
+                })}
+            </S.PeopleList>
+          </S.PeopleWrapper>
+
+          <S.MessageWrapper>
+            <S.MessagesList>
+              {messages?.messages?.length > 0 &&
+                messages?.messages.map((item, key) => {
+                  return (
+                    <S.MessageItem key={`message-item-${key}`}>
+                      <S.MessageAvatar>
+                        {messages?.messages[key - 1]?.user !==
+                          messages?.messages[key]?.user && (
+                          <Avatar
+                            img={getAvatar(item)}
+                            color='main'
+                            size={32}
+                          />
+                        )}
+                      </S.MessageAvatar>
+
+                      <S.MessageContent>
+                        {messages?.messages[key - 1]?.user !==
+                          messages?.messages[key]?.user && (
+                          <S.MessageSender>
+                            <Text type='custom' fc='white' lh={1.6} fw={600}>
+                              {item.user === profile._id
+                                ? profile.name
+                                : messages?.profile?.name}
                             </Text>
 
-                            <Text
-                              type='custom'
-                              fc='bgInverted'
-                              lh={1.6}
-                              fs={12}
-                              pb={8}
-                            >
-                              {getTimeString(item.sentAt, true)}
+                            <Text type='custom' fc='white' lh={1.6} fw={600}>
+                              (@
+                              {item.user === profile._id
+                                ? profile.url
+                                : messages?.profile?.url}
+                              )
                             </Text>
-                          </S.MessageContent>
-                        </S.MessageItem>
-                      );
-                    })}
-                </S.MessagesList>
+                          </S.MessageSender>
+                        )}
 
-                <S.NewMessage>
-                  <Form onSubmit={handleSubmit}>
-                    <Input
-                      id='messages-new-message'
-                      placeholder='Digite sua mensagem'
-                      value={newMessage}
-                      onChange={handleChange}
-                    />
+                        <Text type='custom' fc='white' lh={1.6}>
+                          {item.text}
+                        </Text>
 
-                    <Button
-                      type='submit'
-                      style='primary'
-                      size={12}
-                      disabled={!newMessage}
-                    >
-                      <FontAwesomeIcon icon={faPaperPlane} />
-                      <span>Enviar</span>
-                    </Button>
-                  </Form>
-                </S.NewMessage>
-              </S.MessageWrapper>
-            </>
-          )}
+                        <Text
+                          type='custom'
+                          fc='bgInverted'
+                          lh={1.6}
+                          fs={12}
+                          pb={8}
+                        >
+                          {getTimeString(item.sentAt, true)}
+                        </Text>
+                      </S.MessageContent>
+                    </S.MessageItem>
+                  );
+                })}
+            </S.MessagesList>
+
+            <S.NewMessage>
+              <Form onSubmit={handleSubmit}>
+                <Input
+                  id='messages-new-message'
+                  placeholder='Digite sua mensagem'
+                  value={newMessage}
+                  onChange={handleChange}
+                />
+
+                <Button
+                  type='submit'
+                  style='primary'
+                  size={12}
+                  disabled={!newMessage}
+                >
+                  <FontAwesomeIcon icon={faPaperPlane} />
+                  <span>Enviar</span>
+                </Button>
+              </Form>
+            </S.NewMessage>
+          </S.MessageWrapper>
         </S.MessagesWrapper>
       )}
     </AuthedTemplate>
