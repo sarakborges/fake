@@ -221,7 +221,7 @@ const MessagesTemplate = () => {
                                 fs={12}
                                 pt={4}
                               >
-                                {getTimeString(item.latestMessage.sentAt)}
+                                {getTimeString(item.latestMessage.sentAt, true)}
                               </Text>
                             </S.PersonTextWrapper>
                           </S.PersonWrapper>
