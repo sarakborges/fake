@@ -1,10 +1,13 @@
 // Dependencies
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
 
 // APIs
 import GroupAPI from "Apis/Group";
+
+// Contexts
+import { UserContext } from "Contexts/User";
 
 // Helpers
 import { SITE_NAME } from "Helpers/Constants";
@@ -17,6 +20,9 @@ import AuthedTemplate from "Components/Templates/Authed";
 
 // Template
 const NewGroupTemplate = () => {
+  const { userState } = useContext(UserContext);
+  const { profile } = userState;
+
   const router = useRouter();
   const {
     query: { url },
@@ -43,10 +49,10 @@ const NewGroupTemplate = () => {
   const getGroup = useCallback(async () => {
     const groupData = await GroupAPI.getGroupByUrl(url);
 
-    if (groupData) {
+    if (groupData && groupData.owner === profile?._id) {
       setGroup(groupData);
     }
-  }, [url, GroupAPI]);
+  }, [url, profile, GroupAPI]);
 
   useEffect(() => {
     getGroup();
