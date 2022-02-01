@@ -5,6 +5,14 @@ export const NotificationsWrapper = styled.div`
   padding: 32px;
 `;
 
+export const NoNotificationsWrapper = styled.div`
+  display: flex;
+  place-items: center;
+  place-content: center;
+
+  min-height: 100vh;
+`;
+
 export const NotificationsList = styled.ul`
   display: flex;
   flex-flow: column;

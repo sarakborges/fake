@@ -11,10 +11,7 @@ export const NewProfileContent = styled.div`
     flex-flow: column;
     gap: 24px;
 
-    padding: 24px;
-
-    background-color: var(--bg);
-    border-radius: 16px;
+    padding-top: 16px;
   }
 `;
 

@@ -253,24 +253,22 @@ const GroupForm = ({ form, setForm, originalData }) => {
             />
           </S.Row>
 
-          <S.Row>
-            <LabeledInput
-              id='name'
-              placeholder='Insira o nome do grupo'
-              label='Nome'
-              value={form.name.value}
-              onChange={handleChange}
-            />
+          <LabeledInput
+            id='name'
+            placeholder='Insira o nome do grupo'
+            label='Nome'
+            value={form.name.value}
+            onChange={handleChange}
+          />
 
-            <LabeledInput
-              id='url'
-              placeholder='Insira uma URL personalizada para o grupo'
-              label='URL personalizada (Caso fique em branco, será baseado no nome)'
-              value={form.url.value}
-              error={form.url.error}
-              onChange={handleChange}
-            />
-          </S.Row>
+          <LabeledInput
+            id='url'
+            placeholder='Insira uma URL personalizada para o grupo'
+            label='URL personalizada (Caso fique em branco, será baseado no nome)'
+            value={form.url.value}
+            error={form.url.error}
+            onChange={handleChange}
+          />
 
           <LabeledInput
             id='link'

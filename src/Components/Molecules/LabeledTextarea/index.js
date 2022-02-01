@@ -5,7 +5,15 @@ import Textarea from "Components/Atoms/Textarea";
 import * as S from "./style";
 
 // Template
-const LabeledTextarea = ({ id, size, placeholder, label, value, onChange }) => {
+const LabeledTextarea = ({
+  id,
+  size,
+  placeholder,
+  label,
+  value,
+  onChange,
+  isBgContrast,
+}) => {
   return (
     <S.Wrapper>
       <Textarea
@@ -14,6 +22,7 @@ const LabeledTextarea = ({ id, size, placeholder, label, value, onChange }) => {
         size={size}
         value={value}
         onChange={onChange}
+        isBgContrast={isBgContrast}
       />
 
       <S.Label htmlFor={id}>{label}</S.Label>

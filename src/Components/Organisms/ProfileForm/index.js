@@ -287,24 +287,22 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
             />
           </S.Row2Items>
 
-          <S.Row2Items>
-            <LabeledInput
-              id='name'
-              placeholder='Insira o nome a ser exibido'
-              label='Nome'
-              value={form.name.value}
-              onChange={handleChange}
-            />
+          <LabeledInput
+            id='name'
+            placeholder='Insira o nome a ser exibido'
+            label='Nome'
+            value={form.name.value}
+            onChange={handleChange}
+          />
 
-            <LabeledInput
-              id='url'
-              placeholder='Insira uma URL personalizada'
-              label='URL personalizada (Caso fique em branco, será baseado no nome)'
-              value={form.url.value}
-              error={form.url.error}
-              onChange={handleChange}
-            />
-          </S.Row2Items>
+          <LabeledInput
+            id='url'
+            placeholder='Insira uma URL personalizada'
+            label='URL personalizada (Caso fique em branco, será baseado no nome)'
+            value={form.url.value}
+            error={form.url.error}
+            onChange={handleChange}
+          />
 
           <LabeledInput
             id='link'

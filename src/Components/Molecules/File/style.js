@@ -23,6 +23,7 @@ export const Label = styled.label`
   margin-top: 8px;
 
   border: 4px dotted var(--bgInverted);
+  background-color: var(--bg);
   border-radius: 8px;
   cursor: pointer;
 

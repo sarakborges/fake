@@ -16,9 +16,6 @@ export const SettingsContent = styled.div`
   padding-top: 32px;
 
   form {
-    padding: 24px;
-
-    background-color: var(--bg);
-    border-radius: 16px;
+    padding-top: 16px;
   }
 `;

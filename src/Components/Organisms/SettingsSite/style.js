@@ -15,6 +15,7 @@ export const ThemeOptions = styled.div`
 
   > button {
     padding: 0;
+    background: none;
   }
 `;
 
@@ -23,9 +24,8 @@ export const ThemeButton = styled.span`
   height: 32px;
 
   border-radius: 8px;
-  border: 2px solid
-    ${({ isActive }) => (isActive ? "var(--main)" : "transparent")};
-
+  box-shadow: 0 0 3px
+    ${({ isActive }) => (isActive ? "var(--main)" : "var(--bgInverted)")};
   background-color: ${({ thumb }) => thumb};
 
   transition: border-color 0.3s;

@@ -71,24 +71,22 @@ const SettingsAccount = () => {
 
       {user && (
         <Form onSubmit={handleSubmit}>
-          <S.Row>
-            <LabeledInput
-              id='account-settings-email'
-              placeholder='Email'
-              label='Email'
-              value={form.email.value}
-              onChange={handleChange}
-            />
+          <LabeledInput
+            id='account-settings-email'
+            placeholder='Email'
+            label='Email'
+            value={form.email.value}
+            onChange={handleChange}
+          />
 
-            <LabeledInput
-              id='account-settings-password'
-              type='password'
-              placeholder='Senha'
-              label='Senha'
-              value={form.password.value}
-              onChange={handleChange}
-            />
-          </S.Row>
+          <LabeledInput
+            id='account-settings-password'
+            type='password'
+            placeholder='Senha'
+            label='Senha'
+            value={form.password.value}
+            onChange={handleChange}
+          />
 
           <S.SettingsSave>
             <Button style='primary' size={16}>

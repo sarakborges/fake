@@ -27,6 +27,7 @@ import Button from "Components/Atoms/Button";
 
 // Molecules
 import NoProfile from "Components/Molecules/NoProfile";
+import NoNotification from "Components/Molecules/NoNotification";
 
 // Template
 import AuthedTemplate from "Components/Templates/Authed";
@@ -195,10 +196,9 @@ const NotificationsTemplate = () => {
       {profileData?._id && (
         <S.NotificationsWrapper>
           {getPendingConnections()?.length < 1 && (
-            <>
-              <Text type='pagetitle'>Suas notificações</Text>
-              <Text pt={16}>Tudo certinho por aqui! Sem notificações.</Text>
-            </>
+            <S.NoNotificationsWrapper>
+              <NoNotification />
+            </S.NoNotificationsWrapper>
           )}
 
           {getPendingConnections()?.length > 0 && (
@@ -208,7 +208,7 @@ const NotificationsTemplate = () => {
                   getPendingConnections()?.length !== 1
                     ? "solicitações"
                     : "solicitação"
-                } de conexão`}
+                } de conexão:`}
               </Text>
 
               <S.NotificationsList>
