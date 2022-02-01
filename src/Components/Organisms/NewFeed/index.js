@@ -108,6 +108,18 @@ const NewFeed = ({ feed, setFeed }) => {
     }
   };
 
+  const handleImageButton = () => {
+    const newState = !displayImage;
+    setDisplayImage(newState);
+
+    if (!newState) {
+      setForm({
+        ...form,
+        image: { ...baseFormField },
+      });
+    }
+  };
+
   const handleChange = (e) => {
     const tar = e.currentTarget;
 
@@ -145,11 +157,7 @@ const NewFeed = ({ feed, setFeed }) => {
         )}
 
         <S.PublishFeed>
-          <Button
-            style='secondary'
-            size={16}
-            onClick={() => setDisplayImage(!displayImage)}
-          >
+          <Button style='secondary' size={16} onClick={handleImageButton}>
             {displayImage ? "Remover" : "Anexar"} imagem
           </Button>
 
