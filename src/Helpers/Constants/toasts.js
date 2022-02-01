@@ -184,4 +184,16 @@ export const TOASTS = {
     text: "A URL que você tentou utilizar, já está em uso.",
     type: "warning",
   },
+
+  newPostSuccess: {
+    title: "Sucesso!",
+    text: "Publicado com sucesso.",
+    type: "success",
+  },
+
+  newPostError: {
+    title: "Erro!",
+    text: "Aconteceu algum erro ao tentar publicar. Tente novamente.",
+    type: "error",
+  },
 };

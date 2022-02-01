@@ -1,9 +1,11 @@
 // Dependencies
+import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 // Helpers
 import { getTimeString } from "Helpers/Functions";
+import { ROUTES } from "Helpers/routes";
 
 // Atoms
 import Text from "Components/Atoms/Text";
@@ -18,7 +20,13 @@ import * as S from "./style";
 const FeedItem = ({ info }) => {
   return (
     <S.FeedItem>
-      <InfoArea side='left' info={info.user} />
+      <S.InfoAreaWrapper>
+        <Link href={ROUTES.PROFILE.replace(":id", info.user.url)}>
+          <a>
+            <InfoArea side='left' info={info.user} />
+          </a>
+        </Link>
+      </S.InfoAreaWrapper>
 
       {info.image && <img src={info.image} />}
 

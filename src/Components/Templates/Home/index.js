@@ -17,6 +17,7 @@ import Rightbar from "Components/Atoms/Rightbar";
 
 // Molecules
 import NoProfile from "Components/Molecules/NoProfile";
+import NoFeed from "Components/Molecules/NoFeed";
 
 // Organisms
 import RoundList from "Components/Organisms/RoundList";
@@ -31,7 +32,10 @@ import * as S from "./style";
 
 // Template
 const HomeTemplate = () => {
+  const [approvedConnections, setApprovedConnections] = useState();
+  const [approvedMemberships, setApprovedMemberships] = useState();
   const [profileData, setProfileData] = useState();
+  const [feed, setFeed] = useState();
 
   const { userState } = useContext(UserContext);
   const { profile } = userState;
@@ -48,8 +52,8 @@ const HomeTemplate = () => {
     }
   }, [profile, ProfileAPI]);
 
-  const getApprovedConnections = () => {
-    return (
+  const getApprovedConnections = useCallback(() => {
+    setApprovedConnections(
       profileData?.connections?.filter?.((item) => {
         if (item.status === "connected") {
           return item;
@@ -58,10 +62,10 @@ const HomeTemplate = () => {
         }
       }) || []
     );
-  };
+  }, [profileData, setApprovedConnections]);
 
-  const getApprovedMembership = () => {
-    return (
+  const getApprovedMemberships = useCallback(() => {
+    setApprovedMemberships(
       profileData?.groups?.filter?.((item) => {
         const member = item?.members?.find(
           (groupItem) => groupItem.profile === profile._id
@@ -74,13 +78,17 @@ const HomeTemplate = () => {
         }
       }) || []
     );
-  };
+  }, [profileData, setApprovedMemberships]);
 
-  const getFeed = () => {
+  const getFeed = useCallback(() => {
+    if (!profileData?._id) {
+      return;
+    }
+
     let feed = [];
 
-    if (getApprovedConnections()?.length) {
-      const connections = getApprovedConnections()
+    if (approvedConnections?.length) {
+      const connections = approvedConnections
         ?.map((item) => item.user)
         .filter((item) => item.feed?.length > 0);
 
@@ -107,13 +115,13 @@ const HomeTemplate = () => {
 
     feed = [
       ...feed,
-      ...profile?.feed.map((item) => {
+      ...profileData?.feed.map((item) => {
         return {
           ...item,
           user: {
-            name: profile.name,
-            avatar: profile.avatar,
-            url: profile.url,
+            name: profileData.name,
+            avatar: profileData.avatar,
+            url: profileData.url,
           },
         };
       }),
@@ -121,12 +129,21 @@ const HomeTemplate = () => {
 
     feed.sort((a, b) => (a.postedAt < b.postedAt ? 1 : -1));
 
-    return feed;
-  };
+    setFeed(feed);
+  }, [setFeed, profileData, approvedConnections]);
 
   useEffect(() => {
     getProfile();
   }, [profile, getProfile]);
+
+  useEffect(() => {
+    getFeed();
+  }, [profileData, getFeed]);
+
+  useEffect(() => {
+    getApprovedConnections();
+    getApprovedMemberships();
+  }, [profileData, getApprovedConnections, getApprovedMemberships]);
 
   return (
     <AuthedTemplate>
@@ -134,14 +151,14 @@ const HomeTemplate = () => {
         <title>{SITE_NAME} - Home</title>
       </Head>
 
-      {!profile?._id && <NoProfile />}
+      {!profileData?._id && <NoProfile />}
 
-      {profile?._id && (
+      {profileData?._id && (
         <S.HomeWrapper>
           <S.FeedWrapper>
-            <NewFeed />
+            <NewFeed feed={feed} setFeed={setFeed} />
 
-            <Feed info={getFeed()} />
+            {feed?.length > 0 ? <Feed info={feed} /> : <NoFeed />}
           </S.FeedWrapper>
 
           <Rightbar>
@@ -150,9 +167,7 @@ const HomeTemplate = () => {
               title='Suas conexões'
               emptyTitle='Você ainda não possui conexões'
               extraItemLink={ROUTES.CONNECTIONS}
-              list={getApprovedConnections()
-                ?.slice?.(0, 5)
-                .map((item) => item.user)}
+              list={approvedConnections?.slice?.(0, 5).map((item) => item.user)}
             />
 
             <RoundList
@@ -160,7 +175,7 @@ const HomeTemplate = () => {
               title='Seus grupos'
               emptyTitle='Você ainda não participa de grupos'
               extraItemLink={ROUTES.GROUPS}
-              list={getApprovedMembership().slice?.(0, 5)}
+              list={approvedMemberships?.slice?.(0, 5)}
             />
           </Rightbar>
         </S.HomeWrapper>

@@ -16,6 +16,10 @@ export const FeedItem = styled.div`
   }
 `;
 
+export const InfoAreaWrapper = styled.div`
+  display: flex;
+`;
+
 export const FeedLike = styled.div`
   display: flex;
 
