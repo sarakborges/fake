@@ -46,7 +46,7 @@ const File = ({
 
   return (
     <S.File>
-      <S.LabelText htmlFor={id}>{label}</S.LabelText>
+      {label && <S.LabelText htmlFor={id}>{label}</S.LabelText>}
 
       <S.Label
         htmlFor={id}

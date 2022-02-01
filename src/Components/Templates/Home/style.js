@@ -9,10 +9,10 @@ export const HomeWrapper = styled.div`
   padding: 32px 16px 32px 32px;
 `;
 
-export const FeedPlaceholder = styled.div`
+export const FeedWrapper = styled.div`
   display: flex;
-  place-content: center;
-  place-items: center;
+  flex-flow: column;
+  gap: 64px;
 
   flex: 1;
   min-height: calc(100vh - 64px);

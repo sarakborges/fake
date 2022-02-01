@@ -9,14 +9,6 @@ export const RightBar = styled.div`
   width: 336px;
   margin: 0 16px;
 
-  > div {
-    width: 100%;
-    padding: 16px 2px;
-
-    background-color: var(--bg);
-    border-radius: 16px;
-  }
-
   @media (max-width: 760px) {
     display: none;
   }

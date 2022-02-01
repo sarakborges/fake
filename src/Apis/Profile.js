@@ -102,6 +102,20 @@ const createConnection = (info) => {
     .catch((err) => err);
 };
 
+const createPost = (info) => {
+  if (!info) {
+    console.log("createPost requires info param");
+    return;
+  }
+
+  return axios
+    .put(`${process.env.NEXT_PUBLIC_REQUEST_URI}/profile/feed/new`, {
+      ...info,
+    })
+    .then((res) => res.data)
+    .catch((err) => err);
+};
+
 export default {
   getProfileById,
   getProfileByUrl,
@@ -111,4 +125,5 @@ export default {
   updateConnection,
   createConnection,
   blockProfile,
+  createPost,
 };

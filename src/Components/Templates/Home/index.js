@@ -1,6 +1,6 @@
 // Dependencies
-import { useCallback, useContext, useEffect, useState } from "react";
 import Head from "next/head";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 // APIs
 import ProfileAPI from "Apis/Profile";
@@ -13,7 +13,6 @@ import { SITE_NAME } from "Helpers/Constants";
 import { ROUTES } from "Helpers/routes";
 
 // Atoms
-import Text from "Components/Atoms/Text";
 import Rightbar from "Components/Atoms/Rightbar";
 
 // Molecules
@@ -21,6 +20,8 @@ import NoProfile from "Components/Molecules/NoProfile";
 
 // Organisms
 import RoundList from "Components/Organisms/RoundList";
+import Feed from "Components/Organisms/Feed";
+import NewFeed from "Components/Organisms/NewFeed/";
 
 // Template
 import AuthedTemplate from "Components/Templates/Authed";
@@ -75,6 +76,54 @@ const HomeTemplate = () => {
     );
   };
 
+  const getFeed = () => {
+    let feed = [];
+
+    if (getApprovedConnections()?.length) {
+      const connections = getApprovedConnections()
+        ?.map((item) => item.user)
+        .filter((item) => item.feed?.length > 0);
+
+      if (!connections?.length) {
+        return feed;
+      }
+
+      for (let connection of connections) {
+        const connectionFeed = connection.feed.map((item) => {
+          return {
+            ...item,
+
+            user: {
+              name: connection.name,
+              avatar: connection.avatar,
+              url: connection.url,
+            },
+          };
+        });
+
+        feed = [...feed, ...connectionFeed];
+      }
+    }
+
+    feed = [
+      ...feed,
+      ...profile?.feed.map((item) => {
+        return {
+          ...item,
+          user: {
+            name: profile.name,
+            avatar: profile.avatar,
+            url: profile.url,
+          },
+        };
+      }),
+    ];
+
+    feed.sort((a, b) => (a.postedAt < b.postedAt ? 1 : -1));
+
+    return feed;
+  };
+
   useEffect(() => {
     getProfile();
   }, [profile, getProfile]);
@@ -89,11 +138,11 @@ const HomeTemplate = () => {
 
       {profile?._id && (
         <S.HomeWrapper>
-          <S.FeedPlaceholder>
-            <Text type='title' ta='center'>
-              Aqui vai ter o Feed. Mas ainda não tem nada.
-            </Text>
-          </S.FeedPlaceholder>
+          <S.FeedWrapper>
+            <NewFeed />
+
+            <Feed info={getFeed()} />
+          </S.FeedWrapper>
 
           <Rightbar>
             <RoundList

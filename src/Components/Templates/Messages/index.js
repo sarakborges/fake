@@ -1,10 +1,7 @@
 // Dependencies
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
-import Link from "next/link";
 
 // APIs
 import MessageAPI from "Apis/Message";
@@ -14,20 +11,14 @@ import ProfileAPI from "Apis/Profile";
 import { UserContext } from "Contexts/User";
 
 // Helpers
-import { getTimeString } from "Helpers/Functions";
-import { ROUTES } from "Helpers/routes";
 import { SITE_NAME } from "Helpers/Constants";
-
-// Atoms
-import Form from "Components/Atoms/Form";
-import Text from "Components/Atoms/Text";
-import Input from "Components/Atoms/Input";
-import Button from "Components/Atoms/Button";
-import Avatar from "Components/Atoms/Avatar";
 
 // Molecules
 import NoProfile from "Components/Molecules/NoProfile";
-import LabeledInput from "Components/Molecules/LabeledInput";
+
+// Organisms
+import ChatUsers from "Components/Organisms/ChatUsers";
+import ChatMessages from "Components/Organisms/ChatMessages";
 
 // Template
 import AuthedTemplate from "Components/Templates/Authed";
@@ -64,17 +55,13 @@ const MessagesTemplate = () => {
         sender: profile._id,
       });
 
+      setNewMessage("");
+
       await getMessages();
       await getChatUsers();
-
-      setNewMessage("");
     } catch (e) {
       console.log(e);
     }
-  };
-
-  const handleChange = (e) => {
-    setNewMessage(e.currentTarget.value);
   };
 
   const getChatUsers = useCallback(async () => {
@@ -120,14 +107,6 @@ const MessagesTemplate = () => {
     }
   }, [chatUsers, profile, url, MessageAPI]);
 
-  const getAvatar = (message) => {
-    if (message.user === profile._id) {
-      return profile.avatar;
-    } else {
-      return messages?.profile?.avatar;
-    }
-  };
-
   useEffect(() => {
     getChatUsers();
   }, [getChatUsers]);
@@ -146,170 +125,18 @@ const MessagesTemplate = () => {
 
       {profile?._id && (
         <S.MessagesWrapper>
-          <S.PeopleWrapper>
-            <S.PeopleFilter>
-              <LabeledInput
-                id='messages-people-filter'
-                placeholder='Digite o nome ou @ de quem quer encontrar'
-                label='Procurar pessoa'
-              />
-            </S.PeopleFilter>
+          <ChatUsers
+            usersList={chatUsers}
+            tempUser={tempUser}
+            currentUrl={url}
+          />
 
-            <S.PeopleList>
-              {tempUser?._id &&
-                !chatUsers?.find?.(
-                  (item) => item.user.url === tempUser.url
-                ) && (
-                  <li>
-                    <Link href={ROUTES.MESSAGES.replace(":id", tempUser.url)}>
-                      <a>
-                        <S.PersonWrapper selected={tempUser.url === url}>
-                          <S.PersonAvatar>
-                            <Avatar
-                              img={tempUser.avatar}
-                              size={48}
-                              bgColor='main'
-                            />
-                          </S.PersonAvatar>
-
-                          <div>
-                            <Text type='custom' fc='white' fw={400} lh={1.6}>
-                              {`${tempUser.name} (@${tempUser.url})`}
-                            </Text>
-                          </div>
-                        </S.PersonWrapper>
-                      </a>
-                    </Link>
-                  </li>
-                )}
-
-              {chatUsers?.length > 0 &&
-                chatUsers.map((item) => {
-                  return (
-                    <li key={item.user._id}>
-                      <Link
-                        href={ROUTES.MESSAGES.replace(":id", item.user.url)}
-                      >
-                        <a>
-                          <S.PersonWrapper selected={item.user.url === url}>
-                            <S.PersonAvatar>
-                              <Avatar
-                                img={item.user.avatar}
-                                size={48}
-                                bgColor='main'
-                              />
-                            </S.PersonAvatar>
-
-                            <S.PersonTextWrapper>
-                              <Text type='custom' fc='white' fw={400} lh={1.6}>
-                                {`${item.user.name} (@${item.user.url})`}
-                              </Text>
-
-                              <Text
-                                type='custom'
-                                fc='bgInverted'
-                                lh={1.6}
-                                pt={4}
-                              >
-                                {item.latestMessage.text}
-                              </Text>
-
-                              <Text
-                                type='custom'
-                                fc='bgInverted'
-                                lh={1.6}
-                                fs={12}
-                                pt={4}
-                              >
-                                {getTimeString(item.latestMessage.sentAt, true)}
-                              </Text>
-                            </S.PersonTextWrapper>
-                          </S.PersonWrapper>
-                        </a>
-                      </Link>
-                    </li>
-                  );
-                })}
-            </S.PeopleList>
-          </S.PeopleWrapper>
-
-          <S.MessageWrapper>
-            <S.MessagesList>
-              {messages?.messages?.length > 0 &&
-                messages?.messages.map((item, key) => {
-                  return (
-                    <S.MessageItem key={`message-item-${key}`}>
-                      <S.MessageAvatar>
-                        {messages?.messages[key - 1]?.user !==
-                          messages?.messages[key]?.user && (
-                          <Avatar
-                            img={getAvatar(item)}
-                            color='main'
-                            size={32}
-                          />
-                        )}
-                      </S.MessageAvatar>
-
-                      <S.MessageContent>
-                        {messages?.messages[key - 1]?.user !==
-                          messages?.messages[key]?.user && (
-                          <S.MessageSender>
-                            <Text type='custom' fc='white' lh={1.6} fw={600}>
-                              {item.user === profile._id
-                                ? profile.name
-                                : messages?.profile?.name}
-                            </Text>
-
-                            <Text type='custom' fc='white' lh={1.6} fw={600}>
-                              (@
-                              {item.user === profile._id
-                                ? profile.url
-                                : messages?.profile?.url}
-                              )
-                            </Text>
-                          </S.MessageSender>
-                        )}
-
-                        <Text type='custom' fc='white' lh={1.6}>
-                          {item.text}
-                        </Text>
-
-                        <Text
-                          type='custom'
-                          fc='bgInverted'
-                          lh={1.6}
-                          fs={12}
-                          pb={8}
-                        >
-                          {getTimeString(item.sentAt, true)}
-                        </Text>
-                      </S.MessageContent>
-                    </S.MessageItem>
-                  );
-                })}
-            </S.MessagesList>
-
-            <S.NewMessage>
-              <Form onSubmit={handleSubmit}>
-                <Input
-                  id='messages-new-message'
-                  placeholder='Digite sua mensagem'
-                  value={newMessage}
-                  onChange={handleChange}
-                />
-
-                <Button
-                  type='submit'
-                  style='primary'
-                  size={12}
-                  disabled={!newMessage}
-                >
-                  <FontAwesomeIcon icon={faPaperPlane} />
-                  <span>Enviar</span>
-                </Button>
-              </Form>
-            </S.NewMessage>
-          </S.MessageWrapper>
+          <ChatMessages
+            messages={messages}
+            handleSubmit={handleSubmit}
+            newMessage={newMessage}
+            setNewMessage={setNewMessage}
+          />
         </S.MessagesWrapper>
       )}
     </AuthedTemplate>

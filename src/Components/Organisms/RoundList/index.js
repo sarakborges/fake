@@ -23,7 +23,7 @@ const RoundList = ({
   hideEmpty,
 }) => {
   return !hideEmpty ? (
-    <div>
+    <S.RoundList>
       <S.Title>{title}</S.Title>
 
       {list?.length ? (
@@ -64,7 +64,7 @@ const RoundList = ({
           <Text ta='center'>{emptyTitle}</Text>
         </S.EmptyTitle>
       )}
-    </div>
+    </S.RoundList>
   ) : (
     false
   );

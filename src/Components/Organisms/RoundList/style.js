@@ -4,6 +4,14 @@ export const EmptyTitle = styled.div`
   padding-top: 16px;
 `;
 
+export const RoundList = styled.div`
+  width: 100%;
+  padding: 16px 2px;
+
+  background-color: var(--bg);
+  border-radius: 16px;
+`;
+
 export const Title = styled.div`
   text-align: center;
   color: var(--main);
