@@ -113,19 +113,21 @@ const HomeTemplate = () => {
       }
     }
 
-    feed = [
-      ...feed,
-      ...profileData?.feed.map((item) => {
-        return {
-          ...item,
-          user: {
-            name: profileData.name,
-            avatar: profileData.avatar,
-            url: profileData.url,
-          },
-        };
-      }),
-    ];
+    if (profileData?.feed) {
+      feed = [
+        ...feed,
+        ...profileData?.feed.map((item) => {
+          return {
+            ...item,
+            user: {
+              name: profileData.name,
+              avatar: profileData.avatar,
+              url: profileData.url,
+            },
+          };
+        }),
+      ];
+    }
 
     feed.sort((a, b) => (a.postedAt < b.postedAt ? 1 : -1));
 
