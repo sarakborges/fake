@@ -27,7 +27,10 @@ export const LEFT_MENU = [
       text: "Perfil",
       link: ROUTES.PROFILE,
       needsProfile: true,
-      activeOnRoutes: [ROUTES.PROFILE.replace(":id", "[url]")],
+      activeOnRoutes: [
+        ROUTES.PROFILE.replace(":id", "[url]"),
+        ROUTES.PROFILE_FEED.replace(":id", "[url]"),
+      ],
     },
 
     {

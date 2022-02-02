@@ -11,6 +11,14 @@ export const PROFILE_HEADER = {
     },
 
     {
+      id: "feed",
+      type: "link",
+      title: "Feed",
+      to: ROUTES.PROFILE_FEED,
+      activeOnRoutes: [ROUTES.PROFILE_FEED.replace(":id", "[url]")],
+    },
+
+    {
       id: "connections",
       type: "link",
       title: "Conexões",

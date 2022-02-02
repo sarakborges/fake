@@ -80,6 +80,7 @@ export const DropdownMenu = styled.div`
     aspect-ratio: 1;
 
     box-shadow: 2px 2px 3px var(--bgContrast);
+    border-radius: 8px;
   }
 `;
 
@@ -95,10 +96,10 @@ export const EditLink = styled.div`
     place-content: center;
     gap: 8px;
 
+    width: 48px;
     aspect-ratio: 1;
-    padding: 0 16px;
 
-    border-radius: 4px;
+    border-radius: 8px;
     border: 2px solid transparent;
     background-color: var(--bg);
     box-shadow: 2px 2px 3px var(--bgContrast);

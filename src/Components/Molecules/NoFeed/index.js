@@ -9,7 +9,7 @@ import Text from "Components/Atoms/Text";
 import * as S from "./style";
 
 // Template
-const NoFeed = () => {
+const NoFeed = ({ name }) => {
   return (
     <S.NoFeed>
       <S.NoFeedWrapper>
@@ -20,8 +20,16 @@ const NoFeed = () => {
         <Text type='pagetitle'>Nenhuma publicação</Text>
 
         <Text ta='center'>
-          Seu feed está vazio porque nem você, nem suas conexões publicaram nada
-          ainda. Que tal fazer a primeira?
+          {!name ? (
+            <>
+              Seu feed está vazio. Nem você, nem suas conexões, fizeram
+              publicações. Que tal fazer a primeira?
+            </>
+          ) : (
+            <>
+              <b>{name}</b> ainda não publicou nada.
+            </>
+          )}
         </Text>
       </S.NoFeedWrapper>
     </S.NoFeed>

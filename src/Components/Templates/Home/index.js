@@ -93,23 +93,21 @@ const HomeTemplate = () => {
         .filter((item) => item.feed?.length > 0);
 
       if (!connections?.length) {
-        return feed;
-      }
+        for (let connection of connections) {
+          const connectionFeed = connection.feed.map((item) => {
+            return {
+              ...item,
 
-      for (let connection of connections) {
-        const connectionFeed = connection.feed.map((item) => {
-          return {
-            ...item,
+              user: {
+                name: connection.name,
+                avatar: connection.avatar,
+                url: connection.url,
+              },
+            };
+          });
 
-            user: {
-              name: connection.name,
-              avatar: connection.avatar,
-              url: connection.url,
-            },
-          };
-        });
-
-        feed = [...feed, ...connectionFeed];
+          feed = [...feed, ...connectionFeed];
+        }
       }
     }
 
