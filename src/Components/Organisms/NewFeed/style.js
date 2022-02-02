@@ -6,9 +6,6 @@ export const NewFeed = styled.div`
   gap: 24px;
 
   > textarea {
-    padding: 16px;
-
-    border: 0;
     border-radius: 16px;
   }
 `;

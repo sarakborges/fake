@@ -2,11 +2,10 @@ import styled from "styled-components";
 
 export const Input = styled.input`
   width: 100%;
-  height: 40px;
-  padding: 12px 8px;
+  height: 48px;
+  padding: 12px;
 
-  border: 0;
-  border: 2px solid var(--bgInverted);
+  border: 2px solid transparent;
   border-radius: 4px;
   background-color: ${({ isBgContrast }) =>
     !isBgContrast ? "var(--bg)" : "var(--bgContrast)"};
