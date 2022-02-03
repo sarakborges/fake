@@ -67,9 +67,7 @@ const AuthedTemplate = ({ children }) => {
 
     appDispatch({
       type: "SET_DISPLAY_ADULT",
-      data: {
-        ...appData.displayAdult,
-      },
+      data: appData.displayAdult,
     });
   }, [appDispatch]);
 
