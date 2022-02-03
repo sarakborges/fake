@@ -7,7 +7,7 @@ import GroupAPI from "Apis/Group";
 import ImageAPI from "Apis/Image";
 
 // Helpers
-import { slugify } from "Helpers/Functions";
+import { displayToast, slugify } from "Helpers/Functions";
 import { TOASTS } from "Helpers/Constants";
 import { ROUTES } from "Helpers/routes";
 
@@ -41,23 +41,6 @@ const GroupForm = ({ form, setForm, originalData }) => {
   const _id = originalData?._id;
 
   const [isRequesting, setIsRequesting] = useState(false);
-
-  const displayToast = (toast) => {
-    appDispatch({
-      type: "SET_TOAST",
-      data: {
-        ...TOASTS[toast],
-        isVisible: true,
-      },
-    });
-
-    setTimeout(() => {
-      appDispatch({
-        type: "TOGGLE_TOAST",
-        data: false,
-      });
-    }, 5000);
-  };
 
   const getFormData = useCallback(() => {
     if (!_id) {
@@ -108,7 +91,7 @@ const GroupForm = ({ form, setForm, originalData }) => {
   const handleDelete = async () => {
     try {
       if (!_id) {
-        displayToast("deleteGroupError");
+        displayToast(TOASTS.DELETE_GROUP, 1, appDispatch);
         return;
       }
 
@@ -119,11 +102,11 @@ const GroupForm = ({ form, setForm, originalData }) => {
       });
 
       setIsRequesting(false);
-      displayToast("deleteGroupSuccess");
+      displayToast(TOASTS.DELETE_GROUP, 0, appDispatch);
       router.push(ROUTES.HOME);
     } catch (e) {
       console.log(e);
-      displayToast("deleteGroupError");
+      displayToast(TOASTS.DELETE_GROUP, 0, appDispatch);
       setIsRequesting(false);
     }
   };
@@ -142,7 +125,7 @@ const GroupForm = ({ form, setForm, originalData }) => {
         },
       });
 
-      displayToast("urlExists");
+      displayToast(TOASTS.URL_EXISTS, 2, appDispatch);
       setIsRequesting(false);
       return true;
     }

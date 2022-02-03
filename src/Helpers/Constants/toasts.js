@@ -1,199 +1,82 @@
 export const TOASTS = {
-  connectSuccess: {
-    title: "Successo",
-    text: "Conexão solicitada",
-    type: "success",
-  },
+  SELECT_PROFILE: [
+    "Perfil selecionado.",
+    "Aconteceu algum erro ao tentar selecionar perfil. Tente novamente.",
+  ],
 
-  connectError: {
-    title: "Erro!",
-    text: `Aconteceu algum erro ao tentar solicitar conexão. Tente novamente.`,
-    type: "error",
-  },
+  CONNECT: [
+    "Conexão solicitada.",
+    "Aconteceu algum erro ao tentar solicitar conexão. Tente novamente.",
+  ],
 
-  acceptConnectionSuccess: {
-    title: "Sucesso!",
-    text: `Conexão aceita.`,
-    type: "success",
-  },
+  ACCEPT_CONNECTION: [
+    "Conexão aceita.",
+    "Aconteceu algum erro ao tentar aceitar a conexão. Tente novamente.",
+  ],
 
-  acceptConnectionError: {
-    title: "Erro!",
-    text: `Aconteceu algum erro ao tentar aceitar a conexão. Tente novamente.`,
-    type: "error",
-  },
+  REMOVE_CONNECTION: [
+    "Conexão removida.",
+    "Aconteceu algum erro ao tentar remover a conexão. Tente novamente.",
+  ],
 
-  removeConnectionSuccess: {
-    title: "Sucesso!",
-    text: `Conexão removida.`,
-    type: "success",
-  },
+  BLOCK: [
+    "Perfil bloqueado.",
+    "Aconteceu algum erro ao tentar bloquear o perfil. Tente novamente.",
+  ],
 
-  removeConnectionError: {
-    title: "Erro!",
-    text: `Aconteceu algum erro ao tentar remover a conexão. Tente novamente.`,
-    type: "error",
-  },
+  UNBLOCK: [
+    "Perfil desbloqueado.",
+    "Aconteceu algum erro ao tentar desbloquear o perfil. Tente novamente.",
+  ],
 
-  blockSuccess: {
-    title: "Sucesso!",
-    text: `Perfil bloqueado.`,
-    type: "success",
-  },
+  CREATE_PROFILE: [
+    "Perfil criado.",
+    "Aconteceu algum erro ao tentar criar seu perfil. Tente novamente.",
+    "Todos os campos precisam ser preenchidos, antes de continuarmos.",
+  ],
 
-  blockError: {
-    title: "Erro!",
-    text: `Aconteceu algum erro ao tentar bloquear o perfil. Tente novamente.`,
-    type: "error",
-  },
+  EDIT_PROFILE: [
+    "Perfil editado.",
+    "Aconteceu algum erro ao tentar editar seu perfil. Tente novamente.",
+    "Todos os campos precisam ser preenchidos, antes de continuarmos.",
+  ],
 
-  unblockSuccess: {
-    title: "Sucesso!",
-    text: `Perfil desbloqueado.`,
-    type: "success",
-  },
+  DELETE_PROFILE: [
+    "Perfil excluído.",
+    "Aconteceu algum erro ao tentar excluir seu perfil. Tente novamente.",
+  ],
 
-  unblockError: {
-    title: "Erro!",
-    text: `Aconteceu algum erro ao tentar desbloquear o perfil. Tente novamente.`,
-    type: "error",
-  },
+  CREATE_GROUP: [
+    "Grupo criado.",
+    "Aconteceu algum erro ao tentar criar seu grupo. Tente novamente.",
+    "Todos os campos precisam ser preenchidos, antes de continuarmos.",
+  ],
 
-  createProfileSuccess: {
-    title: "Sucesso!",
-    text: `Perfil criado com sucesso.`,
-    type: "success",
-  },
+  EDIT_GROUP: [
+    "Grupo editado.",
+    "Aconteceu algum erro ao tentar editar seu grupo. Tente novamente.",
+    "Todos os campos precisam ser preenchidos, antes de continuarmos.",
+  ],
 
-  editProfileSuccess: {
-    title: "Sucesso!",
-    text: `Perfil criado com sucesso.`,
-    type: "success",
-  },
+  JOIN_GROUP: [
+    "Você agora faz parte deste grupo.",
+    "Aconteceu algum erro ao tentar participar do grupo. Tente novamente.",
+  ],
 
-  createProfileWarning: {
-    title: "Cuidado!",
-    text: "Todos os campos precisam ser preenchidos, antes de continuarmos.",
-    type: "warning",
-  },
+  LEAVE_GROUP: [
+    "Você saiu deste grupo.",
+    "Aconteceu algum erro ao tentar sair do grupo. Tente novamente.",
+  ],
 
-  editProfileWarning: {
-    title: "Cuidado!",
-    text: "Todos os campos precisam ser preenchidos, antes de continuarmos.",
-    type: "warning",
-  },
+  DELETE_GROUP: [
+    "Grupo deletado.",
+    "Aconteceu algum erro ao tentar deletar o grupo. Tente novamente.",
+  ],
 
-  createProfileError: {
-    title: "Erro!",
-    text: `Aconteceu algum erro ao tentar criar seu perfil. Tente novamente.`,
-    type: "error",
-  },
+  URL_EXISTS: ["", "", "A URL que você tentou utilizar, já está em uso."],
 
-  editProfileError: {
-    title: "Erro!",
-    text: `Aconteceu algum erro ao tentar editar seu perfil. Tente novamente.`,
-    type: "error",
-  },
-
-  deleteProfileSuccess: {
-    title: "Sucesso!",
-    text: "Perfil excluído com sucesso.",
-    type: "success",
-  },
-
-  deleteProfileError: {
-    title: "Erro!",
-    text: "Aconteceu algum erro ao tentar excluir seu perfil. Tente novamente.",
-    type: "error",
-  },
-
-  createGroupSuccess: {
-    title: "Sucesso!",
-    text: "Grupo criado com sucesso.",
-    type: "success",
-  },
-
-  editGroupSuccess: {
-    title: "Sucesso!",
-    text: "Grupo editado com sucesso.",
-    type: "success",
-  },
-
-  createGroupWarning: {
-    title: "Cuidado!",
-    text: "Todos os campos precisam ser preenchidos, antes de continuarmos.",
-    type: "warning",
-  },
-
-  editGroupWarning: {
-    title: "Cuidado!",
-    text: "Todos os campos precisam ser preenchidos, antes de continuarmos.",
-    type: "warning",
-  },
-
-  createGroupError: {
-    title: "Erro!",
-    text: "Aconteceu algum erro ao tentar criar o grupo. Tente novamente.",
-    type: "error",
-  },
-
-  editGroupError: {
-    title: "Erro!",
-    text: "Aconteceu algum erro ao tentar editar o grupo. Tente novamente.",
-    type: "error",
-  },
-
-  enterGroupSuccess: {
-    title: "Sucesso!",
-    text: "Você agora faz parte deste grupo.",
-    type: "success",
-  },
-
-  enterGroupError: {
-    title: "Erro!",
-    text: "Aconteceu algum erro ao tentar participar do grupo. Tente novamente.",
-    type: "error",
-  },
-
-  leaveGroupSuccess: {
-    title: "Sucesso!",
-    text: "Você saiu deste grupo.",
-    type: "success",
-  },
-
-  leaveGroupError: {
-    title: "Erro!",
-    text: "Aconteceu algum erro ao tentar sair do grupo. Tente novamente.",
-    type: "error",
-  },
-
-  deleteGroupSuccess: {
-    title: "Sucesso!",
-    text: "Grupo deletado.",
-    type: "success",
-  },
-
-  deleteGroupError: {
-    title: "Erro!",
-    text: "Aconteceu algum erro ao tentar deletar o grupo. Tente novamente.",
-    type: "error",
-  },
-
-  urlExists: {
-    title: "Cuidado!",
-    text: "A URL que você tentou utilizar, já está em uso.",
-    type: "warning",
-  },
-
-  newPostSuccess: {
-    title: "Sucesso!",
-    text: "Publicado com sucesso.",
-    type: "success",
-  },
-
-  newPostError: {
-    title: "Erro!",
-    text: "Aconteceu algum erro ao tentar publicar. Tente novamente.",
-    type: "error",
-  },
+  NEW_POST: [
+    "Publicado com sucesso.",
+    "Aconteceu algum erro ao tentar publicar. Tente novamente.",
+  ],
 };

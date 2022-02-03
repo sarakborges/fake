@@ -16,7 +16,7 @@ import GroupAPI from "Apis/Group";
 // Helpers
 import { ROUTES } from "Helpers/routes";
 import { PROFILE_HEADER, GROUP_HEADER, TOASTS } from "Helpers/Constants";
-import { getTimeString } from "Helpers/Functions";
+import { displayToast, getTimeString } from "Helpers/Functions";
 
 // Contexsts
 import { UserContext } from "Contexts/User";
@@ -43,23 +43,6 @@ const InfoHeader = ({ info, type, setInfo }) => {
   const { userState, userDispatch } = useContext(UserContext);
   const { appDispatch } = useContext(AppContext);
   const { user, profile } = userState;
-
-  const displayToast = (toast) => {
-    appDispatch({
-      type: "SET_TOAST",
-      data: {
-        ...TOASTS[toast],
-        isVisible: true,
-      },
-    });
-
-    setTimeout(() => {
-      appDispatch({
-        type: "TOGGLE_TOAST",
-        data: false,
-      });
-    }, 5000);
-  };
 
   const toggleMenu = () => {
     setDisplayMenu(!displayMenu);
@@ -122,33 +105,33 @@ const InfoHeader = ({ info, type, setInfo }) => {
         updateUsers(createConnectinoReq);
 
         setIsRequesting(false);
-        displayToast("connectSuccess");
+        displayToast(TOASTS.CONNECT, 0, appDispatch);
       } catch (e) {
         console.log(e);
         setIsRequesting(false);
-        displayToast("connectError");
+        displayToast(TOASTS.CONNECT, 1, appDispatch);
       }
     },
 
     acceptConnection: async () => {
       try {
         await updateConnection("accept");
-        displayToast("acceptConnectionSuccess");
+        displayToast(TOASTS.ACCEPT_CONNECTION, 0, appDispatch);
       } catch (e) {
         console.log(e);
         setIsRequesting(false);
-        displayToast("acceptConnectionError");
+        displayToast(TOASTS.ACCEPT_CONNECTION, 1, appDispatch);
       }
     },
 
     removeConnection: async () => {
       try {
         await updateConnection("remove");
-        displayToast("removeConnectionSuccess");
+        displayToast(TOASTS.REMOVE_CONNECTION, 0, appDispatch);
       } catch (e) {
         console.log(e);
         setIsRequesting(false);
-        displayToast("removeConnectionError");
+        displayToast(TOASTS.REMOVE_CONNECTION, 1, appDispatch);
       }
     },
 
@@ -178,10 +161,10 @@ const InfoHeader = ({ info, type, setInfo }) => {
         updateLocalUser({ ...newProfile });
 
         setIsRequesting(false);
-        displayToast("blockSuccess");
+        displayToast(TOASTS.BLOCK, 0, appDispatch);
       } catch (e) {
         setIsRequesting(false);
-        displayToast("blockError");
+        displayToast(TOASTS.BLOCK, 1, appDispatch);
         console.log(e);
       }
     },
@@ -207,10 +190,10 @@ const InfoHeader = ({ info, type, setInfo }) => {
         updateLocalUser({ ...newProfile });
 
         setIsRequesting(false);
-        displayToast("unblockSuccess");
+        displayToast(TOASTS.UNBLOCK, 0, appDispatch);
       } catch (e) {
         console.log(e);
-        displayToast("unblockError");
+        displayToast(TOASTS.UNBLOCK, 0, appDispatch);
         setIsRequesting(false);
       }
     },
@@ -236,10 +219,10 @@ const InfoHeader = ({ info, type, setInfo }) => {
         setInfo({ ...joinReq.group });
 
         setIsRequesting(false);
-        displayToast("enterGroupSuccess");
+        displayToast(TOASTS.JOIN_GROUP, 0, appDispatch);
       } catch (e) {
         console.log(e);
-        displayToast("enterGroupError");
+        displayToast(TOASTS.JOIN_GROUP, 1, appDispatch);
         setIsRequesting(false);
       }
     },
@@ -265,10 +248,10 @@ const InfoHeader = ({ info, type, setInfo }) => {
         setInfo({ ...leaveReq });
 
         setIsRequesting(false);
-        displayToast("leaveGroupSuccess");
+        displayToast(TOASTS.LEAVE_GROUP, 0, appDispatch);
       } catch (e) {
         console.log(e);
-        displayToast("leaveGroupError");
+        displayToast(TOASTS.LEAVE_GROUP, 1, appDispatch);
         setIsRequesting(false);
       }
     },

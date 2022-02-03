@@ -1,5 +1,7 @@
 // Dependencies
 import { useContext, useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faImage } from "@fortawesome/free-solid-svg-icons";
 
 // APIs
 import ProfileAPI from "Apis/Profile";
@@ -11,6 +13,7 @@ import { AppContext } from "Contexts/App";
 
 // Helpers
 import { TOASTS } from "Helpers/Constants";
+import { displayToast } from "Helpers/Functions";
 
 // Atoms
 import Button from "Components/Atoms/Button";
@@ -23,8 +26,6 @@ import File from "Components/Molecules/File";
 
 // Styles
 import * as S from "./style";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImage, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 // Template
 const NewFeed = ({ feed, setFeed }) => {
@@ -46,23 +47,6 @@ const NewFeed = ({ feed, setFeed }) => {
   const { userState } = useContext(UserContext);
   const { appDispatch } = useContext(AppContext);
   const { profile } = userState;
-
-  const displayToast = (toast) => {
-    appDispatch({
-      type: "SET_TOAST",
-      data: {
-        ...TOASTS[toast],
-        isVisible: true,
-      },
-    });
-
-    setTimeout(() => {
-      appDispatch({
-        type: "TOGGLE_TOAST",
-        data: false,
-      });
-    }, 5000);
-  };
 
   const handleSubmit = async () => {
     try {
@@ -101,12 +85,12 @@ const NewFeed = ({ feed, setFeed }) => {
 
       setForm({ ...baseForm });
 
-      displayToast("newPostSuccess");
+      displayToast(TOASTS.NEW_POST, 0, appDispatch);
       setDisplayImage(false);
       setIsRequesting(false);
     } catch (e) {
       console.log(e);
-      displayToast("newPostError");
+      displayToast(TOASTS.NEW_POST, 1, appDispatch);
       setIsRequesting(false);
     }
   };

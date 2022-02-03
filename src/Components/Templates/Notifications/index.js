@@ -16,8 +16,8 @@ import { UserContext } from "Contexts/User";
 import { AppContext } from "Contexts/App";
 
 // Helpers
-import { SITE_NAME } from "Helpers/Constants";
-import { getTimeString } from "Helpers/Functions";
+import { SITE_NAME, TOASTS } from "Helpers/Constants";
+import { displayToast, getTimeString } from "Helpers/Functions";
 import { ROUTES } from "Helpers/routes";
 
 // Atoms
@@ -44,49 +44,6 @@ const NotificationsTemplate = () => {
   const { profile, user } = userState;
 
   const { appDispatch } = useContext(AppContext);
-
-  const displayToast = (toast) => {
-    const toasts = {
-      acceptConnectionSuccess: {
-        title: "Successo",
-        text: `Conexão aceita!`,
-        type: "success",
-      },
-
-      acceptConnectionError: {
-        title: "Erro",
-        text: `Aconteceu algum erro ao tentar aceitar a conexão. Tente novamente.`,
-        type: "error",
-      },
-
-      refuseConnectionSuccess: {
-        title: "Successo",
-        text: `Conexão recusada.`,
-        type: "success",
-      },
-
-      refuseConnectionError: {
-        title: "Erro",
-        text: `Aconteceu algum erro ao tentar recusar a conexão. Tente novamente.`,
-        type: "error",
-      },
-    };
-
-    appDispatch({
-      type: "SET_TOAST",
-      data: {
-        ...toasts[toast],
-        isVisible: true,
-      },
-    });
-
-    setTimeout(() => {
-      appDispatch({
-        type: "TOGGLE_TOAST",
-        data: false,
-      });
-    }, 5000);
-  };
 
   const getProfile = useCallback(async () => {
     if (!profile?._id) {
@@ -152,10 +109,10 @@ const NotificationsTemplate = () => {
 
       updateUsers([...updatedProfiles]);
 
-      displayToast("acceptConnectionSuccess");
+      displayToast(TOASTS.ACCEPT_CONNECTION, 0, appDispatch);
       setIsRequesting(false);
     } catch (e) {
-      displayToast("acceptConnectionError");
+      displayToast(TOASTS.ACCEPT_CONNECTION, 1, appDispatch);
       setIsRequesting(false);
       console.log(e);
     }
@@ -172,10 +129,10 @@ const NotificationsTemplate = () => {
 
       updateUsers([...updatedProfiles]);
 
-      displayToast("refuseConnectionSuccess");
+      displayToast(TOASTS.REMOVE_CONNECTION, 0, appDispatch);
       setIsRequesting(false);
     } catch (e) {
-      displayToast("refuseConnectionError");
+      displayToast(TOASTS.REMOVE_CONNECTION, 1, appDispatch);
       setIsRequesting(false);
       console.log(e);
     }

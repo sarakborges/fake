@@ -8,6 +8,10 @@ import ProfileAPI from "Apis/Profile";
 import { AppContext } from "Contexts/App";
 import { UserContext } from "Contexts/User";
 
+// Helpers
+import { displayToast } from "Helpers/Functions";
+import { TOASTS } from "Helpers/Constants";
+
 // Molecules
 import InfoArea from "Components/Molecules/InfoArea";
 
@@ -35,37 +39,6 @@ const SelectProfilesList = ({ profiles }) => {
     ).length;
   };
 
-  const displayToast = (toast) => {
-    const toasts = {
-      selectProfileSuccess: {
-        title: "Sucesso!",
-        text: `Perfil selecionado com sucesso.`,
-        type: "success",
-      },
-
-      selectProfileError: {
-        title: "Erro!",
-        text: "Aconteceu algum erro ao trocar de perfil. Tente novamente.",
-        type: "error",
-      },
-    };
-
-    appDispatch({
-      type: "SET_TOAST",
-      data: {
-        ...toasts[toast],
-        isVisible: true,
-      },
-    });
-
-    setTimeout(() => {
-      appDispatch({
-        type: "TOGGLE_TOAST",
-        data: false,
-      });
-    }, 5000);
-  };
-
   const handleProfileChange = async (newProfile) => {
     try {
       const fullProfile = await ProfileAPI.getProfileById(newProfile._id);
@@ -75,9 +48,10 @@ const SelectProfilesList = ({ profiles }) => {
         data: { ...fullProfile },
       });
 
-      displayToast("selectProfileSuccess");
+      displayToast(TOASTS.SELECT_PROFILE, 0, appDispatch);
     } catch (e) {
-      displayToast("selectProfileError");
+      console.log(e);
+      displayToast(TOASTS.SELECT_PROFILE, 1, appDispatch);
     }
   };
 
@@ -97,7 +71,7 @@ const SelectProfilesList = ({ profiles }) => {
                 infoGap={24}
                 avatarSize={64}
                 messages={0}
-                notifications={getPendingConnections()}
+                notifications={getPendingConnections(item)}
                 side='left'
                 displayCounters
                 isBox
