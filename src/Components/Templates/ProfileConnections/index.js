@@ -98,7 +98,7 @@ const ProfileConnectionsTemplate = () => {
                     })}
                     id='profile-connections-filter'
                     placeholder='Digite o nome ou @ de quem quer encontrar'
-                    type='profile'
+                    type='connection'
                     title={
                       profile?._id === profileData._id
                         ? "Suas conexões:"

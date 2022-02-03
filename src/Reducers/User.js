@@ -54,8 +54,6 @@ export const UserReducer = (state, { type, data }) => {
           profiles.length === 1 ? { ...profiles[0] } : { ...state.profile },
       };
 
-      console.log(newData);
-
       localStorage.setItem("user", JSON.stringify(newData));
 
       return newData;

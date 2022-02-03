@@ -1,5 +1,6 @@
 // Dependencies
 import Link from "next/link";
+import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 
 // Helpers
 import { getTimeString } from "Helpers/Functions";
@@ -8,6 +9,7 @@ import { ROUTES } from "Helpers/routes";
 // Atoms
 import Text from "Components/Atoms/Text";
 import Avatar from "Components/Atoms/Avatar";
+import RoundIcon from "Components/Atoms/RoundIcon";
 
 // Styles
 import * as S from "./style";
@@ -19,7 +21,11 @@ const ChatUserItem = ({ info, currentUrl }) => {
       <a>
         <S.PersonWrapper selected={info.user.url === currentUrl}>
           <S.PersonAvatar>
-            <Avatar img={info.user.avatar} size={48} bgColor='main' />
+            {info.user.avatar ? (
+              <Avatar img={info.user.avatar} size={48} bgColor='main' />
+            ) : (
+              <RoundIcon icon={faQuestion} size={48} bgColor='main' />
+            )}
           </S.PersonAvatar>
 
           <S.PersonTextWrapper>

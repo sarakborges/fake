@@ -4,6 +4,7 @@ export const ROUTES = {
   NOTIFICATIONS: "/notifications",
   LOGIN: "/login",
   REGISTER: "/register",
+  SEARCH: "/search/:str",
 
   NEW_GROUP: "/new-group",
   NEW_PROFILE: "/new-profile",

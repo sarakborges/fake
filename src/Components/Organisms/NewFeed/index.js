@@ -177,7 +177,7 @@ const NewFeed = ({ feed, setFeed }) => {
         <div>
           <Button style='secondary' size={16} onClick={handleImageButton}>
             <FontAwesomeIcon icon={faImage} />
-            <span>{valueImg ? "Remover" : "Anexar"} imagem</span>
+            <span>{displayImage ? "Remover" : "Anexar"} imagem</span>
           </Button>
         </div>
 

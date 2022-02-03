@@ -17,12 +17,11 @@ import Rightbar from "Components/Atoms/Rightbar";
 
 // Molecules
 import NoProfile from "Components/Molecules/NoProfile";
-import NoFeed from "Components/Molecules/NoFeed";
 
 // Organisms
 import RoundList from "Components/Organisms/RoundList";
 import Feed from "Components/Organisms/Feed";
-import NewFeed from "Components/Organisms/NewFeed/";
+import SearchForm from "Components/Organisms/SearchForm";
 
 // Template
 import AuthedTemplate from "Components/Templates/Authed";
@@ -35,7 +34,6 @@ const HomeTemplate = () => {
   const [approvedConnections, setApprovedConnections] = useState();
   const [approvedMemberships, setApprovedMemberships] = useState();
   const [profileData, setProfileData] = useState();
-  const [feed, setFeed] = useState();
 
   const { userState } = useContext(UserContext);
   const { profile } = userState;
@@ -80,70 +78,14 @@ const HomeTemplate = () => {
     );
   }, [profileData, setApprovedMemberships]);
 
-  const getFeed = useCallback(() => {
-    if (!profileData?._id) {
-      return;
-    }
-
-    let feed = [];
-
-    if (approvedConnections?.length) {
-      const connections = approvedConnections
-        ?.map((item) => item.user)
-        .filter((item) => item.feed?.length > 0);
-
-      if (!connections?.length) {
-        for (let connection of connections) {
-          const connectionFeed = connection.feed.map((item) => {
-            return {
-              ...item,
-
-              user: {
-                name: connection.name,
-                avatar: connection.avatar,
-                url: connection.url,
-              },
-            };
-          });
-
-          feed = [...feed, ...connectionFeed];
-        }
-      }
-    }
-
-    if (profileData?.feed) {
-      feed = [
-        ...feed,
-        ...profileData?.feed.map((item) => {
-          return {
-            ...item,
-            user: {
-              name: profileData.name,
-              avatar: profileData.avatar,
-              url: profileData.url,
-            },
-          };
-        }),
-      ];
-    }
-
-    feed.sort((a, b) => (a.postedAt < b.postedAt ? 1 : -1));
-
-    setFeed(feed);
-  }, [setFeed, profileData, approvedConnections]);
-
   useEffect(() => {
     getProfile();
-  }, [profile, getProfile]);
-
-  useEffect(() => {
-    getFeed();
-  }, [profileData, getFeed]);
+  }, [getProfile]);
 
   useEffect(() => {
     getApprovedConnections();
     getApprovedMemberships();
-  }, [profileData, getApprovedConnections, getApprovedMemberships]);
+  }, [getApprovedConnections, getApprovedMemberships]);
 
   return (
     <AuthedTemplate>
@@ -156,12 +98,12 @@ const HomeTemplate = () => {
       {profileData?._id && (
         <S.HomeWrapper>
           <S.FeedWrapper>
-            <NewFeed feed={feed} setFeed={setFeed} />
-
-            {feed?.length > 0 ? <Feed info={feed} /> : <NoFeed />}
+            <Feed profile={profileData} connections={approvedConnections} />
           </S.FeedWrapper>
 
           <Rightbar>
+            <SearchForm />
+
             <RoundList
               type='profile'
               title='Suas conexões'

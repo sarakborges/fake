@@ -64,13 +64,12 @@ const InfoCard = ({ info, type }) => {
             </Link>
           </S.Name>
 
-          <Text type='subtitle' pt={12} ta='center'>{`@${info?.url}`}</Text>
-
-          {type === "group" && (
-            <Text type='custom' fs={12} pt={16}>
-              Criado em: {getTimeString(info?.createdAt)}
-            </Text>
-          )}
+          <Text
+            type='subtitle'
+            pt={12}
+            pb={16}
+            ta='center'
+          >{`@${info?.url}`}</Text>
 
           {type === "member" && (
             <Text type='custom' fs={12} pt={16}>
@@ -78,9 +77,17 @@ const InfoCard = ({ info, type }) => {
             </Text>
           )}
 
-          {type === "profile" && (
+          {type === "connection" && (
             <Text type='custom' fs={12} pt={16}>
               Conexão desde: {getTimeString(info?.connectedAt)}
+            </Text>
+          )}
+
+          {(type === "group" ||
+            type === "profile" ||
+            type === "connection") && (
+            <Text type='custom' fs={12} pt={16}>
+              Criado em: {getTimeString(info?.createdAt)}
             </Text>
           )}
         </S.TextWrapper>
@@ -91,7 +98,11 @@ const InfoCard = ({ info, type }) => {
               <FontAwesomeIcon icon={faLink} />
               <span>
                 Visitar{" "}
-                {type === "profile" || type === "member" ? "perfil" : "grupo"}
+                {type === "profile" ||
+                type === "member" ||
+                type === "connection"
+                  ? "perfil"
+                  : "grupo"}
               </span>
             </a>
           </Link>

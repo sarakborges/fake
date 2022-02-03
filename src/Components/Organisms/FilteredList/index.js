@@ -45,7 +45,6 @@ const FilteredList = ({ info, id, placeholder, title, noInfoText, type }) => {
               placeholder={placeholder}
               value={filter}
               onChange={handleFilterChange}
-              isBgContrast
             />
           </S.Header>
 

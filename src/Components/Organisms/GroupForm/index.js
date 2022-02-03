@@ -133,7 +133,6 @@ const GroupForm = ({ form, setForm, originalData }) => {
   };
 
   const handleUrlError = (req) => {
-    console.log(req);
     if (req?.error === "urlExists") {
       setForm({
         ...form,
