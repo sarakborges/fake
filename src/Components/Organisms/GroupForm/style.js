@@ -34,3 +34,22 @@ export const Row = styled.div`
   place-items: flex-start;
   gap: 32px;
 `;
+
+export const CoverPreview = styled.div`
+  div {
+    display: flex;
+    place-content: center;
+    place-items: center;
+
+    width: 100%;
+    height: 128px;
+    aspect-ratio: 18/4;
+    overflow: hidden;
+
+    border-radius: 8px;
+
+    > img {
+      width: 100%;
+    }
+  }
+`;

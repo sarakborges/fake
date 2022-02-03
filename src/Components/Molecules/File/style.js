@@ -22,16 +22,15 @@ export const Label = styled.label`
   padding: 32px;
   margin-top: 8px;
 
-  border: 4px dotted var(--bgInverted);
+  border: 4px solid transparent;
   background-color: var(--bg);
   border-radius: 8px;
   cursor: pointer;
 
-  transition: border-color 0.3s, background-color 0.3s;
+  transition: border-color 0.3s;
 
   &:hover {
     border-color: var(--main);
-    background-color: var(--bgContrast);
   }
 `;
 

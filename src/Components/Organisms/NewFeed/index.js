@@ -1,5 +1,5 @@
 // Dependencies
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 // APIs
 import ProfileAPI from "Apis/Profile";
@@ -23,6 +23,8 @@ import File from "Components/Molecules/File";
 
 // Styles
 import * as S from "./style";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faImage, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 // Template
 const NewFeed = ({ feed, setFeed }) => {
@@ -38,6 +40,7 @@ const NewFeed = ({ feed, setFeed }) => {
 
   const [isRequesting, setIsRequesting] = useState(false);
   const [displayImage, setDisplayImage] = useState(false);
+  const [valueImg, setValueImg] = useState();
   const [form, setForm] = useState({ ...baseForm });
 
   const { userState } = useContext(UserContext);
@@ -133,11 +136,19 @@ const NewFeed = ({ feed, setFeed }) => {
     });
   };
 
+  useEffect(() => {
+    setValueImg(
+      form?.image?.value?.name
+        ? URL.createObjectURL(form?.image?.value)
+        : form?.image?.value
+    );
+  }, [form]);
+
   return (
     <Form onSubmit={handleSubmit}>
-      <S.NewFeed>
-        <Text type='title'>Fazer nova publicação</Text>
+      <Text type='title'>Fazer nova publicação</Text>
 
+      <S.NewFeed>
         <Textarea
           id='text'
           placeholder='Seu texto aqui'
@@ -153,24 +164,32 @@ const NewFeed = ({ feed, setFeed }) => {
             onChange={handleChange}
             placeholder='Arraste sua imagem para cá'
             placeholderHover='Solte sua imagem aqui'
+            Preview={
+              <S.ContentPreview>
+                <img src={valueImg} />
+              </S.ContentPreview>
+            }
           />
         )}
-
-        <S.PublishFeed>
-          <Button style='secondary' size={16} onClick={handleImageButton}>
-            {displayImage ? "Remover" : "Anexar"} imagem
-          </Button>
-
-          <Button
-            type='submit'
-            style='primary'
-            size={16}
-            disabled={isRequesting || (!form.image.value && !form.text.value)}
-          >
-            Publicar
-          </Button>
-        </S.PublishFeed>
       </S.NewFeed>
+
+      <S.FeedButtons>
+        <div>
+          <Button style='secondary' size={16} onClick={handleImageButton}>
+            <FontAwesomeIcon icon={faImage} />
+            <span>{valueImg ? "Remover" : "Anexar"} imagem</span>
+          </Button>
+        </div>
+
+        <Button
+          type='submit'
+          style='primary'
+          size={16}
+          disabled={isRequesting || (!form.image.value && !form.text.value)}
+        >
+          Publicar
+        </Button>
+      </S.FeedButtons>
     </Form>
   );
 };

@@ -32,6 +32,7 @@ import * as S from "./style";
 // Template
 const GroupForm = ({ form, setForm, originalData }) => {
   const router = useRouter();
+  const [valueImg, setValueImg] = useState();
 
   const { userState } = useContext(UserContext);
   const { appDispatch } = useContext(AppContext);
@@ -222,6 +223,14 @@ const GroupForm = ({ form, setForm, originalData }) => {
   };
 
   useEffect(() => {
+    setValueImg(
+      form?.cover?.value?.name
+        ? URL.createObjectURL(form?.cover?.value)
+        : form?.cover?.value
+    );
+  }, [form]);
+
+  useEffect(() => {
     getFormData();
   }, [getFormData]);
 
@@ -250,6 +259,13 @@ const GroupForm = ({ form, setForm, originalData }) => {
               label='Capa'
               value={form.cover.value}
               onChange={handleChange}
+              Preview={
+                <S.CoverPreview>
+                  <div>
+                    <img src={valueImg} />
+                  </div>
+                </S.CoverPreview>
+              }
             />
           </S.Row>
 

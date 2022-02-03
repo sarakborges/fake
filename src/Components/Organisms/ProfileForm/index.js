@@ -32,6 +32,7 @@ import * as S from "./style";
 // Template
 const SettingsProfile = ({ form, setForm, originalData }) => {
   const router = useRouter();
+  const [valueImg, setValueImg] = useState();
 
   const { userState, userDispatch } = useContext(UserContext);
   const { appDispatch } = useContext(AppContext);
@@ -256,6 +257,14 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
   };
 
   useEffect(() => {
+    setValueImg(
+      form?.cover?.value?.name
+        ? URL.createObjectURL(form?.cover?.value)
+        : form?.cover?.value
+    );
+  }, [form]);
+
+  useEffect(() => {
     getFormData();
   }, [getFormData]);
 
@@ -284,6 +293,13 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
               label='Capa'
               value={form.cover.value}
               onChange={handleChange}
+              Preview={
+                <S.CoverPreview>
+                  <div>
+                    <img src={valueImg} />
+                  </div>
+                </S.CoverPreview>
+              }
             />
           </S.Row2Items>
 

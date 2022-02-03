@@ -14,6 +14,7 @@ const File = ({
   onChange,
   placeholder,
   placeholderHover,
+  Preview,
 }) => {
   const [text, setText] = useState(placeholder);
   const [valueImg, setValueImg] = useState();
@@ -69,7 +70,8 @@ const File = ({
                 ? "Prévia do arquivo a ser enviado:"
                 : "Arquivo atual:"}
             </Text>
-            <Avatar img={valueImg} size={128} />
+
+            {Preview ? Preview : <Avatar img={valueImg} size={128} />}
           </S.Preview>
         )}
       </S.Label>
