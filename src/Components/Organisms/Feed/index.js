@@ -27,17 +27,13 @@ const Feed = ({ profile, connections }) => {
         ?.map((item) => item.user)
         .filter((item) => item.feed?.length > 0);
 
-      if (!connectionsContainingFeed?.length) {
+      if (connectionsContainingFeed?.length) {
         for (let connection of connectionsContainingFeed) {
           const connectionFeed = connection.feed.map((item) => {
             return {
               ...item,
 
-              user: {
-                name: connection.name,
-                avatar: connection.avatar,
-                url: connection.url,
-              },
+              user: { ...connection },
             };
           });
 
@@ -52,11 +48,7 @@ const Feed = ({ profile, connections }) => {
         ...profile?.feed.map((item) => {
           return {
             ...item,
-            user: {
-              name: profile.name,
-              avatar: profile.avatar,
-              url: profile.url,
-            },
+            user: { ...profile },
           };
         }),
       ];

@@ -13,6 +13,8 @@ export const Cover = styled.div`
   top: 0;
   z-index: -1;
 
+  filter: ${({ isBlured }) => (isBlured ? "blur(15px)" : "none")};
+
   &:before {
     content: "";
 

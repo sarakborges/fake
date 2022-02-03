@@ -5,6 +5,9 @@ import { faEllipsisH, faQuestion } from "@fortawesome/free-solid-svg-icons";
 // Helpers
 import { ROUTES } from "Helpers/routes";
 
+// Contexsts
+import { AppContext } from "Contexts/App";
+
 // Atoms
 import Text from "Components/Atoms/Text";
 import Avatar from "Components/Atoms/Avatar";
@@ -12,6 +15,7 @@ import RoundIcon from "Components/Atoms/RoundIcon";
 
 // Styles
 import * as S from "./style";
+import { useContext } from "react";
 
 // Template
 const RoundList = ({
@@ -22,6 +26,9 @@ const RoundList = ({
   emptyTitle,
   hideEmpty,
 }) => {
+  const { appState } = useContext(AppContext);
+  const { displayAdult } = appState;
+
   return !hideEmpty ? (
     <S.RoundList>
       <S.Title>{title}</S.Title>
@@ -39,7 +46,12 @@ const RoundList = ({
                 >
                   <a>
                     {item.avatar ? (
-                      <Avatar img={item.avatar} size={40} bgColor='main' />
+                      <Avatar
+                        img={item.avatar}
+                        size={40}
+                        bgColor='main'
+                        isBlured={item.isAdult && !displayAdult}
+                      />
                     ) : (
                       <RoundIcon icon={faQuestion} size={40} bgColor='main' />
                     )}

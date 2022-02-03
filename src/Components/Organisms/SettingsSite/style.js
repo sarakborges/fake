@@ -1,10 +1,14 @@
 import styled from "styled-components";
 
-export const SettingsWrapper = styled.div`
-  form {
-    display: flex;
-    place-items: center;
-  }
+export const List = styled.div`
+  display: flex;
+  flex-flow: column;
+  gap: 32px;
+`;
+
+export const Row = styled.div`
+  display: flex;
+  place-items: center;
 `;
 
 export const ThemeOptions = styled.div`

@@ -18,7 +18,6 @@ import Rightbar from "Components/Atoms/Rightbar";
 
 // Molecules
 import InfoNotFound from "Components/Molecules/InfoNotFound";
-import AdultWarning from "Components/Molecules/AdultWarning";
 import NoFeed from "Components/Molecules/NoFeed";
 
 // Organisms
@@ -36,7 +35,6 @@ import * as S from "./style";
 const ProfileFeedTemplate = () => {
   const [feed, setFeed] = useState();
   const [profileData, setProfileData] = useState();
-  const [displayAdult, setDisplayAdult] = useState(false);
 
   const { userState } = useContext(UserContext);
   const { profile } = userState;
@@ -117,63 +115,57 @@ const ProfileFeedTemplate = () => {
       {profileData?._id &&
         !profileData?.blockedUsers?.includes?.(profile?._id) && (
           <>
-            {profileData?._id !== profile?._id &&
-            !displayAdult &&
-            profileData?.isAdult ? (
-              <AdultWarning setDisplayAdult={setDisplayAdult} type='profile' />
-            ) : (
-              <S.ProfileWrapper>
-                <InfoHeader
-                  info={profileData}
-                  type='profile'
-                  setInfo={setProfileData}
-                />
+            <S.ProfileWrapper>
+              <InfoHeader
+                info={profileData}
+                type='profile'
+                setInfo={setProfileData}
+              />
 
-                <S.ProfileBody>
-                  <S.ProfileLeft>
-                    {feed?.length > 0 ? (
-                      <Feed info={feed} />
-                    ) : (
-                      <NoFeed name={profileData?.name} />
+              <S.ProfileBody>
+                <S.ProfileLeft>
+                  {feed?.length > 0 ? (
+                    <Feed info={feed} />
+                  ) : (
+                    <NoFeed name={profileData?.name} />
+                  )}
+                </S.ProfileLeft>
+
+                <Rightbar>
+                  <RoundList
+                    type='profile'
+                    title='Conexões'
+                    emptyTitle={`${
+                      profile?._id === profileData._id
+                        ? "Você"
+                        : profileData.name
+                    } ainda não possui conexões.`}
+                    list={getApprovedConnections()
+                      ?.slice?.(0, 5)
+                      .map((item) => item.user)}
+                    extraItemLink={ROUTES.PROFILE_CONNECTIONS.replace(
+                      ":id",
+                      profileData.url
                     )}
-                  </S.ProfileLeft>
+                  />
 
-                  <Rightbar>
-                    <RoundList
-                      type='profile'
-                      title='Conexões'
-                      emptyTitle={`${
-                        profile?._id === profileData._id
-                          ? "Você"
-                          : profileData.name
-                      } ainda não possui conexões.`}
-                      list={getApprovedConnections()
-                        ?.slice?.(0, 5)
-                        .map((item) => item.user)}
-                      extraItemLink={ROUTES.PROFILE_CONNECTIONS.replace(
-                        ":id",
-                        profileData.url
-                      )}
-                    />
-
-                    <RoundList
-                      type='group'
-                      title='Grupos'
-                      emptyTitle={`${
-                        profile?._id === profileData._id
-                          ? "Você"
-                          : profileData.name
-                      } ainda não participa de grupos.`}
-                      list={profileData?.groups?.slice?.(0, 5)}
-                      extraItemLink={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
-                        ":id",
-                        profileData.url
-                      )}
-                    />
-                  </Rightbar>
-                </S.ProfileBody>
-              </S.ProfileWrapper>
-            )}
+                  <RoundList
+                    type='group'
+                    title='Grupos'
+                    emptyTitle={`${
+                      profile?._id === profileData._id
+                        ? "Você"
+                        : profileData.name
+                    } ainda não participa de grupos.`}
+                    list={profileData?.groups?.slice?.(0, 5)}
+                    extraItemLink={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
+                      ":id",
+                      profileData.url
+                    )}
+                  />
+                </Rightbar>
+              </S.ProfileBody>
+            </S.ProfileWrapper>
           </>
         )}
     </AuthedTemplate>

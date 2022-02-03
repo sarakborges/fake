@@ -2,12 +2,16 @@
 import { faLink, faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+// Contexsts
+import { AppContext } from "Contexts/App";
+
 // Atoms
 import Avatar from "Components/Atoms/Avatar";
 import RoundIcon from "Components/Atoms/RoundIcon";
 
 // Style
 import * as S from "./style";
+import { useContext } from "react";
 
 // Template
 const InfoArea = ({
@@ -23,6 +27,9 @@ const InfoArea = ({
   squaredBox,
   isBgContrast,
 }) => {
+  const { appState } = useContext(AppContext);
+  const { displayAdult } = appState;
+
   const Content = () => {
     return (
       <S.InfoArea side={side} infoGap={infoGap}>
@@ -33,7 +40,12 @@ const InfoArea = ({
             bgColor='main'
           />
         ) : (
-          <Avatar img={info?.avatar} size={avatarSize || 48} bgColor='main' />
+          <Avatar
+            img={info?.avatar}
+            size={avatarSize || 48}
+            bgColor='main'
+            isBlured={info?.isAdult && !displayAdult}
+          />
         )}
 
         <S.TextWrapper>

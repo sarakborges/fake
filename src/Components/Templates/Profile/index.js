@@ -19,7 +19,6 @@ import InfoAbout from "Components/Atoms/InfoAbout";
 
 // Molecules
 import InfoNotFound from "Components/Molecules/InfoNotFound";
-import AdultWarning from "Components/Molecules/AdultWarning";
 
 // Organisms
 import InfoHeader from "Components/Organisms/InfoHeader";
@@ -34,7 +33,6 @@ import * as S from "./style";
 // Template
 const ProfileTemplate = () => {
   const [profileData, setProfileData] = useState();
-  const [displayAdult, setDisplayAdult] = useState(false);
 
   const { userState } = useContext(UserContext);
   const { profile } = userState;
@@ -83,59 +81,56 @@ const ProfileTemplate = () => {
       {profileData?._id &&
         !profileData?.blockedUsers?.includes?.(profile?._id) && (
           <>
-            {profileData?._id !== profile?._id &&
-            !displayAdult &&
-            profileData?.isAdult ? (
-              <AdultWarning setDisplayAdult={setDisplayAdult} type='profile' />
-            ) : (
-              <S.ProfileWrapper>
-                <InfoHeader
-                  info={profileData}
-                  type='profile'
-                  setInfo={setProfileData}
-                />
+            <S.ProfileWrapper>
+              <InfoHeader
+                info={profileData}
+                type='profile'
+                setInfo={setProfileData}
+              />
 
-                <S.ProfileBody>
-                  <S.ProfileLeft>
-                    <InfoAbout about={profileData.about} />
-                  </S.ProfileLeft>
+              <S.ProfileBody>
+                <S.ProfileLeft>
+                  <InfoAbout
+                    isAdult={profileData.isAdult}
+                    about={profileData.about}
+                  />
+                </S.ProfileLeft>
 
-                  <Rightbar>
-                    <RoundList
-                      type='profile'
-                      title='Conexões'
-                      emptyTitle={`${
-                        profile?._id === profileData._id
-                          ? "Você"
-                          : profileData.name
-                      } ainda não possui conexões.`}
-                      list={getApprovedConnections()
-                        ?.slice?.(0, 5)
-                        .map((item) => item.user)}
-                      extraItemLink={ROUTES.PROFILE_CONNECTIONS.replace(
-                        ":id",
-                        profileData.url
-                      )}
-                    />
+                <Rightbar>
+                  <RoundList
+                    type='profile'
+                    title='Conexões'
+                    emptyTitle={`${
+                      profile?._id === profileData._id
+                        ? "Você"
+                        : profileData.name
+                    } ainda não possui conexões.`}
+                    list={getApprovedConnections()
+                      ?.slice?.(0, 5)
+                      .map((item) => item.user)}
+                    extraItemLink={ROUTES.PROFILE_CONNECTIONS.replace(
+                      ":id",
+                      profileData.url
+                    )}
+                  />
 
-                    <RoundList
-                      type='group'
-                      title='Grupos'
-                      emptyTitle={`${
-                        profile?._id === profileData._id
-                          ? "Você"
-                          : profileData.name
-                      } ainda não participa de grupos.`}
-                      list={profileData?.groups?.slice?.(0, 5)}
-                      extraItemLink={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
-                        ":id",
-                        profileData.url
-                      )}
-                    />
-                  </Rightbar>
-                </S.ProfileBody>
-              </S.ProfileWrapper>
-            )}
+                  <RoundList
+                    type='group'
+                    title='Grupos'
+                    emptyTitle={`${
+                      profile?._id === profileData._id
+                        ? "Você"
+                        : profileData.name
+                    } ainda não participa de grupos.`}
+                    list={profileData?.groups?.slice?.(0, 5)}
+                    extraItemLink={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
+                      ":id",
+                      profileData.url
+                    )}
+                  />
+                </Rightbar>
+              </S.ProfileBody>
+            </S.ProfileWrapper>
           </>
         )}
     </AuthedTemplate>

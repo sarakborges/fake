@@ -12,6 +12,8 @@ export const AppContext = createContext();
 const INITIAL_STATE = {
   theme: DarkTheme,
 
+  displayAdult: false,
+
   toast: {
     isVisible: false,
     title: "",

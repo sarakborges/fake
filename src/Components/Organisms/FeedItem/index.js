@@ -2,10 +2,14 @@
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
 
 // Helpers
 import { getTimeString } from "Helpers/Functions";
 import { ROUTES } from "Helpers/routes";
+
+// Contexsts
+import { AppContext } from "Contexts/App";
 
 // Atoms
 import Text from "Components/Atoms/Text";
@@ -18,6 +22,9 @@ import * as S from "./style";
 
 // Template
 const FeedItem = ({ info }) => {
+  const { appState } = useContext(AppContext);
+  const { displayAdult } = appState;
+
   return (
     <S.FeedItem>
       <S.InfoAreaWrapper>
@@ -28,7 +35,11 @@ const FeedItem = ({ info }) => {
         </Link>
       </S.InfoAreaWrapper>
 
-      {info.image && <img src={info.image} />}
+      {info.image && (
+        <S.ImageWrapper isBlured={info.user.isAdult && !displayAdult}>
+          <img src={info.image} />
+        </S.ImageWrapper>
+      )}
 
       {info.text && (
         <Text type='custom' fc='white'>

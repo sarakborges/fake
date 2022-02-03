@@ -41,8 +41,9 @@ const InfoHeader = ({ info, type, setInfo }) => {
   const headerType = type === "group" ? GROUP_HEADER : PROFILE_HEADER;
 
   const { userState, userDispatch } = useContext(UserContext);
-  const { appDispatch } = useContext(AppContext);
+  const { appState, appDispatch } = useContext(AppContext);
   const { user, profile } = userState;
+  const { displayAdult } = appState;
 
   const toggleMenu = () => {
     setDisplayMenu(!displayMenu);
@@ -359,7 +360,7 @@ const InfoHeader = ({ info, type, setInfo }) => {
       )}
 
       <S.Head>
-        <S.Cover img={info.cover} />
+        <S.Cover img={info.cover} isBlured={info.isAdult && !displayAdult} />
 
         {!getCondition("isNotSelf") && (
           <S.EditLink>
@@ -417,7 +418,12 @@ const InfoHeader = ({ info, type, setInfo }) => {
         <S.Info>
           <S.Avatar>
             {info.avatar ? (
-              <Avatar size={128} img={info.avatar} bgColor={"main"} />
+              <Avatar
+                size={128}
+                img={info.avatar}
+                bgColor={"main"}
+                isBlured={info.isAdult && !displayAdult}
+              />
             ) : (
               <RoundIcon size={128} icon={faQuestion} bgColor={"main"} />
             )}

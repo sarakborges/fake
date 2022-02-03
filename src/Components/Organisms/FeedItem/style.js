@@ -10,14 +10,20 @@ export const FeedItem = styled.div`
 
   border-radius: 24px;
   background-color: var(--bg);
-
-  > img {
-    max-width: 64%;
-  }
 `;
 
 export const InfoAreaWrapper = styled.div`
   display: flex;
+`;
+
+export const ImageWrapper = styled.div`
+  overflow: hidden;
+
+  > img {
+    max-width: 64%;
+
+    filter: ${({ isBlured }) => (isBlured ? "blur(50px)" : "none")};
+  }
 `;
 
 export const FeedLike = styled.div`

@@ -56,10 +56,19 @@ const AuthedTemplate = ({ children }) => {
   }, [getUserData, userDispatch]);
 
   const setAppData = useCallback(async () => {
+    const appData = getAppData(appState.theme.slug);
+
     appDispatch({
       type: "SET_THEME",
       data: {
-        ...getAppData(appState.theme.slug),
+        ...appData.theme,
+      },
+    });
+
+    appDispatch({
+      type: "SET_DISPLAY_ADULT",
+      data: {
+        ...appData.displayAdult,
       },
     });
   }, [appDispatch]);

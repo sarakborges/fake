@@ -17,7 +17,7 @@ import Text from "Components/Atoms/Text";
 import * as S from "./style";
 
 // Template
-const InfoCard = ({ info, type }) => {
+const InfoCard = ({ info, type, isBlured }) => {
   const link = (
     type === "profile" || type === "member" ? ROUTES.PROFILE : ROUTES.GROUP
   ).replace(":id", info?.url);
@@ -35,7 +35,12 @@ const InfoCard = ({ info, type }) => {
                   bgColor='main'
                 />
               ) : (
-                <Avatar img={info?.avatar} size={96} bgColor='main' />
+                <Avatar
+                  img={info?.avatar}
+                  size={96}
+                  bgColor='main'
+                  isBlured={isBlured}
+                />
               )}
             </a>
           </Link>

@@ -3,18 +3,25 @@ import Themes from "Styles/Themes";
 
 export const getAppData = (themeSlug) => {
   // localStorage.clear();
-  const localData = localStorage.getItem("theme");
-  let jsonData;
+  const localTheme = localStorage.getItem("theme");
+  const localAdult = localStorage.getItem("displayAdult");
+  let themeJson;
+  let adultJson;
 
-  if (localData) {
-    jsonData = JSON.parse(localData);
+  if (localTheme) {
+    themeJson = JSON.parse(localTheme);
   }
 
-  const data = jsonData || themeSlug;
+  if (localAdult) {
+    adultJson = JSON.parse(localAdult);
+  }
+
+  const theme = themeJson || themeSlug;
+  const adult = adultJson || false;
 
   const foundTheme = {
-    ...Themes.find((item) => item.slug === data),
+    ...Themes.find((item) => item.slug === theme),
   };
 
-  return foundTheme;
+  return { theme: foundTheme, displayAdult: adult };
 };

@@ -14,7 +14,6 @@ import { UserContext } from "Contexts/User";
 
 // Molecules
 import InfoNotFound from "Components/Molecules/InfoNotFound";
-import AdultWarning from "Components/Molecules/AdultWarning";
 
 // Organisms
 import InfoHeader from "Components/Organisms/InfoHeader";
@@ -29,7 +28,6 @@ import * as S from "./style";
 // Template
 const ProfileConnectionsTemplate = () => {
   const [profileData, setProfileData] = useState();
-  const [displayAdult, setDisplayAdult] = useState(false);
 
   const { userState } = useContext(UserContext);
   const { profile } = userState;
@@ -80,50 +78,42 @@ const ProfileConnectionsTemplate = () => {
       {profileData?._id &&
         !profileData?.blockedUsers?.includes?.(profile?._id) && (
           <>
-            {profileData?._id !== profile?._id &&
-            !displayAdult &&
-            profileData?.isAdult ? (
-              <AdultWarning setDisplayAdult={setDisplayAdult} type='profile' />
-            ) : (
-              <S.ProfileWrapper>
-                <InfoHeader info={profileData} type='profile' />
+            <S.ProfileWrapper>
+              <InfoHeader info={profileData} type='profile' />
 
-                <S.ProfileBody>
-                  <FilteredList
-                    info={getApprovedConnections().map((item) => {
-                      return {
-                        ...item.user,
-                        connectedAt: item.connectedAt,
-                      };
-                    })}
-                    id='profile-connections-filter'
-                    placeholder='Digite o nome ou @ de quem quer encontrar'
-                    type='connection'
-                    title={
-                      profile?._id === profileData._id
-                        ? "Suas conexões:"
-                        : `Conexões de ${profileData.name}:`
-                    }
-                    noInfoText={`${
-                      profile?._id === profileData._id
-                        ? "Você"
-                        : profileData.name
-                    } ainda não possui nenhuma conexão.`}
-                  />
+              <S.ProfileBody>
+                <FilteredList
+                  info={getApprovedConnections().map((item) => {
+                    return {
+                      ...item.user,
+                      connectedAt: item.connectedAt,
+                    };
+                  })}
+                  id='profile-connections-filter'
+                  placeholder='Digite o nome ou @ de quem quer encontrar'
+                  type='connection'
+                  title={
+                    profile?._id === profileData._id
+                      ? "Suas conexões:"
+                      : `Conexões de ${profileData.name}:`
+                  }
+                  noInfoText={`${
+                    profile?._id === profileData._id ? "Você" : profileData.name
+                  } ainda não possui nenhuma conexão.`}
+                />
 
-                  {profile?._id === profileData._id &&
-                    profileData?.blockedUsers?.length > 0 && (
-                      <FilteredList
-                        info={profileData?.blockedUsers}
-                        id='profile-blocked-filter'
-                        placeholder='Digite o nome ou @ de quem quer encontrar'
-                        type='profile'
-                        title='Perfis bloqueados por você:'
-                      />
-                    )}
-                </S.ProfileBody>
-              </S.ProfileWrapper>
-            )}
+                {profile?._id === profileData._id &&
+                  profileData?.blockedUsers?.length > 0 && (
+                    <FilteredList
+                      info={profileData?.blockedUsers}
+                      id='profile-blocked-filter'
+                      placeholder='Digite o nome ou @ de quem quer encontrar'
+                      type='profile'
+                      title='Perfis bloqueados por você:'
+                    />
+                  )}
+              </S.ProfileBody>
+            </S.ProfileWrapper>
           </>
         )}
     </AuthedTemplate>

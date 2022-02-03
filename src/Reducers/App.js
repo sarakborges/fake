@@ -12,6 +12,12 @@ export const AppReducer = (state, { type, data }) => {
       return { ...state, toast: { ...data } };
     }
 
+    case "SET_DISPLAY_ADULT": {
+      localStorage.setItem("displayAdult", JSON.stringify(data));
+
+      return { ...state, displayAdult: data };
+    }
+
     case "TOGGLE_TOAST": {
       return { ...state, toast: { ...state.toast, isVisible: data } };
     }

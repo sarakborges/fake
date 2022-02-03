@@ -16,7 +16,6 @@ import InfoAbout from "Components/Atoms/InfoAbout";
 
 // Molecules
 import InfoNotFound from "Components/Molecules/InfoNotFound";
-import AdultWarning from "Components/Molecules/AdultWarning";
 
 // Organisms
 import InfoHeader from "Components/Organisms/InfoHeader";
@@ -32,7 +31,6 @@ import * as S from "./style";
 // Template
 const GroupTemplate = () => {
   const [group, setGroup] = useState();
-  const [displayAdult, setDisplayAdult] = useState(false);
 
   const router = useRouter();
   const {
@@ -61,47 +59,43 @@ const GroupTemplate = () => {
 
       {group?._id && (
         <>
-          {!displayAdult && group?.isAdult ? (
-            <AdultWarning setDisplayAdult={setDisplayAdult} type='group' />
-          ) : (
-            <S.GroupWrapper>
-              <InfoHeader info={group} type='group' setInfo={setGroup} />
+          <S.GroupWrapper>
+            <InfoHeader info={group} type='group' setInfo={setGroup} />
 
-              <S.GroupBody>
-                <S.GroupLeft>
-                  <InfoAbout about={group.about} />
-                </S.GroupLeft>
+            <S.GroupBody>
+              <S.GroupLeft>
+                <InfoAbout isAdult={group.isAdult} about={group.about} />
+              </S.GroupLeft>
 
-                <Rightbar>
-                  <RoundList
-                    type='profile'
-                    title='Membros'
-                    list={group.members.slice(0, 5).map((item) => item.profile)}
-                    extraItemLink={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
-                      ":id",
-                      group.url
-                    )}
-                  />
+              <Rightbar>
+                <RoundList
+                  type='profile'
+                  title='Membros'
+                  list={group.members.slice(0, 5).map((item) => item.profile)}
+                  extraItemLink={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
+                    ":id",
+                    group.url
+                  )}
+                />
 
-                  <RoundList
-                    type='group'
-                    title='Grupos relacionados'
-                    list={group?.relatedGroups?.slice?.(0, 5)}
-                    extraItemLink='#'
-                    hideEmpty
-                  />
+                <RoundList
+                  type='group'
+                  title='Grupos relacionados'
+                  list={group?.relatedGroups?.slice?.(0, 5)}
+                  extraItemLink='#'
+                  hideEmpty
+                />
 
-                  <LinkList
-                    title='Links importantes'
-                    list={group?.importantLinks}
-                    hideEmpty
-                  />
+                <LinkList
+                  title='Links importantes'
+                  list={group?.importantLinks}
+                  hideEmpty
+                />
 
-                  <LinkList title='Tags' list={group?.tags} hideEmpty />
-                </Rightbar>
-              </S.GroupBody>
-            </S.GroupWrapper>
-          )}
+                <LinkList title='Tags' list={group?.tags} hideEmpty />
+              </Rightbar>
+            </S.GroupBody>
+          </S.GroupWrapper>
         </>
       )}
     </AuthedTemplate>

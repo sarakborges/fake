@@ -2,8 +2,12 @@
 import * as S from "./style";
 
 // Template
-const Avatar = ({ img, size, bgColor }) => {
-  return <S.Avatar bgColor={bgColor} img={img} size={size} />;
+const Avatar = ({ img, size, bgColor, isBlured }) => {
+  return (
+    <S.AvatarWrapper size={size}>
+      <S.Avatar bgColor={bgColor} img={img} isBlured={isBlured} />
+    </S.AvatarWrapper>
+  );
 };
 
 export default Avatar;

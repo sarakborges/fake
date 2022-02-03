@@ -5,7 +5,6 @@ import { useContext } from "react";
 import { AppContext } from "Contexts/App";
 
 // Atoms
-import Form from "Components/Atoms/Form";
 import Button from "Components/Atoms/Button";
 import Text from "Components/Atoms/Text";
 
@@ -14,11 +13,12 @@ import Themes from "Styles/Themes";
 
 // Style
 import * as S from "./style";
+import Checkbox from "Components/Atoms/Checkbox";
 
 // Template
 const SettingsSite = () => {
   const { appState, appDispatch } = useContext(AppContext);
-  const { theme } = appState;
+  const { theme, displayAdult } = appState;
 
   const setTheme = (themeSlug) => {
     appDispatch({
@@ -27,38 +27,54 @@ const SettingsSite = () => {
     });
   };
 
-  const handleSubmit = () => {};
+  const setDisplayAdult = () => {
+    appDispatch({
+      type: "SET_DISPLAY_ADULT",
+      data: !displayAdult,
+    });
+  };
 
   return (
-    <S.SettingsWrapper>
+    <>
       <Text type='title' pb={16}>
         Configurações do site
       </Text>
 
-      <Form onSubmit={handleSubmit}>
-        <Text type='subtitle'>Qual tema você prefere?</Text>
+      <S.List>
+        <S.Row>
+          <Text type='subtitle'>Qual tema você prefere?</Text>
 
-        <S.ThemeOptions>
-          {Themes.map((item) => {
-            return (
-              <Button
-                key={item.slug}
-                style='transparent'
-                onClick={() => {
-                  setTheme(item.slug);
-                }}
-              >
-                <S.ThemeButton
-                  theme={item.slug}
-                  isActive={item.slug === theme.slug}
-                  thumb={item.thumb}
-                />
-              </Button>
-            );
-          })}
-        </S.ThemeOptions>
-      </Form>
-    </S.SettingsWrapper>
+          <S.ThemeOptions>
+            {Themes.map((item) => {
+              return (
+                <Button
+                  key={item.slug}
+                  style='transparent'
+                  onClick={() => {
+                    setTheme(item.slug);
+                  }}
+                >
+                  <S.ThemeButton
+                    theme={item.slug}
+                    isActive={item.slug === theme.slug}
+                    thumb={item.thumb}
+                  />
+                </Button>
+              );
+            })}
+          </S.ThemeOptions>
+        </S.Row>
+
+        <S.Row>
+          <Checkbox
+            id='display-adult'
+            label='Deseja visualizar conteúdo adulto no site?'
+            checked={displayAdult}
+            onChange={setDisplayAdult}
+          />
+        </S.Row>
+      </S.List>
+    </>
   );
 };
 
