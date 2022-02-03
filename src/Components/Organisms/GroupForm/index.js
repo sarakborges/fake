@@ -136,7 +136,11 @@ const GroupForm = ({ form, setForm, originalData }) => {
   const handleSubmit = async () => {
     try {
       if (!form.name.value) {
-        displayToast(_id ? "editGroupWarning" : "createGroupWarning");
+        displayToast(
+          _id ? TOASTS.EDIT_GROUP : TOASTS.CREATE_GROUP,
+          1,
+          appDispatch
+        );
         return;
       }
 
@@ -194,12 +198,20 @@ const GroupForm = ({ form, setForm, originalData }) => {
         }
       }
 
-      displayToast(_id ? "editGroupSuccess" : "createGroupSuccess");
+      displayToast(
+        _id ? TOASTS.EDIT_GROUP : TOASTS.CREATE_GROUP,
+        0,
+        appDispatch
+      );
 
       router.push(ROUTES.GROUP.replace(":id", url));
     } catch (e) {
       setIsRequesting(false);
-      displayToast(_id ? "editGroupError" : "createGroupError");
+      displayToast(
+        _id ? TOASTS.EDIT_GROUP : TOASTS.CREATE_GROUP,
+        1,
+        appDispatch
+      );
       console.log(e);
     }
   };

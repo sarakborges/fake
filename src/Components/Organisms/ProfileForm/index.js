@@ -150,7 +150,11 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
   const handleSubmit = async () => {
     try {
       if (!form.name.value) {
-        displayToast(_id ? "editProfileWarning" : "createProfileWarning");
+        displayToast(
+          _id ? TOASTS.EDIT_PROFILE : TOASTS.CREATE_PROFILE,
+          2,
+          appDispatch
+        );
 
         return;
       }
@@ -229,12 +233,20 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
       }
 
       setIsRequesting(false);
-      displayToast(_id ? "editProfileSuccess" : "createProfileSuccess");
+      displayToast(
+        _id ? TOASTS.EDIT_PROFILE : TOASTS.CREATE_PROFILE,
+        0,
+        appDispatch
+      );
 
       router.push(ROUTES.PROFILE.replace(":id", url));
     } catch (e) {
       setIsRequesting(false);
-      displayToast(_id ? "editProfileError" : "createProfileError");
+      displayToast(
+        _id ? TOASTS.EDIT_PROFILE : TOASTS.CREATE_PROFILE,
+        1,
+        appDispatch
+      );
       console.log(e);
     }
   };
