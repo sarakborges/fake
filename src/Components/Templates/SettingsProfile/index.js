@@ -32,6 +32,8 @@ const SettingsProfileTemplate = () => {
     link: { ...baseFormField },
     about: { ...baseFormField },
     isAdult: { ...baseFormField },
+    publicTags: { ...baseFormField },
+    privateTags: { ...baseFormField },
   };
 
   const [form, setForm] = useState({ ...baseForm });

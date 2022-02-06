@@ -29,6 +29,8 @@ const NewProfileTemplate = () => {
     about: { ...baseFormField },
     link: { ...baseFormField },
     isAdult: { ...baseFormField },
+    publicTags: { ...baseFormField },
+    privateTags: { ...baseFormField },
   };
 
   const [form, setForm] = useState({ ...baseForm });

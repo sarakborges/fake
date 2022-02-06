@@ -23,6 +23,7 @@ import InfoNotFound from "Components/Molecules/InfoNotFound";
 // Organisms
 import InfoHeader from "Components/Organisms/InfoHeader";
 import RoundList from "Components/Organisms/RoundList";
+import TagsList from "Components/Organisms/TagsList";
 
 // Template
 import AuthedTemplate from "Components/Templates/Authed";
@@ -127,6 +128,19 @@ const ProfileTemplate = () => {
                       ":id",
                       profileData.url
                     )}
+                  />
+
+                  <TagsList
+                    title='Tags'
+                    list={
+                      profileData?._id === profile?._id
+                        ? [
+                            ...profileData?.publicTags,
+                            ...profileData?.privateTags,
+                          ]
+                        : [...profileData?.publicTags]
+                    }
+                    hideEmpty
                   />
                 </Rightbar>
               </S.ProfileBody>

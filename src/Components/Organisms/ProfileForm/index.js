@@ -25,6 +25,7 @@ import Button from "Components/Atoms/Button";
 import LabeledInput from "Components/Molecules/LabeledInput";
 import LabeledTextarea from "Components/Molecules/LabeledTextarea";
 import File from "Components/Molecules/File";
+import TagsForm from "Components/Molecules/TagsForm";
 
 // Style
 import * as S from "./style";
@@ -147,6 +148,16 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
     return false;
   };
 
+  const handleNewTags = (newTags, type) => {
+    setForm({
+      ...form,
+      [`${type}Tags`]: {
+        value: [...newTags],
+        error: "",
+      },
+    });
+  };
+
   const handleSubmit = async () => {
     try {
       if (!form.name.value) {
@@ -170,6 +181,8 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
         link: form.link.value,
         about: form.about.value,
         isAdult: !!form.isAdult.value,
+        publicTags: form.publicTags.value,
+        privateTags: form.privateTags.value,
       };
 
       if (!_id) {
@@ -330,6 +343,20 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
             value={form.about.value}
             onChange={handleChange}
             size={120}
+          />
+
+          <TagsForm
+            title='Tags privadas (Só você pode ver)'
+            tags={form.privateTags.value}
+            setTags={handleNewTags}
+            type='private'
+          />
+
+          <TagsForm
+            title='Tags públicas (Todos podem ver)'
+            tags={form.publicTags.value}
+            setTags={handleNewTags}
+            type='public'
           />
 
           <Checkbox
