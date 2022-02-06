@@ -74,6 +74,7 @@ const SelectProfilesList = ({ profiles }) => {
                 notifications={getPendingConnections(item)}
                 side='left'
                 displayCounters
+                displayTags
                 isBox
                 squaredBox
               />

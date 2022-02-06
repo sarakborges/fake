@@ -80,6 +80,25 @@ export const CounterIcon = styled.span`
   border-radius: 100%;
 `;
 
+export const TagsList = styled.span`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  width: 100%;
+  padding-top: 8px;
+`;
+
+export const TagItem = styled.span`
+  padding: 8px;
+
+  color: var(--white);
+  font-size: 12px;
+
+  background-color: var(--main);
+  border-radius: 4px;
+`;
+
 export const Link = styled.span`
   display: flex;
   place-items: center;

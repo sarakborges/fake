@@ -57,11 +57,22 @@ const SelectProfile = () => {
   useEffect(() => {
     setFilteredProfiles(
       user.profiles.filter((item) => {
-        const fields = ["name", "url"];
+        let fields = ["name", "url"];
 
         for (let field of fields) {
-          if (item[field].toLowerCase().includes(filter.toLowerCase())) {
+          if (item[field]?.toLowerCase().includes(filter.toLowerCase())) {
             return true;
+          }
+        }
+
+        fields = ["publicTags", "privateTags"];
+        for (let field of fields) {
+          if (item[field]?.length > 0) {
+            for (let arrItem of item[field]) {
+              if (arrItem.includes(filter.toLowerCase())) {
+                return true;
+              }
+            }
           }
         }
 
@@ -95,7 +106,7 @@ const SelectProfile = () => {
                   id='filter-profiles'
                   value={filter}
                   onChange={handleFilterChange}
-                  placeholder='Insira o nome ou @ do perfil que quer encontrar'
+                  placeholder='Insira sua pesquisa'
                 />
               </S.Filter>
 

@@ -19,6 +19,7 @@ const InfoArea = ({
   side,
   hasLink,
   displayCounters,
+  displayTags,
   notifications,
   messages,
   isBox,
@@ -67,6 +68,30 @@ const InfoArea = ({
               </S.Counter>
             </S.CounterList>
           )}
+
+          {displayTags &&
+            info?.publicTags?.length > 0 &&
+            info?.privateTags?.length > 0 && (
+              <S.TagsList>
+                {info?.publicTags?.length > 0 &&
+                  info?.privateTags?.length > 0 &&
+                  [...info?.publicTags, info?.privateTags].map((item) => {
+                    return <S.TagItem>{item}</S.TagItem>;
+                  })}
+
+                {!info?.privateTags?.length &&
+                  info?.publicTags?.length > 0 &&
+                  [...info?.publicTags].map((item) => {
+                    return <S.TagItem>{item}</S.TagItem>;
+                  })}
+
+                {!info?.publicTags?.length &&
+                  info?.privateTags?.length > 0 &&
+                  [info?.privateTags].map((item) => {
+                    return <S.TagItem>{item}</S.TagItem>;
+                  })}
+              </S.TagsList>
+            )}
         </S.TextWrapper>
 
         {hasLink && (
