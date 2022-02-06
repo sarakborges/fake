@@ -35,7 +35,7 @@ const SearchForm = () => {
         <LabeledInput
           id='site-search'
           label='Encontre pessoas e grupos'
-          placeholder='Insira nome ou @'
+          placeholder='Insira sua pesquisa'
           value={search}
           onChange={(e) => {
             setSearch(e.currentTarget.value);

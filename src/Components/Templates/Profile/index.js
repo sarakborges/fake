@@ -130,18 +130,13 @@ const ProfileTemplate = () => {
                     )}
                   />
 
-                  <TagsList
-                    title='Tags'
-                    list={
-                      profileData?._id === profile?._id
-                        ? [
-                            ...profileData?.publicTags,
-                            ...profileData?.privateTags,
-                          ]
-                        : [...profileData?.publicTags]
-                    }
-                    hideEmpty
-                  />
+                  {profileData?.publicTags?.length > 0 && (
+                    <TagsList
+                      title='Tags'
+                      list={[...profileData?.publicTags]}
+                      hideEmpty
+                    />
+                  )}
                 </Rightbar>
               </S.ProfileBody>
             </S.ProfileWrapper>

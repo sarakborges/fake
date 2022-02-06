@@ -19,7 +19,9 @@ import * as S from "./style";
 // Template
 const InfoCard = ({ info, type, isBlured }) => {
   const link = (
-    type === "profile" || type === "member" ? ROUTES.PROFILE : ROUTES.GROUP
+    type === "profile" || type === "member" || type === "connection"
+      ? ROUTES.PROFILE
+      : ROUTES.GROUP
   ).replace(":id", info?.url);
 
   return (
