@@ -34,7 +34,7 @@ const SearchForm = () => {
       <Form onSubmit={handleSearchSubmit}>
         <LabeledInput
           id='site-search'
-          label='Encontre pessoas ou grupos'
+          label='Encontre pessoas e grupos'
           placeholder='Insira nome ou @'
           value={search}
           onChange={(e) => {
