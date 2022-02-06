@@ -6,19 +6,11 @@ export const GroupWrapper = styled.div`
 
 export const GroupBody = styled.div`
   display: flex;
+  gap: 16px;
 
   width: 100%;
   padding-right: 16px;
-`;
-
-export const About = styled.div`
-  flex: 1;
-  margin: 0 32px 32px;
   overflow: hidden;
-
-  img {
-    max-width: 100%;
-  }
 `;
 
 export const GroupLeft = styled.div`

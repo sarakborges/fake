@@ -76,19 +76,19 @@ const InfoArea = ({
                 {info?.publicTags?.length > 0 &&
                   info?.privateTags?.length > 0 &&
                   [...info?.publicTags, info?.privateTags].map((item) => {
-                    return <S.TagItem>{item}</S.TagItem>;
+                    return <S.TagItem key={item}>{item}</S.TagItem>;
                   })}
 
                 {!info?.privateTags?.length &&
                   info?.publicTags?.length > 0 &&
                   [...info?.publicTags].map((item) => {
-                    return <S.TagItem>{item}</S.TagItem>;
+                    return <S.TagItem key={item}>{item}</S.TagItem>;
                   })}
 
                 {!info?.publicTags?.length &&
                   info?.privateTags?.length > 0 &&
                   [info?.privateTags].map((item) => {
-                    return <S.TagItem>{item}</S.TagItem>;
+                    return <S.TagItem key={item}>{item}</S.TagItem>;
                   })}
               </S.TagsList>
             )}

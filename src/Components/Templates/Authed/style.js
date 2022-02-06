@@ -25,6 +25,7 @@ export const Content = styled.div`
   flex-flow: column;
 
   flex: 1;
+  overflow: hidden;
 
   background-color: var(--bgContrast);
 `;
