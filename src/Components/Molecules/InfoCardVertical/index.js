@@ -1,5 +1,6 @@
 // Dependencies
 import Link from "next/link";
+import { useContext, useEffect, useState } from "react";
 import { faLink, faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCrown } from "@fortawesome/free-solid-svg-icons";
@@ -7,6 +8,9 @@ import { faCrown } from "@fortawesome/free-solid-svg-icons";
 // Helpers
 import { ROUTES } from "Helpers/routes";
 import { getTimeString } from "Helpers/Functions";
+
+// Contexts
+import { UserContext } from "Contexts/User";
 
 // Atoms
 import Avatar from "Components/Atoms/Avatar";
@@ -18,11 +22,28 @@ import * as S from "./style";
 
 // Template
 const InfoCard = ({ info, type, isBlured }) => {
+  const { userState } = useContext(UserContext);
+  const { profile } = userState;
+
+  const [tags, setTags] = useState([]);
+
   const link = (
     type === "profile" || type === "member" || type === "connection"
       ? ROUTES.PROFILE
       : ROUTES.GROUP
   ).replace(":id", info?.url);
+
+  useEffect(() => {
+    let newTags = [];
+
+    if (info?.publicTags) {
+      newTags = [...newTags, ...info?.publicTags];
+    }
+
+    newTags.sort((a, b) => (a > b ? 1 : -1));
+
+    setTags(newTags);
+  }, []);
 
   return (
     <>
@@ -98,6 +119,25 @@ const InfoCard = ({ info, type, isBlured }) => {
             </Text>
           )}
         </S.TextWrapper>
+
+        <S.TagsList>
+          {tags.map((item) => {
+            return (
+              <Link key={item} href={ROUTES.SEARCH.replace(":str", item)}>
+                <a>
+                  <S.TagItem
+                    isCommon={
+                      profile?.publicTags?.includes(item) ||
+                      profile?.privateTags?.includes(item)
+                    }
+                  >
+                    {item}
+                  </S.TagItem>
+                </a>
+              </Link>
+            );
+          })}
+        </S.TagsList>
 
         <S.CardButtons>
           <Link href={link}>

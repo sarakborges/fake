@@ -40,10 +40,33 @@ export const Name = styled.div`
   }
 `;
 
+export const TagsList = styled.span`
+  display: flex;
+  flex-wrap: wrap;
+  place-content: center;
+  gap: 8px;
+
+  width: 100%;
+  padding-top: 16px;
+`;
+
+export const TagItem = styled.span`
+  padding: 8px;
+
+  color: var(--white);
+  font-size: 12px;
+
+  background-color: ${({ isCommon }) =>
+    isCommon ? "var(--main)" : "var(--bgContrast)"};
+  border-radius: 4px;
+`;
+
 export const CardButtons = styled.div`
   display: flex;
   flex-flow: column;
+  place-content: flex-end;
 
+  flex: 1;
   padding-top: 16px;
 
   > a {

@@ -94,6 +94,7 @@ const SelectProfile = () => {
                 side='left'
                 hasLink
                 isBox
+                displayTags
                 squaredBox
               />
             </a>

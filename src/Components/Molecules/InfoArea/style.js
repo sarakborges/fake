@@ -86,7 +86,7 @@ export const TagsList = styled.span`
   gap: 8px;
 
   width: 100%;
-  padding-top: 8px;
+  padding-top: 16px;
 `;
 
 export const TagItem = styled.span`
