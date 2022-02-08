@@ -25,6 +25,7 @@ const RoundList = ({
   extraItemLink,
   emptyTitle,
   hideEmpty,
+  displayMore,
 }) => {
   const { appState } = useContext(AppContext);
   const { displayAdult } = appState;
@@ -63,7 +64,7 @@ const RoundList = ({
             );
           })}
 
-          {list.length > 4 && (
+          {displayMore && (
             <Link href={extraItemLink}>
               <a>
                 <RoundIcon icon={faEllipsisH} size={40} bgColor='main' />

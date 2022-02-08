@@ -35,6 +35,8 @@ import * as S from "./style";
 const ProfileFeedTemplate = () => {
   const [feed, setFeed] = useState();
   const [profileData, setProfileData] = useState();
+  const [approvedConnections, setApprovedConnections] = useState([]);
+  const [approvedMemberships, setApprovedMemberships] = useState([]);
 
   const { userState } = useContext(UserContext);
   const { profile } = userState;
@@ -55,15 +57,33 @@ const ProfileFeedTemplate = () => {
     [ProfileAPI]
   );
 
-  const getApprovedConnections = () => {
-    return profileData?.connections?.filter?.((item) => {
-      if (item.status === "connected") {
-        return item;
-      } else {
-        return false;
-      }
-    });
-  };
+  const getApprovedConnections = useCallback(() => {
+    setApprovedConnections(
+      profileData?.connections?.filter?.((item) => {
+        if (item.status === "connected") {
+          return item;
+        } else {
+          return false;
+        }
+      }) || []
+    );
+  }, [profileData, setApprovedConnections]);
+
+  const getApprovedMemberships = useCallback(() => {
+    setApprovedMemberships(
+      profileData?.groups?.filter?.((item) => {
+        const member = item?.members?.find(
+          (groupItem) => groupItem.profile === profileData?._id
+        );
+
+        if (member?.status === "member") {
+          return item;
+        } else {
+          return false;
+        }
+      }) || []
+    );
+  }, [profileData, setApprovedMemberships]);
 
   const getFeed = useCallback(() => {
     if (!profileData?._id) {
@@ -100,6 +120,11 @@ const ProfileFeedTemplate = () => {
   useEffect(() => {
     getFeed();
   }, [profileData, getFeed]);
+
+  useEffect(() => {
+    getApprovedConnections();
+    getApprovedMemberships();
+  }, [getApprovedConnections, getApprovedMemberships]);
 
   return (
     <AuthedTemplate>
@@ -140,13 +165,14 @@ const ProfileFeedTemplate = () => {
                         ? "Você"
                         : profileData.name
                     } ainda não possui conexões.`}
-                    list={getApprovedConnections()
+                    list={approvedConnections
                       ?.slice?.(0, 5)
                       .map((item) => item.user)}
                     extraItemLink={ROUTES.PROFILE_CONNECTIONS.replace(
                       ":id",
                       profileData.url
                     )}
+                    displayMore={approvedConnections?.length > 5}
                   />
 
                   <RoundList
@@ -157,12 +183,21 @@ const ProfileFeedTemplate = () => {
                         ? "Você"
                         : profileData.name
                     } ainda não participa de grupos.`}
-                    list={profileData?.groups?.slice?.(0, 5)}
+                    list={approvedMemberships?.slice?.(0, 5)}
                     extraItemLink={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
                       ":id",
                       profileData.url
                     )}
+                    displayMore={approvedMemberships?.length > 5}
                   />
+
+                  {profileData?.publicTags?.length > 0 && (
+                    <TagsList
+                      title='Tags'
+                      list={[...profileData?.publicTags]}
+                      hideEmpty
+                    />
+                  )}
                 </Rightbar>
               </S.ProfileBody>
             </S.ProfileWrapper>

@@ -76,6 +76,7 @@ const GroupTemplate = () => {
                     ":id",
                     group.url
                   )}
+                  displayMore={group.members.length > 5}
                 />
 
                 <RoundList
@@ -84,6 +85,7 @@ const GroupTemplate = () => {
                   list={group?.relatedGroups?.slice?.(0, 5)}
                   extraItemLink='#'
                   hideEmpty
+                  displayMore={group.relatedGroups.length > 5}
                 />
 
                 <LinkList

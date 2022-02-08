@@ -108,7 +108,11 @@ const HomeTemplate = () => {
               type='profile'
               title='Suas conexões'
               emptyTitle='Você ainda não possui conexões'
-              extraItemLink={ROUTES.CONNECTIONS}
+              extraItemLink={ROUTES.PROFILE_CONNECTIONS.replace(
+                ":id",
+                profileData?.url
+              )}
+              displayMore={approvedConnections?.length > 5}
               list={approvedConnections?.slice?.(0, 5).map((item) => item.user)}
             />
 
@@ -117,6 +121,7 @@ const HomeTemplate = () => {
               title='Seus grupos'
               emptyTitle='Você ainda não participa de grupos'
               extraItemLink={ROUTES.GROUPS}
+              displayMore={approvedMemberships?.length > 5}
               list={approvedMemberships?.slice?.(0, 5)}
             />
           </Rightbar>

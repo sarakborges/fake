@@ -1,5 +1,4 @@
 export const displayToast = (toast, type, dispatch) => {
-  console.log(dispatch);
   if (!dispatch) {
     return;
   }
