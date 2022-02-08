@@ -73,6 +73,7 @@ const NewFeed = ({ feed, setFeed }) => {
         {
           ...newPost,
           user: {
+            _id: profile._id,
             name: profile.name,
             avatar: profile.avatar,
             url: profile.url,

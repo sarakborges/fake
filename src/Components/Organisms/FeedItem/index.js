@@ -1,8 +1,11 @@
 // Dependencies
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
+
+// APIs
+import ProfileAPI from "Apis/Profile";
 
 // Helpers
 import { getTimeString } from "Helpers/Functions";
@@ -10,9 +13,11 @@ import { ROUTES } from "Helpers/routes";
 
 // Contexsts
 import { AppContext } from "Contexts/App";
+import { UserContext } from "Contexts/User";
 
 // Atoms
 import Text from "Components/Atoms/Text";
+import Button from "Components/Atoms/Button";
 
 // Molecules
 import InfoArea from "Components/Molecules/InfoArea";
@@ -21,9 +26,25 @@ import InfoArea from "Components/Molecules/InfoArea";
 import * as S from "./style";
 
 // Template
-const FeedItem = ({ info }) => {
+const FeedItem = ({ info, setFeed }) => {
   const { appState } = useContext(AppContext);
   const { displayAdult } = appState;
+
+  const { userState } = useContext(UserContext);
+  const { profile } = userState;
+
+  const handleDelete = async () => {
+    try {
+      await ProfileAPI.deletePost({
+        userId: info.user._id,
+        postId: info._id,
+      });
+
+      setFeed(info._id);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <S.FeedItem>
@@ -33,6 +54,12 @@ const FeedItem = ({ info }) => {
             <InfoArea side='left' info={info.user} />
           </a>
         </Link>
+
+        {profile?._id === info.user._id && (
+          <Button style='transparent' size={16} onClick={handleDelete}>
+            <FontAwesomeIcon icon={faTimes} />
+          </Button>
+        )}
       </S.InfoAreaWrapper>
 
       {info.image && (

@@ -116,6 +116,20 @@ const createPost = (info) => {
     .catch((err) => err);
 };
 
+const deletePost = (info) => {
+  if (!info) {
+    console.log("deletePost requires info param");
+    return;
+  }
+
+  return axios
+    .put(`${process.env.NEXT_PUBLIC_REQUEST_URI}/profile/feed/delete`, {
+      ...info,
+    })
+    .then((res) => res.data)
+    .catch((err) => err);
+};
+
 export default {
   getProfileById,
   getProfileByUrl,
@@ -126,4 +140,5 @@ export default {
   createConnection,
   blockProfile,
   createPost,
+  deletePost,
 };

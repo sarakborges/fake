@@ -14,6 +14,7 @@ export const FeedItem = styled.div`
 
 export const InfoAreaWrapper = styled.div`
   display: flex;
+  place-content: space-between;
 `;
 
 export const ImageWrapper = styled.div`

@@ -15,6 +15,10 @@ import * as S from "./style";
 const Feed = ({ profile, connections }) => {
   const [feed, setFeed] = useState();
 
+  const handleDelete = (postId) => {
+    setFeed(feed.filter((item) => item._id !== postId));
+  };
+
   const getFeed = useCallback(() => {
     if (!profile?._id) {
       return;
@@ -63,20 +67,21 @@ const Feed = ({ profile, connections }) => {
     getFeed();
   }, [getFeed]);
 
-  if (!feed?.length) {
-    return <NoFeed />;
-  }
-
   return (
     <>
       <NewFeed feed={feed} setFeed={setFeed} />
 
-      <S.Feed>
-        {feed?.length > 0 &&
-          feed.map((item, key) => {
-            return <FeedItem key={`feed-item${key}`} info={item} />;
+      {feed?.length > 0 ? (
+        <S.Feed>
+          {feed.map((item) => {
+            return (
+              <FeedItem key={item._id} setFeed={handleDelete} info={item} />
+            );
           })}
-      </S.Feed>
+        </S.Feed>
+      ) : (
+        <NoFeed />
+      )}
     </>
   );
 };
