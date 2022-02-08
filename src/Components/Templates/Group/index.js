@@ -50,7 +50,7 @@ const GroupTemplate = () => {
   return (
     <AuthedTemplate>
       <Head>
-        <title>{`${SITE_NAME} - ${group?.name || "Grupo"}`}</title>
+        <title>{`${SITE_NAME} - ${groupData?.name || "Grupo"}`}</title>
       </Head>
 
       {!groupData?._id && <InfoNotFound type='group' />}

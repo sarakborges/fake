@@ -14,7 +14,7 @@ const GroupRightBar = ({ group }) => {
         title='Membros'
         list={group.members.slice(0, 5).map((item) => item.profile)}
         extraItemLink={ROUTES.GROUP_MEMBERS.MEMBERS.replace(":id", group.url)}
-        displayMore={group.members.length > 5}
+        displayMore={group?.members?.length > 5}
       />
 
       <RoundList
@@ -23,7 +23,7 @@ const GroupRightBar = ({ group }) => {
         list={group?.relatedGroups?.slice?.(0, 5)}
         extraItemLink='#'
         hideEmpty
-        displayMore={group.relatedGroups.length > 5}
+        displayMore={group?.relatedGroups?.length > 5}
       />
 
       <LinkList

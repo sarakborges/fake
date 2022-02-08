@@ -121,7 +121,7 @@ const ProfileFeedTemplate = () => {
                 </S.ProfileLeft>
 
                 <Rightbar>
-                  <ProfileRightBar profile={profileData} />
+                  <ProfileRightBar profileData={profileData} />
                 </Rightbar>
               </S.ProfileBody>
             </S.ProfileWrapper>
