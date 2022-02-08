@@ -8,10 +8,8 @@ import GroupAPI from "Apis/Group";
 
 // Helpers
 import { SITE_NAME } from "Helpers/Constants";
-import { ROUTES } from "Helpers/routes";
 
 // Atoms
-import Rightbar from "Components/Atoms/Rightbar";
 import InfoAbout from "Components/Atoms/InfoAbout";
 
 // Molecules
@@ -19,8 +17,8 @@ import InfoNotFound from "Components/Molecules/InfoNotFound";
 
 // Organisms
 import InfoHeader from "Components/Organisms/InfoHeader";
-import RoundList from "Components/Organisms/RoundList";
-import LinkList from "Components/Organisms/LinkList";
+import GroupRightBar from "Components/Organisms/GroupRightBar";
+import Rightbar from "Components/Atoms/Rightbar";
 
 // Template
 import AuthedTemplate from "Components/Templates/Authed";
@@ -30,24 +28,24 @@ import * as S from "./style";
 
 // Template
 const GroupTemplate = () => {
-  const [group, setGroup] = useState();
+  const [groupData, setGroupData] = useState();
 
   const router = useRouter();
   const {
     query: { url },
   } = router;
 
-  const getGroup = useCallback(async () => {
-    const groupData = await GroupAPI.getGroupByUrl(url);
+  const getGroupData = useCallback(async () => {
+    const groupReq = await GroupAPI.getGroupByUrl(url);
 
-    if (groupData) {
-      setGroup(groupData);
+    if (groupReq) {
+      setGroupData(groupReq);
     }
   }, [url, GroupAPI]);
 
   useEffect(() => {
-    getGroup();
-  }, [getGroup]);
+    getGroupData();
+  }, [getGroupData]);
 
   return (
     <AuthedTemplate>
@@ -55,46 +53,23 @@ const GroupTemplate = () => {
         <title>{`${SITE_NAME} - ${group?.name || "Grupo"}`}</title>
       </Head>
 
-      {!group?._id && <InfoNotFound type='group' />}
+      {!groupData?._id && <InfoNotFound type='group' />}
 
-      {group?._id && (
+      {groupData?._id && (
         <>
           <S.GroupWrapper>
-            <InfoHeader info={group} type='group' setInfo={setGroup} />
+            <InfoHeader info={groupData} type='group' setInfo={setGroupData} />
 
             <S.GroupBody>
               <S.GroupLeft>
-                <InfoAbout isAdult={group.isAdult} about={group.about} />
+                <InfoAbout
+                  isAdult={groupData.isAdult}
+                  about={groupData.about}
+                />
               </S.GroupLeft>
 
               <Rightbar>
-                <RoundList
-                  type='profile'
-                  title='Membros'
-                  list={group.members.slice(0, 5).map((item) => item.profile)}
-                  extraItemLink={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
-                    ":id",
-                    group.url
-                  )}
-                  displayMore={group.members.length > 5}
-                />
-
-                <RoundList
-                  type='group'
-                  title='Grupos relacionados'
-                  list={group?.relatedGroups?.slice?.(0, 5)}
-                  extraItemLink='#'
-                  hideEmpty
-                  displayMore={group.relatedGroups.length > 5}
-                />
-
-                <LinkList
-                  title='Links importantes'
-                  list={group?.importantLinks}
-                  hideEmpty
-                />
-
-                <LinkList title='Tags' list={group?.tags} hideEmpty />
+                <GroupRightBar group={groupData} />
               </Rightbar>
             </S.GroupBody>
           </S.GroupWrapper>

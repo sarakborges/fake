@@ -8,22 +8,20 @@ import ProfileAPI from "Apis/Profile";
 
 // Helpers
 import { SITE_NAME } from "Helpers/Constants";
-import { ROUTES } from "Helpers/routes";
 
 // Contexts
 import { UserContext } from "Contexts/User";
 
 // Atoms
-import Rightbar from "Components/Atoms/Rightbar";
 import InfoAbout from "Components/Atoms/InfoAbout";
+import Rightbar from "Components/Atoms/Rightbar";
 
 // Molecules
 import InfoNotFound from "Components/Molecules/InfoNotFound";
 
 // Organisms
 import InfoHeader from "Components/Organisms/InfoHeader";
-import RoundList from "Components/Organisms/RoundList";
-import TagsList from "Components/Organisms/TagsList";
+import ProfileRightBar from "Components/Organisms/ProfileRightBar";
 
 // Template
 import AuthedTemplate from "Components/Templates/Authed";
@@ -34,8 +32,6 @@ import * as S from "./style";
 // Template
 const ProfileTemplate = () => {
   const [profileData, setProfileData] = useState();
-  const [approvedConnections, setApprovedConnections] = useState([]);
-  const [approvedMemberships, setApprovedMemberships] = useState([]);
 
   const { userState } = useContext(UserContext);
   const { profile } = userState;
@@ -56,42 +52,9 @@ const ProfileTemplate = () => {
     [ProfileAPI]
   );
 
-  const getApprovedConnections = useCallback(() => {
-    setApprovedConnections(
-      profileData?.connections?.filter?.((item) => {
-        if (item.status === "connected") {
-          return item;
-        } else {
-          return false;
-        }
-      }) || []
-    );
-  }, [profileData, setApprovedConnections]);
-
-  const getApprovedMemberships = useCallback(() => {
-    setApprovedMemberships(
-      profileData?.groups?.filter?.((item) => {
-        const member = item?.members?.find(
-          (groupItem) => groupItem.profile === profileData?._id
-        );
-
-        if (member?.status === "member") {
-          return item;
-        } else {
-          return false;
-        }
-      }) || []
-    );
-  }, [profileData, setApprovedMemberships]);
-
   useEffect(() => {
     getProfile(url);
   }, [url, getProfile]);
-
-  useEffect(() => {
-    getApprovedConnections();
-    getApprovedMemberships();
-  }, [getApprovedConnections, getApprovedMemberships]);
 
   return (
     <AuthedTemplate>
@@ -123,47 +86,7 @@ const ProfileTemplate = () => {
                 </S.ProfileLeft>
 
                 <Rightbar>
-                  <RoundList
-                    type='profile'
-                    title='Conexões'
-                    emptyTitle={`${
-                      profile?._id === profileData._id
-                        ? "Você"
-                        : profileData.name
-                    } ainda não possui conexões.`}
-                    list={approvedConnections
-                      ?.slice?.(0, 5)
-                      .map((item) => item.user)}
-                    extraItemLink={ROUTES.PROFILE_CONNECTIONS.replace(
-                      ":id",
-                      profileData.url
-                    )}
-                    displayMore={approvedConnections?.length > 5}
-                  />
-
-                  <RoundList
-                    type='group'
-                    title='Grupos'
-                    emptyTitle={`${
-                      profile?._id === profileData._id
-                        ? "Você"
-                        : profileData.name
-                    } ainda não participa de grupos.`}
-                    list={approvedMemberships?.slice?.(0, 5)}
-                    extraItemLink={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
-                      ":id",
-                      profileData.url
-                    )}
-                    displayMore={approvedMemberships?.length > 5}
-                  />
-
-                  {profileData?.publicTags?.length > 0 && (
-                    <TagsList
-                      title='Tags'
-                      list={[...profileData?.publicTags]}
-                      hideEmpty
-                    />
-                  )}
+                  <ProfileRightBar profileData={profileData} />
                 </Rightbar>
               </S.ProfileBody>
             </S.ProfileWrapper>

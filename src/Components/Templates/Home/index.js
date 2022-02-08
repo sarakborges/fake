@@ -10,7 +10,6 @@ import { UserContext } from "Contexts/User";
 
 // Helpers
 import { SITE_NAME } from "Helpers/Constants";
-import { ROUTES } from "Helpers/routes";
 
 // Atoms
 import Rightbar from "Components/Atoms/Rightbar";
@@ -19,7 +18,6 @@ import Rightbar from "Components/Atoms/Rightbar";
 import NoProfile from "Components/Molecules/NoProfile";
 
 // Organisms
-import RoundList from "Components/Organisms/RoundList";
 import Feed from "Components/Organisms/Feed";
 import SearchForm from "Components/Organisms/SearchForm";
 
@@ -28,11 +26,11 @@ import AuthedTemplate from "Components/Templates/Authed";
 
 // Styles
 import * as S from "./style";
+import ProfileRightBar from "Components/Organisms/ProfileRightBar";
 
 // Template
 const HomeTemplate = () => {
   const [approvedConnections, setApprovedConnections] = useState();
-  const [approvedMemberships, setApprovedMemberships] = useState();
   const [profileData, setProfileData] = useState();
 
   const { userState } = useContext(UserContext);
@@ -62,30 +60,13 @@ const HomeTemplate = () => {
     );
   }, [profileData, setApprovedConnections]);
 
-  const getApprovedMemberships = useCallback(() => {
-    setApprovedMemberships(
-      profileData?.groups?.filter?.((item) => {
-        const member = item?.members?.find(
-          (groupItem) => groupItem.profile === profile._id
-        );
-
-        if (member?.status === "member") {
-          return item;
-        } else {
-          return false;
-        }
-      }) || []
-    );
-  }, [profileData, setApprovedMemberships]);
-
   useEffect(() => {
     getProfile();
   }, [getProfile]);
 
   useEffect(() => {
     getApprovedConnections();
-    getApprovedMemberships();
-  }, [getApprovedConnections, getApprovedMemberships]);
+  }, [getApprovedConnections]);
 
   return (
     <AuthedTemplate>
@@ -104,26 +85,7 @@ const HomeTemplate = () => {
           <Rightbar>
             <SearchForm />
 
-            <RoundList
-              type='profile'
-              title='Suas conexões'
-              emptyTitle='Você ainda não possui conexões'
-              extraItemLink={ROUTES.PROFILE_CONNECTIONS.replace(
-                ":id",
-                profileData?.url
-              )}
-              displayMore={approvedConnections?.length > 5}
-              list={approvedConnections?.slice?.(0, 5).map((item) => item.user)}
-            />
-
-            <RoundList
-              type='group'
-              title='Seus grupos'
-              emptyTitle='Você ainda não participa de grupos'
-              extraItemLink={ROUTES.GROUPS}
-              displayMore={approvedMemberships?.length > 5}
-              list={approvedMemberships?.slice?.(0, 5)}
-            />
+            <ProfileRightBar profileData={profileData} />
           </Rightbar>
         </S.HomeWrapper>
       )}
