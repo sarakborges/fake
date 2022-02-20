@@ -11,13 +11,13 @@ import InfoCard from "Components/Molecules/InfoCardVertical";
 import * as S from "./style";
 
 // Template
-const InfoList = ({ info, type }) => {
+const InfoList = ({ info, type, parentInfo }) => {
   const { appState } = useContext(AppContext);
   const { displayAdult } = appState;
 
   return (
     <S.InfoList>
-      {info &&
+      {info?.length &&
         info.map((item) => {
           return (
             <li key={item?.url}>
@@ -25,6 +25,7 @@ const InfoList = ({ info, type }) => {
                 info={item}
                 type={type}
                 isBlured={item.isAdult && !displayAdult}
+                parentInfo={parentInfo}
               />
             </li>
           );

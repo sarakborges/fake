@@ -40,6 +40,7 @@ const ChatMessages = ({
             return (
               <ChatMessageItem
                 info={item}
+                key={`messages-${key}`}
                 defaultUser={{ ...messages.profile }}
                 lastMessageSender={messages?.messages[key - 1]?.user}
               />

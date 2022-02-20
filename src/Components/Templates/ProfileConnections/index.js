@@ -59,6 +59,7 @@ const ProfileConnectionsTemplate = () => {
           type='connection'
           title={`Conexões de ${profileState?.name}:`}
           noInfoText={`${profileState?.name} ainda não possui nenhuma conexão.`}
+          parentInfo={profileState}
         />
 
         {profile?._id === profileState?._id &&
@@ -69,6 +70,7 @@ const ProfileConnectionsTemplate = () => {
               placeholder='Insira sua pesquisa'
               type='profile'
               title='Perfis que você bloqueou:'
+              parentInfo={profileState}
             />
           )}
       </S.ProfileConnections>

@@ -1,5 +1,5 @@
 // Dependencies
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 // Atoms
 import Input from "Components/Atoms/Input";
@@ -12,24 +12,41 @@ import InfoList from "Components/Organisms/InfoList";
 import * as S from "./style";
 
 // Template
-const FilteredList = ({ info, id, placeholder, title, noInfoText, type }) => {
+const FilteredList = ({
+  info,
+  id,
+  placeholder,
+  title,
+  noInfoText,
+  type,
+  parentInfo,
+}) => {
   const [filter, setFilter] = useState("");
+  const [filteredList, setFilteredList] = useState([...info]);
 
-  const getFilteredInfo = () => {
+  const getFilteredInfo = useCallback(() => {
     if (!filter) {
-      return info;
+      setFilteredList([...info]);
     }
 
-    return info.filter(
-      (item) =>
-        item.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()) ||
-        `@${item.url}`.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+    setFilteredList(
+      info.filter(
+        (item) =>
+          item.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()) ||
+          `@${item.url}`
+            .toLocaleLowerCase()
+            .includes(filter.toLocaleLowerCase())
+      ) || []
     );
-  };
+  }, [info, filter, setFilteredList]);
 
   const handleFilterChange = (e) => {
     setFilter(e.currentTarget.value);
   };
+
+  useEffect(() => {
+    getFilteredInfo();
+  }, [getFilteredInfo]);
 
   return (
     <S.Wrapper>
@@ -48,13 +65,14 @@ const FilteredList = ({ info, id, placeholder, title, noInfoText, type }) => {
             />
           </S.Header>
 
-          <InfoList info={getFilteredInfo()} type={type} />
+          <InfoList info={filteredList} type={type} parentInfo={parentInfo} />
         </>
       ) : (
         <S.Header>
           <Text type='title' pb={16}>
             {title}
           </Text>
+
           <Text>{noInfoText}</Text>
         </S.Header>
       )}

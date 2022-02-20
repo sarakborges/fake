@@ -26,34 +26,36 @@ import * as S from "./style";
 // Template
 const GroupMembersAllTemplate = () => {
   const [group, setGroup] = useState();
+  const [members, setMembers] = useState([]);
 
   const router = useRouter();
   const {
     query: { url },
   } = router;
 
-  const getMembers = () => {
-    if (group?.members?.length < 0) {
+  const getMembers = useCallback(() => {
+    if (!group?.members?.length) {
       return [];
     }
 
-    return group?.members.filter((item) => item.status === "member");
-  };
+    setMembers(group?.members.filter((item) => item.status === "member") || []);
+  }, [group, setMembers]);
 
-  const getGroup = useCallback(
-    async (groupUrl) => {
-      const groupReq = await GroupAPI.getGroupByUrl(groupUrl);
+  const getGroup = useCallback(async () => {
+    const groupReq = await GroupAPI.getGroupByUrl(url);
 
-      if (groupReq) {
-        setGroup(groupReq);
-      }
-    },
-    [GroupAPI]
-  );
+    if (groupReq) {
+      setGroup(groupReq);
+    }
+  }, [GroupAPI]);
 
   useEffect(() => {
-    getGroup(url);
-  }, [url, getGroup]);
+    getGroup();
+  }, [getGroup]);
+
+  useEffect(() => {
+    getMembers();
+  }, [getMembers]);
 
   return (
     <AuthedTemplate>
@@ -79,7 +81,7 @@ const GroupMembersAllTemplate = () => {
               />
 
               <FilteredList
-                info={getMembers().map((item) => {
+                info={members.map((item) => {
                   return {
                     ...item.profile,
                     joinedAt: item.joinedAt,

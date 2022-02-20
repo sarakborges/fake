@@ -27,6 +27,7 @@ const ProfileGroupsTemplate = () => {
           placeholder='Insira sua pesquisa'
           title={`Grupos que ${profileState?.name} participa:`}
           noInfoText={`${profileState?.name} ainda não participa de nenhum grupo.`}
+          parentInfo={profileState}
         />
       </S.ProfileGroups>
     </ProfileTemplate>

@@ -9,7 +9,6 @@ import { ROUTES } from "Helpers/routes";
 
 // Contexts
 import { UserContext } from "Contexts/User";
-import { ProfileContext } from "Contexts/Profile";
 
 // Molecules
 import InfoArea from "Components/Molecules/InfoArea";
@@ -20,8 +19,7 @@ import Text from "Components/Atoms/Text";
 import ButtonLink from "Components/Atoms/ButtonLink";
 
 // Template
-const InfoCard = ({ info, type, isBlured }) => {
-  const { profileState } = useContext(ProfileContext);
+const InfoCard = ({ info, type, isBlured, parentInfo }) => {
   const { userState } = useContext(UserContext);
   const { profile } = userState;
 
@@ -91,13 +89,13 @@ const InfoCard = ({ info, type, isBlured }) => {
                 </a>
               </Link>
 
-              {profileState?._id === info?.owner && (
+              {info?.owner && parentInfo?._id === info?.owner && (
                 <S.Owner>
                   <FontAwesomeIcon icon={faCrown} />
                 </S.Owner>
               )}
 
-              {info?.moderators?.include(profileState?._id) && (
+              {info?.moderators && info?.moderators?.include(parentInfo?._id) && (
                 <S.Moderator>
                   <FontAwesomeIcon icon={faCrown} />
                 </S.Moderator>
