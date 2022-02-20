@@ -35,12 +35,12 @@ const GroupForm = ({ form, setForm, originalData }) => {
   const [valueImg, setValueImg] = useState();
 
   const { userState } = useContext(UserContext);
-  const { appDispatch } = useContext(AppContext);
   const { profile } = userState;
 
-  const _id = originalData?._id;
+  const { appState, appDispatch } = useContext(AppContext);
+  const { isRequesting } = appState;
 
-  const [isRequesting, setIsRequesting] = useState(false);
+  const _id = originalData?._id;
 
   const getFormData = useCallback(() => {
     if (!_id) {
@@ -95,19 +95,31 @@ const GroupForm = ({ form, setForm, originalData }) => {
         return;
       }
 
-      setIsRequesting(true);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: true,
+      });
 
       await GroupAPI.deleteGroup({
         id: _id,
       });
 
-      setIsRequesting(false);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
+
       displayToast(TOASTS.DELETE_GROUP, 0, appDispatch);
       router.push(ROUTES.HOME);
     } catch (e) {
       console.log(e);
+
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
+
       displayToast(TOASTS.DELETE_GROUP, 0, appDispatch);
-      setIsRequesting(false);
     }
   };
 
@@ -126,7 +138,12 @@ const GroupForm = ({ form, setForm, originalData }) => {
       });
 
       displayToast(TOASTS.URL_EXISTS, 2, appDispatch);
-      setIsRequesting(false);
+
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
+
       return true;
     }
 
@@ -144,7 +161,10 @@ const GroupForm = ({ form, setForm, originalData }) => {
         return;
       }
 
-      setIsRequesting(true);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: true,
+      });
 
       const url = slugify(form.url.value || form.name.value);
 
@@ -206,7 +226,11 @@ const GroupForm = ({ form, setForm, originalData }) => {
 
       router.push(ROUTES.GROUP.replace(":id", url));
     } catch (e) {
-      setIsRequesting(false);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
+
       displayToast(
         _id ? TOASTS.EDIT_GROUP : TOASTS.CREATE_GROUP,
         1,

@@ -16,12 +16,13 @@ import { ProfileContext } from "Contexts/Profile";
 // Atoms
 import Button from "Components/Atoms/Button";
 
-const UnconnectButton = ({ isRequesting, setIsRequesting, children }) => {
+const UnconnectButton = ({ children }) => {
   const { userState, userDispatch } = useContext(UserContext);
   const { profile } = userState;
 
   const { profileState, profileDispatch } = useContext(ProfileContext);
-  const { appDispatch } = useContext(AppContext);
+  const { appState, appDispatch } = useContext(AppContext);
+  const { isRequesting } = appState;
 
   const updateUsers = (req) => {
     const newLocalProfile = req.find((item) => item._id === profile._id);
@@ -44,7 +45,10 @@ const UnconnectButton = ({ isRequesting, setIsRequesting, children }) => {
 
   const handleClick = async () => {
     try {
-      setIsRequesting(true);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: true,
+      });
 
       const updateConnectinoReq = await ProfileAPI.updateConnection({
         ids: [profile._id, profileState._id],
@@ -53,11 +57,20 @@ const UnconnectButton = ({ isRequesting, setIsRequesting, children }) => {
 
       updateUsers(updateConnectinoReq);
 
-      setIsRequesting(false);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
+
       displayToast(TOASTS.REMOVE_CONNECTION, 0, appDispatch);
     } catch (e) {
       console.log(e);
-      setIsRequesting(false);
+
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
+
       displayToast(TOASTS.REMOVE_CONNECTION, 1, appDispatch);
     }
   };

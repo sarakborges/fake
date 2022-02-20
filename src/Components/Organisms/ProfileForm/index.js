@@ -36,13 +36,13 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
   const [valueImg, setValueImg] = useState();
 
   const { userState, userDispatch } = useContext(UserContext);
-  const { appDispatch } = useContext(AppContext);
   const { user } = userState;
+
+  const { appState, appDispatch } = useContext(AppContext);
+  const { isRequesting } = appState;
 
   const profiles = user?.profiles;
   const _id = originalData?._id;
-
-  const [isRequesting, setIsRequesting] = useState(false);
 
   const getFormData = useCallback(() => {
     if (!_id) {
@@ -97,7 +97,10 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
         return;
       }
 
-      setIsRequesting(true);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: true,
+      });
 
       await ProfileAPI.deleteProfile({
         user: user._id,
@@ -116,13 +119,22 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
         },
       });
 
-      setIsRequesting(false);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
+
       displayToast(TOASTS.DELETE_PROFILE, 0, appDispatch);
       router.push(ROUTES.HOME);
     } catch (e) {
       console.log(e);
+
       displayToast(TOASTS.DELETE_PROFILE, 1, appDispatch);
-      setIsRequesting(false);
+
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
     }
   };
 
@@ -141,7 +153,12 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
       });
 
       displayToast(TOASTS.URL_EXISTS, 2, appDispatch);
-      setIsRequesting(false);
+
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
+
       return true;
     }
 
@@ -170,7 +187,10 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
         return;
       }
 
-      setIsRequesting(true);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: true,
+      });
 
       const url = slugify(form.url.value || form.name.value);
 
@@ -245,7 +265,11 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
         });
       }
 
-      setIsRequesting(false);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
+
       displayToast(
         _id ? TOASTS.EDIT_PROFILE : TOASTS.CREATE_PROFILE,
         0,
@@ -254,7 +278,11 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
 
       router.push(ROUTES.PROFILE.replace(":id", url));
     } catch (e) {
-      setIsRequesting(false);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
+
       displayToast(
         _id ? TOASTS.EDIT_PROFILE : TOASTS.CREATE_PROFILE,
         1,

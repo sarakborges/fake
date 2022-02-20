@@ -39,14 +39,15 @@ const NewFeed = ({ feed, setFeed }) => {
     image: { ...baseFormField },
   };
 
-  const [isRequesting, setIsRequesting] = useState(false);
   const [displayImage, setDisplayImage] = useState(false);
   const [valueImg, setValueImg] = useState();
   const [form, setForm] = useState({ ...baseForm });
 
   const { userState } = useContext(UserContext);
-  const { appDispatch } = useContext(AppContext);
   const { profile } = userState;
+
+  const { appState, appDispatch } = useContext(AppContext);
+  const { isRequesting } = appState;
 
   const handleSubmit = async () => {
     try {
@@ -54,7 +55,10 @@ const NewFeed = ({ feed, setFeed }) => {
         return;
       }
 
-      setIsRequesting(true);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: true,
+      });
 
       let imageUploaded = "";
 
@@ -88,11 +92,19 @@ const NewFeed = ({ feed, setFeed }) => {
 
       displayToast(TOASTS.NEW_POST, 0, appDispatch);
       setDisplayImage(false);
-      setIsRequesting(false);
+
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
     } catch (e) {
       console.log(e);
       displayToast(TOASTS.NEW_POST, 1, appDispatch);
-      setIsRequesting(false);
+
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
     }
   };
 

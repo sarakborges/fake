@@ -35,13 +35,15 @@ import * as S from "./style";
 import UnblockProfileButton from "Components/Molecules/UnblockProfileButton";
 
 const InfoHeader = ({ info, type, setInfo }) => {
-  const [isRequesting, setIsRequesting] = useState(false);
   const [tags, setTags] = useState([]);
 
   const headerType = type === "group" ? GROUP_HEADER : PROFILE_HEADER;
 
   const { userState, userDispatch } = useContext(UserContext);
+
   const { appState, appDispatch } = useContext(AppContext);
+  const { isRequesting } = appState;
+
   const { user, profile } = userState;
   const { displayAdult } = appState;
 
@@ -74,7 +76,10 @@ const InfoHeader = ({ info, type, setInfo }) => {
 
   const updateConnection = async (status) => {
     try {
-      setIsRequesting(true);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: true,
+      });
 
       const updateConnectinoReq = await ProfileAPI.updateConnection({
         ids: [profile._id, info._id],
@@ -83,52 +88,30 @@ const InfoHeader = ({ info, type, setInfo }) => {
 
       updateUsers(updateConnectinoReq);
 
-      setIsRequesting(false);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
     } catch (e) {
       console.log(e);
-      setIsRequesting(false);
+
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
     }
   };
 
   const headerButtons = {
-    connectTo: (
-      <ConnectButton
-        isRequesting={isRequesting}
-        setIsRequesting={setIsRequesting}
-      />
-    ),
+    connectTo: <ConnectButton />,
 
-    cancelConnection: (
-      <UnconnectButton
-        isRequesting={isRequesting}
-        setIsRequesting={setIsRequesting}
-      >
-        Cancelar solicitação
-      </UnconnectButton>
-    ),
+    cancelConnection: <UnconnectButton>Cancelar solicitação</UnconnectButton>,
 
-    removeConnection: (
-      <UnconnectButton
-        isRequesting={isRequesting}
-        setIsRequesting={setIsRequesting}
-      >
-        Remover conexão
-      </UnconnectButton>
-    ),
+    removeConnection: <UnconnectButton>Remover conexão</UnconnectButton>,
 
-    blockProfile: (
-      <BlockProfileButton
-        isRequesting={isRequesting}
-        setIsRequesting={setIsRequesting}
-      />
-    ),
+    blockProfile: <BlockProfileButton />,
 
-    unBlockProfile: (
-      <UnblockProfileButton
-        isRequesting={isRequesting}
-        setIsRequesting={setIsRequesting}
-      />
-    ),
+    unBlockProfile: <UnblockProfileButton />,
   };
 
   const buttonActions = {
@@ -138,14 +121,22 @@ const InfoHeader = ({ info, type, setInfo }) => {
         displayToast(TOASTS.ACCEPT_CONNECTION, 0, appDispatch);
       } catch (e) {
         console.log(e);
-        setIsRequesting(false);
+
+        appDispatch({
+          type: "SET_IS_REQUESTING",
+          data: false,
+        });
+
         displayToast(TOASTS.ACCEPT_CONNECTION, 1, appDispatch);
       }
     },
 
     enterGroup: async () => {
       try {
-        setIsRequesting(true);
+        appDispatch({
+          type: "SET_IS_REQUESTING",
+          data: true,
+        });
 
         const joinReq = await GroupAPI.joinGroup({
           profile: profile._id,
@@ -163,18 +154,30 @@ const InfoHeader = ({ info, type, setInfo }) => {
 
         setInfo({ ...joinReq.group });
 
-        setIsRequesting(false);
+        appDispatch({
+          type: "SET_IS_REQUESTING",
+          data: false,
+        });
+
         displayToast(TOASTS.JOIN_GROUP, 0, appDispatch);
       } catch (e) {
         console.log(e);
+
         displayToast(TOASTS.JOIN_GROUP, 1, appDispatch);
-        setIsRequesting(false);
+
+        appDispatch({
+          type: "SET_IS_REQUESTING",
+          data: false,
+        });
       }
     },
 
     leaveGroup: async () => {
       try {
-        setIsRequesting(true);
+        appDispatch({
+          type: "SET_IS_REQUESTING",
+          data: true,
+        });
 
         const leaveReq = await GroupAPI.leaveGroup({
           profile: profile._id,
@@ -192,12 +195,21 @@ const InfoHeader = ({ info, type, setInfo }) => {
 
         setInfo({ ...leaveReq });
 
-        setIsRequesting(false);
+        appDispatch({
+          type: "SET_IS_REQUESTING",
+          data: false,
+        });
+
         displayToast(TOASTS.LEAVE_GROUP, 0, appDispatch);
       } catch (e) {
         console.log(e);
+
         displayToast(TOASTS.LEAVE_GROUP, 1, appDispatch);
-        setIsRequesting(false);
+
+        appDispatch({
+          type: "SET_IS_REQUESTING",
+          data: false,
+        });
       }
     },
   };

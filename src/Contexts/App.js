@@ -13,6 +13,7 @@ const INITIAL_STATE = {
   theme: DarkTheme,
 
   displayAdult: false,
+  isRequesting: false,
 
   toast: {
     isVisible: false,

@@ -37,13 +37,13 @@ import * as S from "./style";
 
 // Template
 const NotificationsTemplate = () => {
-  const [isRequesting, setIsRequesting] = useState(false);
   const [profileData, setProfileData] = useState(false);
 
   const { userState, userDispatch } = useContext(UserContext);
   const { profile, user } = userState;
 
-  const { appDispatch } = useContext(AppContext);
+  const { appState, appDispatch } = useContext(AppContext);
+  const { isRequesting } = appState;
 
   const getProfile = useCallback(async () => {
     if (!profile?._id) {
@@ -100,7 +100,10 @@ const NotificationsTemplate = () => {
 
   const acceptConnection = async (target) => {
     try {
-      setIsRequesting(true);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: true,
+      });
 
       const updatedProfiles = await ProfileAPI.updateConnection({
         ids: [target, profile._id],
@@ -110,17 +113,29 @@ const NotificationsTemplate = () => {
       updateUsers([...updatedProfiles]);
 
       displayToast(TOASTS.ACCEPT_CONNECTION, 0, appDispatch);
-      setIsRequesting(false);
+
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
     } catch (e) {
       displayToast(TOASTS.ACCEPT_CONNECTION, 1, appDispatch);
-      setIsRequesting(false);
+
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
+
       console.log(e);
     }
   };
 
   const refuseConnection = async (target) => {
     try {
-      setIsRequesting(true);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: true,
+      });
 
       const updatedProfiles = await ProfileAPI.updateConnection({
         ids: [profile._id, target],
@@ -130,10 +145,19 @@ const NotificationsTemplate = () => {
       updateUsers([...updatedProfiles]);
 
       displayToast(TOASTS.REMOVE_CONNECTION, 0, appDispatch);
-      setIsRequesting(false);
+
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
     } catch (e) {
       displayToast(TOASTS.REMOVE_CONNECTION, 1, appDispatch);
-      setIsRequesting(false);
+
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
+
       console.log(e);
     }
   };

@@ -16,12 +16,13 @@ import { ProfileContext } from "Contexts/Profile";
 // Atoms
 import Button from "Components/Atoms/Button";
 
-const ConnectButton = ({ isRequesting, setIsRequesting }) => {
+const ConnectButton = () => {
   const { userState, userDispatch } = useContext(UserContext);
   const { profile } = userState;
 
   const { profileState, profileDispatch } = useContext(ProfileContext);
-  const { appDispatch } = useContext(AppContext);
+  const { appState, appDispatch } = useContext(AppContext);
+  const { isRequesting } = appState;
 
   const updateUsers = (req) => {
     const newLocalProfile = req.find((item) => item._id === profile._id);
@@ -44,7 +45,10 @@ const ConnectButton = ({ isRequesting, setIsRequesting }) => {
 
   const handleClick = async () => {
     try {
-      setIsRequesting(true);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: true,
+      });
 
       const createConnectinoReq = await ProfileAPI.createConnection({
         ids: [profile._id, profileState._id],
@@ -52,11 +56,20 @@ const ConnectButton = ({ isRequesting, setIsRequesting }) => {
 
       updateUsers(createConnectinoReq);
 
-      setIsRequesting(false);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
+
       displayToast(TOASTS.CONNECT, 0, appDispatch);
     } catch (e) {
       console.log(e);
-      setIsRequesting(false);
+
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
+
       displayToast(TOASTS.CONNECT, 1, appDispatch);
     }
   };

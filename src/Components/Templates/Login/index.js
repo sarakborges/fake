@@ -36,7 +36,7 @@ const LoginTemplate = () => {
   const router = useRouter();
 
   const { appState, appDispatch } = useContext(AppContext);
-  const { theme, toast } = appState;
+  const { theme, toast, isRequesting } = appState;
 
   const baseFormField = {
     value: "",
@@ -49,7 +49,6 @@ const LoginTemplate = () => {
   };
 
   const [form, setForm] = useState({ ...baseForm });
-  const [isRequesting, setIsRequesting] = useState(false);
 
   const displaySuccessToast = () => {
     appDispatch({
@@ -127,12 +126,19 @@ const LoginTemplate = () => {
       return;
     }
 
-    setIsRequesting(true);
+    appDispatch({
+      type: "SET_IS_REQUESTING",
+      data: true,
+    });
 
     const loginReq = await UserAPI.getUser(email.value, password.value);
 
     if (!loginReq?._id) {
-      setIsRequesting(false);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
+
       displayErrorToast();
       return;
     }

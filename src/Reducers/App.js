@@ -22,6 +22,10 @@ export const AppReducer = (state, { type, data }) => {
       return { ...state, toast: { ...state.toast, isVisible: data } };
     }
 
+    case "SET_IS_REQUESTING": {
+      return { ...state, isRequesting: data };
+    }
+
     default: {
       throw new Error(`Unknown type ${type} reducer on AppReducer`);
     }

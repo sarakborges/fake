@@ -16,16 +16,20 @@ import { ProfileContext } from "Contexts/Profile";
 // Atoms
 import Button from "Components/Atoms/Button";
 
-const BlockProfileButton = ({ isRequesting, setIsRequesting }) => {
+const BlockProfileButton = () => {
   const { userState, userDispatch } = useContext(UserContext);
   const { profile } = userState;
 
   const { profileState } = useContext(ProfileContext);
-  const { appDispatch } = useContext(AppContext);
+  const { appState, appDispatch } = useContext(AppContext);
+  const { isRequesting } = appState;
 
   const handleClick = async () => {
     try {
-      setIsRequesting(true);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: true,
+      });
 
       const newProfile = {
         ...profile,
@@ -53,12 +57,21 @@ const BlockProfileButton = ({ isRequesting, setIsRequesting }) => {
         },
       });
 
-      setIsRequesting(false);
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
+
       displayToast(TOASTS.BLOCK, 0, appDispatch);
     } catch (e) {
-      setIsRequesting(false);
-      displayToast(TOASTS.BLOCK, 1, appDispatch);
       console.log(e);
+
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
+
+      displayToast(TOASTS.BLOCK, 1, appDispatch);
     }
   };
 

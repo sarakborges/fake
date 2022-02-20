@@ -37,7 +37,7 @@ const RegisterTemplate = () => {
 
   const { appState, appDispatch } = useContext(AppContext);
 
-  const { theme, toast } = appState;
+  const { theme, toast, isRequesting } = appState;
 
   const baseFormField = {
     value: "",
@@ -50,7 +50,6 @@ const RegisterTemplate = () => {
   };
 
   const [form, setForm] = useState({ ...baseForm });
-  const [isRequesting, setIsRequesting] = useState(false);
 
   const displaySuccessToast = () => {
     appDispatch({
@@ -147,7 +146,10 @@ const RegisterTemplate = () => {
       return;
     }
 
-    setIsRequesting(true);
+    appDispatch({
+      type: "SET_IS_REQUESTING",
+      data: true,
+    });
 
     const loginReq = await UserAPI.getUser(email.value, password.value);
 
@@ -160,7 +162,12 @@ const RegisterTemplate = () => {
 
     if (!registerReq) {
       displayErrorToast();
-      setIsRequesting(false);
+
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
+
       return;
     }
 
