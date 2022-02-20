@@ -105,21 +105,21 @@ const InfoCard = ({ info, type, isBlured }) => {
             </S.InfoAreaWrapper>
 
             {info?.members && (
-              <Text type='custom' fs={14} fc='white'>
+              <Text type='custom' fs={14}>
                 {info?.members.length}{" "}
                 {info?.members.length !== 1 ? "participantes" : "participante"}
               </Text>
             )}
 
-            {approvedConnections && (
-              <Text type='custom' fs={14} fc='white'>
+            {info?.connections && (
+              <Text type='custom' fs={14}>
                 {approvedConnections.length}{" "}
                 {approvedConnections.length !== 1 ? "conexões" : "conexão"}
               </Text>
             )}
 
-            {approvedMemberships && (
-              <Text type='custom' fs={14} fc='white'>
+            {info?.groups && (
+              <Text type='custom' fs={14}>
                 {approvedMemberships.length}{" "}
                 {approvedMemberships.length !== 1 ? "grupos" : "grupo"}
               </Text>

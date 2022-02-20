@@ -5,6 +5,7 @@ import { useRouter } from "next/dist/client/router";
 
 // APIs
 import MessageAPI from "Apis/Message";
+import ProfileAPI from "Apis/Profile";
 
 // Helpers
 import { SITE_NAME } from "Helpers/Constants";
@@ -34,7 +35,7 @@ const ProfileTemplate = ({ children }) => {
   const [messages, setMessages] = useState();
   const [newMessage, setNewMessage] = useState("");
 
-  const { profileState } = useContext(ProfileContext);
+  const { profileState, profileDispatch } = useContext(ProfileContext);
 
   const { userState } = useContext(UserContext);
   const { profile } = userState;
@@ -43,6 +44,17 @@ const ProfileTemplate = ({ children }) => {
   const {
     query: { url },
   } = router;
+
+  const getProfile = useCallback(async () => {
+    const profileReq = await ProfileAPI.getProfileByUrl(url);
+
+    if (profileReq) {
+      profileDispatch({
+        type: "SET_PROFILE",
+        data: profileReq,
+      });
+    }
+  }, [url, ProfileAPI]);
 
   const handleSubmit = async () => {
     try {
@@ -82,6 +94,10 @@ const ProfileTemplate = ({ children }) => {
   useEffect(() => {
     getMessages();
   }, [url, getMessages]);
+
+  useEffect(() => {
+    getProfile();
+  }, [getProfile]);
 
   return (
     <AuthedTemplate>
