@@ -1,6 +1,7 @@
 // Dependencies
 import Link from "next/link";
 import { useContext, useEffect, useRef, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
   faTimesCircle,
@@ -23,27 +24,26 @@ import { AppContext } from "Contexts/App";
 import Button from "Components/Atoms/Button";
 import InfoLinks from "Components/Atoms/InfoLinks";
 
+// Molecules
+import InfoArea from "Components/Molecules/InfoArea";
+import ConnectButton from "Components/Molecules/ConnectButton";
+import UnconnectButton from "Components/Molecules/UnconnectButton";
+import BlockProfileButton from "Components/Molecules/BlockProfileButton";
+
 // Style
 import * as S from "./style";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import InfoArea from "Components/Molecules/InfoArea";
+import UnblockProfileButton from "Components/Molecules/UnblockProfileButton";
 
 const InfoHeader = ({ info, type, setInfo }) => {
   const [isRequesting, setIsRequesting] = useState(false);
-  const [displayMenu, setDisplayMenu] = useState(false);
   const [tags, setTags] = useState([]);
 
-  const dropdownRef = useRef();
   const headerType = type === "group" ? GROUP_HEADER : PROFILE_HEADER;
 
   const { userState, userDispatch } = useContext(UserContext);
   const { appState, appDispatch } = useContext(AppContext);
   const { user, profile } = userState;
   const { displayAdult } = appState;
-
-  const toggleMenu = () => {
-    setDisplayMenu(!displayMenu);
-  };
 
   const updateLocalUser = (newProfile) => {
     userDispatch({
@@ -90,26 +90,48 @@ const InfoHeader = ({ info, type, setInfo }) => {
     }
   };
 
+  const headerButtons = {
+    connectTo: (
+      <ConnectButton
+        isRequesting={isRequesting}
+        setIsRequesting={setIsRequesting}
+      />
+    ),
+
+    cancelConnection: (
+      <UnconnectButton
+        isRequesting={isRequesting}
+        setIsRequesting={setIsRequesting}
+      >
+        Cancelar solicitação
+      </UnconnectButton>
+    ),
+
+    removeConnection: (
+      <UnconnectButton
+        isRequesting={isRequesting}
+        setIsRequesting={setIsRequesting}
+      >
+        Remover conexão
+      </UnconnectButton>
+    ),
+
+    blockProfile: (
+      <BlockProfileButton
+        isRequesting={isRequesting}
+        setIsRequesting={setIsRequesting}
+      />
+    ),
+
+    unBlockProfile: (
+      <UnblockProfileButton
+        isRequesting={isRequesting}
+        setIsRequesting={setIsRequesting}
+      />
+    ),
+  };
+
   const buttonActions = {
-    connectTo: async () => {
-      try {
-        setIsRequesting(true);
-
-        const createConnectinoReq = await ProfileAPI.createConnection({
-          ids: [profile._id, info._id],
-        });
-
-        updateUsers(createConnectinoReq);
-
-        setIsRequesting(false);
-        displayToast(TOASTS.CONNECT, 0, appDispatch);
-      } catch (e) {
-        console.log(e);
-        setIsRequesting(false);
-        displayToast(TOASTS.CONNECT, 1, appDispatch);
-      }
-    },
-
     acceptConnection: async () => {
       try {
         await updateConnection("accept");
@@ -118,80 +140,6 @@ const InfoHeader = ({ info, type, setInfo }) => {
         console.log(e);
         setIsRequesting(false);
         displayToast(TOASTS.ACCEPT_CONNECTION, 1, appDispatch);
-      }
-    },
-
-    removeConnection: async () => {
-      try {
-        await updateConnection("remove");
-        displayToast(TOASTS.REMOVE_CONNECTION, 0, appDispatch);
-      } catch (e) {
-        console.log(e);
-        setIsRequesting(false);
-        displayToast(TOASTS.REMOVE_CONNECTION, 1, appDispatch);
-      }
-    },
-
-    blockUser: async () => {
-      try {
-        setIsRequesting(true);
-
-        const newProfile = {
-          ...profile,
-
-          blockedUsers:
-            profile?.blockedUsers?.length > 0
-              ? [...profile.blockedUsers, info._id]
-              : [info._id],
-        };
-
-        await ProfileAPI.blockProfile({
-          ids: [profile._id, info._id],
-          status: "blocked",
-        });
-
-        await ProfileAPI.updateConnection({
-          ids: [profile._id, info._id],
-          status: "remove",
-        });
-
-        updateLocalUser({ ...newProfile });
-
-        setIsRequesting(false);
-        displayToast(TOASTS.BLOCK, 0, appDispatch);
-      } catch (e) {
-        setIsRequesting(false);
-        displayToast(TOASTS.BLOCK, 1, appDispatch);
-        console.log(e);
-      }
-    },
-
-    unBlockUser: async () => {
-      try {
-        setIsRequesting(true);
-
-        const newProfile = {
-          ...profile,
-
-          blockedUsers:
-            profile?.blockedUsers?.length > 0
-              ? [...profile.blockedUsers.filter((item) => item !== info._id)]
-              : [],
-        };
-
-        await ProfileAPI.blockProfile({
-          ids: [profile._id, info._id],
-          status: "unblocked",
-        });
-
-        updateLocalUser({ ...newProfile });
-
-        setIsRequesting(false);
-        displayToast(TOASTS.UNBLOCK, 0, appDispatch);
-      } catch (e) {
-        console.log(e);
-        displayToast(TOASTS.UNBLOCK, 0, appDispatch);
-        setIsRequesting(false);
       }
     },
 
@@ -313,14 +261,6 @@ const InfoHeader = ({ info, type, setInfo }) => {
   };
 
   useEffect(() => {
-    document.addEventListener("click", (e) => {
-      if (!dropdownRef?.current?.contains(e.target)) {
-        setDisplayMenu(false);
-      }
-    });
-  }, []);
-
-  useEffect(() => {
     let newTags = [];
 
     if (info?.publicTags) {
@@ -382,24 +322,7 @@ const InfoHeader = ({ info, type, setInfo }) => {
               {headerType.ACTIONS.filter(
                 (item) => !getCondition(item.hideCondition)
               ).map((item) => {
-                return (
-                  <div key={item.id}>
-                    {item.type === "button" ? (
-                      <Button
-                        style='primary'
-                        size={14}
-                        onClick={buttonActions[item.action]}
-                        disabled={isRequesting}
-                      >
-                        {item.title}
-                      </Button>
-                    ) : (
-                      <Link href={item.to.replace(":id", info.url)}>
-                        <a>{item.title}</a>
-                      </Link>
-                    )}
-                  </div>
-                );
+                return <div key={item.id}>{headerButtons[item.action]}</div>;
               })}
 
               {!getCondition("isNotSelf") && (

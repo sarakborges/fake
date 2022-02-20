@@ -89,41 +89,41 @@ const InfoCard = ({ info, type, isBlured, parentInfo }) => {
                 </a>
               </Link>
 
-              {(info?.owner && parentInfo?._id === info?.owner) ||
-                (parentInfo?.owner === info?._id && (
-                  <S.Owner>
-                    <FontAwesomeIcon icon={faCrown} />
-                  </S.Owner>
-                ))}
+              {((info?.owner && parentInfo?._id === info?.owner) ||
+                parentInfo?.owner === info?._id) && (
+                <S.Owner>
+                  <FontAwesomeIcon icon={faCrown} />
+                </S.Owner>
+              )}
 
-              {(info?.moderators &&
+              {((info?.moderators &&
                 info?.moderators?.include(parentInfo?._id)) ||
                 (parentInfo?.moderators &&
-                  parentInfo?.moderators(include(info?._id)) && (
-                    <S.Moderator>
-                      <FontAwesomeIcon icon={faCrown} />
-                    </S.Moderator>
-                  ))}
+                  parentInfo?.moderators?.include(info?._id))) && (
+                <S.Moderator>
+                  <FontAwesomeIcon icon={faCrown} />
+                </S.Moderator>
+              )}
             </S.InfoAreaWrapper>
 
-            {info?.members && (
+            {type === "group" && (
               <Text type='custom' fs={14}>
-                {info?.members.length}{" "}
-                {info?.members.length !== 1 ? "participantes" : "participante"}
+                Possui {info?.members?.length}{" "}
+                {info?.members?.length !== 1 ? "participantes" : "participante"}
               </Text>
             )}
 
-            {info?.connections && (
+            {type !== "group" && (
               <Text type='custom' fs={14}>
-                {approvedConnections.length}{" "}
-                {approvedConnections.length !== 1 ? "conexões" : "conexão"}
+                Possui {approvedConnections?.length}{" "}
+                {approvedConnections?.length !== 1 ? "conexões" : "conexão"}
               </Text>
             )}
 
-            {info?.groups && (
+            {type !== "group" && (
               <Text type='custom' fs={14}>
-                {approvedMemberships.length}{" "}
-                {approvedMemberships.length !== 1 ? "grupos" : "grupo"}
+                Participa de {approvedMemberships?.length}{" "}
+                {approvedMemberships?.length !== 1 ? "grupos" : "grupo"}
               </Text>
             )}
 

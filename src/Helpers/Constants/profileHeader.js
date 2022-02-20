@@ -38,42 +38,32 @@ export const PROFILE_HEADER = {
   ACTIONS: [
     {
       id: "add",
-      type: "button",
-      title: "Conectar-se",
       hideCondition: "hasAnyConnectionStatus",
       action: "connectTo",
     },
 
     {
       id: "cancel",
-      type: "button",
-      title: "Cancelar solicitação",
       hideCondition: "isNotPending",
-      action: "removeConnection",
+      action: "cancelConnection",
     },
 
     {
       id: "remove",
-      type: "button",
-      title: "Remover conexão",
       hideCondition: "isNotConnected",
       action: "removeConnection",
     },
 
     {
       id: "block",
-      type: "button",
-      title: "Bloquear",
       hideCondition: "isBlocked",
-      action: "blockUser",
+      action: "blockProfile",
     },
 
     {
       id: "block",
-      type: "button",
-      title: "Desbloquear",
       hideCondition: "isNotBlocked",
-      action: "unBlockUser",
+      action: "unBlockProfile",
     },
   ],
 };
