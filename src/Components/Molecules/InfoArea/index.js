@@ -1,29 +1,18 @@
 // Dependencies
 import { useContext, useEffect, useState } from "react";
-import { faLink, faQuestion } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Contexsts
 import { AppContext } from "Contexts/App";
+import Text from "Components/Atoms/Text";
 
-// Atoms
-import Avatar from "Components/Atoms/Avatar";
-import RoundIcon from "Components/Atoms/RoundIcon";
+// Molecules
+import ProfilePicture from "Components/Molecules/ProfilePicture";
 
 // Style
 import * as S from "./style";
-import Text from "Components/Atoms/Text";
 
 // Template
-const InfoArea = ({
-  info,
-  side,
-  displayCounters,
-  displayTags,
-  notifications,
-  messages,
-  avatarSize,
-}) => {
+const InfoArea = ({ info, side, displayCounters, notifications, messages }) => {
   const { appState } = useContext(AppContext);
   const { displayAdult } = appState;
 
@@ -49,20 +38,7 @@ const InfoArea = ({
     <span>
       <S.InfoArea side={side}>
         <S.Avatar>
-          {info?.icon || !info?.avatar ? (
-            <RoundIcon
-              icon={info?.icon || faQuestion}
-              size={avatarSize || 48}
-              bgColor='main'
-            />
-          ) : (
-            <Avatar
-              img={info?.avatar}
-              size={avatarSize || 48}
-              bgColor='main'
-              isBlured={info?.isAdult && !displayAdult}
-            />
-          )}
+          <ProfilePicture avatar={info?.avatar} size={48} />
         </S.Avatar>
 
         <span>
@@ -91,14 +67,6 @@ const InfoArea = ({
           )}
         </span>
       </S.InfoArea>
-
-      {displayTags && tags?.length > 0 && (
-        <S.TagsList>
-          {tags.map((item) => {
-            return <S.TagItem key={item}>{item}</S.TagItem>;
-          })}
-        </S.TagsList>
-      )}
     </span>
   );
 };

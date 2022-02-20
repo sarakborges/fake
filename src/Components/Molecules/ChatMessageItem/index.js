@@ -9,7 +9,9 @@ import { getTimeString } from "Helpers/Functions";
 
 // Atoms
 import Text from "Components/Atoms/Text";
-import Avatar from "Components/Atoms/Avatar";
+
+// Molecules
+import ProfilePicture from "Components/Molecules/ProfilePicture";
 
 // Styles
 import * as S from "./style";
@@ -31,7 +33,7 @@ const ChatMessageItem = ({ info, defaultUser, lastMessageSender }) => {
     <S.MessageItem>
       <S.MessageAvatar>
         {lastMessageSender !== info.user && (
-          <Avatar img={getAvatar(info)} color='main' size={32} />
+          <ProfilePicture avatar={getAvatar(info)} size={32} />
         )}
       </S.MessageAvatar>
 

@@ -1,12 +1,6 @@
 // Dependencies
 import Link from "next/link";
 import { useState, useContext, useEffect, useRef } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronDown,
-  faLink,
-  faQuestion,
-} from "@fortawesome/free-solid-svg-icons";
 
 // Helpers
 import { ROUTES } from "Helpers/routes";
@@ -14,21 +8,20 @@ import { ROUTES } from "Helpers/routes";
 // Contexts
 import { UserContext } from "Contexts/User";
 
+// Atoms
+import Input from "Components/Atoms/Input";
+import ButtonLink from "Components/Atoms/ButtonLink";
+
 // Molecules
 import InfoArea from "Components/Molecules/InfoArea";
+import ProfilePicture from "Components/Molecules/ProfilePicture";
 
 // Organisms
 import SelectProfilesList from "Components/Organisms/SelectProfilesList";
 
 // Style
 import * as S from "./style";
-import Input from "Components/Atoms/Input";
-import Text from "Components/Atoms/Text";
-import Avatar from "Components/Atoms/Avatar";
-import RoundIcon from "Components/Atoms/RoundIcon";
-import ButtonLink from "Components/Atoms/ButtonLink";
 
-// Template
 const SelectProfile = () => {
   const { userState } = useContext(UserContext);
   const { user, profile } = userState;
@@ -146,11 +139,7 @@ const SelectProfile = () => {
       </S.SelectProfile>
 
       <S.InfoAreaWrapper onClick={toggleProfiles} highlighted={displayProfiles}>
-        {profile.avatar ? (
-          <Avatar img={profile.avatar} size={48} bgColor='main' />
-        ) : (
-          <RoundIcon icon={faQuestion} size={48} bgColor='main' />
-        )}
+        <ProfilePicture avatar={profile.avatar} size={48} />
       </S.InfoAreaWrapper>
     </S.SelectProfileWrapper>
   );

@@ -22,12 +22,12 @@ import { ROUTES } from "Helpers/routes";
 
 // Atoms
 import Text from "Components/Atoms/Text";
-import Avatar from "Components/Atoms/Avatar";
 import Button from "Components/Atoms/Button";
 
 // Molecules
 import NoProfile from "Components/Molecules/NoProfile";
 import NoNotification from "Components/Molecules/NoNotification";
+import ProfilePicture from "Components/Molecules/ProfilePicture";
 
 // Template
 import AuthedTemplate from "Components/Templates/Authed";
@@ -198,11 +198,7 @@ const NotificationsTemplate = () => {
                     <S.NotificationsItem key={`notification-${key}`}>
                       <Link href={ROUTES.PROFILE.replace(":id", item.user.url)}>
                         <a>
-                          <Avatar
-                            img={item.user.avatar}
-                            size={48}
-                            bgColor='main'
-                          />
+                          <ProfilePicture avatar={item.user.avatar} size={48} />
                         </a>
                       </Link>
 

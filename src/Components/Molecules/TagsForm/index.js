@@ -8,6 +8,9 @@ import Text from "Components/Atoms/Text";
 import Input from "Components/Atoms/Input";
 import Button from "Components/Atoms/Button";
 
+// Molecules
+import TagsList from "Components/Molecules/TagsList";
+
 // Style
 import * as S from "./style";
 
@@ -36,17 +39,7 @@ const TagsForm = ({ title, tags, setTags, type }) => {
 
       <S.TagsWrapper>
         {tags?.length > 0 && (
-          <S.Tags>
-            {tags?.map((item) => {
-              return (
-                <S.TagItem key={item} onClick={() => handleRemove(item)}>
-                  <span>{item}</span>
-
-                  <FontAwesomeIcon icon={faTimes} />
-                </S.TagItem>
-              );
-            })}
-          </S.Tags>
+          <TagsList tags={tags} handleRemove={handleRemove} highlighted />
         )}
 
         <S.NewTag>

@@ -26,13 +26,14 @@ import InfoLinks from "Components/Atoms/InfoLinks";
 
 // Molecules
 import InfoArea from "Components/Molecules/InfoArea";
+import TagsList from "Components/Molecules/TagsList";
 import ConnectButton from "Components/Molecules/ConnectButton";
 import UnconnectButton from "Components/Molecules/UnconnectButton";
 import BlockProfileButton from "Components/Molecules/BlockProfileButton";
+import UnblockProfileButton from "Components/Molecules/UnblockProfileButton";
 
 // Style
 import * as S from "./style";
-import UnblockProfileButton from "Components/Molecules/UnblockProfileButton";
 
 const InfoHeader = ({ info, type, setInfo }) => {
   const [tags, setTags] = useState([]);
@@ -104,13 +105,9 @@ const InfoHeader = ({ info, type, setInfo }) => {
 
   const headerButtons = {
     connectTo: <ConnectButton />,
-
     cancelConnection: <UnconnectButton>Cancelar solicitação</UnconnectButton>,
-
     removeConnection: <UnconnectButton>Remover conexão</UnconnectButton>,
-
     blockProfile: <BlockProfileButton />,
-
     unBlockProfile: <UnblockProfileButton />,
   };
 
@@ -357,24 +354,14 @@ const InfoHeader = ({ info, type, setInfo }) => {
         </S.Info>
 
         {tags?.length > 0 && (
-          <S.TagsList>
-            {tags.map((item) => {
-              return (
-                <Link key={item} href={ROUTES.SEARCH.replace(":str", item)}>
-                  <a>
-                    <S.TagItem
-                      isCommon={
-                        profile?.publicTags?.includes(item) ||
-                        profile?.privateTags?.includes(item)
-                      }
-                    >
-                      {item}
-                    </S.TagItem>
-                  </a>
-                </Link>
-              );
-            })}
-          </S.TagsList>
+          <TagsList
+            tags={tags}
+            hasLink
+            compareTo={[
+              ...(profile?.publicTags || []),
+              ...(profile?.privateTags || []),
+            ]}
+          />
         )}
       </S.Head>
     </>

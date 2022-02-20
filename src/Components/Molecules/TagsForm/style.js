@@ -22,22 +22,6 @@ export const Tags = styled.div`
   gap: 16px;
 `;
 
-export const TagItem = styled.div`
-  display: flex;
-  place-items: center;
-  gap: 8px;
-
-  padding: 8px;
-
-  color: var(--white);
-  font-size: 12px;
-
-  background-color: var(--main);
-  border-radius: 4px;
-
-  cursor: pointer;
-`;
-
 export const NewTag = styled.div`
   display: flex;
   place-items: center;

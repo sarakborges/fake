@@ -1,6 +1,6 @@
 // Dependencies
 import Link from "next/link";
-import { faEllipsisH, faQuestion } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 
 // Helpers
 import { ROUTES } from "Helpers/routes";
@@ -10,8 +10,10 @@ import { AppContext } from "Contexts/App";
 
 // Atoms
 import Text from "Components/Atoms/Text";
-import Avatar from "Components/Atoms/Avatar";
 import RoundIcon from "Components/Atoms/RoundIcon";
+
+// Molecules
+import ProfilePicture from "Components/Molecules/ProfilePicture";
 
 // Styles
 import * as S from "./style";
@@ -46,16 +48,11 @@ const RoundList = ({
                   ).replace(":id", item.url)}
                 >
                   <a>
-                    {item.avatar ? (
-                      <Avatar
-                        img={item.avatar}
-                        size={40}
-                        bgColor='main'
-                        isBlured={item.isAdult && !displayAdult}
-                      />
-                    ) : (
-                      <RoundIcon icon={faQuestion} size={40} bgColor='main' />
-                    )}
+                    <ProfilePicture
+                      avatar={item.avatar}
+                      size={40}
+                      isBlured={item.isAdult && !displayAdult}
+                    />
                   </a>
                 </Link>
 

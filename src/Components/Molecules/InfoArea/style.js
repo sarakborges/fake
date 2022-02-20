@@ -69,15 +69,6 @@ export const CounterIcon = styled.span`
   border-radius: 100%;
 `;
 
-export const TagsList = styled.span`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-
-  width: 100%;
-  padding-top: 16px;
-`;
-
 export const TagItem = styled.span`
   padding: 4px 8px;
 

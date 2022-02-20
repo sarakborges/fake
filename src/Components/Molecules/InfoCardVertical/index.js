@@ -10,13 +10,16 @@ import { ROUTES } from "Helpers/routes";
 // Contexts
 import { UserContext } from "Contexts/User";
 
+// Atoms
+import Text from "Components/Atoms/Text";
+import ButtonLink from "Components/Atoms/ButtonLink";
+
 // Molecules
 import InfoArea from "Components/Molecules/InfoArea";
+import TagsList from "Components/Molecules/TagsList";
 
 // Style
 import * as S from "./style";
-import Text from "Components/Atoms/Text";
-import ButtonLink from "Components/Atoms/ButtonLink";
 
 // Template
 const InfoCard = ({ info, type, isBlured, parentInfo }) => {
@@ -133,24 +136,16 @@ const InfoCard = ({ info, type, isBlured, parentInfo }) => {
           </S.MainInfo>
 
           {tags?.length > 0 && (
-            <S.TagsList>
-              {tags.map((item) => {
-                return (
-                  <Link key={item} href={ROUTES.SEARCH.replace(":str", item)}>
-                    <a>
-                      <S.TagItem
-                        isCommon={
-                          profile?.publicTags?.includes(item) ||
-                          profile?.privateTags?.includes(item)
-                        }
-                      >
-                        {item}
-                      </S.TagItem>
-                    </a>
-                  </Link>
-                );
-              })}
-            </S.TagsList>
+            <S.Tags>
+              <TagsList
+                tags={tags}
+                hasLink
+                compareTo={[
+                  ...(profile?.publicTags || []),
+                  ...(profile?.privateTags || []),
+                ]}
+              />
+            </S.Tags>
           )}
         </S.InfoCardContent>
       </S.Cover>

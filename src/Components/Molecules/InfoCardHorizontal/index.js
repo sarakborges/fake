@@ -1,7 +1,7 @@
 // Dependencies
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
-import { faLink, faQuestion } from "@fortawesome/free-solid-svg-icons";
+import { faLink } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Helpers
@@ -12,9 +12,11 @@ import { getTimeString } from "Helpers/Functions";
 import { UserContext } from "Contexts/User";
 
 // Atoms
-import Avatar from "Components/Atoms/Avatar";
-import RoundIcon from "Components/Atoms/RoundIcon";
 import Text from "Components/Atoms/Text";
+
+// Molecules
+import ProfilePicture from "Components/Molecules/ProfilePicture";
+import TagsList from "Components/Molecules/TagsList";
 
 // Style
 import * as S from "./style";
@@ -48,15 +50,7 @@ const InfoCard = ({ info, type }) => {
       <S.CardContent>
         <Link href={link}>
           <a>
-            {info?.icon || !info?.avatar ? (
-              <RoundIcon
-                icon={info?.icon || faQuestion}
-                size={64}
-                bgColor='main'
-              />
-            ) : (
-              <Avatar img={info?.avatar} size={64} bgColor='main' />
-            )}
+            <ProfilePicture avatar={info?.avatar} size={64} />
           </a>
         </Link>
 
@@ -85,24 +79,14 @@ const InfoCard = ({ info, type }) => {
       </S.CardContent>
 
       {tags?.length > 0 && (
-        <S.TagsList>
-          {tags.map((item) => {
-            return (
-              <Link key={item} href={ROUTES.SEARCH.replace(":str", item)}>
-                <a>
-                  <S.TagItem
-                    isCommon={
-                      profile?.publicTags?.includes(item) ||
-                      profile?.privateTags?.includes(item)
-                    }
-                  >
-                    {item}
-                  </S.TagItem>
-                </a>
-              </Link>
-            );
-          })}
-        </S.TagsList>
+        <TagsList
+          tags={tags}
+          hasLink
+          compareTo={[
+            ...(profile?.publicTags || []),
+            ...(profile?.privateTags || []),
+          ]}
+        />
       )}
     </S.InfoCard>
   );

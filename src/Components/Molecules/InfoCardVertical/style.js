@@ -48,29 +48,10 @@ export const MainInfo = styled.span`
   flex: 1;
 `;
 
-export const TagsList = styled.span`
+export const Tags = styled.span`
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
 
-  width: 100%;
-  padding: 16px 24px;
-
-  > a {
-    display: flex;
-  }
-`;
-
-export const TagItem = styled.span`
-  padding: 4px 8px;
-
-  color: var(--white);
-  font-size: 12px;
-
-  background-color: ${({ isCommon }) =>
-    isCommon ? "var(--main)" : "var(--bgContrast)"};
-  border-radius: 4px;
-  box-shadow: 2px 2px 3px var(--bg);
+  padding: 0 24px 16px;
 `;
 
 export const Owner = styled.span`
