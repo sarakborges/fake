@@ -19,7 +19,7 @@ export const Cover = styled.span`
 
 export const InfoCardContent = styled.span`
   width: 100%;
-  padding: 24px;
+  padding-right: 24px;
 
   background-color: var(--bgTransparent);
 `;
@@ -29,6 +29,16 @@ export const InfoAreaWrapper = styled.span`
   place-items: center;
   gap: 16px;
   flex: 1;
+
+  > a {
+    padding: 24px;
+
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: var(--bgTransparent);
+    }
+  }
 `;
 
 export const MainInfo = styled.span`
@@ -44,7 +54,7 @@ export const TagsList = styled.span`
   gap: 8px;
 
   width: 100%;
-  padding-top: 16px;
+  padding: 16px 24px;
 
   > a {
     display: flex;

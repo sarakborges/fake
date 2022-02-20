@@ -35,7 +35,7 @@ const GroupMembersModeratorsTemplate = () => {
   const getModerators = () => {
     return group?.members.filter(
       (item) =>
-        group.owner !== item.profile._id &&
+        group.owner === item.profile._id ||
         group?.moderators?.includes?.(item.profile._id)
     );
   };
@@ -88,10 +88,10 @@ const GroupMembersModeratorsTemplate = () => {
                   };
                 })}
                 id='group-moderators-filter'
-                placeholder='Digite o nome ou @ de quem quer encontrar'
+                placeholder='Insira sua pesquisa'
                 type='member'
                 title={`Moderadores de ${group.name}:`}
-                noInfoText={`${group.name} ainda não possui moderadores.`}
+                parentInfo={group}
               />
             </S.GroupBody>
           </S.Wrapper>

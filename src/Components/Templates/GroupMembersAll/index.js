@@ -92,10 +92,10 @@ const GroupMembersAllTemplate = () => {
                   };
                 })}
                 id='group-members-filter'
-                placeholder='Digite o nome ou @ de quem quer encontrar'
+                placeholder='Insira sua pesquisa'
                 type='member'
                 title={`Participantes de ${group.name}:`}
-                noInfoText={`${group.name} ainda não possui membros.`}
+                parentInfo={group}
               />
             </S.GroupBody>
           </S.Wrapper>

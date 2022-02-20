@@ -89,17 +89,21 @@ const InfoCard = ({ info, type, isBlured, parentInfo }) => {
                 </a>
               </Link>
 
-              {info?.owner && parentInfo?._id === info?.owner && (
-                <S.Owner>
-                  <FontAwesomeIcon icon={faCrown} />
-                </S.Owner>
-              )}
+              {(info?.owner && parentInfo?._id === info?.owner) ||
+                (parentInfo?.owner === info?._id && (
+                  <S.Owner>
+                    <FontAwesomeIcon icon={faCrown} />
+                  </S.Owner>
+                ))}
 
-              {info?.moderators && info?.moderators?.include(parentInfo?._id) && (
-                <S.Moderator>
-                  <FontAwesomeIcon icon={faCrown} />
-                </S.Moderator>
-              )}
+              {(info?.moderators &&
+                info?.moderators?.include(parentInfo?._id)) ||
+                (parentInfo?.moderators &&
+                  parentInfo?.moderators(include(info?._id)) && (
+                    <S.Moderator>
+                      <FontAwesomeIcon icon={faCrown} />
+                    </S.Moderator>
+                  ))}
             </S.InfoAreaWrapper>
 
             {info?.members && (

@@ -18,7 +18,7 @@ export const Button = styled.div`
 
     font-size: 12px;
     font-family: inherit;
-    color: var(--offWhite);
+    color: var(--white);
 
     transition: background-color 0.3s, color 0.3s, opacity 0.3s;
 
