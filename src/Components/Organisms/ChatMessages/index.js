@@ -1,6 +1,10 @@
 // Dependencies
+import { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+
+// Contexts
+import { UserContext } from "Contexts/User";
 
 // Atoms
 import Form from "Components/Atoms/Form";
@@ -12,6 +16,7 @@ import ChatMessageItem from "Components/Molecules/ChatMessageItem";
 
 // Styles
 import * as S from "./style";
+import Text from "Components/Atoms/Text";
 
 // Template
 const ChatMessages = ({
@@ -20,6 +25,9 @@ const ChatMessages = ({
   setNewMessage,
   handleSubmit,
 }) => {
+  const { userState } = useContext(UserContext);
+  const { profile } = userState;
+
   const handleChange = (e) => {
     setNewMessage(e.currentTarget.value);
   };
@@ -27,7 +35,7 @@ const ChatMessages = ({
   return (
     <S.MessageWrapper>
       <S.MessagesList>
-        {messages?.messages?.length > 0 &&
+        {messages?.messages?.length > 0 ? (
           messages?.messages.map((item, key) => {
             return (
               <ChatMessageItem
@@ -36,7 +44,22 @@ const ChatMessages = ({
                 lastMessageSender={messages?.messages[key - 1]?.user}
               />
             );
-          })}
+          })
+        ) : (
+          <S.NoChatMessage>
+            <Text type='custom' lh={1.4} pb={16}>
+              {messages?.profile._id !== profile?._id
+                ? `Você e ${messages?.profile.name} ainda não começaram a se falar.`
+                : `Você pode enviar mensagens para si mesmo, que podem servir como anotações.`}
+            </Text>
+
+            {messages?.profile._id !== profile?._id && (
+              <Text type='custom' lh={1.4} fw={600}>
+                Que tal enviar uma mensagem para começar uma conversa?
+              </Text>
+            )}
+          </S.NoChatMessage>
+        )}
       </S.MessagesList>
 
       <S.NewMessage>
@@ -55,7 +78,6 @@ const ChatMessages = ({
             disabled={!newMessage}
           >
             <FontAwesomeIcon icon={faPaperPlane} />
-            <span>Enviar</span>
           </Button>
         </Form>
       </S.NewMessage>

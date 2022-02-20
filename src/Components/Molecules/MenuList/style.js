@@ -6,28 +6,23 @@ export const MenuLists = styled.div`
 `;
 
 export const MenuList = styled.ul`
-  padding: 24px 32px;
+  padding: 24px 0;
 `;
 
 export const MenuItem = styled.li`
-  &:not(:first-of-type) {
-    padding-top: 8px;
-  }
-
   > :is(a, button) {
     display: flex;
     place-items: center;
     place-content: flex-start;
     gap: 16px;
 
-    height: 48px;
-    padding: 0 16px;
+    height: 40px;
+    padding: 0 32px;
     width: 100%;
 
-    font-size: 16px;
+    font-size: 14px;
     color: ${({ active }) => (active ? "var(--main)" : "var(--bgInverted)")};
 
-    border-radius: 16px;
     background-color: transparent;
     border: none;
 

@@ -1,37 +1,44 @@
 // Dependencies
 import Head from "next/head";
+import Link from "next/link";
 import { useCallback, useContext, useEffect, useState } from "react";
+import { faEllipsisH, faQuestion } from "@fortawesome/free-solid-svg-icons";
 
 // APIs
 import ProfileAPI from "Apis/Profile";
+import MessageAPI from "Apis/Message";
 
 // Contexts
 import { UserContext } from "Contexts/User";
 
 // Helpers
 import { SITE_NAME } from "Helpers/Constants";
+import { ROUTES } from "Helpers/routes";
 
 // Atoms
-import Rightbar from "Components/Atoms/Rightbar";
+import Text from "Components/Atoms/Text";
+import Avatar from "Components/Atoms/Avatar";
+import RoundIcon from "Components/Atoms/RoundIcon";
 
 // Molecules
 import NoProfile from "Components/Molecules/NoProfile";
 
 // Organisms
 import Feed from "Components/Organisms/Feed";
-import SearchForm from "Components/Organisms/SearchForm";
+import ChatUsers from "Components/Organisms/ChatUsers";
 
 // Template
 import AuthedTemplate from "Components/Templates/Authed";
 
 // Styles
 import * as S from "./style";
-import ProfileRightBar from "Components/Organisms/ProfileRightBar";
 
 // Template
 const HomeTemplate = () => {
-  const [approvedConnections, setApprovedConnections] = useState();
+  const [approvedConnections, setApprovedConnections] = useState([]);
+  const [approvedMemberships, setApprovedMemberships] = useState([]);
   const [profileData, setProfileData] = useState();
+  const [chatUsers, setChatUsers] = useState();
 
   const { userState } = useContext(UserContext);
   const { profile } = userState;
@@ -60,13 +67,46 @@ const HomeTemplate = () => {
     );
   }, [profileData, setApprovedConnections]);
 
+  const getApprovedMemberships = useCallback(() => {
+    setApprovedMemberships(
+      profileData?.groups?.filter?.((item) => {
+        const member = item?.members?.find(
+          (groupItem) => groupItem.profile === profileData?._id
+        );
+
+        if (member?.status === "member") {
+          return item;
+        } else {
+          return false;
+        }
+      }) || []
+    );
+  }, [profileData, setApprovedMemberships]);
+
+  const getChatUsers = useCallback(async () => {
+    if (!profile?._id) {
+      return;
+    }
+
+    const chatUsersReq = await MessageAPI.getAllMessages(profile._id);
+
+    if (chatUsersReq) {
+      setChatUsers(chatUsersReq);
+    }
+  }, [profile, MessageAPI]);
+
   useEffect(() => {
     getProfile();
   }, [getProfile]);
 
   useEffect(() => {
     getApprovedConnections();
-  }, [getApprovedConnections]);
+    getApprovedMemberships();
+  }, [getApprovedConnections, getApprovedMemberships]);
+
+  useEffect(() => {
+    getChatUsers();
+  }, [getChatUsers]);
 
   return (
     <AuthedTemplate>
@@ -78,15 +118,21 @@ const HomeTemplate = () => {
 
       {profileData?._id && (
         <S.HomeWrapper>
-          <S.FeedWrapper>
-            <Feed profile={profileData} connections={approvedConnections} />
-          </S.FeedWrapper>
+          <S.LeftWrapper>
+            <Feed
+              profile={profileData}
+              connections={approvedConnections}
+              displayNewFeed
+            />
+          </S.LeftWrapper>
 
-          <Rightbar>
-            <SearchForm />
+          <S.ChatWrapper>
+            <Text type='custom' pt={16} pl={16} fw={600}>
+              Suas mensagens recentes
+            </Text>
 
-            <ProfileRightBar profileData={profileData} />
-          </Rightbar>
+            <ChatUsers usersList={chatUsers} />
+          </S.ChatWrapper>
         </S.HomeWrapper>
       )}
     </AuthedTemplate>

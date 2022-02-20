@@ -1,133 +1,35 @@
 // Dependencies
-import Head from "next/head";
-import { useCallback, useContext, useEffect, useState } from "react";
-import { useRouter } from "next/dist/client/router";
-
-// APIs
-import ProfileAPI from "Apis/Profile";
-
-// Helpers
-import { SITE_NAME } from "Helpers/Constants";
+import { useContext } from "react";
 
 // Contexts
-import { UserContext } from "Contexts/User";
-
-// Molecules
-import InfoNotFound from "Components/Molecules/InfoNotFound";
+import { ProfileContext } from "Contexts/Profile";
 
 // Organisms
-import InfoHeader from "Components/Organisms/InfoHeader";
 import FilteredList from "Components/Organisms/FilteredList";
 
 // Template
-import AuthedTemplate from "Components/Templates/Authed";
+import ProfileTemplate from "Components/Templates/Profile";
 
-// Style
+// Styles
 import * as S from "./style";
 
 // Template
 const ProfileGroupsTemplate = () => {
-  const [profileData, setProfileData] = useState();
-
-  const { userState } = useContext(UserContext);
-  const { profile } = userState;
-
-  const router = useRouter();
-  const {
-    query: { url },
-  } = router;
-
-  const getProfile = useCallback(
-    async (profileUrl) => {
-      const profileReq = await ProfileAPI.getProfileByUrl(profileUrl);
-
-      if (profileReq) {
-        setProfileData(profileReq);
-      }
-    },
-    [ProfileAPI]
-  );
-
-  const getOwnedGroups = () => {
-    if (profileData?.groups?.length < 1) {
-      return [];
-    }
-
-    return profileData?.groups?.filter((item) => {
-      return (
-        item.owner === profileData._id ||
-        item?.moderators?.includes?.(profileData._id)
-      );
-    });
-  };
-
-  const getNonOwnedGroups = () => {
-    if (profileData?.groups?.length < 1) {
-      return [];
-    }
-
-    return profileData?.groups?.filter((item) => {
-      return (
-        item?.owner !== profileData._id &&
-        !item?.moderators?.includes?.(profileData._id)
-      );
-    });
-  };
-
-  useEffect(() => {
-    getProfile(url);
-  }, [url, getProfile]);
+  const { profileState } = useContext(ProfileContext);
 
   return (
-    <AuthedTemplate>
-      <Head>
-        <title>{`${SITE_NAME} - Grupos de ${
-          profileData?.name || "Grupos"
-        }`}</title>
-      </Head>
-
-      {(!profileData?._id ||
-        profileData?.blockedUsers?.includes?.(profile?._id)) && (
-        <InfoNotFound type='profile' />
-      )}
-
-      {profileData?._id &&
-        !profileData?.blockedUsers?.includes?.(profile?._id) && (
-          <>
-            <S.ProfileWrapper>
-              <InfoHeader info={profileData} type='profile' />
-
-              <S.ProfileBody>
-                <FilteredList
-                  info={getNonOwnedGroups()}
-                  id='non-owned-groups-filter'
-                  type='group'
-                  placeholder='Digite o nome ou @ do grupo que quer encontrar'
-                  title={`Grupos que ${
-                    profile?._id === profileData._id ? "você" : profileData.name
-                  } participa:`}
-                  noInfoText={`${
-                    profile?._id === profileData._id ? "Você" : profileData.name
-                  } ainda não participa de nenhum grupo.`}
-                />
-
-                <FilteredList
-                  info={getOwnedGroups()}
-                  id='non-groups-filter'
-                  type='group'
-                  placeholder='Digite o nome ou @ do grupo que quer encontrar'
-                  title={`Grupos que ${
-                    profile?._id === profileData._id ? "você" : profileData.name
-                  } administra:`}
-                  noInfoText={`${
-                    profile?._id === profileData._id ? "Você" : profileData.name
-                  } ainda não administra de nenhum grupo.`}
-                />
-              </S.ProfileBody>
-            </S.ProfileWrapper>
-          </>
-        )}
-    </AuthedTemplate>
+    <ProfileTemplate>
+      <S.ProfileGroups>
+        <FilteredList
+          info={profileState?.groups}
+          id='non-owned-groups-filter'
+          type='group'
+          placeholder='Insira sua pesquisa'
+          title={`Grupos que ${profileState?.name} participa:`}
+          noInfoText={`${profileState?.name} ainda não participa de nenhum grupo.`}
+        />
+      </S.ProfileGroups>
+    </ProfileTemplate>
   );
 };
 

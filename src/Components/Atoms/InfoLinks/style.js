@@ -2,25 +2,20 @@ import styled from "styled-components";
 
 export const Sections = styled.div`
   display: flex;
-  gap: 64px;
-
-  padding-top: 48px;
-
-  @media (max-width: 640px) {
-    gap: 32px;
-  }
 `;
 
 export const SectionLink = styled.div`
+  display: flex;
+  place-content: center;
+  place-items: center;
+
   > a {
-    font-size: 20px;
-    color: ${({ active }) => (active ? "var(--main)" : "var(--bgInverted)")};
+    padding: 16px 24px;
+
+    font-size: 16px;
+    color: ${({ active }) => (active ? "var(--white)" : "var(--bgInverted)")};
     text-shadow: 2px 2px 3px var(--bgContrast);
 
     transition: color 0.3s;
-
-    @media (max-width: 520px) {
-      font-size: 16px;
-    }
   }
 `;

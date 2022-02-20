@@ -19,7 +19,10 @@ export const ThemeOptions = styled.div`
 
   > button {
     padding: 0;
+
     background: none;
+    box-shadow: none;
+    border: 0;
   }
 `;
 
@@ -28,8 +31,9 @@ export const ThemeButton = styled.span`
   height: 32px;
 
   border-radius: 8px;
+  border: 2px solid var(--bg);
   box-shadow: 0 0 3px
-    ${({ isActive }) => (isActive ? "var(--main)" : "var(--bgInverted)")};
+    ${({ isActive }) => (isActive ? "var(--main)" : "var(--bg)")};
   background-color: ${({ thumb }) => thumb};
 
   transition: border-color 0.3s;

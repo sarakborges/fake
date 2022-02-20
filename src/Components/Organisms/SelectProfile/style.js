@@ -1,21 +1,57 @@
 import styled from "styled-components";
 
-export const InfoAreaWrapper = styled.div`
-  padding: 0 16px;
+export const SelectProfileWrapper = styled.div`
+  position: relative;
+`;
+
+export const ActiveProfile = styled.div`
+  display: flex;
+  place-content: space-between;
+  place-items: center;
+
+  padding: 0 24px;
+
+  > a {
+    padding: 16px 0;
+  }
+`;
+
+export const Settings = styled.div`
+  display: flex;
+  place-content: center;
+  place-items: center;
+
+  padding-bottom: 16px;
+
+  > a {
+    font-size: 12px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  > span {
+    width: 4px;
+    height: 4px;
+    margin: 0 12px;
+
+    background-color: var(--bgInverted);
+  }
 `;
 
 export const SelectProfile = styled.div`
   position: absolute;
-  left: 0;
-  bottom: calc(100% + 16px);
+  right: 0;
+  top: 100%;
   z-index: 3;
 
-  width: calc(100% + 120px);
+  width: 480px;
   overflow: hidden;
 
-  background-color: var(--bg);
-  border-radius: 16px;
-  box-shadow: 0 0 5px 3px var(--bgContrast);
+  background-color: var(--bgContrast);
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 3px 5px var(--bg);
 
   opacity: ${({ displayProfiles }) => (displayProfiles ? 1 : 0)};
   visibility: ${({ displayProfiles }) =>
@@ -24,38 +60,14 @@ export const SelectProfile = styled.div`
   transition: opacity 0.3s, visibility 0.3s;
 `;
 
-export const Filter = styled.div`
-  border-top: 4px solid var(--bgContrast);
-`;
+export const InfoAreaWrapper = styled.div`
+  display: flex;
 
-export const NewProfile = styled.div`
-  > a {
-    display: flex;
-    place-content: center;
-    place-items: center;
-    gap: 8px;
+  padding: 16px;
 
-    padding: 16px 0;
+  background-color: ${({ highlighted }) =>
+    highlighted ? "var(--bgContrast)" : "transparent"};
+  cursor: pointer;
 
-    transition: background-color 0.3s;
-
-    &:hover {
-      background-color: var(--bgContrast);
-    }
-
-    > span {
-      display: flex;
-      place-content: center;
-      place-items: center;
-
-      border-radius: 100%;
-      background-color: var(--bgContrast);
-    }
-  }
-`;
-
-export const InfoArea = styled.div`
-  position: relative;
-
-  padding: 32px 16px 0;
+  transition: background-color 0.3s;
 `;

@@ -1,7 +1,7 @@
-import ProfileTemplate from "Components/Templates/Profile";
+import ProfileAboutPage from "Components/Pages/ProfileAbout";
 
 const Profile = () => {
-  return <ProfileTemplate />;
+  return <ProfileAboutPage />;
 };
 
 export default Profile;

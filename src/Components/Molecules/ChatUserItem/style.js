@@ -10,7 +10,7 @@ export const PersonWrapper = styled.span`
 
   cursor: pointer;
   background-color: ${({ selected }) =>
-    selected ? "var(--bg)" : "transparent"};
+    selected ? "var(--bgContrast)" : "transparent"};
 
   transition: background-color 0.3s;
 

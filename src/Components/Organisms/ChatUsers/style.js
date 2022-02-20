@@ -21,8 +21,5 @@ export const PeopleFilter = styled.div`
   display: flex;
   place-items: center;
 
-  padding: 0 16px;
-  height: 100px;
-
-  background-color: var(--bg);
+  padding: 16px;
 `;

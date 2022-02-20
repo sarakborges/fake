@@ -1,5 +1,7 @@
+// Atoms
+import Input from "Components/Atoms/Input";
+
 // Molecules
-import LabeledInput from "Components/Molecules/LabeledInput";
 import ChatUserItem from "Components/Molecules/ChatUserItem";
 
 // Styles
@@ -10,11 +12,7 @@ const ChatUsers = ({ usersList, tempUser, currentUrl }) => {
   return (
     <S.PeopleWrapper>
       <S.PeopleFilter>
-        <LabeledInput
-          id='messages-people-filter'
-          placeholder='Digite o nome ou @ de quem quer encontrar'
-          label='Procurar pessoa'
-        />
+        <Input id='messages-people-filter' placeholder='Insira sua pesquisa' />
       </S.PeopleFilter>
 
       <S.PeopleList>
@@ -29,10 +27,10 @@ const ChatUsers = ({ usersList, tempUser, currentUrl }) => {
           )}
 
         {usersList?.length > 0 &&
-          usersList.map((item) => {
+          usersList.map((item, key) => {
             return (
-              <li key={item.user._id}>
-                <ChatUserItem info={item} currentUrl={currentUrl} />
+              <li key={item.user._id || key}>
+                <ChatUserItem info={item} currentUrl={currentUrl || ""} />
               </li>
             );
           })}

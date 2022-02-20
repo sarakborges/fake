@@ -1,37 +1,66 @@
 // Dependencies
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
-import { faLink, faQuestion } from "@fortawesome/free-solid-svg-icons";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCrown } from "@fortawesome/free-solid-svg-icons";
 
 // Helpers
 import { ROUTES } from "Helpers/routes";
-import { getTimeString } from "Helpers/Functions";
 
 // Contexts
 import { UserContext } from "Contexts/User";
+import { ProfileContext } from "Contexts/Profile";
 
-// Atoms
-import Avatar from "Components/Atoms/Avatar";
-import RoundIcon from "Components/Atoms/RoundIcon";
-import Text from "Components/Atoms/Text";
+// Molecules
+import InfoArea from "Components/Molecules/InfoArea";
 
 // Style
 import * as S from "./style";
+import Text from "Components/Atoms/Text";
+import ButtonLink from "Components/Atoms/ButtonLink";
 
 // Template
 const InfoCard = ({ info, type, isBlured }) => {
+  const { profileState } = useContext(ProfileContext);
   const { userState } = useContext(UserContext);
   const { profile } = userState;
 
+  const [approvedConnections, setApprovedConnections] = useState([]);
+  const [approvedMemberships, setApprovedMemberships] = useState([]);
   const [tags, setTags] = useState([]);
 
-  const link = (
-    type === "profile" || type === "member" || type === "connection"
-      ? ROUTES.PROFILE
-      : ROUTES.GROUP
-  ).replace(":id", info?.url);
+  const link = (type !== "group" ? ROUTES.PROFILE : ROUTES.GROUP).replace(
+    ":id",
+    info?.url
+  );
+
+  const getApprovedConnections = useCallback(() => {
+    setApprovedConnections(
+      info?.connections?.filter?.((item) => {
+        if (item.status === "connected") {
+          return item;
+        } else {
+          return false;
+        }
+      }) || []
+    );
+  }, [info, setApprovedConnections]);
+
+  const getApprovedMemberships = useCallback(() => {
+    setApprovedMemberships(
+      info?.groups?.filter?.((item) => {
+        const member = item?.members?.find(
+          (groupItem) => groupItem.profile === info?._id
+        );
+
+        if (member?.status === "member") {
+          return item;
+        } else {
+          return false;
+        }
+      }) || []
+    );
+  }, [info, setApprovedMemberships]);
 
   useEffect(() => {
     let newTags = [];
@@ -45,117 +74,85 @@ const InfoCard = ({ info, type, isBlured }) => {
     setTags(newTags);
   }, []);
 
+  useEffect(() => {
+    getApprovedConnections();
+    getApprovedMemberships();
+  }, [getApprovedConnections, getApprovedMemberships]);
+
   return (
-    <>
-      <S.InfoCard>
-        <S.Avatar>
-          <Link href={link}>
-            <a>
-              {info?.icon || !info?.avatar ? (
-                <RoundIcon
-                  icon={info?.icon || faQuestion}
-                  size={96}
-                  bgColor='main'
-                />
-              ) : (
-                <Avatar
-                  img={info?.avatar}
-                  size={96}
-                  bgColor='main'
-                  isBlured={isBlured}
-                />
-              )}
-            </a>
-          </Link>
-        </S.Avatar>
-
-        <S.TextWrapper>
-          <S.Name>
-            <Link href={link}>
-              <a>
-                <Text type='title' ta='center'>
-                  {info?.isOwner ? (
-                    <S.Owner>
-                      <span>{info?.name}</span>
-                      <FontAwesomeIcon icon={faCrown} />
-                    </S.Owner>
-                  ) : info?.isModerator ? (
-                    <S.Moderator>
-                      <span>{info?.name}</span>
-                      <FontAwesomeIcon icon={faCrown} />
-                    </S.Moderator>
-                  ) : (
-                    info?.name
-                  )}
-                </Text>
-              </a>
-            </Link>
-          </S.Name>
-
-          <Text
-            type='subtitle'
-            pt={12}
-            pb={16}
-            ta='center'
-          >{`@${info?.url}`}</Text>
-
-          {type === "member" && (
-            <Text type='custom' fs={12} pt={16}>
-              Participa desde: {getTimeString(info?.joinedAt)}
-            </Text>
-          )}
-
-          {type === "connection" && (
-            <Text type='custom' fs={12} pt={16}>
-              Conexão desde: {getTimeString(info?.connectedAt)}
-            </Text>
-          )}
-
-          {(type === "group" ||
-            type === "profile" ||
-            type === "connection") && (
-            <Text type='custom' fs={12} pt={16}>
-              Criado em: {getTimeString(info?.createdAt)}
-            </Text>
-          )}
-        </S.TextWrapper>
-
-        <S.TagsList>
-          {tags.map((item) => {
-            return (
-              <Link key={item} href={ROUTES.SEARCH.replace(":str", item)}>
+    <S.InfoCard>
+      <S.Cover img={info?.cover}>
+        <S.InfoCardContent>
+          <S.MainInfo>
+            <S.InfoAreaWrapper>
+              <Link href={link}>
                 <a>
-                  <S.TagItem
-                    isCommon={
-                      profile?.publicTags?.includes(item) ||
-                      profile?.privateTags?.includes(item)
-                    }
-                  >
-                    {item}
-                  </S.TagItem>
+                  <InfoArea info={info} side='left' />
                 </a>
               </Link>
-            );
-          })}
-        </S.TagsList>
 
-        <S.CardButtons>
-          <Link href={link}>
-            <a>
-              <FontAwesomeIcon icon={faLink} />
-              <span>
-                Visitar{" "}
-                {type === "profile" ||
-                type === "member" ||
-                type === "connection"
-                  ? "perfil"
-                  : "grupo"}
-              </span>
-            </a>
-          </Link>
-        </S.CardButtons>
-      </S.InfoCard>
-    </>
+              {profileState?._id === info?.owner && (
+                <S.Owner>
+                  <FontAwesomeIcon icon={faCrown} />
+                </S.Owner>
+              )}
+
+              {info?.moderators?.include(profileState?._id) && (
+                <S.Moderator>
+                  <FontAwesomeIcon icon={faCrown} />
+                </S.Moderator>
+              )}
+            </S.InfoAreaWrapper>
+
+            {info?.members && (
+              <Text type='custom' fs={14} fc='white'>
+                {info?.members.length}{" "}
+                {info?.members.length !== 1 ? "participantes" : "participante"}
+              </Text>
+            )}
+
+            {approvedConnections && (
+              <Text type='custom' fs={14} fc='white'>
+                {approvedConnections.length}{" "}
+                {approvedConnections.length !== 1 ? "conexões" : "conexão"}
+              </Text>
+            )}
+
+            {approvedMemberships && (
+              <Text type='custom' fs={14} fc='white'>
+                {approvedMemberships.length}{" "}
+                {approvedMemberships.length !== 1 ? "grupos" : "grupo"}
+              </Text>
+            )}
+
+            <ButtonLink href={link}>
+              Ver {type === "group" ? "grupo" : "perfil"}
+            </ButtonLink>
+          </S.MainInfo>
+
+          {tags?.length > 0 && (
+            <S.TagsList>
+              {tags.map((item) => {
+                return (
+                  <Link key={item} href={ROUTES.SEARCH.replace(":str", item)}>
+                    <a>
+                      <S.TagItem
+                        isCommon={
+                          profile?.publicTags?.includes(item) ||
+                          profile?.privateTags?.includes(item)
+                        }
+                      >
+                        {item}
+                      </S.TagItem>
+                    </a>
+                  </Link>
+                );
+              })}
+            </S.TagsList>
+          )}
+        </S.InfoCardContent>
+      </S.Cover>
+    </S.InfoCard>
   );
 };
 

@@ -48,39 +48,45 @@ const FeedItem = ({ info, setFeed }) => {
 
   return (
     <S.FeedItem>
-      <S.InfoAreaWrapper>
-        <Link href={ROUTES.PROFILE.replace(":id", info.user.url)}>
-          <a>
-            <InfoArea side='left' info={info.user} />
-          </a>
-        </Link>
+      <S.Header>
+        <S.InfoAreaWrapper>
+          <Link href={ROUTES.PROFILE.replace(":id", info.user.url)}>
+            <a>
+              <InfoArea side='left' info={info.user} />
+            </a>
+          </Link>
+        </S.InfoAreaWrapper>
 
         {profile?._id === info.user._id && (
           <Button style='transparent' size={16} onClick={handleDelete}>
             <FontAwesomeIcon icon={faTimes} />
           </Button>
         )}
-      </S.InfoAreaWrapper>
+      </S.Header>
 
-      {info.image && (
-        <S.ImageWrapper isBlured={info.user.isAdult && !displayAdult}>
-          <img src={info.image} />
-        </S.ImageWrapper>
-      )}
+      <S.Content>
+        {info.image && (
+          <S.ImageWrapper isBlured={info.user.isAdult && !displayAdult}>
+            <img src={info.image} />
+          </S.ImageWrapper>
+        )}
 
-      {info.text && (
-        <Text type='custom' fc='white'>
-          {info.text}
-        </Text>
-      )}
+        {info.text && (
+          <Text type='custom' fc='white'>
+            {info.text}
+          </Text>
+        )}
+      </S.Content>
 
       {/* <S.FeedLike hasLike>
                       <FontAwesomeIcon icon={faHeart} />
                     </S.FeedLike> */}
 
-      <Text type='custom' fs={12} fc='bgInverted'>
-        Postado {getTimeString(info.postedAt, true)}
-      </Text>
+      <S.Date>
+        <Text type='custom' fs={12} fc='bgInverted'>
+          Postado {getTimeString(info.postedAt, true)}
+        </Text>
+      </S.Date>
     </S.FeedItem>
   );
 };

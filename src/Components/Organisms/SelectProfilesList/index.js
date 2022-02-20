@@ -68,15 +68,12 @@ const SelectProfilesList = ({ profiles }) => {
             >
               <InfoArea
                 info={item}
-                infoGap={24}
-                avatarSize={64}
+                avatarSize={48}
                 messages={0}
                 notifications={getPendingConnections(item)}
                 side='left'
                 displayCounters
                 displayTags
-                isBox
-                squaredBox
               />
             </li>
           );

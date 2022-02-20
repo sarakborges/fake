@@ -3,11 +3,16 @@ import styled from "styled-components";
 export const Topbar = styled.div`
   display: flex;
   place-items: center;
-  gap: 32px;
+  place-content: space-between;
+  gap: 16px;
+
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 99;
 
   width: 100%;
-  min-height: 80px;
-  padding-left: 16px;
+  padding: 0 20px 0 12px;
 
   background-color: var(--bg);
 `;
@@ -21,38 +26,55 @@ export const ToggleMenu = styled.div`
 `;
 
 export const SearchWrapper = styled.div`
-  flex: 1;
-
-  input {
-    background-color: var(--bgContrast);
-    border-radius: 8px;
-  }
-
-  button {
-    border-radius: 8px;
-  }
-`;
-
-export const ProfileArea = styled.div`
-  max-width: 50%;
-  height: 100%;
-
-  position: relative;
-`;
-
-export const InfoAreaWrapper = styled.div`
   display: flex;
   place-items: center;
   place-content: center;
 
-  height: 100%;
-  padding: 0 16px;
+  width: 400px;
 
-  cursor: pointer;
+  > p {
+    display: flex;
+    place-items: center;
+    place-content: center;
 
-  transition: background-color 0.3s;
+    height: 48px;
+    aspect-ratio: 1;
+  }
+`;
 
-  &:hover {
-    background-color: var(--bgContrast);
+export const ActionsWrapper = styled.div`
+  display: flex;
+  place-items: center;
+  place-content: center;
+  gap: 8px;
+
+  > p {
+    display: flex;
+    place-items: center;
+    place-content: center;
+
+    height: 48px;
+    aspect-ratio: 1;
+
+    > a {
+      display: flex;
+      place-content: center;
+      place-items: center;
+
+      height: 100%;
+      width: 100%;
+    }
+  }
+`;
+
+export const ActionsButtons = styled.div`
+  display: flex;
+  place-items: center;
+  gap: 12px;
+
+  flex: 1;
+
+  > button {
+    padding: 0 12px;
   }
 `;

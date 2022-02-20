@@ -16,11 +16,11 @@ const TagsForm = ({ title, tags, setTags, type }) => {
   const [newTag, setNewTag] = useState("");
 
   const handleChange = (e) => {
-    setNewTag(e.currentTarget.value.toLowerCase().trim());
+    setNewTag(e.currentTarget.value.toLowerCase());
   };
 
   const handleClick = () => {
-    setTags([...tags, newTag], type);
+    setTags([...tags, newTag.trim()], type);
     setNewTag("");
   };
 
@@ -39,7 +39,7 @@ const TagsForm = ({ title, tags, setTags, type }) => {
           <S.Tags>
             {tags?.map((item) => {
               return (
-                <S.TagItem onClick={() => handleRemove(item)}>
+                <S.TagItem key={item} onClick={() => handleRemove(item)}>
                   <span>{item}</span>
 
                   <FontAwesomeIcon icon={faTimes} />

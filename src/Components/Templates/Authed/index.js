@@ -2,8 +2,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { ThemeProvider } from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 // Helpers
 import { getUserData, getAppData } from "Helpers/Functions";
@@ -13,14 +11,11 @@ import { ROUTES } from "Helpers/routes";
 import { AppContext } from "Contexts/App";
 import { UserContext } from "Contexts/User";
 
-// Atoms
-import Button from "Components/Atoms/Button";
-
 // Molecules
 import Toast from "Components/Molecules/Toast";
 
 // Organisms
-import Sidebar from "Components/Organisms/Sidebar";
+import Topbar from "Components/Organisms/Topbar";
 
 // Style
 import { GlobalStyle } from "Styles/global";
@@ -82,24 +77,10 @@ const AuthedTemplate = ({ children }) => {
 
       {<Toast {...toast} />}
 
-      <S.Topbar>
-        <Button
-          style='transparent'
-          onClick={() => setDisplaySidebar(!displaySidebar)}
-          size={20}
-        >
-          <FontAwesomeIcon icon={faBars} />
-        </Button>
-      </S.Topbar>
-
       <S.Container>
-        <Sidebar displaySidebar={displaySidebar} />
+        <Topbar />
 
-        <S.Content>
-          <S.PageContentWrapper>
-            <S.PageContent>{children}</S.PageContent>
-          </S.PageContentWrapper>
-        </S.Content>
+        <S.Content>{children}</S.Content>
       </S.Container>
     </ThemeProvider>
   );

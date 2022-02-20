@@ -4,24 +4,24 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 
 // APIs
-import ProfileAPI from "Apis/Profile";
+import MessageAPI from "Apis/Message";
 
 // Helpers
 import { SITE_NAME } from "Helpers/Constants";
 
 // Contexts
 import { UserContext } from "Contexts/User";
+import { ProfileContext } from "Contexts/Profile";
 
 // Atoms
-import InfoAbout from "Components/Atoms/InfoAbout";
-import Rightbar from "Components/Atoms/Rightbar";
+import Text from "Components/Atoms/Text";
 
 // Molecules
 import InfoNotFound from "Components/Molecules/InfoNotFound";
 
 // Organisms
 import InfoHeader from "Components/Organisms/InfoHeader";
-import ProfileRightBar from "Components/Organisms/ProfileRightBar";
+import ChatMessages from "Components/Organisms/ChatMessages";
 
 // Template
 import AuthedTemplate from "Components/Templates/Authed";
@@ -30,8 +30,11 @@ import AuthedTemplate from "Components/Templates/Authed";
 import * as S from "./style";
 
 // Template
-const ProfileTemplate = () => {
-  const [profileData, setProfileData] = useState();
+const ProfileTemplate = ({ children }) => {
+  const [messages, setMessages] = useState();
+  const [newMessage, setNewMessage] = useState("");
+
+  const { profileState } = useContext(ProfileContext);
 
   const { userState } = useContext(UserContext);
   const { profile } = userState;
@@ -41,56 +44,102 @@ const ProfileTemplate = () => {
     query: { url },
   } = router;
 
-  const getProfile = useCallback(
-    async (profileUrl) => {
-      const profileReq = await ProfileAPI.getProfileByUrl(profileUrl);
+  const handleSubmit = async () => {
+    try {
+      const sentProfile = messages?.profileData?._id;
 
-      if (profileReq) {
-        setProfileData(profileReq);
+      if (!sentProfile) {
+        return;
       }
-    },
-    [ProfileAPI]
-  );
+
+      await MessageAPI.sendMessage({
+        users: [profileState._id, sentProfile],
+        message: newMessage,
+        sender: profileState._id,
+      });
+
+      setNewMessage("");
+
+      await getMessages();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getMessages = useCallback(async () => {
+    if (!profileState?._id || !profile?._id || !url) {
+      return;
+    }
+
+    const messagesReq = await MessageAPI.getMessages([
+      profile._id,
+      profileState._id,
+    ]);
+
+    setMessages(messagesReq);
+  }, [profileState, profile, url, MessageAPI]);
 
   useEffect(() => {
-    getProfile(url);
-  }, [url, getProfile]);
+    getMessages();
+  }, [url, getMessages]);
 
   return (
     <AuthedTemplate>
       <Head>
-        <title>{`${SITE_NAME} - ${profileData?.name || "Perfil"}`}</title>
+        <title>{`${SITE_NAME} - ${profileState?.name || "Perfil"}`}</title>
       </Head>
 
-      {(!profileData?._id ||
-        profileData?.blockedUsers?.includes?.(profile?._id)) && (
+      {(!profileState?._id ||
+        profileState?.blockedUsers?.includes?.(profile?._id)) && (
         <InfoNotFound type='profile' />
       )}
 
-      {profileData?._id &&
-        !profileData?.blockedUsers?.includes?.(profile?._id) && (
-          <>
-            <S.ProfileWrapper>
-              <InfoHeader
-                info={profileData}
-                type='profile'
-                setInfo={setProfileData}
-              />
-
+      {profileState?._id &&
+        !profileState?.blockedUsers?.includes?.(profile?._id) && (
+          <S.ProfileWrapper bg={profileState.cover}>
+            <S.ProfileContent>
               <S.ProfileBody>
                 <S.ProfileLeft>
-                  <InfoAbout
-                    isAdult={profileData.isAdult}
-                    about={profileData.about}
+                  <InfoHeader
+                    info={profileState}
+                    type='profile'
+                    // setInfo={setProfileData}
                   />
+
+                  {children}
                 </S.ProfileLeft>
 
-                <Rightbar>
-                  <ProfileRightBar profileData={profileData} />
-                </Rightbar>
+                <S.ProfileRight>
+                  <S.ChatWrapper>
+                    {!profileState.isPrivate ||
+                    profileState.connections
+                      .filter((item) => item.status === "connected")
+                      .map((item) => item.user._id)
+                      .includes(profile?._id) ? (
+                      <ChatMessages
+                        messages={messages}
+                        handleSubmit={handleSubmit}
+                        newMessage={newMessage}
+                        setNewMessage={setNewMessage}
+                      />
+                    ) : (
+                      <S.NoChatWrapper>
+                        <Text
+                          type='custom'
+                          ta='center'
+                          fs={16}
+                          fw={600}
+                          lh={1.4}
+                        >
+                          {`Apenas conexões podem enviar mensagens para ${profileState.name}`}
+                        </Text>
+                      </S.NoChatWrapper>
+                    )}
+                  </S.ChatWrapper>
+                </S.ProfileRight>
               </S.ProfileBody>
-            </S.ProfileWrapper>
-          </>
+            </S.ProfileContent>
+          </S.ProfileWrapper>
         )}
     </AuthedTemplate>
   );

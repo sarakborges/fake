@@ -1,7 +1,7 @@
-import ProfileConnectionsTemplate from "Components/Templates/ProfileConnections";
+import ProfileConnectionsPage from "Components/Pages/ProfileConnections";
 
 const ProfileConnections = () => {
-  return <ProfileConnectionsTemplate />;
+  return <ProfileConnectionsPage />;
 };
 
 export default ProfileConnections;

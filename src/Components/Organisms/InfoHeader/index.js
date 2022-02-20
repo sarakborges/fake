@@ -3,9 +3,6 @@ import Link from "next/link";
 import { useContext, useEffect, useRef, useState } from "react";
 import {
   faCheckCircle,
-  faEllipsisH,
-  faPencilAlt,
-  faQuestion,
   faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -16,7 +13,7 @@ import GroupAPI from "Apis/Group";
 // Helpers
 import { ROUTES } from "Helpers/routes";
 import { PROFILE_HEADER, GROUP_HEADER, TOASTS } from "Helpers/Constants";
-import { displayToast, getTimeString } from "Helpers/Functions";
+import { displayToast } from "Helpers/Functions";
 
 // Contexsts
 import { UserContext } from "Contexts/User";
@@ -24,18 +21,17 @@ import { AppContext } from "Contexts/App";
 
 // Atoms
 import Button from "Components/Atoms/Button";
-import Avatar from "Components/Atoms/Avatar";
-import RoundIcon from "Components/Atoms/RoundIcon";
-import Text from "Components/Atoms/Text";
 import InfoLinks from "Components/Atoms/InfoLinks";
 
 // Style
 import * as S from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import InfoArea from "Components/Molecules/InfoArea";
 
 const InfoHeader = ({ info, type, setInfo }) => {
   const [isRequesting, setIsRequesting] = useState(false);
   const [displayMenu, setDisplayMenu] = useState(false);
+  const [tags, setTags] = useState([]);
 
   const dropdownRef = useRef();
   const headerType = type === "group" ? GROUP_HEADER : PROFILE_HEADER;
@@ -324,6 +320,18 @@ const InfoHeader = ({ info, type, setInfo }) => {
     });
   }, []);
 
+  useEffect(() => {
+    let newTags = [];
+
+    if (info?.publicTags) {
+      newTags = [...newTags, ...info?.publicTags];
+    }
+
+    newTags.sort((a, b) => (a > b ? 1 : -1));
+
+    setTags(newTags);
+  }, [info]);
+
   return (
     <>
       {!getCondition("isNotSent") && (
@@ -360,129 +368,79 @@ const InfoHeader = ({ info, type, setInfo }) => {
       )}
 
       <S.Head>
-        <S.Cover img={info.cover} isBlured={info.isAdult && !displayAdult} />
-
-        {!getCondition("isNotSelf") && (
-          <S.EditLink>
-            <Link href={ROUTES.SETTINGS.PROFILE}>
-              <a>
-                <FontAwesomeIcon icon={faPencilAlt} />
-              </a>
-            </Link>
-          </S.EditLink>
-        )}
-
-        {!getCondition("isNotOwner") && (
-          <S.EditLink>
-            <Link href={ROUTES.SETTINGS.GROUP.replace(":id", info.url)}>
-              <a>
-                <FontAwesomeIcon icon={faPencilAlt} />
-              </a>
-            </Link>
-          </S.EditLink>
-        )}
-
-        {profile?._id &&
-          headerType.MORE_ACTIONS.filter(
-            (item) => !getCondition(item.hideCondition)
-          ).length > 0 && (
-            <S.DropdownMenu ref={dropdownRef}>
-              <Button style='transparent' size={16} onClick={toggleMenu}>
-                <FontAwesomeIcon icon={faEllipsisH} />
-              </Button>
-
-              <S.Dropdown displayMenu={displayMenu}>
-                {headerType.MORE_ACTIONS.filter(
-                  (item) => !getCondition(item.hideCondition)
-                ).map((item) => {
-                  if (!profile?._id || getCondition(item.hideCondition)) {
-                    return false;
-                  }
-
-                  return (
-                    <Button
-                      key={item.id}
-                      style='transparent'
-                      size={16}
-                      onClick={buttonActions[item.action]}
-                      disabled={isRequesting}
-                    >
-                      {item.title}
-                    </Button>
-                  );
-                })}
-              </S.Dropdown>
-            </S.DropdownMenu>
-          )}
-
         <S.Info>
-          <S.Avatar>
-            {info.avatar ? (
-              <Avatar
-                size={128}
-                img={info.avatar}
-                bgColor={"main"}
-                isBlured={info.isAdult && !displayAdult}
-              />
-            ) : (
-              <RoundIcon size={128} icon={faQuestion} bgColor={"main"} />
-            )}
-          </S.Avatar>
+          <S.InfoArea>
+            <InfoArea info={info} side='left' />
+          </S.InfoArea>
 
           <S.Center>
-            <S.MainInfo>
-              <Text type='custom' fs={36} fw={600}>
-                {info.name}
-              </Text>
-
-              <Text type='subtitle'>@{info.url}</Text>
-
-              <Text type='custom' fs={12} pt={12}>
-                {`${
-                  type === "profile" ? "Perfil" : "Grupo"
-                } criado em: ${getTimeString(info.createdAt)}`}
-              </Text>
-
-              {info?.link && (
-                <a href={info.link} target='_blank'>
-                  <span>{info.link}</span>
-                </a>
-              )}
-            </S.MainInfo>
-
             <InfoLinks info={info} type={type} />
           </S.Center>
 
-          {profile?._id &&
-            headerType.ACTIONS.filter(
-              (item) => !getCondition(item.hideCondition)
-            ).length > 0 && (
-              <S.Actions>
-                {headerType.ACTIONS.filter(
-                  (item) => !getCondition(item.hideCondition)
-                ).map((item) => {
-                  return (
-                    <div key={item.id}>
-                      {item.type === "button" ? (
-                        <Button
-                          style='primary'
-                          size={16}
-                          onClick={buttonActions[item.action]}
-                          disabled={isRequesting}
-                        >
-                          {item.title}
-                        </Button>
-                      ) : (
-                        <Link href={item.to.replace(":id", info.url)}>
-                          <a>{item.title}</a>
-                        </Link>
-                      )}
-                    </div>
-                  );
-                })}
-              </S.Actions>
-            )}
+          {profile?._id && (
+            <S.Actions>
+              {headerType.ACTIONS.filter(
+                (item) => !getCondition(item.hideCondition)
+              ).map((item) => {
+                return (
+                  <div key={item.id}>
+                    {item.type === "button" ? (
+                      <Button
+                        style='primary'
+                        size={14}
+                        onClick={buttonActions[item.action]}
+                        disabled={isRequesting}
+                      >
+                        {item.title}
+                      </Button>
+                    ) : (
+                      <Link href={item.to.replace(":id", info.url)}>
+                        <a>{item.title}</a>
+                      </Link>
+                    )}
+                  </div>
+                );
+              })}
+
+              {!getCondition("isNotSelf") && (
+                <S.EditLink>
+                  <Link href={ROUTES.SETTINGS.PROFILE}>
+                    <a>Editar perfil</a>
+                  </Link>
+                </S.EditLink>
+              )}
+
+              {!getCondition("isNotOwner") && (
+                <S.EditLink>
+                  <Link href={ROUTES.SETTINGS.GROUP.replace(":id", info.url)}>
+                    <a>Editar grupo</a>
+                  </Link>
+                </S.EditLink>
+              )}
+            </S.Actions>
+          )}
         </S.Info>
+
+        {tags?.length > 0 && (
+          <S.TagsList>
+            {tags.map((item) => {
+              return (
+                <Link key={item} href={ROUTES.SEARCH.replace(":str", item)}>
+                  <a>
+                    <S.TagItem
+                      isCommon={
+                        profile?.publicTags?.includes(item) ||
+                        profile?.privateTags?.includes(item)
+                      }
+                    >
+                      {item}
+                    </S.TagItem>
+                  </a>
+                </Link>
+              );
+            })}
+          </S.TagsList>
+        )}
       </S.Head>
     </>
   );

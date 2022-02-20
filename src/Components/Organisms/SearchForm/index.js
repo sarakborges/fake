@@ -1,51 +1,84 @@
 // Dependencies
-import { useRouter } from "next/dist/client/router";
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { useCallback, useEffect, useState } from "react";
 
-// Helpers
-import { ROUTES } from "Helpers/routes";
+// APIs
+import SearchAPI from "Apis/Search";
 
 // Atoms
-import Form from "Components/Atoms/Form";
-import Button from "Components/Atoms/Button";
+import Input from "Components/Atoms/Input";
+import Text from "Components/Atoms/Text";
 
-// Molecules
-import LabeledInput from "Components/Molecules/LabeledInput";
+// Organisms
+import InfoListHorizontal from "Components/Organisms/InfoListHorizontal";
 
 // Styles
 import * as S from "./style";
 
 // Template
 const SearchForm = () => {
-  const router = useRouter();
-
+  const [displayResults, setDisplayResults] = useState(false);
   const [search, setSearch] = useState();
+  const [searchData, setSearchData] = useState();
 
-  const handleSearchSubmit = () => {
-    if (search) {
-      router.push(ROUTES.SEARCH.replace(":str", search));
+  const getSearch = useCallback(async () => {
+    if (!search) {
+      setSearchData();
+      return;
     }
-  };
+
+    const searchReq = await SearchAPI.searchByStr(search);
+
+    if (searchReq) {
+      setSearchData(searchReq);
+    } else {
+      setSearchData();
+    }
+  }, [search, SearchAPI]);
+
+  useEffect(() => {
+    getSearch();
+  }, [getSearch]);
 
   return (
     <S.Search>
-      <Form onSubmit={handleSearchSubmit}>
-        <LabeledInput
-          id='site-search'
-          label='Encontre pessoas e grupos'
-          placeholder='Insira sua pesquisa'
-          value={search}
-          onChange={(e) => {
-            setSearch(e.currentTarget.value);
-          }}
-        />
+      <Input
+        id='site-search'
+        placeholder='Insira sua pesquisa'
+        value={search}
+        isBgContrast
+        onChange={(e) => {
+          setSearch(e.currentTarget.value);
+        }}
+        onFocus={() => {
+          setDisplayResults(true);
+        }}
+        onBlur={() => {
+          setDisplayResults(false);
+        }}
+      />
 
-        <Button type='submit' style='primary' size={16}>
-          <FontAwesomeIcon icon={faSearch} />
-        </Button>
-      </Form>
+      <S.SearchResults
+        displayResults={
+          displayResults &&
+          (searchData?.profiles?.length || searchData?.groups?.length)
+        }
+      >
+        {searchData?.profiles?.length > 0 && (
+          <div>
+            <Text>Perfis encontrados:</Text>
+
+            <InfoListHorizontal type='profile' info={searchData?.profiles} />
+          </div>
+        )}
+
+        {searchData?.groups?.length > 0 && (
+          <div>
+            <Text>Grupos encontrados:</Text>
+
+            <InfoListHorizontal type='group' info={searchData?.groups} />
+          </div>
+        )}
+      </S.SearchResults>
     </S.Search>
   );
 };

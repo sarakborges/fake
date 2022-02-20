@@ -12,21 +12,17 @@ import RoundIcon from "Components/Atoms/RoundIcon";
 
 // Style
 import * as S from "./style";
+import Text from "Components/Atoms/Text";
 
 // Template
 const InfoArea = ({
   info,
   side,
-  hasLink,
   displayCounters,
   displayTags,
   notifications,
   messages,
-  isBox,
   avatarSize,
-  infoGap,
-  squaredBox,
-  isBgContrast,
 }) => {
   const { appState } = useContext(AppContext);
   const { displayAdult } = appState;
@@ -49,10 +45,10 @@ const InfoArea = ({
     setTags(newTags);
   }, [info]);
 
-  const Content = () => {
-    return (
-      <>
-        <S.InfoArea side={side} infoGap={infoGap}>
+  return (
+    <span>
+      <S.InfoArea side={side}>
+        <S.Avatar>
           {info?.icon || !info?.avatar ? (
             <RoundIcon
               icon={info?.icon || faQuestion}
@@ -67,52 +63,43 @@ const InfoArea = ({
               isBlured={info?.isAdult && !displayAdult}
             />
           )}
+        </S.Avatar>
 
-          <S.TextWrapper>
-            <S.Text>
-              <S.Name>{info?.name || "Não encontrado"}</S.Name>
-              <S.Url>{info?.url ? `@${info?.url}` : ""}</S.Url>
-            </S.Text>
+        <span>
+          <S.Text>
+            <Text type='custom' fc='main' fw={600}>
+              {info?.name || "Não encontrado"}
+            </Text>
 
-            {displayCounters && (
-              <S.CounterList>
-                <S.Counter>
-                  <S.CounterIcon>{notifications}</S.CounterIcon>
-                  <>{notifications === 1 ? "Notificação" : "Notificações"}</>
-                </S.Counter>
+            <Text type='custom' fc='bgInverted'>
+              {info?.url ? `@${info?.url}` : ""}
+            </Text>
+          </S.Text>
 
-                <S.Counter>
-                  <S.CounterIcon>{messages}</S.CounterIcon>
-                  <>{messages === 1 ? "Mensagem" : "Mensagens"}</>
-                </S.Counter>
-              </S.CounterList>
-            )}
-          </S.TextWrapper>
+          {displayCounters && (
+            <S.CounterList>
+              <S.Counter>
+                <S.CounterIcon>{notifications}</S.CounterIcon>
+                <>{notifications === 1 ? "Notificação" : "Notificações"}</>
+              </S.Counter>
 
-          {hasLink && (
-            <S.Link>
-              <FontAwesomeIcon icon={faLink} />
-            </S.Link>
+              <S.Counter>
+                <S.CounterIcon>{messages}</S.CounterIcon>
+                <>{messages === 1 ? "Mensagem" : "Mensagens"}</>
+              </S.Counter>
+            </S.CounterList>
           )}
-        </S.InfoArea>
+        </span>
+      </S.InfoArea>
 
-        {displayTags && tags?.length > 0 && (
-          <S.TagsList>
-            {tags.map((item) => {
-              return <S.TagItem key={item}>{item}</S.TagItem>;
-            })}
-          </S.TagsList>
-        )}
-      </>
-    );
-  };
-
-  return isBox ? (
-    <S.InfoAreaBox squaredBox={squaredBox} isBgContrast={isBgContrast}>
-      <Content />
-    </S.InfoAreaBox>
-  ) : (
-    <Content />
+      {displayTags && tags?.length > 0 && (
+        <S.TagsList>
+          {tags.map((item) => {
+            return <S.TagItem key={item}>{item}</S.TagItem>;
+          })}
+        </S.TagsList>
+      )}
+    </span>
   );
 };
 

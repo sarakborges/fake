@@ -131,7 +131,9 @@ const NewFeed = ({ feed, setFeed }) => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Text type='title'>Fazer nova publicação</Text>
+      <Text type='custom' fw={600}>
+        Fazer nova publicação
+      </Text>
 
       <S.NewFeed>
         <Textarea

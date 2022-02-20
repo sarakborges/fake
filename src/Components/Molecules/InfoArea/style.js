@@ -4,14 +4,13 @@ export const InfoArea = styled.span`
   display: flex;
   flex-flow: ${({ side }) => (side === "left" ? "row" : "row-reverse")};
   place-items: center;
-  gap: ${({ infoGap }) => (infoGap ? `${infoGap}px` : "16px")};
+  gap: 16px;
 `;
 
-export const TextWrapper = styled.span`
-  display: block;
-
-  max-width: calc(100% - 64px);
-  flex: 1;
+export const Avatar = styled.span`
+  > span {
+    box-shadow: 2px 2px 3px var(--bg);
+  }
 `;
 
 export const Text = styled.span`
@@ -21,30 +20,20 @@ export const Text = styled.span`
 
   width: 100%;
   flex: 1;
-`;
-
-export const Name = styled.span`
-  width: 100%;
   overflow: hidden;
-
-  line-height: 32px;
-  font-size: 20px;
-  color: var(--main);
-
-  white-space: nowrap;
-  text-overflow: ellipsis;
-`;
-
-export const Url = styled.span`
-  width: 100%;
-  overflow: hidden;
-
-  line-height: 32px;
-  font-size: 16px;
-  color: var(--bgInverted);
 
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-shadow: 2px 2px 3px var(--bgContrast);
+
+  > p {
+    display: flex;
+    place-items: flex-start;
+
+    height: 24px;
+
+    line-height: 24px;
+  }
 `;
 
 export const CounterList = styled.span`
@@ -90,7 +79,7 @@ export const TagsList = styled.span`
 `;
 
 export const TagItem = styled.span`
-  padding: 8px;
+  padding: 4px 8px;
 
   color: var(--white);
   font-size: 12px;
@@ -110,22 +99,4 @@ export const Link = styled.span`
 
   border-radius: 12px;
   transition: background-color 0.3s;
-`;
-
-export const InfoAreaBox = styled.div`
-  padding: 16px;
-
-  background-color: ${({ isBgContrast }) =>
-    isBgContrast ? "var(--bgContrast)" : "var(--bg)"};
-  border-radius: ${({ squaredBox }) => (squaredBox ? "none" : "16px")};
-  cursor: pointer;
-
-  transition: background-color 0.3s, box-shadow 0.3s;
-
-  &:hover {
-    background-color: var(--bgContrast);
-
-    box-shadow: ${({ isBgContrast }) =>
-      isBgContrast ? "0 0 5px var(--main)" : "none"};
-  }
 `;

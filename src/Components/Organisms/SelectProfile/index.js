@@ -2,16 +2,17 @@
 import Link from "next/link";
 import { useState, useContext, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronDown,
+  faLink,
+  faQuestion,
+} from "@fortawesome/free-solid-svg-icons";
 
 // Helpers
 import { ROUTES } from "Helpers/routes";
 
 // Contexts
 import { UserContext } from "Contexts/User";
-
-// Atoms
-import Text from "Components/Atoms/Text";
 
 // Molecules
 import InfoArea from "Components/Molecules/InfoArea";
@@ -22,6 +23,10 @@ import SelectProfilesList from "Components/Organisms/SelectProfilesList";
 // Style
 import * as S from "./style";
 import Input from "Components/Atoms/Input";
+import Text from "Components/Atoms/Text";
+import Avatar from "Components/Atoms/Avatar";
+import RoundIcon from "Components/Atoms/RoundIcon";
+import ButtonLink from "Components/Atoms/ButtonLink";
 
 // Template
 const SelectProfile = () => {
@@ -82,63 +87,72 @@ const SelectProfile = () => {
   }, [filter]);
 
   return (
-    <S.InfoAreaWrapper>
-      <S.InfoArea ref={profilesListRef} onClick={(e) => e.stopPropagation()}>
-        <S.SelectProfile displayProfiles={displayProfiles}>
+    <S.SelectProfileWrapper
+      ref={profilesListRef}
+      onClick={(e) => e.stopPropagation()}
+    >
+      <S.SelectProfile displayProfiles={displayProfiles}>
+        <S.ActiveProfile>
           <Link href={ROUTES.PROFILE.replace(":id", profile.url)}>
             <a>
               <InfoArea
                 info={profile}
-                infoGap={24}
-                avatarSize={64}
+                avatarSize={48}
                 side='left'
-                hasLink
-                isBox
                 displayTags
-                squaredBox
               />
             </a>
           </Link>
 
-          {user.profiles.length > 1 && (
-            <>
-              <S.Filter>
-                <Input
-                  id='filter-profiles'
-                  value={filter}
-                  onChange={handleFilterChange}
-                  placeholder='Insira sua pesquisa'
-                />
-              </S.Filter>
+          <ButtonLink href={ROUTES.PROFILE.replace(":id", profile.url)}>
+            Ver perfil
+          </ButtonLink>
+        </S.ActiveProfile>
 
-              <SelectProfilesList
-                profiles={filteredProfiles?.filter(
-                  (item) => item._id !== profile._id
-                )}
-              />
-            </>
-          )}
+        <S.Settings>
+          <Link href={ROUTES.SETTINGS.PROFILE}>
+            <a>Gerenciar seu perfil</a>
+          </Link>
 
-          <S.NewProfile>
-            <Link href={ROUTES.NEW_PROFILE}>
-              <a>
-                <span>
-                  <FontAwesomeIcon icon={faPlus} />
-                </span>
+          <span />
 
-                <Text type='custom' fw={600}>
-                  Novo perfil
-                </Text>
-              </a>
-            </Link>
-          </S.NewProfile>
-        </S.SelectProfile>
+          <Link href={ROUTES.SETTINGS.ACCOUNT}>
+            <a>Gerenciar sua conta</a>
+          </Link>
 
-        <div onClick={toggleProfiles}>
-          <InfoArea info={profile} isBox />
-        </div>
-      </S.InfoArea>
-    </S.InfoAreaWrapper>
+          <span />
+
+          <Link href={ROUTES.SETTINGS.SITE}>
+            <a>Preferências do site</a>
+          </Link>
+        </S.Settings>
+
+        {user.profiles.length > 1 && (
+          <>
+            <Input
+              id='filter-profiles'
+              value={filter}
+              onChange={handleFilterChange}
+              placeholder='Filtrar seus perfis'
+            />
+
+            <SelectProfilesList
+              profiles={filteredProfiles?.filter(
+                (item) => item._id !== profile._id
+              )}
+            />
+          </>
+        )}
+      </S.SelectProfile>
+
+      <S.InfoAreaWrapper onClick={toggleProfiles} highlighted={displayProfiles}>
+        {profile.avatar ? (
+          <Avatar img={profile.avatar} size={48} bgColor='main' />
+        ) : (
+          <RoundIcon icon={faQuestion} size={48} bgColor='main' />
+        )}
+      </S.InfoAreaWrapper>
+    </S.SelectProfileWrapper>
   );
 };
 

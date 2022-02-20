@@ -12,7 +12,7 @@ import NewFeed from "Components/Organisms/NewFeed/";
 import * as S from "./style";
 
 // Template
-const Feed = ({ profile, connections }) => {
+const Feed = ({ profile, connections, displayNewFeed }) => {
   const [feed, setFeed] = useState();
 
   const handleDelete = (postId) => {
@@ -69,7 +69,7 @@ const Feed = ({ profile, connections }) => {
 
   return (
     <>
-      <NewFeed feed={feed} setFeed={setFeed} />
+      {displayNewFeed && <NewFeed feed={feed} setFeed={setFeed} />}
 
       {feed?.length > 0 ? (
         <S.Feed>

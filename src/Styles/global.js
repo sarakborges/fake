@@ -10,6 +10,7 @@ export const GlobalStyle = createGlobalStyle`
     --bg: ${({ theme }) => theme.colors.bg};
     --bgContrast: ${({ theme }) => theme.colors.bgContrast};
     --bgInverted: ${({ theme }) => theme.colors.bgInverted};
+    --bgTransparent: ${({ theme }) => `${theme.colors.bg}DD`};
 
     --lightGray: #CCCCCC;
     --mediumGray: #999999;
@@ -53,13 +54,12 @@ export const GlobalStyle = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
 
     width: 100%;
-    overflow-x: hidden;
 
     font-family: 'Open Sans', serif;
   }
 
   body{
-    background-color: var(--bg);
+    background-color: var(--bgContrast);
 
     color: var(--bgInverted);
 

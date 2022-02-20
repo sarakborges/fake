@@ -49,6 +49,4 @@ export const GROUP_HEADER = {
       action: "leaveGroup",
     },
   ],
-
-  MORE_ACTIONS: [],
 };

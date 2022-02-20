@@ -9,6 +9,8 @@ const Input = ({
   value,
   error,
   onChange,
+  onFocus,
+  onBlur,
   disabled,
   isBgContrast,
 }) => {
@@ -24,6 +26,8 @@ const Input = ({
         value={value}
         isBgContrast={isBgContrast}
         onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
         disabled={disabled}
       />
     </>

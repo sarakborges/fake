@@ -9,6 +9,8 @@ export const NoFeed = styled.div`
   width: 100%;
   flex: 1;
   padding: 32px;
+
+  text-shadow: 2px 2px 3px var(--bgContrast);
 `;
 
 export const NoFeedWrapper = styled.div`

@@ -1,7 +1,7 @@
-import ProfileGroupsTemplate from "Components/Templates/ProfileGroups";
+import ProfileGroupsPage from "Components/Pages/ProfileGroups";
 
 const ProfileGroups = () => {
-  return <ProfileGroupsTemplate />;
+  return <ProfileGroupsPage />;
 };
 
 export default ProfileGroups;

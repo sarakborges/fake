@@ -1,16 +1,18 @@
 import styled from "styled-components";
 
 export const InfoList = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 356px);
-  grid-auto-rows: 1fr;
-  gap: 32px;
+  display: flex;
+  flex-flow: column;
+
+  overflow: hidden;
+
+  background-color: var(--bg);
+  border-radius: 4px;
+  box-shadow: 2px 2px 3px var(--bg);
 
   > li {
-    height: 100%;
-
-    > div {
-      height: 100%;
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--bgContrast);
     }
   }
 `;

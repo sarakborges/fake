@@ -2,14 +2,20 @@ import styled from "styled-components";
 
 export const ProfilesList = styled.ul`
   width: 100%;
-  max-height: calc((128px * 2.5) + 8px);
+  max-height: calc((108px * 2.5) + 8px);
   overflow: hidden;
   overflow-y: auto;
 
-  border: 0 solid var(--bgContrast);
-  border-width: 4px 0;
-
   & > li {
     width: 100%;
+    padding: 16px 24px;
+
+    cursor: pointer;
+
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: var(--bg);
+    }
   }
 `;

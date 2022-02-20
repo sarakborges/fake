@@ -2,28 +2,15 @@ import styled from "styled-components";
 
 export const InfoCard = styled.div`
   display: flex;
-  gap: 24px;
+  flex-flow: column;
 
-  padding-right: 24px;
-  overflow: hidden;
-
-  border-radius: 16px;
-  background-color: var(--bg);
-`;
-
-export const CardBar = styled.div`
-  width: 12px;
-
-  background-color: var(--main);
+  padding: 16px 24px;
 `;
 
 export const CardContent = styled.div`
   display: flex;
   place-items: center;
   gap: 24px;
-
-  flex: 1;
-  padding: 24px 0;
 
   > a {
     display: flex;
@@ -49,9 +36,10 @@ export const CardButtons = styled.div`
     place-content: center;
     gap: 8px;
 
-    padding: 12px;
+    padding: 8px;
 
     color: var(--white);
+    font-size: 12px;
 
     border: 2px solid var(--main);
     background-color: var(--main);
@@ -65,4 +53,28 @@ export const CardButtons = styled.div`
       background-color: var(--white);
     }
   }
+`;
+
+export const TagsList = styled.span`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  width: 100%;
+  padding-top: 16px;
+
+  > a {
+    display: flex;
+  }
+`;
+
+export const TagItem = styled.span`
+  padding: 8px;
+
+  color: var(--white);
+  font-size: 12px;
+
+  background-color: ${({ isCommon }) =>
+    isCommon ? "var(--main)" : "var(--bgContrast)"};
+  border-radius: 4px;
 `;

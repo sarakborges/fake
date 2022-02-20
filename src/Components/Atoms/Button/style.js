@@ -83,6 +83,7 @@ export const Button = styled.button`
   padding: 0 16px;
 
   border-radius: 4px;
+  box-shadow: 2px 2px 3px var(--bg);
   cursor: pointer;
 
   font-size: ${({ size }) => `${size}px`};

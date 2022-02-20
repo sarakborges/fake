@@ -18,20 +18,25 @@ export const MessageWrapper = styled.div`
 
 export const MessagesList = styled.ul`
   display: flex;
+  place-content: flex-end;
   flex-flow: column;
   flex: 1;
 
-  padding: 0 24px 24px;
+  padding: 0 24px;
 `;
+
+export const NoChatMessage = styled.li``;
 
 export const NewMessage = styled.div`
   > form {
     display: flex;
-    place-items: flex-end;
-    gap: 32px;
+    place-items: center;
+    gap: 16px;
 
-    padding: 16px 16px 24px;
+    padding: 16px;
 
-    border-top: 2px solid var(--bg);
+    > button {
+      aspect-ratio: 1;
+    }
   }
 `;

@@ -1,7 +1,7 @@
-import ProfileFeedTemplate from "Components/Templates/ProfileFeed";
+import ProfileFeedPage from "Components/Pages/ProfileFeed";
 
 const ProfileFeed = () => {
-  return <ProfileFeedTemplate />;
+  return <ProfileFeedPage />;
 };
 
 export default ProfileFeed;

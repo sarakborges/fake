@@ -6,15 +6,31 @@ export const FeedItem = styled.div`
   gap: 24px;
 
   width: 100%;
-  padding: 24px;
+  padding: 8px;
 
-  border-radius: 24px;
   background-color: var(--bg);
+  border-radius: 4px;
+`;
+
+export const Header = styled.div`
+  display: flex;
+  place-content: space-between;
 `;
 
 export const InfoAreaWrapper = styled.div`
-  display: flex;
-  place-content: space-between;
+  padding: 16px 16px 0;
+`;
+
+export const Content = styled.div`
+  padding: 0 16px;
+
+  > p {
+    white-space: pre;
+  }
+`;
+
+export const Date = styled.div`
+  padding: 0 16px 16px;
 `;
 
 export const ImageWrapper = styled.div`

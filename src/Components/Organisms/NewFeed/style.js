@@ -5,13 +5,7 @@ export const NewFeed = styled.div`
   flex-flow: column;
   gap: 24px;
 
-  margin: 24px 0;
-
-  > textarea {
-    padding: 16px;
-
-    border-radius: 16px;
-  }
+  margin: 12px 0;
 `;
 
 export const ContentPreview = styled.div`

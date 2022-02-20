@@ -37,14 +37,6 @@ export const PROFILE_HEADER = {
 
   ACTIONS: [
     {
-      id: "messages",
-      type: "link",
-      title: "Enviar mensagem",
-      to: ROUTES.MESSAGES,
-      hideCondition: "isBlocked",
-    },
-
-    {
       id: "add",
       type: "button",
       title: "Conectar-se",
@@ -71,19 +63,17 @@ export const PROFILE_HEADER = {
     {
       id: "block",
       type: "button",
-      title: "Desbloquear",
-      hideCondition: "isNotBlocked",
-      action: "unBlockUser",
-    },
-  ],
-
-  MORE_ACTIONS: [
-    {
-      id: "block",
-      type: "button",
       title: "Bloquear",
       hideCondition: "isBlocked",
       action: "blockUser",
+    },
+
+    {
+      id: "block",
+      type: "button",
+      title: "Desbloquear",
+      hideCondition: "isNotBlocked",
+      action: "unBlockUser",
     },
   ],
 };
