@@ -31,7 +31,7 @@ const TagsList = ({
                   <Tag
                     tag={item}
                     hasLink={hasLink}
-                    handleRemove={!!handleRemove}
+                    handleRemove={handleRemove}
                     highlighted={highlighted || compareTo.includes(item)}
                   />
                 </a>
@@ -40,7 +40,7 @@ const TagsList = ({
               <Tag
                 tag={item}
                 hasLink={hasLink}
-                handleRemove={!!handleRemove}
+                handleRemove={handleRemove}
                 highlighted={highlighted || compareTo.includes(item)}
               />
             )}

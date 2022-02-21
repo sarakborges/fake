@@ -17,6 +17,15 @@ export const ProfileWrapper = styled.div`
   padding: 32px 0;
 `;
 
+export const ProfileButtons = styled.div`
+  display: flex;
+  gap: 24px;
+
+  > div > a {
+    width: 100px;
+  }
+`;
+
 export const FeedWrapper = styled.div`
   display: flex;
   flex-flow: column;

@@ -26,7 +26,7 @@ const LinkList = ({ list, title, emptyTitle, hideEmpty }) => {
 
       {list?.length ? (
         <S.TagsList>
-          <TagsList tags={list} hasLink highlighted />
+          <TagsList tags={list} hasLink highlighted isCentered />
         </S.TagsList>
       ) : (
         <S.EmptyTitle>

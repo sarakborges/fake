@@ -128,11 +128,22 @@ const HomeTemplate = () => {
                 @{profileData?.url}
               </Text>
 
-              <ButtonLink
-                href={ROUTES.PROFILE.replace(":id", profileData?.url)}
-              >
-                Ver perfil
-              </ButtonLink>
+              <S.ProfileButtons>
+                <ButtonLink
+                  href={ROUTES.PROFILE.replace(":id", profileData?.url)}
+                >
+                  Ver perfil
+                </ButtonLink>
+
+                <ButtonLink
+                  href={ROUTES.SETTINGS.PROFILE.replace(
+                    ":id",
+                    profileData?.url
+                  )}
+                >
+                  Editar perfil
+                </ButtonLink>
+              </S.ProfileButtons>
             </S.ProfileWrapper>
 
             <S.Counters>
@@ -178,7 +189,6 @@ const HomeTemplate = () => {
                   ...(profileData?.publicTags || []),
                 ]}
                 title='Suas tags'
-                isCentered
               />
             )}
           </S.Lists>
