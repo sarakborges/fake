@@ -12,9 +12,16 @@ import Tag from "Components/Atoms/Tag";
 import * as S from "./style";
 
 // Template
-const TagsList = ({ tags, handleRemove, hasLink, highlighted, compareTo }) => {
+const TagsList = ({
+  tags,
+  handleRemove,
+  hasLink,
+  highlighted,
+  compareTo,
+  isCentered,
+}) => {
   return (
-    <S.TagsList tags={tags} handleRemove={!!handleRemove}>
+    <S.TagsList tags={tags} isCentered={isCentered}>
       {tags.map((item) => {
         return (
           <Fragment key={item}>

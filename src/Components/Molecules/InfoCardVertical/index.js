@@ -120,6 +120,12 @@ const InfoCard = ({ info, type, isBlured, parentInfo }) => {
 
             {type === "group" && (
               <Text type='custom' fs={14}>
+                Criado em {getTimeString(info.createdAt)}
+              </Text>
+            )}
+
+            {type === "group" && (
+              <Text type='custom' fs={14}>
                 Possui {info?.members?.length}{" "}
                 {info?.members?.length !== 1 ? "participantes" : "participante"}
               </Text>

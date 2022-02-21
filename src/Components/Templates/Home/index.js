@@ -178,6 +178,7 @@ const HomeTemplate = () => {
                   ...(profileData?.publicTags || []),
                 ]}
                 title='Suas tags'
+                isCentered
               />
             )}
           </S.Lists>
