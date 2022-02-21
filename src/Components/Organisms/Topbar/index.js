@@ -62,17 +62,17 @@ const TopBar = () => {
       </S.SearchWrapper>
 
       <S.ActionsButtons>
-        <ButtonLink href={ROUTES.NEW_GROUP}>
-          <>
-            <FontAwesomeIcon icon={faPlus} />
-            <span>Criar grupo</span>
-          </>
-        </ButtonLink>
-
         <ButtonLink href={ROUTES.NEW_PROFILE}>
           <>
             <FontAwesomeIcon icon={faPlus} />
             <span>Criar perfil</span>
+          </>
+        </ButtonLink>
+
+        <ButtonLink href={ROUTES.NEW_GROUP}>
+          <>
+            <FontAwesomeIcon icon={faPlus} />
+            <span>Criar grupo</span>
           </>
         </ButtonLink>
       </S.ActionsButtons>
