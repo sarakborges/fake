@@ -9,6 +9,8 @@ export const ActiveProfile = styled.div`
   place-content: space-between;
   place-items: center;
 
+  padding-right: 16px;
+
   > a {
     padding: 16px;
 
