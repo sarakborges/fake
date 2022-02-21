@@ -65,6 +65,7 @@ const GroupMembersMembersTemplate = () => {
           placeholder='Insira sua pesquisa'
           type='member'
           title={`Participantes de ${groupState?.name}:`}
+          noInfoText={`${groupState?.name} ainda não possui participantes.`}
         />
       </S.MembersWrapper>
     </GroupTemplate>

@@ -34,6 +34,21 @@ export const GroupLeft = styled.div`
   display: flex;
   flex-flow: column;
   flex: 1;
+`;
 
-  padding: 0 24px 24px;
+export const GroupRight = styled.div`
+  display: flex;
+  flex-flow: column;
+
+  position: sticky;
+  top: 72px;
+  right: 0;
+  z-index: 1;
+
+  max-height: calc(100vh - 72px);
+  min-width: 400px;
+  max-width: 400px;
+  padding-top: 32px;
+
+  background-color: var(--bgTransparent);
 `;

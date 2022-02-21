@@ -224,6 +224,11 @@ const GroupForm = ({ form, setForm, originalData }) => {
         appDispatch
       );
 
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
+
       router.push(ROUTES.GROUP.replace(":id", url));
     } catch (e) {
       appDispatch({
