@@ -59,14 +59,16 @@ const GroupTemplate = ({ children }) => {
 
       {groupState?._id && (
         <>
-          <S.GroupWrapper>
-            <InfoHeader info={groupState} type='group' />
+          <S.GroupWrapper bg={groupState?.cover}>
+            <S.GroupContent bg={!!groupState?.cover}>
+              <InfoHeader info={groupState} type='group' />
 
-            <S.GroupBody>
-              <S.GroupLeft>{children}</S.GroupLeft>
+              <S.GroupBody>
+                <S.GroupLeft>{children}</S.GroupLeft>
 
-              <Rightbar></Rightbar>
-            </S.GroupBody>
+                <Rightbar></Rightbar>
+              </S.GroupBody>
+            </S.GroupContent>
           </S.GroupWrapper>
         </>
       )}
