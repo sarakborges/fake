@@ -50,11 +50,7 @@ const InfoCard = ({ info, type, isBlured, parentInfo }) => {
   const getApprovedMemberships = useCallback(() => {
     setApprovedMemberships(
       info?.groups?.filter?.((item) => {
-        const member = item?.members?.find(
-          (groupItem) => groupItem.profile === info?._id
-        );
-
-        if (member?.status === "member") {
+        if (item.status === "member") {
           return item;
         } else {
           return false;

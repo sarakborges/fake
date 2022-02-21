@@ -41,7 +41,7 @@ export const ProfileRight = styled.div`
   flex-flow: column;
 
   position: sticky;
-  top: 80px;
+  top: 72px;
   right: 0;
   z-index: 1;
 

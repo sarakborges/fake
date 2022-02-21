@@ -72,11 +72,7 @@ const HomeTemplate = () => {
   const getApprovedMemberships = useCallback(() => {
     setApprovedMemberships(
       profileData?.groups?.filter?.((item) => {
-        const member = item?.members?.find(
-          (groupItem) => groupItem.profile === profileData?._id
-        );
-
-        if (member?.status === "member") {
+        if (item.status === "member") {
           return item;
         } else {
           return false;
@@ -141,7 +137,7 @@ const HomeTemplate = () => {
             />
 
             <RoundList
-              list={approvedMemberships}
+              list={approvedMemberships.map((item) => item.group)}
               title='Seus grupos'
               type='group'
               displayMore={approvedMemberships?.length > 5}
@@ -151,13 +147,18 @@ const HomeTemplate = () => {
               )}
             />
 
-            <LinkList
-              list={[
-                ...(profileData?.privateTags || []),
-                ...(profileData?.publicTags || []),
-              ]}
-              title='Suas tags'
-            />
+            {[
+              ...(profileData?.privateTags || []),
+              ...(profileData?.publicTags || []),
+            ].length > 0 && (
+              <LinkList
+                list={[
+                  ...(profileData?.privateTags || []),
+                  ...(profileData?.publicTags || []),
+                ]}
+                title='Suas tags'
+              />
+            )}
           </S.RightLists>
 
           <S.ChatWrapper>

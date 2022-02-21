@@ -34,11 +34,7 @@ const ProfileRightBar = ({ profileData }) => {
   const getApprovedMemberships = useCallback(() => {
     setApprovedMemberships(
       profileData?.groups?.filter?.((item) => {
-        const member = item?.members?.find(
-          (groupItem) => groupItem.profile === profileData?._id
-        );
-
-        if (member?.status === "member") {
+        if (item.status === "member") {
           return item;
         } else {
           return false;
@@ -74,7 +70,7 @@ const ProfileRightBar = ({ profileData }) => {
         emptyTitle={`${
           profile?._id === profileData._id ? "Você" : profileData.name
         } ainda não participa de grupos.`}
-        list={approvedMemberships?.slice?.(0, 5)}
+        list={approvedMemberships?.slice?.(0, 5).filter((item) => item.group)}
         extraItemLink={ROUTES.GROUP_MEMBERS.MEMBERS.replace(
           ":id",
           profileData.url
