@@ -21,7 +21,12 @@ const ProfileGroupsTemplate = () => {
     <ProfileTemplate>
       <S.ProfileGroups>
         <FilteredList
-          info={profileState?.groups}
+          info={profileState?.groups.map((item) => {
+            return {
+              ...item.group,
+              joinedAt: item.joinedAt,
+            };
+          })}
           id='non-owned-groups-filter'
           type='group'
           placeholder='Insira sua pesquisa'
