@@ -174,7 +174,7 @@ const NewFeed = ({ feed, setFeed }) => {
 
       <S.FeedButtons>
         <div>
-          <Button style='secondary' size={16} onClick={handleImageButton}>
+          <Button style='transparent' size={16} onClick={handleImageButton}>
             <FontAwesomeIcon icon={faImage} />
             <span>{displayImage ? "Remover" : "Anexar"} imagem</span>
           </Button>

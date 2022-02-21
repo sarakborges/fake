@@ -161,7 +161,7 @@ const HomeTemplate = () => {
           </S.RightLists>
 
           <S.ChatWrapper>
-            {chatUsers.length > 0 && (
+            {chatUsers?.length > 0 && (
               <Text type='custom' pt={16} pl={16} fw={600}>
                 Suas mensagens recentes
               </Text>

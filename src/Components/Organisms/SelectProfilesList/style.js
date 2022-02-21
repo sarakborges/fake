@@ -8,7 +8,7 @@ export const ProfilesList = styled.ul`
 
   & > li {
     width: 100%;
-    padding: 16px 24px;
+    padding: 16px;
 
     cursor: pointer;
 

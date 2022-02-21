@@ -139,7 +139,7 @@ const SelectProfile = () => {
       </S.SelectProfile>
 
       <S.InfoAreaWrapper onClick={toggleProfiles} highlighted={displayProfiles}>
-        <ProfilePicture avatar={profile.avatar} size={48} />
+        <ProfilePicture avatar={profile.avatar} size={40} />
       </S.InfoAreaWrapper>
     </S.SelectProfileWrapper>
   );

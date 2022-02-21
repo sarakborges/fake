@@ -9,10 +9,14 @@ export const ActiveProfile = styled.div`
   place-content: space-between;
   place-items: center;
 
-  padding: 0 24px;
-
   > a {
-    padding: 16px 0;
+    padding: 16px;
+
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: var(--bgTransparent);
+    }
   }
 `;
 
