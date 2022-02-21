@@ -8,7 +8,16 @@ export const HomeWrapper = styled.div`
   flex: 1;
 `;
 
-export const LeftWrapper = styled.div`
+export const ProfileWrapper = styled.div`
+  display: flex;
+  flex-flow: column;
+  place-items: center;
+  gap: 16px;
+
+  padding: 32px 0;
+`;
+
+export const FeedWrapper = styled.div`
   display: flex;
   flex-flow: column;
   gap: 64px;
@@ -17,13 +26,43 @@ export const LeftWrapper = styled.div`
   padding: 24px;
 `;
 
-export const RightLists = styled.div`
+export const Lists = styled.div`
   display: flex;
   flex-flow: column;
-  gap: 32px;
 
   min-width: 400px;
-  padding: 32px;
+  padding: 0 24px;
+
+  background-color: var(--bgTransparent);
+`;
+
+export const Counters = styled.div`
+  display: flex;
+  place-content: center;
+  place-items: center;
+  gap: 24px;
+
+  padding-bottom: 16px;
+
+  > a {
+    display: flex;
+    flex-flow: column;
+    place-content: center;
+    place-items: center;
+
+    width: 100px;
+    padding: 12px;
+
+    background-color: var(--bgContrast);
+    border: 2px solid transparent;
+    border-radius: 4px;
+
+    transition: border-color 0.3s;
+
+    &:hover {
+      border-color: var(--main);
+    }
+  }
 `;
 
 export const ChatWrapper = styled.div`

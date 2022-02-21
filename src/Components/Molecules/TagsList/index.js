@@ -14,7 +14,7 @@ import * as S from "./style";
 // Template
 const TagsList = ({ tags, handleRemove, hasLink, highlighted, compareTo }) => {
   return (
-    <S.TagsList tags={tags}>
+    <S.TagsList tags={tags} handleRemove={!!handleRemove}>
       {tags.map((item) => {
         return (
           <Fragment key={item}>
@@ -24,7 +24,7 @@ const TagsList = ({ tags, handleRemove, hasLink, highlighted, compareTo }) => {
                   <Tag
                     tag={item}
                     hasLink={hasLink}
-                    handleRemove={handleRemove}
+                    handleRemove={!!handleRemove}
                     highlighted={highlighted || compareTo.includes(item)}
                   />
                 </a>
@@ -33,7 +33,7 @@ const TagsList = ({ tags, handleRemove, hasLink, highlighted, compareTo }) => {
               <Tag
                 tag={item}
                 hasLink={hasLink}
-                handleRemove={handleRemove}
+                handleRemove={!!handleRemove}
                 highlighted={highlighted || compareTo.includes(item)}
               />
             )}

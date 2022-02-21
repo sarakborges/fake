@@ -23,7 +23,7 @@ export const Button = styled.div`
     transition: background-color 0.3s, color 0.3s, opacity 0.3s;
 
     &:hover {
-      background-color: var(--white);
+      background-color: var(--bgContrast);
 
       color: var(--main);
     }

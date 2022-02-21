@@ -34,6 +34,8 @@ import AuthedTemplate from "Components/Templates/Authed";
 import * as S from "./style";
 import RoundList from "Components/Organisms/RoundList";
 import LinkList from "Components/Organisms/LinkList";
+import ProfilePicture from "Components/Molecules/ProfilePicture";
+import ButtonLink from "Components/Atoms/ButtonLink";
 
 // Template
 const HomeTemplate = () => {
@@ -116,36 +118,55 @@ const HomeTemplate = () => {
 
       {profileData?._id && (
         <S.HomeWrapper>
-          <S.LeftWrapper>
-            <Feed
-              profile={profileData}
-              connections={approvedConnections}
-              displayNewFeed
-            />
-          </S.LeftWrapper>
+          <S.Lists>
+            <S.ProfileWrapper>
+              <ProfilePicture avatar={profileData?.avatar} size={128} />
 
-          <S.RightLists>
-            <RoundList
-              list={approvedConnections.map((item) => item.user)}
-              title='Suas conexões'
-              type='profile'
-              displayMore={approvedConnections?.length > 5}
-              extraItemLink={ROUTES.PROFILE_CONNECTIONS.replace(
-                ":id",
-                profileData?.url
-              )}
-            />
+              <Text type='title'>{profileData?.name}</Text>
 
-            <RoundList
-              list={approvedMemberships.map((item) => item.group)}
-              title='Seus grupos'
-              type='group'
-              displayMore={approvedMemberships?.length > 5}
-              extraItemLink={ROUTES.PROFILE_GROUPS.replace(
-                ":id",
-                profileData?.url
-              )}
-            />
+              <Text type='subtitle' pb={16}>
+                @{profileData?.url}
+              </Text>
+
+              <ButtonLink
+                href={ROUTES.PROFILE.replace(":id", profileData?.url)}
+              >
+                Ver perfil
+              </ButtonLink>
+            </S.ProfileWrapper>
+
+            <S.Counters>
+              <Link
+                href={ROUTES.PROFILE_CONNECTIONS.replace(
+                  ":id",
+                  profileData?.url
+                )}
+              >
+                <a>
+                  <Text type='custom' fs={20} fw={600} lh={1.4}>
+                    {approvedConnections.length}
+                  </Text>
+
+                  <Text type='custom' fs={14} lh={1.4}>
+                    {approvedConnections.length !== 1 ? "Conexões" : "Conexão"}
+                  </Text>
+                </a>
+              </Link>
+
+              <Link
+                href={ROUTES.PROFILE_GROUPS.replace(":id", profileData?.url)}
+              >
+                <a>
+                  <Text type='custom' fs={20} fw={600} lh={1.4}>
+                    {approvedMemberships.length}
+                  </Text>
+
+                  <Text type='custom' fs={14} lh={1.4}>
+                    {approvedMemberships.length !== 1 ? "Grupos" : "Grupo"}
+                  </Text>
+                </a>
+              </Link>
+            </S.Counters>
 
             {[
               ...(profileData?.privateTags || []),
@@ -159,7 +180,15 @@ const HomeTemplate = () => {
                 title='Suas tags'
               />
             )}
-          </S.RightLists>
+          </S.Lists>
+
+          <S.FeedWrapper>
+            <Feed
+              profile={profileData}
+              connections={approvedConnections}
+              displayNewFeed
+            />
+          </S.FeedWrapper>
 
           <S.ChatWrapper>
             {chatUsers?.length > 0 && (

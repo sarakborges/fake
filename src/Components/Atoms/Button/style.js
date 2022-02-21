@@ -6,7 +6,7 @@ const PrimaryButton = css`
   color: var(--offWhite);
 
   &:not(:disabled):hover {
-    background-color: var(--offWhite);
+    background-color: var(--bgContrast);
     color: var(--main);
   }
 `;
@@ -17,7 +17,7 @@ const SecondaryButton = css`
   color: var(--main);
 
   &:not(:disabled):hover {
-    background-color: var(--white);
+    background-color: var(--bgContrast);
   }
 `;
 
@@ -27,6 +27,7 @@ const TransparentButton = css`
   color: var(--main);
 
   &:not(:disabled):hover {
+    border-color: var(--main);
     background-color: var(--bgContrast);
   }
 `;
@@ -89,7 +90,7 @@ export const Button = styled.button`
   font-size: ${({ size }) => `${size}px`};
   font-family: inherit;
 
-  transition: background-color 0.3s, color 0.3s, opacity 0.3s;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s, opacity 0.3s;
 
   ${({ buttonStyle }) => buttonStyle === "primary" && PrimaryButton}
   ${({ buttonStyle }) => buttonStyle === "secondary" && SecondaryButton}

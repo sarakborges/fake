@@ -6,6 +6,7 @@ import { faCrown } from "@fortawesome/free-solid-svg-icons";
 
 // Helpers
 import { ROUTES } from "Helpers/routes";
+import { getTimeString } from "Helpers/Functions";
 
 // Contexts
 import { UserContext } from "Contexts/User";
@@ -104,6 +105,18 @@ const InfoCard = ({ info, type, isBlured, parentInfo }) => {
                 </S.Moderator>
               )}
             </S.InfoAreaWrapper>
+
+            {type === "member" && (
+              <Text type='custom' fs={14}>
+                Participa desde {getTimeString(info.joinedAt)}
+              </Text>
+            )}
+
+            {type === "connection" && (
+              <Text type='custom' fs={14}>
+                Conexão desde {getTimeString(info.connectedAt)}
+              </Text>
+            )}
 
             {type === "group" && (
               <Text type='custom' fs={14}>
