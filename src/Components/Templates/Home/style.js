@@ -17,6 +17,15 @@ export const LeftWrapper = styled.div`
   padding: 24px;
 `;
 
+export const RightLists = styled.div`
+  display: flex;
+  flex-flow: column;
+  gap: 32px;
+
+  min-width: 400px;
+  padding: 32px;
+`;
+
 export const ChatWrapper = styled.div`
   display: flex;
   flex-flow: column;

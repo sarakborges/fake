@@ -1,36 +1,35 @@
 // Dependencies
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLink } from "@fortawesome/free-solid-svg-icons";
+import { useEffect } from "react";
 
 // Atoms
 import Text from "Components/Atoms/Text";
+
+// Molecules
+import TagsList from "Components/Molecules/TagsList";
 
 // Styles
 import * as S from "./style";
 
 // Template
 const LinkList = ({ list, title, emptyTitle, hideEmpty }) => {
+  useEffect(() => {
+    list.sort((a, b) => (a > b ? 1 : -1));
+  }, []);
+
   return !hideEmpty ? (
-    <div>
+    <S.List>
       <S.Title>{title}</S.Title>
 
       {list?.length ? (
-        <S.List>
-          {list.map((item) => {
-            return (
-              <a key={item.title} href={item.link} target='_blank'>
-                <FontAwesomeIcon icon={faLink} />
-                <>{item.title}</>
-              </a>
-            );
-          })}
-        </S.List>
+        <S.TagsList>
+          <TagsList tags={list} hasLink highlighted />
+        </S.TagsList>
       ) : (
         <S.EmptyTitle>
           <Text ta='center'>{emptyTitle}</Text>
         </S.EmptyTitle>
       )}
-    </div>
+    </S.List>
   ) : (
     false
   );

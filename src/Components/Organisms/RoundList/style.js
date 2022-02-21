@@ -9,7 +9,7 @@ export const RoundList = styled.div`
   padding: 16px 2px;
 
   background-color: var(--bg);
-  border-radius: 16px;
+  border-radius: 4px;
 `;
 
 export const Title = styled.div`

@@ -32,6 +32,8 @@ import AuthedTemplate from "Components/Templates/Authed";
 
 // Styles
 import * as S from "./style";
+import RoundList from "Components/Organisms/RoundList";
+import LinkList from "Components/Organisms/LinkList";
 
 // Template
 const HomeTemplate = () => {
@@ -126,10 +128,44 @@ const HomeTemplate = () => {
             />
           </S.LeftWrapper>
 
+          <S.RightLists>
+            <RoundList
+              list={approvedConnections.map((item) => item.user)}
+              title='Suas conexões'
+              type='profile'
+              displayMore={approvedConnections?.length > 5}
+              extraItemLink={ROUTES.PROFILE_CONNECTIONS.replace(
+                ":id",
+                profileData?.url
+              )}
+            />
+
+            <RoundList
+              list={approvedMemberships}
+              title='Seus grupos'
+              type='group'
+              displayMore={approvedMemberships?.length > 5}
+              extraItemLink={ROUTES.PROFILE_GROUPS.replace(
+                ":id",
+                profileData?.url
+              )}
+            />
+
+            <LinkList
+              list={[
+                ...(profileData?.privateTags || []),
+                ...(profileData?.publicTags || []),
+              ]}
+              title='Suas tags'
+            />
+          </S.RightLists>
+
           <S.ChatWrapper>
-            <Text type='custom' pt={16} pl={16} fw={600}>
-              Suas mensagens recentes
-            </Text>
+            {chatUsers.length > 0 && (
+              <Text type='custom' pt={16} pl={16} fw={600}>
+                Suas mensagens recentes
+              </Text>
+            )}
 
             <ChatUsers usersList={chatUsers} />
           </S.ChatWrapper>
