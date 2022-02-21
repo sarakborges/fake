@@ -15,4 +15,5 @@ export const GroupBody = styled.div`
 
 export const GroupLeft = styled.div`
   flex: 1;
+  padding: 0 24px 24px;
 `;

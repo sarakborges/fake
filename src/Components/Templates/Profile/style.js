@@ -7,7 +7,7 @@ export const ProfileWrapper = styled.div`
   width: 100%;
   flex: 1;
 
-  background-color: var(--bg);
+  background-color: var(--bgContrast);
   background-image: url(${({ bg }) => bg});
   background-position: center center;
   background-repeat: no-repeat;
@@ -20,7 +20,7 @@ export const ProfileContent = styled.div`
   flex-flow: column;
   flex: 1;
 
-  background-color: var(--bgTransparent);
+  background-color: ${({ bg }) => (bg ? "var(--bgTransparent)" : "none")};
 `;
 
 export const ProfileBody = styled.div`
@@ -45,7 +45,7 @@ export const ProfileRight = styled.div`
   right: 0;
   z-index: 1;
 
-  max-height: calc(100vh - 80px);
+  max-height: calc(100vh - 72px);
   min-width: 400px;
   max-width: 400px;
   padding-top: 32px;

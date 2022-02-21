@@ -1,7 +1,7 @@
-import GroupMembersModeratorsTemplate from "Components/Templates/GroupMembersModerators";
+import GroupMembersModeratorsPage from "Components/Pages/GroupMembersModerators";
 
 const GroupMembersModerators = () => {
-  return <GroupMembersModeratorsTemplate />;
+  return <GroupMembersModeratorsPage />;
 };
 
 export default GroupMembersModerators;

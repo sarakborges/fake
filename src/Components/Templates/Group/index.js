@@ -1,6 +1,6 @@
 // Dependencies
 import Head from "next/head";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import { useRouter } from "next/dist/client/router";
 
 // APIs
@@ -9,15 +9,14 @@ import GroupAPI from "Apis/Group";
 // Helpers
 import { SITE_NAME } from "Helpers/Constants";
 
-// Atoms
-import InfoAbout from "Components/Atoms/InfoAbout";
+// Contexts
+import { GroupContext } from "Contexts/Group";
 
 // Molecules
 import InfoNotFound from "Components/Molecules/InfoNotFound";
 
 // Organisms
 import InfoHeader from "Components/Organisms/InfoHeader";
-import GroupRightBar from "Components/Organisms/GroupRightBar";
 import Rightbar from "Components/Atoms/Rightbar";
 
 // Template
@@ -27,8 +26,8 @@ import AuthedTemplate from "Components/Templates/Authed";
 import * as S from "./style";
 
 // Template
-const GroupTemplate = () => {
-  const [groupData, setGroupData] = useState();
+const GroupTemplate = ({ children }) => {
+  const { groupState, groupDispatch } = useContext(GroupContext);
 
   const router = useRouter();
   const {
@@ -39,7 +38,10 @@ const GroupTemplate = () => {
     const groupReq = await GroupAPI.getGroupByUrl(url);
 
     if (groupReq) {
-      setGroupData(groupReq);
+      groupDispatch({
+        type: "SET_GROUP",
+        data: { ...groupReq },
+      });
     }
   }, [url, GroupAPI]);
 
@@ -50,27 +52,20 @@ const GroupTemplate = () => {
   return (
     <AuthedTemplate>
       <Head>
-        <title>{`${SITE_NAME} - ${groupData?.name || "Grupo"}`}</title>
+        <title>{`${SITE_NAME} - ${groupState?.name || "Grupo"}`}</title>
       </Head>
 
-      {!groupData?._id && <InfoNotFound type='group' />}
+      {!groupState?._id && <InfoNotFound type='group' />}
 
-      {groupData?._id && (
+      {groupState?._id && (
         <>
           <S.GroupWrapper>
-            <InfoHeader info={groupData} type='group' setInfo={setGroupData} />
+            <InfoHeader info={groupState} type='group' />
 
             <S.GroupBody>
-              <S.GroupLeft>
-                <InfoAbout
-                  isAdult={groupData.isAdult}
-                  about={groupData.about}
-                />
-              </S.GroupLeft>
+              <S.GroupLeft>{children}</S.GroupLeft>
 
-              <Rightbar>
-                <GroupRightBar group={groupData} />
-              </Rightbar>
+              <Rightbar></Rightbar>
             </S.GroupBody>
           </S.GroupWrapper>
         </>

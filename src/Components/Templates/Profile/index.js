@@ -113,7 +113,7 @@ const ProfileTemplate = ({ children }) => {
       {profileState?._id &&
         !profileState?.blockedUsers?.includes?.(profile?._id) && (
           <S.ProfileWrapper bg={profileState.cover}>
-            <S.ProfileContent>
+            <S.ProfileContent bg={!!profileState.cover}>
               <S.ProfileBody>
                 <S.ProfileLeft>
                   <InfoHeader

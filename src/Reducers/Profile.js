@@ -6,7 +6,7 @@ export const ProfileReducer = (state, { type, data }) => {
     }
 
     default: {
-      throw new Error(`Unknown type ${type} reducer on UserReducer`);
+      throw new Error(`Unknown type ${type} reducer on ProfileReducer`);
     }
   }
 };

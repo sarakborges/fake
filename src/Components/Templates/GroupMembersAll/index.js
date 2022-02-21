@@ -1,107 +1,72 @@
 // Dependencies
-import Head from "next/head";
-import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/dist/client/router";
-
-// APIs
-import GroupAPI from "Apis/Group";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 // Helpers
-import { SITE_NAME, GROUP_MEMBERS_TABS } from "Helpers/Constants";
+import { GROUP_MEMBERS_TABS } from "Helpers/Constants";
+
+// Contexts
+import { GroupContext } from "Contexts/Group";
 
 // Molecules
 import Tabs from "Components/Molecules/Tabs";
-import InfoNotFound from "Components/Molecules/InfoNotFound";
 
 // Organisms
-import InfoHeader from "Components/Organisms/InfoHeader";
 import FilteredList from "Components/Organisms/FilteredList";
 
-// Template
-import AuthedTemplate from "Components/Templates/Authed";
+// Templates
+import GroupTemplate from "Components/Templates/Group";
 
-// Style
+// Styles
 import * as S from "./style";
 
-// Template
 const GroupMembersAllTemplate = () => {
-  const [group, setGroup] = useState();
   const [members, setMembers] = useState([]);
 
-  const router = useRouter();
-  const {
-    query: { url },
-  } = router;
+  const { groupState } = useContext(GroupContext);
 
   const getMembers = useCallback(() => {
-    if (!group?.members?.length) {
+    if (!groupState?.members?.length) {
       return [];
     }
 
-    setMembers(group?.members.filter((item) => item.status === "member") || []);
-  }, [group, setMembers]);
-
-  const getGroup = useCallback(async () => {
-    const groupReq = await GroupAPI.getGroupByUrl(url);
-
-    if (groupReq) {
-      setGroup(groupReq);
-    }
-  }, [GroupAPI]);
-
-  useEffect(() => {
-    getGroup();
-  }, [getGroup]);
+    setMembers(
+      groupState?.members.filter((item) => item.status === "member") || []
+    );
+  }, [groupState, setMembers]);
 
   useEffect(() => {
     getMembers();
   }, [getMembers]);
 
   return (
-    <AuthedTemplate>
-      <Head>
-        <title>{`${SITE_NAME} - ${group?.name || "Grupo"} - Membros`}</title>
-      </Head>
+    <GroupTemplate>
+      <S.MembersWrapper>
+        <Tabs
+          tabs={GROUP_MEMBERS_TABS.map((item) => {
+            return {
+              ...item,
+              link: item.link.replace(":id", groupState?.url),
+            };
+          })}
+        />
 
-      {!group?._id && <InfoNotFound type='group' />}
-
-      {group?._id && (
-        <>
-          <S.Wrapper>
-            <InfoHeader info={group} type='group' setInfo={setGroup} />
-
-            <S.GroupBody>
-              <Tabs
-                tabs={GROUP_MEMBERS_TABS.map((item) => {
-                  return {
-                    ...item,
-                    link: item.link.replace(":id", group.url),
-                  };
-                })}
-              />
-
-              <FilteredList
-                info={members.map((item) => {
-                  return {
-                    ...item.profile,
-                    joinedAt: item.joinedAt,
-                    isOwner: item.profile._id === group.owner,
-                    isModerator: group?.moderators?.includes?.(
-                      item.profile._id
-                    ),
-                  };
-                })}
-                id='group-members-filter'
-                placeholder='Insira sua pesquisa'
-                type='member'
-                title={`Participantes de ${group.name}:`}
-                parentInfo={group}
-              />
-            </S.GroupBody>
-          </S.Wrapper>
-        </>
-      )}
-    </AuthedTemplate>
+        <FilteredList
+          info={members.map((item) => {
+            return {
+              ...item.profile,
+              joinedAt: item.joinedAt,
+              isOwner: item.profile._id === groupState?.owner,
+              isModerator: groupState?.moderators?.includes?.(item.profile._id),
+            };
+          })}
+          id='group-members-filter'
+          placeholder='Insira sua pesquisa'
+          type='member'
+          title={`Todos participantes de ${groupState?.name}:`}
+          parentInfo={groupState}
+        />
+      </S.MembersWrapper>
+    </GroupTemplate>
   );
 };
 

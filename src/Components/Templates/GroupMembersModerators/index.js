@@ -1,103 +1,74 @@
 // Dependencies
-import Head from "next/head";
-import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/dist/client/router";
-
-// APIs
-import GroupAPI from "Apis/Group";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 // Helpers
-import { SITE_NAME, GROUP_MEMBERS_TABS } from "Helpers/Constants";
+import { GROUP_MEMBERS_TABS } from "Helpers/Constants";
+
+// Contexts
+import { GroupContext } from "Contexts/Group";
 
 // Molecules
 import Tabs from "Components/Molecules/Tabs";
-import InfoNotFound from "Components/Molecules/InfoNotFound";
 
 // Organisms
-import InfoHeader from "Components/Organisms/InfoHeader";
 import FilteredList from "Components/Organisms/FilteredList";
 
-// Template
-import AuthedTemplate from "Components/Templates/Authed";
+// Templates
+import GroupTemplate from "Components/Templates/Group";
 
-// Style
+// Styles
 import * as S from "./style";
 
-// Template
 const GroupMembersModeratorsTemplate = () => {
-  const [group, setGroup] = useState();
+  const [members, setMembers] = useState([]);
 
-  const router = useRouter();
-  const {
-    query: { url },
-  } = router;
+  const { groupState } = useContext(GroupContext);
 
-  const getModerators = () => {
-    return group?.members.filter(
-      (item) =>
-        group.owner === item.profile._id ||
-        group?.moderators?.includes?.(item.profile._id)
+  const getMembers = useCallback(() => {
+    if (!groupState?.members?.length) {
+      return [];
+    }
+
+    setMembers(
+      groupState?.members.filter(
+        (item) =>
+          groupState?.owner === item.profile._id ||
+          groupState?.moderators?.includes?.(item.profile._id)
+      )
     );
-  };
-
-  const getGroup = useCallback(
-    async (groupUrl) => {
-      const groupData = await GroupAPI.getGroupByUrl(groupUrl);
-
-      if (groupData) {
-        setGroup(groupData);
-      }
-    },
-    [GroupAPI]
-  );
+  }, [groupState, setMembers]);
 
   useEffect(() => {
-    getGroup(url);
-  }, [url, getGroup]);
+    getMembers();
+  }, [getMembers]);
 
   return (
-    <AuthedTemplate>
-      <Head>
-        <title>{`${SITE_NAME} - ${
-          group?.name || "Grupo"
-        } - Moderadores`}</title>
-      </Head>
+    <GroupTemplate>
+      <S.MembersWrapper>
+        <Tabs
+          tabs={GROUP_MEMBERS_TABS.map((item) => {
+            return {
+              ...item,
+              link: item.link.replace(":id", groupState?.url),
+            };
+          })}
+        />
 
-      {!group?._id && <InfoNotFound type='group' />}
-
-      {group?._id && (
-        <>
-          <S.Wrapper>
-            <InfoHeader info={group} type='group' setInfo={setGroup} />
-
-            <S.GroupBody>
-              <Tabs
-                tabs={GROUP_MEMBERS_TABS.map((item) => {
-                  return {
-                    ...item,
-                    link: item.link.replace(":id", group.url),
-                  };
-                })}
-              />
-
-              <FilteredList
-                info={getModerators().map((item) => {
-                  return {
-                    ...item.profile,
-                    joinedAt: item.joinedAt,
-                  };
-                })}
-                id='group-moderators-filter'
-                placeholder='Insira sua pesquisa'
-                type='member'
-                title={`Moderadores de ${group.name}:`}
-                parentInfo={group}
-              />
-            </S.GroupBody>
-          </S.Wrapper>
-        </>
-      )}
-    </AuthedTemplate>
+        <FilteredList
+          info={members?.map((item) => {
+            return {
+              ...item.profile,
+              joinedAt: item.joinedAt,
+            };
+          })}
+          id='group-members-filter'
+          placeholder='Insira sua pesquisa'
+          type='member'
+          title={`Moderadores de ${groupState?.name}:`}
+          parentInfo={groupState}
+        />
+      </S.MembersWrapper>
+    </GroupTemplate>
   );
 };
 

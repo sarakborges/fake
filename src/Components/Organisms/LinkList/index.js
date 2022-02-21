@@ -13,6 +13,10 @@ import * as S from "./style";
 // Template
 const LinkList = ({ list, title, emptyTitle, hideEmpty }) => {
   useEffect(() => {
+    if (!list?.length) {
+      return;
+    }
+
     list.sort((a, b) => (a > b ? 1 : -1));
   }, []);
 

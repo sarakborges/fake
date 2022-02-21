@@ -4,7 +4,6 @@ export default {
 
   colors: {
     main: "#47bda7",
-    mainVariation: "#72e3cf",
 
     bg: "#131b19",
     bgContrast: "#192422",

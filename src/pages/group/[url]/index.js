@@ -1,7 +1,7 @@
-import GroupTemplate from "Components/Templates/Group";
+import GroupAboutPage from "Components/Pages/GroupAbout";
 
 const Group = () => {
-  return <GroupTemplate />;
+  return <GroupAboutPage />;
 };
 
 export default Group;
