@@ -16,7 +16,6 @@ import ProfilePicture from "Components/Molecules/ProfilePicture";
 // Styles
 import * as S from "./style";
 
-// Template
 const ChatMessageItem = ({ info, defaultUser, lastMessageSender }) => {
   const { userState } = useContext(UserContext);
   const { profile } = userState;

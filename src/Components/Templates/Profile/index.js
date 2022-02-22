@@ -24,13 +24,12 @@ import InfoNotFound from "Components/Molecules/InfoNotFound";
 import InfoHeader from "Components/Organisms/InfoHeader";
 import ChatMessages from "Components/Organisms/ChatMessages";
 
-// Template
+// Templates
 import AuthedTemplate from "Components/Templates/Authed";
 
 // Style
 import * as S from "./style";
 
-// Template
 const ProfileTemplate = ({ children }) => {
   const [messages, setMessages] = useState();
   const [newMessage, setNewMessage] = useState("");

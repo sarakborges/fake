@@ -16,7 +16,7 @@ import { ProfileContext } from "Contexts/Profile";
 // Atoms
 import Button from "Components/Atoms/Button";
 
-const UnconnectButton = ({ children, profileId }) => {
+const AcceptConnectionButton = ({ children, profileId }) => {
   const { userState, userDispatch } = useContext(UserContext);
   const { profile } = userState;
 
@@ -55,7 +55,7 @@ const UnconnectButton = ({ children, profileId }) => {
 
       const updateConnectinoReq = await ProfileAPI.updateConnection({
         ids: [profile._id, profileId || profileState?._id],
-        status: "remove",
+        status: "accept",
       });
 
       updateUsers(updateConnectinoReq);
@@ -65,7 +65,7 @@ const UnconnectButton = ({ children, profileId }) => {
         data: false,
       });
 
-      displayToast(TOASTS.REMOVE_CONNECTION, 0, appDispatch);
+      displayToast(TOASTS.ACCEPT_CONNECTION, 0, appDispatch);
     } catch (e) {
       console.log(e);
 
@@ -74,7 +74,7 @@ const UnconnectButton = ({ children, profileId }) => {
         data: false,
       });
 
-      displayToast(TOASTS.REMOVE_CONNECTION, 1, appDispatch);
+      displayToast(TOASTS.ACCEPT_CONNECTION, 1, appDispatch);
     }
   };
 
@@ -90,4 +90,4 @@ const UnconnectButton = ({ children, profileId }) => {
   );
 };
 
-export default UnconnectButton;
+export default AcceptConnectionButton;

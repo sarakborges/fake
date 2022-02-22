@@ -7,10 +7,9 @@ import { SITE_NAME } from "Helpers/Constants";
 // Organisms
 import SettingsSite from "Components/Organisms/SettingsSite";
 
-// Template Wrapper
+// Templates
 import SettingsTemplate from "Components/Templates/Settings";
 
-// Template
 const SettingsSiteTemplate = () => {
   return (
     <SettingsTemplate>

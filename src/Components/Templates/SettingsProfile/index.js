@@ -11,10 +11,9 @@ import { SITE_NAME } from "Helpers/Constants";
 // Organisms
 import ProfileForm from "Components/Organisms/ProfileForm";
 
-// Template
+// Templates
 import SettingsTemplate from "Components/Templates/Settings";
 
-// Template
 const SettingsProfileTemplate = () => {
   const { userState } = useContext(UserContext);
   const { profile } = userState;

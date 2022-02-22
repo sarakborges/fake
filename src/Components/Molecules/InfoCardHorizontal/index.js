@@ -21,7 +21,6 @@ import TagsList from "Components/Molecules/TagsList";
 // Style
 import * as S from "./style";
 
-// Template
 const InfoCard = ({ info, type }) => {
   const { userState } = useContext(UserContext);
   const { profile } = userState;

@@ -19,18 +19,18 @@ import { UserContext } from "Contexts/User";
 // Atoms
 import Button from "Components/Atoms/Button";
 import ButtonLink from "Components/Atoms/ButtonLink";
-import Text from "Components/Atoms/Text";
 
 // Organisms
 import SearchForm from "Components/Organisms/SearchForm";
 import SelectProfile from "Components/Organisms/SelectProfile";
+import Notifications from "Components/Organisms/Notifications";
 
 // Style
 import * as S from "./style";
 
-// Template
 const TopBar = () => {
   const [displaySidebar, setDisplaySidebar] = useState(false);
+  const [displayNotifications, setDisplayNotifications] = useState(false);
 
   const { userState } = useContext(UserContext);
   const { profile } = userState;
@@ -48,13 +48,13 @@ const TopBar = () => {
       </S.ToggleMenu>
 
       <S.ActionsWrapper>
-        <Text type='custom' fs={20}>
+        <div>
           <Link href={ROUTES.HOME}>
             <a>
               <FontAwesomeIcon icon={faHome} />
             </a>
           </Link>
-        </Text>
+        </div>
       </S.ActionsWrapper>
 
       <S.SearchWrapper>
@@ -80,13 +80,19 @@ const TopBar = () => {
       <S.ActionsWrapper>
         {profile?._id && <SelectProfile />}
 
-        <Text type='custom' fs={20}>
-          <FontAwesomeIcon icon={faBell} />
-        </Text>
+        <div>
+          <Notifications displayNotifications={displayNotifications} />
 
-        <Text type='custom' fs={20}>
-          <FontAwesomeIcon icon={faEnvelope} />
-        </Text>
+          <span onClick={() => setDisplayNotifications(!displayNotifications)}>
+            <FontAwesomeIcon icon={faBell} />
+          </span>
+        </div>
+
+        <div>
+          <span>
+            <FontAwesomeIcon icon={faEnvelope} />
+          </span>
+        </div>
       </S.ActionsWrapper>
     </S.Topbar>
   );

@@ -31,7 +31,6 @@ import DarkTheme from "Styles/Themes/Dark";
 import { GlobalStyle } from "Styles/global";
 import * as S from "./style";
 
-// Template
 const RegisterTemplate = () => {
   const router = useRouter();
 

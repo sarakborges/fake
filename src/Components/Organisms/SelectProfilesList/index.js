@@ -18,7 +18,6 @@ import InfoArea from "Components/Molecules/InfoArea";
 // Style
 import * as S from "./style";
 
-// Template
 const SelectProfilesList = ({ profiles }) => {
   const { userDispatch } = useContext(UserContext);
   const { appDispatch } = useContext(AppContext);

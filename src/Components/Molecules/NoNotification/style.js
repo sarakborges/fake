@@ -18,8 +18,6 @@ export const NoNotificationWrapper = styled.div`
   place-content: center;
   gap: 32px;
 
-  width: 520px;
-
   span {
     font-weight: 600;
   }

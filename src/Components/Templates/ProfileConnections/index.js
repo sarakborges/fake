@@ -8,13 +8,12 @@ import { ProfileContext } from "Contexts/Profile";
 // Organisms
 import FilteredList from "Components/Organisms/FilteredList";
 
-// Template
+// Templates
 import ProfileTemplate from "Components/Templates/Profile";
 
 // Styles
 import * as S from "./style";
 
-// Template
 const ProfileConnectionsTemplate = () => {
   const { profileState } = useContext(ProfileContext);
   const { userState } = useContext(UserContext);

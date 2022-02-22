@@ -8,7 +8,6 @@ import ChatUserItem from "Components/Molecules/ChatUserItem";
 // Styles
 import * as S from "./style";
 
-// Template
 const ChatUsers = ({ usersList, tempUser, currentUrl }) => {
   return (
     <S.PeopleWrapper>

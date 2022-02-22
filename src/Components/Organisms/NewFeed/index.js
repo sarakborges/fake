@@ -27,7 +27,6 @@ import File from "Components/Molecules/File";
 // Styles
 import * as S from "./style";
 
-// Template
 const NewFeed = ({ feed, setFeed }) => {
   const baseFormField = {
     value: "",

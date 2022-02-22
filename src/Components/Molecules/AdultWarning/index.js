@@ -9,7 +9,6 @@ import Text from "Components/Atoms/Text";
 // Style
 import * as S from "./style";
 
-// Template
 const AdultWarning = ({ type, setDisplayAdult }) => {
   return (
     <S.InfoNotFound>

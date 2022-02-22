@@ -4,7 +4,6 @@ import Textarea from "Components/Atoms/Textarea";
 // Style
 import * as S from "./style";
 
-// Template
 const LabeledTextarea = ({
   id,
   size,

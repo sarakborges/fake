@@ -48,21 +48,32 @@ export const ActionsWrapper = styled.div`
   place-content: center;
   gap: 8px;
 
-  > p {
+  > div {
+    position: relative;
+
     display: flex;
     place-items: center;
     place-content: center;
 
-    height: 48px;
-    aspect-ratio: 1;
+    height: 72px;
 
-    > a {
+    font-size: 20px;
+
+    > :is(a, span) {
       display: flex;
       place-content: center;
       place-items: center;
 
-      height: 100%;
-      width: 100%;
+      height: 48px;
+      aspect-ratio: 1;
+
+      cursor: pointer;
+
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: var(--bgContrast);
+      }
     }
   }
 `;

@@ -18,7 +18,6 @@ import ChatMessageItem from "Components/Molecules/ChatMessageItem";
 import * as S from "./style";
 import Text from "Components/Atoms/Text";
 
-// Template
 const ChatMessages = ({
   messages,
   newMessage,

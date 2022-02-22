@@ -19,7 +19,6 @@ import ProfilePicture from "Components/Molecules/ProfilePicture";
 import * as S from "./style";
 import { useContext } from "react";
 
-// Template
 const RoundList = ({
   list,
   title,

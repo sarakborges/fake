@@ -11,7 +11,6 @@ import ProfilePicture from "Components/Molecules/ProfilePicture";
 // Style
 import * as S from "./style";
 
-// Template
 const InfoArea = ({ info, side, displayCounters, notifications, messages }) => {
   const { appState } = useContext(AppContext);
   const { displayAdult } = appState;

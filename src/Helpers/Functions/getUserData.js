@@ -1,4 +1,5 @@
 import UserAPI from "Apis/User";
+import ProfileAPI from "Apis/Profile";
 
 export const getUserData = async () => {
   // localStorage.clear();
@@ -13,7 +14,7 @@ export const getUserData = async () => {
     if (!userReq?._id) {
       return false;
     } else {
-      userData = { ...userReq, profile: { ...localUserData.profile } };
+      userData = { ...userReq };
     }
   } else {
     return false;
@@ -21,13 +22,16 @@ export const getUserData = async () => {
 
   const profileData =
     userData.profiles?.length > 0
-      ? userData.profiles.find((item) => item._id === userData?.profile?._id) ||
-        userData.profiles[0]
+      ? userData.profiles.find(
+          (item) => item._id === localUserData?.profile?._id
+        ) || userData.profiles[0]
       : undefined;
+
+  const profileReq = await ProfileAPI.getProfileById(profileData._id);
 
   const ret = {
     user: { ...userData },
-    profile: profileData,
+    profile: profileReq,
   };
 
   return ret;

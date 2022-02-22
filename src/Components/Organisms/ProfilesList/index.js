@@ -22,7 +22,6 @@ import SelectProfilesList from "Components/Organisms/SelectProfilesList";
 // Style
 import * as S from "./style";
 
-// Template
 const ProfilesList = () => {
   const { userState } = useContext(UserContext);
   const { user, profile } = userState;

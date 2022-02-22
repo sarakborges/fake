@@ -1,7 +1,6 @@
 // Style
 import * as S from "./style";
 
-// Template
 const Avatar = ({ img, size, bgColor, isBlured }) => {
   return (
     <S.AvatarWrapper size={size}>

@@ -11,7 +11,6 @@ import InfoList from "Components/Organisms/InfoList";
 // Style
 import * as S from "./style";
 
-// Template
 const FilteredList = ({
   info,
   id,

@@ -6,7 +6,6 @@ import Avatar from "Components/Atoms/Avatar";
 import * as S from "./style";
 import { useEffect, useState } from "react";
 
-// Template
 const File = ({
   id,
   label,

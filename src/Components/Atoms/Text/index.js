@@ -1,7 +1,6 @@
 // Style
 import * as S from "./style";
 
-// Template
 const Text = ({ type, children, ...rest }) => {
   return (
     <>

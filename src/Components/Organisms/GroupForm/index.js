@@ -29,7 +29,6 @@ import LabeledTextarea from "Components/Molecules/LabeledTextarea";
 // Style
 import * as S from "./style";
 
-// Template
 const GroupForm = ({ form, setForm, originalData }) => {
   const router = useRouter();
   const [valueImg, setValueImg] = useState();
@@ -268,18 +267,18 @@ const GroupForm = ({ form, setForm, originalData }) => {
           <S.Row>
             <File
               id='avatar'
-              placeholder='Arraste o arquivo do seu AVATAR para cá'
-              placeholderHover='Solte o arquivo do seu AVATAR aqui'
-              label='Avatar'
+              placeholder='Arraste o arquivo da sua foto para cá'
+              placeholderHover='Solte o arquivo da sua foto aqui'
+              label='Foto'
               value={form.avatar.value}
               onChange={handleChange}
             />
 
             <File
               id='cover'
-              placeholder='Arraste o arquivo da sua CAPA para cá'
-              placeholderHover='Solte o arquivo da sua CAPA aqui'
-              label='Capa'
+              placeholder='Arraste o arquivo da sua imagem de fundo para cá'
+              placeholderHover='Solte o arquivo da sua imagem de fundo aqui'
+              label='Imagem de fundo'
               value={form.cover.value}
               onChange={handleChange}
               Preview={

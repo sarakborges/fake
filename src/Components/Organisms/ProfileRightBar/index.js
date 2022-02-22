@@ -11,7 +11,6 @@ import { UserContext } from "Contexts/User";
 import RoundList from "Components/Organisms/RoundList";
 import TagsList from "Components/Organisms/TagsList";
 
-// Template
 const ProfileRightBar = ({ profileData }) => {
   const [approvedConnections, setApprovedConnections] = useState([]);
   const [approvedMemberships, setApprovedMemberships] = useState([]);

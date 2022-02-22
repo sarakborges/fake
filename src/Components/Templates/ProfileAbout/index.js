@@ -11,10 +11,9 @@ import { ProfileContext } from "Contexts/Profile";
 // Atoms
 import InfoAbout from "Components/Atoms/InfoAbout";
 
-// Template
+// Templates
 import ProfileTemplate from "Components/Templates/Profile";
 
-// Template
 const ProfileAboutTemplate = () => {
   const { profileState } = useContext(ProfileContext);
 

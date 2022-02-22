@@ -14,7 +14,6 @@ import InfoArea from "Components/Molecules/InfoArea";
 // Style
 import * as S from "./style";
 
-// Template
 const CreateNew = ({ type }) => {
   const typeStr =
     type === "group" ? "grupo" : type === "profile" ? "perfil" : "";

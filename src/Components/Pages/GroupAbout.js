@@ -4,7 +4,6 @@ import { GroupProvider } from "Contexts/Group";
 // Templates
 import GroupAboutTemplate from "Components/Templates/GroupAbout";
 
-// Template
 const GroupAboutPage = () => {
   return (
     <GroupProvider>

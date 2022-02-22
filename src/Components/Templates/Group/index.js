@@ -17,15 +17,13 @@ import InfoNotFound from "Components/Molecules/InfoNotFound";
 
 // Organisms
 import InfoHeader from "Components/Organisms/InfoHeader";
-import Rightbar from "Components/Atoms/Rightbar";
 
-// Template
+// Templates
 import AuthedTemplate from "Components/Templates/Authed";
 
 // Style
 import * as S from "./style";
 
-// Template
 const GroupTemplate = ({ children }) => {
   const { groupState, groupDispatch } = useContext(GroupContext);
 

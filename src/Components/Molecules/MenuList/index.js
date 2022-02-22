@@ -18,7 +18,6 @@ import Button from "Components/Atoms/Button";
 // Style
 import * as S from "./style";
 
-// Template
 const MenuList = () => {
   const router = useRouter();
   const { pathname } = router;

@@ -5,7 +5,6 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 // Style
 import * as S from "./style";
 
-// Template
 const Tag = ({ tag, highlighted, handleRemove }) => {
   return (
     <S.Tag

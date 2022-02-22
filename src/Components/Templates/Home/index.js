@@ -17,27 +17,23 @@ import { ROUTES } from "Helpers/routes";
 
 // Atoms
 import Text from "Components/Atoms/Text";
-import Avatar from "Components/Atoms/Avatar";
-import RoundIcon from "Components/Atoms/RoundIcon";
+import ButtonLink from "Components/Atoms/ButtonLink";
 
 // Molecules
 import NoProfile from "Components/Molecules/NoProfile";
+import ProfilePicture from "Components/Molecules/ProfilePicture";
 
 // Organisms
 import Feed from "Components/Organisms/Feed";
 import ChatUsers from "Components/Organisms/ChatUsers";
+import LinkList from "Components/Organisms/LinkList";
 
-// Template
+// Templates
 import AuthedTemplate from "Components/Templates/Authed";
 
 // Styles
 import * as S from "./style";
-import RoundList from "Components/Organisms/RoundList";
-import LinkList from "Components/Organisms/LinkList";
-import ProfilePicture from "Components/Molecules/ProfilePicture";
-import ButtonLink from "Components/Atoms/ButtonLink";
 
-// Template
 const HomeTemplate = () => {
   const [approvedConnections, setApprovedConnections] = useState([]);
   const [approvedMemberships, setApprovedMemberships] = useState([]);

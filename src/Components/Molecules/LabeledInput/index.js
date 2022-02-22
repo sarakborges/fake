@@ -4,7 +4,6 @@ import Input from "Components/Atoms/Input";
 // Style
 import * as S from "./style";
 
-// Template
 const LabeledInput = ({
   id,
   type,

@@ -1,7 +1,6 @@
 // Style
 import * as S from "./style";
 
-// Template
 const Button = ({ children, type, disabled, style, size, onClick }) => {
   return (
     <S.Button

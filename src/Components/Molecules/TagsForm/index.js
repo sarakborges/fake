@@ -14,7 +14,6 @@ import TagsList from "Components/Molecules/TagsList";
 // Style
 import * as S from "./style";
 
-// Template
 const TagsForm = ({ title, tags, setTags, type }) => {
   const [newTag, setNewTag] = useState("");
 

@@ -11,7 +11,6 @@ import Tag from "Components/Atoms/Tag";
 // Style
 import * as S from "./style";
 
-// Template
 const TagsList = ({
   tags,
   handleRemove,

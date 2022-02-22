@@ -11,7 +11,6 @@ import NewFeed from "Components/Organisms/NewFeed/";
 // Styles
 import * as S from "./style";
 
-// Template
 const Feed = ({ profile, connections, displayNewFeed }) => {
   const [feed, setFeed] = useState();
 

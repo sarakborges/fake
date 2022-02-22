@@ -7,13 +7,12 @@ import { ProfileContext } from "Contexts/Profile";
 // Organisms
 import Feed from "Components/Organisms/Feed";
 
-// Template
+// Templates
 import ProfileTemplate from "Components/Templates/Profile";
 
 // Styles
 import * as S from "./style";
 
-// Template
 const ProfileFeedTemplate = () => {
   const { profileState } = useContext(ProfileContext);
 

@@ -8,13 +8,12 @@ import { SITE_NAME } from "Helpers/Constants";
 // Organisms
 import ProfileForm from "Components/Organisms/ProfileForm";
 
-// Template
+// Templates
 import AuthedTemplate from "Components/Templates/Authed";
 
 // Style
 import * as S from "./style";
 
-// Template
 const NewProfileTemplate = () => {
   const baseFormField = {
     value: "",

@@ -10,7 +10,6 @@ import TagsList from "Components/Molecules/TagsList";
 // Styles
 import * as S from "./style";
 
-// Template
 const LinkList = ({ list, title, emptyTitle, hideEmpty }) => {
   useEffect(() => {
     if (!list?.length) {

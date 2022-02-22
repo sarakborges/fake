@@ -8,7 +8,6 @@ import Text from "Components/Atoms/Text";
 // Style
 import * as S from "./style";
 
-// Template
 const NoNotification = () => {
   return (
     <S.NoNotification>

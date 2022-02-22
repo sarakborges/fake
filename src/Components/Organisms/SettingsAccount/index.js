@@ -15,7 +15,6 @@ import LabeledInput from "Components/Molecules/LabeledInput";
 // Style
 import * as S from "./style";
 
-// Template
 const SettingsAccount = () => {
   const { userState } = useContext(UserContext);
   const { user } = userState;

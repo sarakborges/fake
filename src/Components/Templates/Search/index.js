@@ -13,14 +13,13 @@ import { SITE_NAME } from "Helpers/Constants";
 import InfoList from "Components/Organisms/InfoList";
 import SearchForm from "Components/Organisms/SearchForm";
 
-// Template
+// Templates
 import AuthedTemplate from "Components/Templates/Authed";
 
 // Styles
 import * as S from "./style";
 import Text from "Components/Atoms/Text";
 
-// Template
 const HomeTemplate = () => {
   const router = useRouter();
   const {

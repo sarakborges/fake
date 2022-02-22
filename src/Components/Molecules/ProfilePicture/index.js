@@ -5,7 +5,6 @@ import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import Avatar from "Components/Atoms/Avatar";
 import RoundIcon from "Components/Atoms/RoundIcon";
 
-// Template
 const ProfilePicture = ({ avatar, size, isBlured }) => {
   return (
     <>

@@ -7,7 +7,6 @@ import { AppContext } from "Contexts/App";
 // Molecules
 import InfoCard from "Components/Molecules/InfoCardHorizontal";
 
-// Template
 const InfoList = ({ info, type }) => {
   const { appState } = useContext(AppContext);
   const { displayAdult } = appState;

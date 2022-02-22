@@ -15,7 +15,6 @@ import Themes from "Styles/Themes";
 import * as S from "./style";
 import Checkbox from "Components/Atoms/Checkbox";
 
-// Template
 const SettingsSite = () => {
   const { appState, appDispatch } = useContext(AppContext);
   const { theme, displayAdult } = appState;

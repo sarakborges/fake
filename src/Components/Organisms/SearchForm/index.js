@@ -14,7 +14,6 @@ import InfoListHorizontal from "Components/Organisms/InfoListHorizontal";
 // Styles
 import * as S from "./style";
 
-// Template
 const SearchForm = () => {
   const [displayResults, setDisplayResults] = useState(false);
   const [search, setSearch] = useState();

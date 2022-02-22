@@ -5,7 +5,6 @@ import { useRouter } from "next/dist/client/router";
 // Style
 import * as S from "./style";
 
-// Template
 const Tabs = ({ tabs }) => {
   const router = useRouter();
   const { asPath } = router;

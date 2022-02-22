@@ -25,7 +25,6 @@ import InfoArea from "Components/Molecules/InfoArea";
 // Styles
 import * as S from "./style";
 
-// Template
 const FeedItem = ({ info, setFeed }) => {
   const { appState } = useContext(AppContext);
   const { displayAdult } = appState;

@@ -1,4 +1,3 @@
-// Template
 const Form = ({ children, onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();

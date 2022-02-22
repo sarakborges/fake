@@ -15,10 +15,9 @@ import { SITE_NAME } from "Helpers/Constants";
 // Organisms
 import GroupForm from "Components/Organisms/GroupForm";
 
-// Template
+// Templates
 import AuthedTemplate from "Components/Templates/Authed";
 
-// Template
 const NewGroupTemplate = () => {
   const { userState } = useContext(UserContext);
   const { profile } = userState;

@@ -7,7 +7,6 @@ import { AppContext } from "Contexts/App";
 // Style
 import * as S from "./style";
 
-// Template
 const InfoAbout = ({ isAdult, about }) => {
   const { appState } = useContext(AppContext);
   const { displayAdult } = appState;

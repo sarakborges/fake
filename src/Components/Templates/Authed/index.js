@@ -30,8 +30,6 @@ const AuthedTemplate = ({ children }) => {
 
   const { theme, toast } = appState;
 
-  const [displaySidebar, setDisplaySidebar] = useState(false);
-
   const setUserData = useCallback(async () => {
     try {
       const userReq = await getUserData();

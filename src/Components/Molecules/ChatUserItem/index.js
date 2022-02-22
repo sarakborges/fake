@@ -14,7 +14,6 @@ import ProfilePicture from "Components/Molecules/ProfilePicture";
 // Styles
 import * as S from "./style";
 
-// Template
 const ChatUserItem = ({ info, currentUrl }) => {
   return (
     <Link href={ROUTES.MESSAGES.replace(":id", info.user.url)}>

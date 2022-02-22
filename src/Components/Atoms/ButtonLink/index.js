@@ -4,7 +4,6 @@ import Link from "next/link";
 // Style
 import * as S from "./style";
 
-// Template
 const ButtonLink = ({ children, href }) => {
   return (
     <S.Button>

@@ -10,7 +10,6 @@ import InfoCard from "Components/Molecules/InfoCardVertical";
 // Style
 import * as S from "./style";
 
-// Template
 const InfoList = ({ info, type, parentInfo }) => {
   const { appState } = useContext(AppContext);
   const { displayAdult } = appState;

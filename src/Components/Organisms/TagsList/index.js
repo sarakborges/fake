@@ -13,7 +13,6 @@ import Text from "Components/Atoms/Text";
 // Styles
 import * as S from "./style";
 
-// Template
 const LinkList = ({ list, title, emptyTitle, hideEmpty }) => {
   const { userState } = useContext(UserContext);
   const { profile } = userState;

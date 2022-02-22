@@ -1,14 +1,13 @@
 // Molecules
 import Tabs from "Components/Molecules/Tabs";
 
-// Template
+// Templates
 import AuthedTemplate from "Components/Templates/Authed";
 import { ROUTES } from "Helpers/routes";
 
 // Style
 import * as S from "./style";
 
-// Template
 const SettingsTemplate = ({ children }) => {
   const tabs = [
     {

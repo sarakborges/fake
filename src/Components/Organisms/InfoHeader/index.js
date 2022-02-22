@@ -112,22 +112,6 @@ const InfoHeader = ({ info, type, setInfo }) => {
   };
 
   const buttonActions = {
-    acceptConnection: async () => {
-      try {
-        await updateConnection("accept");
-        displayToast(TOASTS.ACCEPT_CONNECTION, 0, appDispatch);
-      } catch (e) {
-        console.log(e);
-
-        appDispatch({
-          type: "SET_IS_REQUESTING",
-          data: false,
-        });
-
-        displayToast(TOASTS.ACCEPT_CONNECTION, 1, appDispatch);
-      }
-    },
-
     enterGroup: async () => {
       try {
         appDispatch({

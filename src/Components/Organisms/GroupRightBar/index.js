@@ -5,7 +5,6 @@ import { ROUTES } from "Helpers/routes";
 import RoundList from "Components/Organisms/RoundList";
 import LinkList from "Components/Organisms/LinkList";
 
-// Template
 const GroupRightBar = ({ group }) => {
   return (
     <>
