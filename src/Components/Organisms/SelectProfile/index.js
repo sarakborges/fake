@@ -40,12 +40,18 @@ const SelectProfile = () => {
     setFilter(e.currentTarget.value);
   };
 
+  const toggleMenu = (e) => {
+    if (!profilesListRef?.current?.contains(e.target)) {
+      setDisplayProfiles(false);
+    }
+  };
+
   useEffect(() => {
-    document.addEventListener("click", (e) => {
-      if (!profilesListRef?.current?.contains(e.target)) {
-        setDisplayProfiles(false);
-      }
-    });
+    document.addEventListener("click", toggleMenu);
+
+    return () => {
+      document.addEventListener("click", toggleMenu);
+    };
   }, []);
 
   useEffect(() => {
