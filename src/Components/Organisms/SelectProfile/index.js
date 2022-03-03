@@ -122,9 +122,11 @@ const SelectProfile = () => {
             <InfoArea info={profile} avatarSize={48} side='left' displayTags />
           </S.ActiveInfo>
 
-          <ButtonLink href={ROUTES.PROFILE.replace(":id", profile.url)}>
-            Ver perfil
-          </ButtonLink>
+          <S.GoToProfile>
+            <ButtonLink href={ROUTES.PROFILE.replace(":id", profile.url)}>
+              Ver perfil
+            </ButtonLink>
+          </S.GoToProfile>
         </S.ActiveProfile>
 
         <div>

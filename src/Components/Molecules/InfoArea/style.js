@@ -13,6 +13,14 @@ export const Avatar = styled.span`
   }
 `;
 
+export const TextWrapper = styled.span`
+  display: flex;
+  flex-flow: column;
+
+  width: 100%;
+  overflow: hidden;
+`;
+
 export const Text = styled.span`
   display: flex;
   place-content: center;
@@ -22,15 +30,14 @@ export const Text = styled.span`
   flex: 1;
   overflow: hidden;
 
-  text-overflow: ellipsis;
-  white-space: nowrap;
   text-shadow: 2px 2px 3px var(--bgContrast);
 
   > p {
-    display: flex;
-    place-items: flex-start;
-
+    width: 100%;
     height: 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     line-height: 24px;
   }
@@ -51,6 +58,7 @@ export const Counter = styled.span`
 
   line-height: 32px;
   font-size: 16px;
+  font-weight: 300;
   color: var(--bgInverted);
 `;
 

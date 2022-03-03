@@ -8,12 +8,22 @@ export const ActiveProfile = styled.div`
   display: flex;
   place-content: space-between;
   place-items: center;
+  gap: 16px;
 
-  padding-right: 16px;
+  width: 100%;
+  padding: 0 16px;
+  overflow: hidden;
 `;
 
 export const ActiveInfo = styled.div`
-  padding: 16px;
+  flex: 1;
+  padding: 16px 0;
+
+  overflow: hidden;
+`;
+
+export const GoToProfile = styled.div`
+  min-width: 80px;
 `;
 
 export const Settings = styled.div`

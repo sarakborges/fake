@@ -33,6 +33,7 @@ import AuthedTemplate from "Components/Templates/Authed";
 
 // Styles
 import * as S from "./style";
+import RoundList from "Components/Organisms/RoundList";
 
 const HomeTemplate = () => {
   const [approvedConnections, setApprovedConnections] = useState([]);
@@ -143,6 +144,30 @@ const HomeTemplate = () => {
                 </ButtonLink>
               </S.ProfileButtons>
             </S.ProfileWrapper>
+
+            <RoundList
+              list={approvedConnections.slice(0, 5).map((item) => item.user)}
+              title='Suas conexões'
+              type='profile'
+              extraItemLink={ROUTES.PROFILE_CONNECTIONS.replace(
+                ":id",
+                profileData?.url
+              )}
+              emptyTitle={"Você ainda não possui conexões"}
+              displayMore={approvedConnections?.length > 5}
+            />
+
+            <RoundList
+              list={approvedMemberships.slice(0, 5).map((item) => item.group)}
+              title='Seus grupos'
+              type='group'
+              extraItemLink={ROUTES.PROFILE_GROUPS.replace(
+                ":id",
+                profileData?.url
+              )}
+              emptyTitle={"Você ainda não participa de grupos"}
+              displayMore={approvedConnections?.length > 5}
+            />
 
             {[
               ...(profileData?.privateTags || []),

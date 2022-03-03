@@ -15,6 +15,15 @@ export const ProfileWrapper = styled.div`
   gap: 16px;
 
   padding: 32px 0;
+
+  > p {
+    max-width: 100%;
+    height: 24px;
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 `;
 
 export const ProfileButtons = styled.div`
@@ -36,6 +45,7 @@ export const Lists = styled.div`
   flex-flow: column;
 
   min-width: 400px;
+  max-width: 400px;
   padding: 0 24px;
 
   background-color: var(--bgTransparent);

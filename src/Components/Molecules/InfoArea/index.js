@@ -34,39 +34,37 @@ const InfoArea = ({ info, side, displayCounters, notifications, messages }) => {
   }, [info]);
 
   return (
-    <span>
-      <S.InfoArea side={side}>
-        <S.Avatar>
-          <ProfilePicture avatar={info?.avatar} size={48} />
-        </S.Avatar>
+    <S.InfoArea side={side}>
+      <S.Avatar>
+        <ProfilePicture avatar={info?.avatar} size={48} />
+      </S.Avatar>
 
-        <span>
-          <S.Text>
-            <Text type='custom' fc='main' fw={600}>
-              {info?.name || "Não encontrado"}
-            </Text>
+      <S.TextWrapper>
+        <S.Text>
+          <Text type='custom' fc='main' fw={600}>
+            {info?.name || "Não encontrado"}
+          </Text>
 
-            <Text type='custom' fc='bgInverted'>
-              {info?.url ? `@${info?.url}` : ""}
-            </Text>
-          </S.Text>
+          <Text type='custom' fc='bgInverted'>
+            {info?.url ? `@${info?.url}` : ""}
+          </Text>
+        </S.Text>
 
-          {displayCounters && (
-            <S.CounterList>
-              <S.Counter>
-                <S.CounterIcon>{notifications}</S.CounterIcon>
-                <>{notifications === 1 ? "Notificação" : "Notificações"}</>
-              </S.Counter>
+        {displayCounters && (
+          <S.CounterList>
+            <S.Counter>
+              <S.CounterIcon>{notifications}</S.CounterIcon>
+              <>{notifications === 1 ? "Notificação" : "Notificações"}</>
+            </S.Counter>
 
-              <S.Counter>
-                <S.CounterIcon>{messages}</S.CounterIcon>
-                <>{messages === 1 ? "Mensagem" : "Mensagens"}</>
-              </S.Counter>
-            </S.CounterList>
-          )}
-        </span>
-      </S.InfoArea>
-    </span>
+            <S.Counter>
+              <S.CounterIcon>{messages}</S.CounterIcon>
+              <>{messages === 1 ? "Mensagem" : "Mensagens"}</>
+            </S.Counter>
+          </S.CounterList>
+        )}
+      </S.TextWrapper>
+    </S.InfoArea>
   );
 };
 
