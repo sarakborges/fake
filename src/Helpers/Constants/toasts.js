@@ -79,4 +79,6 @@ export const TOASTS = {
     "Publicado com sucesso.",
     "Aconteceu algum erro ao tentar publicar. Tente novamente.",
   ],
+
+  LOGOUT: ["Esperamos que volte logo."],
 };

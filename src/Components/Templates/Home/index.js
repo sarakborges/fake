@@ -118,9 +118,11 @@ const HomeTemplate = () => {
             <S.ProfileWrapper>
               <ProfilePicture avatar={profileData?.avatar} size={128} />
 
-              <Text type='title'>{profileData?.name}</Text>
+              <Text type='custom' fs={20} fw={600}>
+                {profileData?.name}
+              </Text>
 
-              <Text type='subtitle' pb={16}>
+              <Text type='custom' pb={8}>
                 @{profileData?.url}
               </Text>
 
@@ -141,39 +143,6 @@ const HomeTemplate = () => {
                 </ButtonLink>
               </S.ProfileButtons>
             </S.ProfileWrapper>
-
-            <S.Counters>
-              <Link
-                href={ROUTES.PROFILE_CONNECTIONS.replace(
-                  ":id",
-                  profileData?.url
-                )}
-              >
-                <a>
-                  <Text type='custom' fs={20} fw={600} lh={1.4}>
-                    {approvedConnections.length}
-                  </Text>
-
-                  <Text type='custom' fs={14} lh={1.4}>
-                    {approvedConnections.length !== 1 ? "Conexões" : "Conexão"}
-                  </Text>
-                </a>
-              </Link>
-
-              <Link
-                href={ROUTES.PROFILE_GROUPS.replace(":id", profileData?.url)}
-              >
-                <a>
-                  <Text type='custom' fs={20} fw={600} lh={1.4}>
-                    {approvedMemberships.length}
-                  </Text>
-
-                  <Text type='custom' fs={14} lh={1.4}>
-                    {approvedMemberships.length !== 1 ? "Grupos" : "Grupo"}
-                  </Text>
-                </a>
-              </Link>
-            </S.Counters>
 
             {[
               ...(profileData?.privateTags || []),

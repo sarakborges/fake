@@ -168,6 +168,7 @@ const LoginTemplate = () => {
               placeholder='Digite seu email aqui'
               value={form.email.value}
               onChange={handleChange}
+              isBgContrast
             />
 
             <LabeledInput
@@ -177,6 +178,7 @@ const LoginTemplate = () => {
               placeholder='Digite sua senha aqui'
               value={form.password.value}
               onChange={handleChange}
+              isBgContrast
             />
 
             <Button
@@ -185,7 +187,7 @@ const LoginTemplate = () => {
               size={16}
               disabled={isRequesting}
             >
-              Logar
+              Entrar
             </Button>
 
             <S.RegisterLink>

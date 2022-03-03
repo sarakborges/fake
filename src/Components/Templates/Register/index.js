@@ -197,6 +197,7 @@ const RegisterTemplate = () => {
               placeholder='Digite seu email aqui'
               value={form.email.value}
               onChange={handleChange}
+              isBgContrast
             />
 
             <LabeledInput
@@ -206,6 +207,7 @@ const RegisterTemplate = () => {
               placeholder='Digite sua senha aqui'
               value={form.password.value}
               onChange={handleChange}
+              isBgContrast
             />
 
             <Button

@@ -19,7 +19,7 @@ export const FormWrapper = styled.div`
   max-width: 100%;
   padding: 32px;
 
-  background-color: var(--bgContrast);
+  background-color: var(--bg);
   border-radius: 16px;
 `;
 

@@ -27,7 +27,9 @@ export const getUserData = async () => {
         ) || userData.profiles[0]
       : undefined;
 
-  const profileReq = await ProfileAPI.getProfileById(profileData._id);
+  const profileReq = profileData?._id
+    ? await ProfileAPI.getProfileById(profileData?._id)
+    : null;
 
   const ret = {
     user: { ...userData },

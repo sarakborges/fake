@@ -32,13 +32,15 @@ const ChatUsers = ({ usersList, tempUser, currentUrl }) => {
               )}
 
             {usersList?.length > 0 &&
-              usersList.map((item, key) => {
-                return (
-                  <li key={item.user._id || key}>
-                    <ChatUserItem info={item} currentUrl={currentUrl || ""} />
-                  </li>
-                );
-              })}
+              usersList
+                .filter((item) => item?.user?._id)
+                .map((item, key) => {
+                  return (
+                    <li key={item.user._id || key}>
+                      <ChatUserItem info={item} currentUrl={currentUrl || ""} />
+                    </li>
+                  );
+                })}
           </S.PeopleList>
         </>
       ) : (

@@ -19,11 +19,7 @@ export const ProfileWrapper = styled.div`
 
 export const ProfileButtons = styled.div`
   display: flex;
-  gap: 24px;
-
-  > div > a {
-    width: 100px;
-  }
+  gap: 16px;
 `;
 
 export const FeedWrapper = styled.div`
@@ -45,35 +41,6 @@ export const Lists = styled.div`
   background-color: var(--bgTransparent);
 `;
 
-export const Counters = styled.div`
-  display: flex;
-  place-content: center;
-  place-items: center;
-  gap: 24px;
-
-  padding-bottom: 16px;
-
-  > a {
-    display: flex;
-    flex-flow: column;
-    place-content: center;
-    place-items: center;
-
-    width: 100px;
-    padding: 12px;
-
-    background-color: var(--bgContrast);
-    border: 2px solid transparent;
-    border-radius: 4px;
-
-    transition: border-color 0.3s;
-
-    &:hover {
-      border-color: var(--main);
-    }
-  }
-`;
-
 export const ChatWrapper = styled.div`
   display: flex;
   flex-flow: column;
@@ -81,5 +48,4 @@ export const ChatWrapper = styled.div`
   min-width: 400px;
 
   background-color: var(--bgTransparent);
-  border-left: 4px solid var(--bgTransparent);
 `;

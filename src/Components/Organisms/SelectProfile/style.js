@@ -10,16 +10,10 @@ export const ActiveProfile = styled.div`
   place-items: center;
 
   padding-right: 16px;
+`;
 
-  > a {
-    padding: 16px;
-
-    transition: background-color 0.3s;
-
-    &:hover {
-      background-color: var(--bgTransparent);
-    }
-  }
+export const ActiveInfo = styled.div`
+  padding: 16px;
 `;
 
 export const Settings = styled.div`
@@ -43,6 +37,14 @@ export const Settings = styled.div`
     margin: 0 12px;
 
     background-color: var(--bgInverted);
+  }
+`;
+
+export const Logout = styled.div`
+  cursor: pointer;
+
+  &:hover > p {
+    text-decoration: underline;
   }
 `;
 

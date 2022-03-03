@@ -1,14 +1,19 @@
 // Dependencies
 import Link from "next/link";
+import { useRouter } from "next/dist/client/router";
 import { useState, useContext, useEffect, useRef } from "react";
 
 // Helpers
 import { ROUTES } from "Helpers/routes";
+import { displayToast } from "Helpers/Functions";
+import { TOASTS } from "Helpers/Constants";
 
 // Contexts
+import { AppContext } from "Contexts/App";
 import { UserContext } from "Contexts/User";
 
 // Atoms
+import Text from "Components/Atoms/Text";
 import Input from "Components/Atoms/Input";
 import ButtonLink from "Components/Atoms/ButtonLink";
 
@@ -23,14 +28,35 @@ import SelectProfilesList from "Components/Organisms/SelectProfilesList";
 import * as S from "./style";
 
 const SelectProfile = () => {
-  const { userState } = useContext(UserContext);
+  const router = useRouter();
+
+  const { userState, userDispatch } = useContext(UserContext);
   const { user, profile } = userState;
+
+  const { appDispatch } = useContext(AppContext);
 
   const [displayProfiles, setDisplayProfiles] = useState(false);
   const [filter, setFilter] = useState("");
   const [filteredProfiles, setFilteredProfiles] = useState();
 
   const profilesListRef = useRef();
+
+  const handleLogout = () => {
+    localStorage.clear();
+
+    userDispatch({
+      type: "SET_USER",
+      data: {
+        isLoggedIn: false,
+        user: undefined,
+        profile: undefined,
+      },
+    });
+
+    displayToast(TOASTS.LOGOUT, 0, appDispatch);
+
+    router.push(ROUTES.LOGIN);
+  };
 
   const toggleProfiles = () => {
     setDisplayProfiles(!displayProfiles);
@@ -92,39 +118,42 @@ const SelectProfile = () => {
     >
       <S.SelectProfile displayProfiles={displayProfiles}>
         <S.ActiveProfile>
-          <Link href={ROUTES.PROFILE.replace(":id", profile.url)}>
-            <a>
-              <InfoArea
-                info={profile}
-                avatarSize={48}
-                side='left'
-                displayTags
-              />
-            </a>
-          </Link>
+          <S.ActiveInfo>
+            <InfoArea info={profile} avatarSize={48} side='left' displayTags />
+          </S.ActiveInfo>
 
           <ButtonLink href={ROUTES.PROFILE.replace(":id", profile.url)}>
             Ver perfil
           </ButtonLink>
         </S.ActiveProfile>
 
-        <S.Settings>
-          <Link href={ROUTES.SETTINGS.PROFILE}>
-            <a>Gerenciar seu perfil</a>
-          </Link>
+        <div>
+          <S.Settings>
+            <Link href={ROUTES.SETTINGS.PROFILE}>
+              <a>Gerenciar seu perfil</a>
+            </Link>
 
-          <span />
+            <span />
 
-          <Link href={ROUTES.SETTINGS.ACCOUNT}>
-            <a>Gerenciar sua conta</a>
-          </Link>
+            <Link href={ROUTES.SETTINGS.ACCOUNT}>
+              <a>Gerenciar sua conta</a>
+            </Link>
 
-          <span />
+            <span />
 
-          <Link href={ROUTES.SETTINGS.SITE}>
-            <a>Preferências do site</a>
-          </Link>
-        </S.Settings>
+            <Link href={ROUTES.SETTINGS.SITE}>
+              <a>Preferências do site</a>
+            </Link>
+
+            <span />
+
+            <S.Logout onClick={handleLogout}>
+              <Text type='custom' fs={12} fc='main' fw={400}>
+                Sair
+              </Text>
+            </S.Logout>
+          </S.Settings>
+        </div>
 
         {user.profiles.length > 1 && (
           <>
