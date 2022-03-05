@@ -49,7 +49,6 @@ const RoundList = ({
                   <a>
                     <ProfilePicture
                       avatar={item.avatar}
-                      size={40}
                       isBlured={item.isAdult && !displayAdult}
                     />
                   </a>
@@ -63,7 +62,7 @@ const RoundList = ({
           {displayMore && (
             <Link href={extraItemLink}>
               <a>
-                <RoundIcon icon={faEllipsisH} size={40} bgColor='main' />
+                <RoundIcon icon={faEllipsisH} bgColor='main' />
               </a>
             </Link>
           )}

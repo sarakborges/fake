@@ -5,8 +5,8 @@ export const AvatarWrapper = styled.span`
   place-content: center;
   place-items: center;
 
-  width: ${({ size }) => `${size}px`};
-  height: ${({ size }) => `${size}px`};
+  width: ${({ size }) => (size ? `${size}px` : "100%")};
+  aspect-ratio: 1;
   overflow: hidden;
 
   border-radius: 100%;

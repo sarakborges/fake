@@ -49,8 +49,8 @@ export const LinkWrapper = styled.div`
 `;
 
 export const List = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
   gap: 12px;
 
   padding: 24px 16px 0;
