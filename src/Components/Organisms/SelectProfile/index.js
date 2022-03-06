@@ -112,10 +112,7 @@ const SelectProfile = () => {
   }, [filter]);
 
   return (
-    <S.SelectProfileWrapper
-      ref={profilesListRef}
-      onClick={(e) => e.stopPropagation()}
-    >
+    <S.SelectProfileWrapper ref={profilesListRef}>
       <S.SelectProfile displayProfiles={displayProfiles}>
         <S.ActiveProfile>
           <S.ActiveInfo>

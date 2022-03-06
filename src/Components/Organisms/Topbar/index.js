@@ -4,7 +4,6 @@ import { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
-  faBell,
   faEnvelope,
   faHome,
   faPlus,
@@ -30,7 +29,6 @@ import * as S from "./style";
 
 const TopBar = () => {
   const [displaySidebar, setDisplaySidebar] = useState(false);
-  const [displayNotifications, setDisplayNotifications] = useState(false);
 
   const { userState } = useContext(UserContext);
   const { profile } = userState;
@@ -69,31 +67,28 @@ const TopBar = () => {
           </>
         </ButtonLink>
 
-        <ButtonLink href={ROUTES.NEW_GROUP}>
-          <>
-            <FontAwesomeIcon icon={faPlus} />
-            <span>Criar grupo</span>
-          </>
-        </ButtonLink>
+        {profile?._id && (
+          <ButtonLink href={ROUTES.NEW_GROUP}>
+            <>
+              <FontAwesomeIcon icon={faPlus} />
+              <span>Criar grupo</span>
+            </>
+          </ButtonLink>
+        )}
       </S.ActionsButtons>
 
-      <S.ActionsWrapper>
-        {profile?._id && <SelectProfile />}
+      {profile?._id && (
+        <S.ActionsWrapper>
+          <SelectProfile />
+          <Notifications />
 
-        <div>
-          <Notifications displayNotifications={displayNotifications} />
-
-          <span onClick={() => setDisplayNotifications(!displayNotifications)}>
-            <FontAwesomeIcon icon={faBell} />
-          </span>
-        </div>
-
-        <div>
-          <span>
-            <FontAwesomeIcon icon={faEnvelope} />
-          </span>
-        </div>
-      </S.ActionsWrapper>
+          <div>
+            <span>
+              <FontAwesomeIcon icon={faEnvelope} />
+            </span>
+          </div>
+        </S.ActionsWrapper>
+      )}
     </S.Topbar>
   );
 };

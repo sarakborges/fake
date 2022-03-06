@@ -85,3 +85,26 @@ export const NotificationsButtons = styled.div`
   place-items: center;
   gap: 16px;
 `;
+
+export const NotificationIcon = styled.span`
+  position: relative;
+`;
+
+export const Counter = styled.span`
+  position: absolute;
+  right: 4px;
+  top: 4px;
+
+  display: flex;
+  place-content: center;
+  place-items: center;
+
+  width: 16px;
+  aspect-ratio: 1;
+
+  background-color: var(--main);
+  border-radius: 100%;
+
+  font-size: 12px;
+  color: var(--white);
+`;
