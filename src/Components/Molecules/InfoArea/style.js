@@ -34,20 +34,19 @@ export const Text = styled.span`
 
   > p {
     width: 100%;
-    height: 24px;
+    height: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-
-    line-height: 24px;
   }
 `;
 
 export const CounterList = styled.span`
   display: flex;
-  gap: 24px;
+  gap: 16px;
 
   width: 100%;
+  padding: 4px 0;
   flex: 1;
 `;
 
@@ -56,8 +55,7 @@ export const Counter = styled.span`
   place-items: center;
   gap: 8px;
 
-  line-height: 32px;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 300;
   color: var(--bgInverted);
 `;
@@ -67,8 +65,8 @@ export const CounterIcon = styled.span`
   place-content: center;
   place-items: center;
 
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
 
   font-size: 12px;
   color: var(--white);

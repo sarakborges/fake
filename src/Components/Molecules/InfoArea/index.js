@@ -36,17 +36,13 @@ const InfoArea = ({ info, side, displayCounters, notifications, messages }) => {
   return (
     <S.InfoArea side={side}>
       <S.Avatar>
-        <ProfilePicture avatar={info?.avatar} size={48} />
+        <ProfilePicture avatar={info?.avatar} size={40} />
       </S.Avatar>
 
       <S.TextWrapper>
         <S.Text>
-          <Text type='custom' fc='main' fw={600}>
+          <Text type='custom' fc='white' fs={16} fw={400}>
             {info?.name || "Não encontrado"}
-          </Text>
-
-          <Text type='custom' fc='bgInverted'>
-            {info?.url ? `@${info?.url}` : ""}
           </Text>
         </S.Text>
 

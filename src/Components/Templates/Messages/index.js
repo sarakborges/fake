@@ -124,11 +124,13 @@ const MessagesTemplate = () => {
 
       {profile?._id && (
         <S.MessagesWrapper>
-          <ChatUsers
-            usersList={chatUsers}
-            tempUser={tempUser}
-            currentUrl={url}
-          />
+          <S.ChatUsers>
+            <ChatUsers
+              usersList={chatUsers}
+              tempUser={tempUser}
+              currentUrl={url}
+            />
+          </S.ChatUsers>
 
           <ChatMessages
             messages={messages}

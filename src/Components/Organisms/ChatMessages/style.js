@@ -12,8 +12,6 @@ export const MessageWrapper = styled.div`
   display: flex;
   flex-flow: column;
   flex: 1;
-
-  border-left: 2px solid var(--bg);
 `;
 
 export const MessagesList = styled.ul`

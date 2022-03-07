@@ -117,15 +117,24 @@ const HomeTemplate = () => {
         <S.HomeWrapper>
           <S.Lists>
             <S.ProfileWrapper>
-              <ProfilePicture avatar={profileData?.avatar} size={128} />
+              <div>
+                <ProfilePicture avatar={profileData?.avatar} size={128} />
 
-              <Text type='custom' fs={20} fw={600}>
-                {profileData?.name}
-              </Text>
+                <Text
+                  type='custom'
+                  fs={20}
+                  fw={600}
+                  pt={16}
+                  ta='center'
+                  fc='white'
+                >
+                  {profileData?.name}
+                </Text>
 
-              <Text type='custom' pb={8}>
-                @{profileData?.url}
-              </Text>
+                <Text type='custom' pb={16} pt={8} ta='center'>
+                  @{profileData?.url}
+                </Text>
+              </div>
 
               <S.ProfileButtons>
                 <ButtonLink
@@ -146,7 +155,7 @@ const HomeTemplate = () => {
             </S.ProfileWrapper>
 
             <RoundList
-              list={approvedConnections.slice(0, 5).map((item) => item.user)}
+              list={approvedConnections.slice(0, 6).map((item) => item.user)}
               title='Suas conexões'
               type='profile'
               extraItemLink={ROUTES.PROFILE_CONNECTIONS.replace(
@@ -154,11 +163,11 @@ const HomeTemplate = () => {
                 profileData?.url
               )}
               emptyTitle={"Você ainda não possui conexões"}
-              displayMore={approvedConnections?.length > 5}
+              displayMore={approvedConnections?.length > 6}
             />
 
             <RoundList
-              list={approvedMemberships.slice(0, 5).map((item) => item.group)}
+              list={approvedMemberships.slice(0, 6).map((item) => item.group)}
               title='Seus grupos'
               type='group'
               extraItemLink={ROUTES.PROFILE_GROUPS.replace(
@@ -166,7 +175,7 @@ const HomeTemplate = () => {
                 profileData?.url
               )}
               emptyTitle={"Você ainda não participa de grupos"}
-              displayMore={approvedConnections?.length > 5}
+              displayMore={approvedMemberships?.length > 6}
             />
 
             {[

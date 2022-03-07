@@ -15,5 +15,5 @@ export const Title = styled.div`
 `;
 
 export const TagsList = styled.div`
-  padding: 24px 16px 0;
+  padding: 12px 16px 0;
 `;

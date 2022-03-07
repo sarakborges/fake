@@ -42,11 +42,6 @@ const ChatMessageItem = ({ info, defaultUser, lastMessageSender }) => {
             <Text type='custom' fc='white' lh={1.6} fw={600}>
               {info.user === profile._id ? profile.name : defaultUser.name}
             </Text>
-
-            <Text type='custom' fc='white' lh={1.6} fw={600}>
-              (@
-              {info.user === profile._id ? profile.url : defaultUser.url})
-            </Text>
           </S.MessageSender>
         )}
 

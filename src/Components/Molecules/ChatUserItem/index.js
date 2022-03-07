@@ -16,16 +16,16 @@ import * as S from "./style";
 
 const ChatUserItem = ({ info, currentUrl }) => {
   return (
-    <Link href={ROUTES.MESSAGES.replace(":id", info.user.url)}>
-      <a>
-        <S.PersonWrapper selected={info.user.url === currentUrl}>
+    <S.PersonWrapper selected={info.user.url === currentUrl}>
+      <Link href={ROUTES.MESSAGES.replace(":id", info.user.url)}>
+        <a>
           <S.PersonAvatar>
             <ProfilePicture avatar={info.user.avatar} size={48} />
           </S.PersonAvatar>
 
           <S.PersonTextWrapper>
             <Text type='custom' fc='white' fw={400} lh={1.6}>
-              {`${info.user.name} (@${info.user.url})`}
+              {info.user.name}
             </Text>
 
             {info?.latestMessage?.text && (
@@ -40,9 +40,9 @@ const ChatUserItem = ({ info, currentUrl }) => {
               </>
             )}
           </S.PersonTextWrapper>
-        </S.PersonWrapper>
-      </a>
-    </Link>
+        </a>
+      </Link>
+    </S.PersonWrapper>
   );
 };
 

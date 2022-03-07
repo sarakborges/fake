@@ -1,21 +1,23 @@
 import styled from "styled-components";
 
 export const PersonWrapper = styled.span`
-  display: flex;
-  place-items: center;
-  gap: 24px;
+  > a {
+    display: flex;
+    place-items: center;
+    gap: 24px;
 
-  width: 100%;
-  padding: 16px;
+    width: 100%;
+    padding: 16px;
 
-  cursor: pointer;
-  background-color: ${({ selected }) =>
-    selected ? "var(--bgContrast)" : "transparent"};
+    cursor: pointer;
+    background-color: ${({ selected }) =>
+      selected ? "var(--bg)" : "transparent"};
 
-  transition: background-color 0.3s;
+    transition: background-color 0.3s;
 
-  &:hover {
-    background-color: var(--bg);
+    &:hover {
+      background-color: var(--bg);
+    }
   }
 `;
 

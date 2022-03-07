@@ -53,7 +53,8 @@ export const Lists = styled.div`
   min-width: 400px;
   max-width: 400px;
   padding: 0 24px 24px;
-  overflow: hidden auto;
+  overflow-x: visible;
+  overflow-y: auto;
 
   background-color: var(--bgTransparent);
 `;
@@ -70,7 +71,6 @@ export const ChatWrapper = styled.div`
   max-height: calc(100vh - 72px);
   min-width: 400px;
   max-width: 400px;
-  padding-top: 32px;
 
   background-color: var(--bgTransparent);
 `;

@@ -15,6 +15,10 @@ export const FeedItem = styled.div`
 export const Header = styled.div`
   display: flex;
   place-content: space-between;
+
+  > button {
+    aspect-ratio: 1;
+  }
 `;
 
 export const InfoAreaWrapper = styled.div`

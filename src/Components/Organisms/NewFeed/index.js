@@ -188,7 +188,7 @@ const NewFeed = ({ feed, setFeed }) => {
 
       <S.FeedButtons>
         <div>
-          <Button style='transparent' size={16} onClick={handleImageButton}>
+          <Button style='transparent' size={14} onClick={handleImageButton}>
             <FontAwesomeIcon icon={faImage} />
             <span>{displayImage ? "Remover" : "Anexar"} imagem</span>
           </Button>
@@ -197,7 +197,7 @@ const NewFeed = ({ feed, setFeed }) => {
         <Button
           type='submit'
           style='primary'
-          size={16}
+          size={14}
           disabled={isRequesting || (!form.image.value && !form.text.value)}
         >
           Publicar

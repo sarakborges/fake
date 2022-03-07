@@ -134,7 +134,9 @@ const Notifications = () => {
       >
         <FontAwesomeIcon icon={faBell} />
 
-        <S.Counter>{pendingConnections.length}</S.Counter>
+        {pendingConnections?.length > 0 && (
+          <S.Counter>{pendingConnections.length}</S.Counter>
+        )}
       </S.NotificationIcon>
     </div>
   );

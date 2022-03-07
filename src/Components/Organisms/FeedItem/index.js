@@ -57,7 +57,7 @@ const FeedItem = ({ info, setFeed }) => {
         </S.InfoAreaWrapper>
 
         {profile?._id === info.user._id && (
-          <Button style='transparent' size={16} onClick={handleDelete}>
+          <Button style='transparent' size={12} onClick={handleDelete}>
             <FontAwesomeIcon icon={faTimes} />
           </Button>
         )}

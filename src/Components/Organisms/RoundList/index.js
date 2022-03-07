@@ -53,8 +53,6 @@ const RoundList = ({
                     />
                   </a>
                 </Link>
-
-                <S.Tooltip>{item.name}</S.Tooltip>
               </S.LinkWrapper>
             );
           })}
