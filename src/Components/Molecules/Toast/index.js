@@ -32,7 +32,9 @@ const Toast = ({ type, title, text }) => {
 
   useEffect(() => {
     if (toast.isVisible) {
-      setTimeout(() => handleClose, 5000);
+      setTimeout(() => {
+        handleClose();
+      }, 3000);
     }
   }, [toast]);
 

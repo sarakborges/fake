@@ -19,11 +19,11 @@ const Feed = ({ profile, connections, displayNewFeed }) => {
   };
 
   const getFeed = useCallback(() => {
+    let feedRet = [];
+
     if (!profile?._id) {
       return;
     }
-
-    let feedRet = [];
 
     if (connections?.length) {
       const connectionsContainingFeed = connections
@@ -45,9 +45,8 @@ const Feed = ({ profile, connections, displayNewFeed }) => {
       }
     }
 
-    if (profile?.feed) {
-      feedRet = [
-        ...feedRet,
+    if (profile?.feed?.length) {
+      const profileFeed = [
         ...profile?.feed.map((item) => {
           return {
             ...item,
@@ -55,6 +54,8 @@ const Feed = ({ profile, connections, displayNewFeed }) => {
           };
         }),
       ];
+
+      feedRet = [...feedRet, ...profileFeed];
     }
 
     feedRet.sort((a, b) => (a.postedAt < b.postedAt ? 1 : -1));
@@ -72,9 +73,13 @@ const Feed = ({ profile, connections, displayNewFeed }) => {
 
       {feed?.length > 0 ? (
         <S.Feed>
-          {feed.map((item) => {
+          {feed.map((item, key) => {
             return (
-              <FeedItem key={item._id} setFeed={handleDelete} info={item} />
+              <FeedItem
+                key={`${item._id}-${key}`}
+                setFeed={handleDelete}
+                info={item}
+              />
             );
           })}
         </S.Feed>
