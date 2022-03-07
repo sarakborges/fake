@@ -7,8 +7,8 @@ import ProfileAPI from "Apis/Profile";
 import ImageAPI from "Apis/Image";
 
 // Helpers
-import { displayToast, slugify } from "Helpers/Functions";
-import { TOASTS } from "Helpers/Constants";
+import { slugify } from "Helpers/Functions";
+import { TOASTS, TOAST_TYPES } from "Helpers/Constants";
 import { ROUTES } from "Helpers/routes";
 
 // Contexts
@@ -92,7 +92,15 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
   const handleDelete = async () => {
     try {
       if (!_id) {
-        displayToast(TOASTS.DELETE_PROFILE, 1, appDispatch);
+        appDispatch({
+          type: "SET_TOAST",
+          data: {
+            ...TOAST_TYPES.error,
+            text: TOASTS.DELETE_PROFILE.error,
+            isVisible: true,
+          },
+        });
+
         return;
       }
 
@@ -123,12 +131,27 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
         data: false,
       });
 
-      displayToast(TOASTS.DELETE_PROFILE, 0, appDispatch);
+      appDispatch({
+        type: "SET_TOAST",
+        data: {
+          ...TOAST_TYPES.success,
+          text: TOASTS.DELETE_PROFILE.success,
+          isVisible: true,
+        },
+      });
+
       router.push(ROUTES.HOME);
     } catch (e) {
       console.log(e);
 
-      displayToast(TOASTS.DELETE_PROFILE, 1, appDispatch);
+      appDispatch({
+        type: "SET_TOAST",
+        data: {
+          ...TOAST_TYPES.error,
+          text: TOASTS.DELETE_PROFILE.error,
+          isVisible: true,
+        },
+      });
 
       appDispatch({
         type: "SET_IS_REQUESTING",
@@ -151,7 +174,14 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
         },
       });
 
-      displayToast(TOASTS.URL_EXISTS, 2, appDispatch);
+      appDispatch({
+        type: "SET_TOAST",
+        data: {
+          ...TOAST_TYPES.warning,
+          text: TOASTS.URL_EXISTS.warning,
+          isVisible: true,
+        },
+      });
 
       appDispatch({
         type: "SET_IS_REQUESTING",
@@ -177,11 +207,14 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
   const handleSubmit = async () => {
     try {
       if (!form.name.value) {
-        displayToast(
-          _id ? TOASTS.EDIT_PROFILE : TOASTS.CREATE_PROFILE,
-          2,
-          appDispatch
-        );
+        appDispatch({
+          type: "SET_TOAST",
+          data: {
+            ...TOAST_TYPES.warning,
+            text: [_id ? TOASTS.EDIT_PROFILE : TOASTS.CREATE_PROFILE].warning,
+            isVisible: true,
+          },
+        });
 
         return;
       }
@@ -269,11 +302,14 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
         data: false,
       });
 
-      displayToast(
-        _id ? TOASTS.EDIT_PROFILE : TOASTS.CREATE_PROFILE,
-        0,
-        appDispatch
-      );
+      appDispatch({
+        type: "SET_TOAST",
+        data: {
+          ...TOAST_TYPES.success,
+          text: [_id ? TOASTS.EDIT_PROFILE : TOASTS.CREATE_PROFILE].success,
+          isVisible: true,
+        },
+      });
 
       router.push(ROUTES.PROFILE.replace(":id", url));
     } catch (e) {
@@ -282,11 +318,15 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
         data: false,
       });
 
-      displayToast(
-        _id ? TOASTS.EDIT_PROFILE : TOASTS.CREATE_PROFILE,
-        1,
-        appDispatch
-      );
+      appDispatch({
+        type: "SET_TOAST",
+        data: {
+          ...TOAST_TYPES.error,
+          text: [_id ? TOASTS.EDIT_PROFILE : TOASTS.CREATE_PROFILE].error,
+          isVisible: true,
+        },
+      });
+
       console.log(e);
     }
   };

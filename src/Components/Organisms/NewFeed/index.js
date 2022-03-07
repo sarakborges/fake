@@ -12,8 +12,7 @@ import { UserContext } from "Contexts/User";
 import { AppContext } from "Contexts/App";
 
 // Helpers
-import { TOASTS } from "Helpers/Constants";
-import { displayToast } from "Helpers/Functions";
+import { TOASTS, TOAST_TYPES } from "Helpers/Constants";
 
 // Atoms
 import Button from "Components/Atoms/Button";
@@ -89,7 +88,15 @@ const NewFeed = ({ feed, setFeed }) => {
 
       setForm({ ...baseForm });
 
-      displayToast(TOASTS.NEW_POST, 0, appDispatch);
+      appDispatch({
+        type: "SET_TOAST",
+        data: {
+          ...TOAST_TYPES.success,
+          text: TOASTS.NEW_POST.success,
+          isVisible: true,
+        },
+      });
+
       setDisplayImage(false);
 
       appDispatch({
@@ -98,7 +105,15 @@ const NewFeed = ({ feed, setFeed }) => {
       });
     } catch (e) {
       console.log(e);
-      displayToast(TOASTS.NEW_POST, 1, appDispatch);
+
+      appDispatch({
+        type: "SET_TOAST",
+        data: {
+          ...TOAST_TYPES.error,
+          text: TOASTS.NEW_POST.error,
+          isVisible: true,
+        },
+      });
 
       appDispatch({
         type: "SET_IS_REQUESTING",

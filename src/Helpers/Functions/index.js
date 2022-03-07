@@ -4,7 +4,6 @@ import { getAppData } from "./getAppData";
 import { slugify } from "./slugify";
 import { getTimeString } from "./getTimeString";
 import { isLinkActive } from "./isLinkActive";
-import { displayToast } from "./displayToast";
 
 export {
   getLangFromReq,
@@ -13,5 +12,4 @@ export {
   slugify,
   getTimeString,
   isLinkActive,
-  displayToast,
 };

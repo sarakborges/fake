@@ -5,8 +5,7 @@ import { useState, useContext, useEffect, useRef } from "react";
 
 // Helpers
 import { ROUTES } from "Helpers/routes";
-import { displayToast } from "Helpers/Functions";
-import { TOASTS } from "Helpers/Constants";
+import { TOASTS, TOAST_TYPES } from "Helpers/Constants";
 
 // Contexts
 import { AppContext } from "Contexts/App";
@@ -53,7 +52,14 @@ const SelectProfile = () => {
       },
     });
 
-    displayToast(TOASTS.LOGOUT, 0, appDispatch);
+    appDispatch({
+      type: "SET_TOAST",
+      data: {
+        ...TOAST_TYPES.success,
+        text: TOASTS.LOGOUT.success,
+        isVisible: true,
+      },
+    });
 
     router.push(ROUTES.LOGIN);
   };

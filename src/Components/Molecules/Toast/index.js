@@ -1,5 +1,5 @@
 // Dependencies
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
@@ -18,16 +18,23 @@ import * as S from "./style";
 
 const Toast = ({ type, title, text }) => {
   const { appState, appDispatch } = useContext(AppContext);
+  const { toast } = appState;
 
   const handleClose = () => {
     appDispatch({
       type: "SET_TOAST",
       data: {
-        ...appState.toast,
+        ...toast,
         isVisible: false,
       },
     });
   };
+
+  useEffect(() => {
+    if (toast.isVisible) {
+      setTimeout(() => handleClose, 5000);
+    }
+  }, [toast]);
 
   return (
     <S.Toast isVisible={appState.toast.isVisible} type={type}>

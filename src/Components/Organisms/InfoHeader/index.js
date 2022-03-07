@@ -13,8 +13,12 @@ import GroupAPI from "Apis/Group";
 
 // Helpers
 import { ROUTES } from "Helpers/routes";
-import { PROFILE_HEADER, GROUP_HEADER, TOASTS } from "Helpers/Constants";
-import { displayToast } from "Helpers/Functions";
+import {
+  PROFILE_HEADER,
+  GROUP_HEADER,
+  TOASTS,
+  TOAST_TYPES,
+} from "Helpers/Constants";
 
 // Contexsts
 import { UserContext } from "Contexts/User";
@@ -140,11 +144,25 @@ const InfoHeader = ({ info, type, setInfo }) => {
           data: false,
         });
 
-        displayToast(TOASTS.JOIN_GROUP, 0, appDispatch);
+        appDispatch({
+          type: "SET_TOAST",
+          data: {
+            ...TOAST_TYPES.success,
+            text: TOASTS.JOIN_GROUP.success,
+            isVisible: true,
+          },
+        });
       } catch (e) {
         console.log(e);
 
-        displayToast(TOASTS.JOIN_GROUP, 1, appDispatch);
+        appDispatch({
+          type: "SET_TOAST",
+          data: {
+            ...TOAST_TYPES.error,
+            text: TOASTS.JOIN_GROUP.error,
+            isVisible: true,
+          },
+        });
 
         appDispatch({
           type: "SET_IS_REQUESTING",
@@ -181,11 +199,25 @@ const InfoHeader = ({ info, type, setInfo }) => {
           data: false,
         });
 
-        displayToast(TOASTS.LEAVE_GROUP, 0, appDispatch);
+        appDispatch({
+          type: "SET_TOAST",
+          data: {
+            ...TOAST_TYPES.success,
+            text: TOASTS.LEAVE_GROUP.success,
+            isVisible: true,
+          },
+        });
       } catch (e) {
         console.log(e);
 
-        displayToast(TOASTS.LEAVE_GROUP, 1, appDispatch);
+        appDispatch({
+          type: "SET_TOAST",
+          data: {
+            ...TOAST_TYPES.error,
+            text: TOASTS.LEAVE_GROUP.error,
+            isVisible: true,
+          },
+        });
 
         appDispatch({
           type: "SET_IS_REQUESTING",

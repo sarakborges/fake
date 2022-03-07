@@ -9,8 +9,7 @@ import { AppContext } from "Contexts/App";
 import { UserContext } from "Contexts/User";
 
 // Helpers
-import { displayToast } from "Helpers/Functions";
-import { TOASTS } from "Helpers/Constants";
+import { TOASTS, TOAST_TYPES } from "Helpers/Constants";
 
 // Molecules
 import InfoArea from "Components/Molecules/InfoArea";
@@ -47,10 +46,25 @@ const SelectProfilesList = ({ profiles }) => {
         data: { ...fullProfile },
       });
 
-      displayToast(TOASTS.SELECT_PROFILE, 0, appDispatch);
+      appDispatch({
+        type: "SET_TOAST",
+        data: {
+          ...TOAST_TYPES.success,
+          text: TOASTS.SELECT_PROFILE.success,
+          isVisible: true,
+        },
+      });
     } catch (e) {
       console.log(e);
-      displayToast(TOASTS.SELECT_PROFILE, 1, appDispatch);
+
+      appDispatch({
+        type: "SET_TOAST",
+        data: {
+          ...TOAST_TYPES.error,
+          text: TOASTS.SELECT_PROFILE.error,
+          isVisible: true,
+        },
+      });
     }
   };
 

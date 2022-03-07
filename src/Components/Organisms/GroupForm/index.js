@@ -7,8 +7,8 @@ import GroupAPI from "Apis/Group";
 import ImageAPI from "Apis/Image";
 
 // Helpers
-import { displayToast, slugify } from "Helpers/Functions";
-import { TOASTS } from "Helpers/Constants";
+import { slugify } from "Helpers/Functions";
+import { TOASTS, TOAST_TYPES } from "Helpers/Constants";
 import { ROUTES } from "Helpers/routes";
 
 // Contexts
@@ -90,7 +90,14 @@ const GroupForm = ({ form, setForm, originalData }) => {
   const handleDelete = async () => {
     try {
       if (!_id) {
-        displayToast(TOASTS.DELETE_GROUP, 1, appDispatch);
+        appDispatch({
+          type: "SET_TOAST",
+          data: {
+            ...TOAST_TYPES.error,
+            text: TOASTS.REMOVE_CONNECTION.error,
+            isVisible: true,
+          },
+        });
         return;
       }
 
@@ -108,7 +115,15 @@ const GroupForm = ({ form, setForm, originalData }) => {
         data: false,
       });
 
-      displayToast(TOASTS.DELETE_GROUP, 0, appDispatch);
+      appDispatch({
+        type: "SET_TOAST",
+        data: {
+          ...TOAST_TYPES.success,
+          text: TOASTS.REMOVE_CONNECTION.success,
+          isVisible: true,
+        },
+      });
+
       router.push(ROUTES.HOME);
     } catch (e) {
       console.log(e);
@@ -118,7 +133,14 @@ const GroupForm = ({ form, setForm, originalData }) => {
         data: false,
       });
 
-      displayToast(TOASTS.DELETE_GROUP, 0, appDispatch);
+      appDispatch({
+        type: "SET_TOAST",
+        data: {
+          ...TOAST_TYPES.error,
+          text: TOASTS.REMOVE_CONNECTION.error,
+          isVisible: true,
+        },
+      });
     }
   };
 
@@ -136,7 +158,14 @@ const GroupForm = ({ form, setForm, originalData }) => {
         },
       });
 
-      displayToast(TOASTS.URL_EXISTS, 2, appDispatch);
+      appDispatch({
+        type: "SET_TOAST",
+        data: {
+          ...TOAST_TYPES.warning,
+          text: TOASTS.REMOVE_CONNECTION.warning,
+          isVisible: true,
+        },
+      });
 
       appDispatch({
         type: "SET_IS_REQUESTING",
@@ -152,11 +181,15 @@ const GroupForm = ({ form, setForm, originalData }) => {
   const handleSubmit = async () => {
     try {
       if (!form.name.value) {
-        displayToast(
-          _id ? TOASTS.EDIT_GROUP : TOASTS.CREATE_GROUP,
-          1,
-          appDispatch
-        );
+        appDispatch({
+          type: "SET_TOAST",
+          data: {
+            ...TOAST_TYPES.error,
+            text: [_id ? TOASTS.EDIT_GROUP : TOASTS.CREATE_GROUP].error,
+            isVisible: true,
+          },
+        });
+
         return;
       }
 
@@ -217,11 +250,14 @@ const GroupForm = ({ form, setForm, originalData }) => {
         }
       }
 
-      displayToast(
-        _id ? TOASTS.EDIT_GROUP : TOASTS.CREATE_GROUP,
-        0,
-        appDispatch
-      );
+      appDispatch({
+        type: "SET_TOAST",
+        data: {
+          ...TOAST_TYPES.success,
+          text: [_id ? TOASTS.EDIT_GROUP : TOASTS.CREATE_GROUP].success,
+          isVisible: true,
+        },
+      });
 
       appDispatch({
         type: "SET_IS_REQUESTING",
@@ -235,11 +271,14 @@ const GroupForm = ({ form, setForm, originalData }) => {
         data: false,
       });
 
-      displayToast(
-        _id ? TOASTS.EDIT_GROUP : TOASTS.CREATE_GROUP,
-        1,
-        appDispatch
-      );
+      appDispatch({
+        type: "SET_TOAST",
+        data: {
+          ...TOAST_TYPES.error,
+          text: [_id ? TOASTS.EDIT_GROUP : TOASTS.CREATE_GROUP].error,
+          isVisible: true,
+        },
+      });
       console.log(e);
     }
   };

@@ -5,8 +5,7 @@ import { useContext } from "react";
 import ProfileAPI from "Apis/Profile";
 
 // Helpers
-import { displayToast } from "Helpers/Functions";
-import { TOASTS } from "Helpers/Constants";
+import { TOASTS, TOAST_TYPES } from "Helpers/Constants";
 
 // Contexts
 import { AppContext } from "Contexts/App";
@@ -62,7 +61,14 @@ const BlockProfileButton = () => {
         data: false,
       });
 
-      displayToast(TOASTS.BLOCK, 0, appDispatch);
+      appDispatch({
+        type: "SET_TOAST",
+        data: {
+          ...TOAST_TYPES.success,
+          text: TOASTS.BLOCK.success,
+          isVisible: true,
+        },
+      });
     } catch (e) {
       console.log(e);
 
@@ -71,7 +77,14 @@ const BlockProfileButton = () => {
         data: false,
       });
 
-      displayToast(TOASTS.BLOCK, 1, appDispatch);
+      appDispatch({
+        type: "SET_TOAST",
+        data: {
+          ...TOAST_TYPES.error,
+          text: TOASTS.BLOCK.error,
+          isVisible: true,
+        },
+      });
     }
   };
 

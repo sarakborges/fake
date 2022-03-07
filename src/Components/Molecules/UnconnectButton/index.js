@@ -5,8 +5,7 @@ import { useContext } from "react";
 import ProfileAPI from "Apis/Profile";
 
 // Helpers
-import { displayToast } from "Helpers/Functions";
-import { TOASTS } from "Helpers/Constants";
+import { TOASTS, TOAST_TYPES } from "Helpers/Constants";
 
 // Contexts
 import { AppContext } from "Contexts/App";
@@ -65,7 +64,14 @@ const UnconnectButton = ({ children, profileId }) => {
         data: false,
       });
 
-      displayToast(TOASTS.REMOVE_CONNECTION, 0, appDispatch);
+      appDispatch({
+        type: "SET_TOAST",
+        data: {
+          ...TOAST_TYPES.success,
+          text: TOASTS.REMOVE_CONNECTION.success,
+          isVisible: true,
+        },
+      });
     } catch (e) {
       console.log(e);
 
@@ -74,7 +80,14 @@ const UnconnectButton = ({ children, profileId }) => {
         data: false,
       });
 
-      displayToast(TOASTS.REMOVE_CONNECTION, 1, appDispatch);
+      appDispatch({
+        type: "SET_TOAST",
+        data: {
+          ...TOAST_TYPES.error,
+          text: TOASTS.REMOVE_CONNECTION.error,
+          isVisible: true,
+        },
+      });
     }
   };
 
