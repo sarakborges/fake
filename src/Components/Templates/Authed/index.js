@@ -1,7 +1,6 @@
 // Dependencies
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
-import { ThemeProvider } from "styled-components";
 
 // Helpers
 import { getUserData, getAppData } from "Helpers/Functions";
@@ -11,24 +10,21 @@ import { ROUTES } from "Helpers/routes";
 import { AppContext } from "Contexts/App";
 import { UserContext } from "Contexts/User";
 
-// Molecules
-import Toast from "Components/Molecules/Toast";
-
 // Organisms
 import Topbar from "Components/Organisms/Topbar";
 
+// Templates
+import AppTemplate from "Components/Templates/App";
+
 // Style
-import { GlobalStyle } from "Styles/global";
 import * as S from "./style";
 
 // Template
 const AuthedTemplate = ({ children }) => {
   const router = useRouter();
 
-  const { appState, appDispatch } = useContext(AppContext);
+  const { appDispatch } = useContext(AppContext);
   const { userDispatch } = useContext(UserContext);
-
-  const { theme, toast } = appState;
 
   const setUserData = useCallback(async () => {
     try {
@@ -49,18 +45,11 @@ const AuthedTemplate = ({ children }) => {
   }, [getUserData, userDispatch]);
 
   const setAppData = useCallback(async () => {
-    const appData = getAppData(appState.theme.slug);
-
-    appDispatch({
-      type: "SET_THEME",
-      data: {
-        ...appData.theme,
-      },
-    });
+    const { displayAdult } = getAppData();
 
     appDispatch({
       type: "SET_DISPLAY_ADULT",
-      data: appData.displayAdult,
+      data: displayAdult,
     });
   }, [appDispatch]);
 
@@ -70,17 +59,13 @@ const AuthedTemplate = ({ children }) => {
   }, [setUserData, setAppData, getUserData, getAppData]);
 
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-
-      {<Toast {...toast} />}
-
+    <AppTemplate>
       <S.Container>
         <Topbar />
 
         <S.Content>{children}</S.Content>
       </S.Container>
-    </ThemeProvider>
+    </AppTemplate>
   );
 };
 

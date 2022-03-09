@@ -1,32 +1,18 @@
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 
-export const GlobalStyle = createGlobalStyle`
+export const DefaultStyle = createGlobalStyle`
   ${reset}
 
   :root{
-    --main: ${({ theme }) => theme.main};
-    --bg: ${({ theme }) => theme.bg};
-    --bgContrast: ${({ theme }) => theme.bgContrast};
-    --bgInverted: ${({ theme }) => theme.bgInverted};
-    --bgTransparent: ${({ theme }) => `${theme.bg}DD`};
-
-    --lightGray: #CCCCCC;
-    --mediumGray: #999999;
-    --darkGray: #666666;
-    --darkerGray: #333333;
-
     --offWhite: #eeeeee;
     --white: #ffffff;
 
-    --dark: #16141c;
-    --offDark: #1b1924;
-    
-    --green: #11a26f;
-    --yellow: #bfa436;
-    --red: #c73d6b;
-    --golden: #d4af37;
-    --silver: #dbe4eb;
+    --offBlack: #111111;
+    --black: #000000;
+
+    --purple: #6447bd;
+    --green: #47bda7;
   }
 
   *{

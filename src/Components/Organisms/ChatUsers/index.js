@@ -17,6 +17,7 @@ const ChatUsers = ({ usersList, tempUser, currentUrl }) => {
             <Input
               id='messages-people-filter'
               placeholder='Insira sua pesquisa'
+              isBgContrast
             />
           </S.PeopleFilter>
 

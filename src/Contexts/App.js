@@ -4,13 +4,10 @@ import { useReducer, createContext } from "react";
 // Reducers
 import { AppReducer } from "Reducers/App";
 
-// Style
-import DarkTheme from "Styles/Themes/Dark";
-
 export const AppContext = createContext();
 
 const INITIAL_STATE = {
-  theme: DarkTheme,
+  theme: undefined,
 
   displayAdult: false,
   isRequesting: false,

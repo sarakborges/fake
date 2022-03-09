@@ -125,6 +125,7 @@ const HomeTemplate = () => {
                   fs={20}
                   fw={600}
                   pt={16}
+                  lh={1.4}
                   ta='center'
                   fc='white'
                 >

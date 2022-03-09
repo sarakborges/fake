@@ -15,7 +15,7 @@ export const Topbar = styled.nav`
   height: 72px;
   padding: 0 44px;
 
-  background-color: var(--bgContrast);
+  background-color: var(--bg);
 `;
 
 export const AboutWrapper = styled.div`
@@ -37,6 +37,6 @@ export const About = styled.div`
   max-width: 100%;
   padding: 32px;
 
-  background-color: var(--bgContrast);
-  border-radius: 16px;
+  background-color: var(--bg);
+  border-radius: 4px;
 `;

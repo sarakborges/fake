@@ -82,7 +82,7 @@ const SelectProfile = () => {
     document.addEventListener("click", toggleMenu);
 
     return () => {
-      document.addEventListener("click", toggleMenu);
+      document.removeEventListener("click", toggleMenu);
     };
   }, []);
 

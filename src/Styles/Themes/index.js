@@ -1,5 +1,7 @@
-import Dark from "Styles/Themes/Dark";
-import DarkGreen from "Styles/Themes/DarkGreen";
-import Light from "Styles/Themes/Light";
+import dark from "Styles/Themes/Dark";
+import light from "Styles/Themes/Light";
 
-export default [Dark, DarkGreen, Light];
+export default {
+  dark,
+  light,
+};

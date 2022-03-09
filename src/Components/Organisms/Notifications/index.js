@@ -56,7 +56,7 @@ const Notifications = () => {
     document.addEventListener("click", toggleNotifications);
 
     return () => {
-      document.addEventListener("click", toggleNotifications);
+      document.removeEventListener("click", toggleNotifications);
     };
   }, []);
 

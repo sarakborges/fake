@@ -1,6 +1,4 @@
 // Dependencies
-import { useContext } from "react";
-import { ThemeProvider } from "styled-components";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -8,27 +6,18 @@ import Link from "next/link";
 import { SITE_NAME } from "Helpers/Constants";
 import { ROUTES } from "Helpers/routes";
 
-// Contexts
-import { AppContext } from "Contexts/App";
-
 // Atoms
 import Text from "Components/Atoms/Text";
 
-// Themes
-import DarkTheme from "Styles/Themes/Dark";
+// Templates
+import AppTemplate from "Components/Templates/App";
 
 // Styles
-import { GlobalStyle } from "Styles/global";
 import * as S from "./style";
 
 const AboutTemplate = () => {
-  const { appState } = useContext(AppContext);
-  const { theme } = appState;
-
   return (
-    <ThemeProvider theme={theme || DarkTheme}>
-      <GlobalStyle />
-
+    <AppTemplate>
       <Head>
         <title>{SITE_NAME} - Sobre</title>
       </Head>
@@ -169,7 +158,7 @@ const AboutTemplate = () => {
           </Text>
         </S.About>
       </S.AboutWrapper>
-    </ThemeProvider>
+    </AppTemplate>
   );
 };
 

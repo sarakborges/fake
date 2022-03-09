@@ -3,7 +3,6 @@ import { useContext, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ThemeProvider } from "styled-components";
 
 // APIs
 import UserAPI from "Apis/User";
@@ -21,21 +20,19 @@ import Button from "Components/Atoms/Button";
 import Text from "Components/Atoms/Text";
 
 // Molecules
-import Toast from "Components/Molecules/Toast";
 import LabeledInput from "Components/Molecules/LabeledInput";
 
-// Themes
-import DarkTheme from "Styles/Themes/Dark";
+// Templates
+import AppTemplate from "Components/Templates/App";
 
 // Styles
-import { GlobalStyle } from "Styles/global";
 import * as S from "./style";
 
 const LoginTemplate = () => {
   const router = useRouter();
 
   const { appState, appDispatch } = useContext(AppContext);
-  const { theme, toast, isRequesting } = appState;
+  const { isRequesting } = appState;
 
   const baseFormField = {
     value: "",
@@ -148,11 +145,7 @@ const LoginTemplate = () => {
   };
 
   return (
-    <ThemeProvider theme={theme || DarkTheme}>
-      <GlobalStyle />
-
-      {<Toast {...toast} />}
-
+    <AppTemplate>
       <Head>
         <title>{SITE_NAME} - Login</title>
       </Head>
@@ -200,7 +193,7 @@ const LoginTemplate = () => {
           </S.FormWrapper>
         </S.LoginWrapper>
       </Form>
-    </ThemeProvider>
+    </AppTemplate>
   );
 };
 
