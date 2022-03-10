@@ -31,6 +31,10 @@ const AppTemplate = ({ children }) => {
       if (localStorageTheme) {
         const { localTheme, localMainColor } = JSON.parse(localStorageTheme);
 
+        if (!localTheme || !localMainColor) {
+          return;
+        }
+
         appDispatch({
           type: "SET_THEME",
           data: { ...Themes[localTheme], main: Colors[localMainColor] },
