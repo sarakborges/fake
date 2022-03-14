@@ -56,7 +56,7 @@ const HomeTemplate = () => {
             Sua pesquisa: "{str}"
           </Text>
 
-          <SearchForm />
+          <SearchForm isBgContrast />
         </div>
 
         {!searchData?.profiles?.length && !searchData?.groups?.length && (

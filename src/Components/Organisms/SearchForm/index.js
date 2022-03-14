@@ -14,7 +14,7 @@ import InfoListHorizontal from "Components/Organisms/InfoListHorizontal";
 // Styles
 import * as S from "./style";
 
-const SearchForm = () => {
+const SearchForm = ({ isBgContrast }) => {
   const [displayResults, setDisplayResults] = useState(false);
   const [search, setSearch] = useState();
   const [searchData, setSearchData] = useState();
@@ -44,7 +44,7 @@ const SearchForm = () => {
         id='site-search'
         placeholder='Insira sua pesquisa'
         value={search}
-        isBgContrast
+        isBgContrast={!isBgContrast}
         onChange={(e) => {
           setSearch(e.currentTarget.value);
         }}

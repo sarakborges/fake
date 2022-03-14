@@ -32,12 +32,6 @@ export const InfoAreaWrapper = styled.span`
 
   > a {
     padding: 24px;
-
-    transition: background-color 0.3s;
-
-    &:hover {
-      background-color: var(--bgTransparent);
-    }
   }
 `;
 

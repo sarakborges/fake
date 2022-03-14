@@ -20,7 +20,7 @@ import ProfileTemplate from "Components/Templates/Profile";
 // Styles
 import * as S from "./style";
 
-const ProfileConnectionsTemplate = () => {
+const ProfileMutualConnectionsTemplate = () => {
   const { profileState } = useContext(ProfileContext);
   const { userState } = useContext(UserContext);
   const { profile } = userState;
@@ -38,9 +38,16 @@ const ProfileConnectionsTemplate = () => {
       isNotSelf: profileState?._id !== profile?._id,
     });
 
+    const currentProfileConnections = profile?.connections.map(
+      (item) => item.user._id
+    );
+
     const filteredConnections = profileState?.connections
       ?.filter?.((item) => {
-        if (item.status === "connected") {
+        if (
+          item.status === "connected" &&
+          currentProfileConnections.includes(item.user._id)
+        ) {
           return item;
         } else {
           return false;
@@ -82,8 +89,8 @@ const ProfileConnectionsTemplate = () => {
             id='profile-connections-filter'
             placeholder='Insira sua pesquisa'
             type='connection'
-            title={`Conexões de ${profileState?.name}:`}
-            noInfoText={`${profileState?.name} ainda não possui nenhuma conexão.`}
+            title={`Conexões em comum com ${profileState?.name}:`}
+            noInfoText={`Você e ${profileState?.name} não possuem conexões em comum.`}
             parentInfo={profileState}
           />
         </S.ProfileConnections>
@@ -92,4 +99,4 @@ const ProfileConnectionsTemplate = () => {
   );
 };
 
-export default ProfileConnectionsTemplate;
+export default ProfileMutualConnectionsTemplate;

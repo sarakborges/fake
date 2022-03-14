@@ -164,7 +164,7 @@ const HomeTemplate = () => {
                 profileData?.url
               )}
               emptyTitle={"Você ainda não possui conexões"}
-              displayMore={approvedConnections?.length > 6}
+              displayMore
             />
 
             <RoundList
@@ -176,7 +176,7 @@ const HomeTemplate = () => {
                 profileData?.url
               )}
               emptyTitle={"Você ainda não participa de grupos"}
-              displayMore={approvedMemberships?.length > 6}
+              displayMore
             />
 
             {[

@@ -56,16 +56,19 @@ export const NotificationsContent = styled.div`
 export const NotificationText = styled.div`
   flex: 1;
 
+  overflow: hidden;
+  white-space: nowrap;
+
   > p:first-child {
     display: flex;
     gap: 6px;
 
     > a {
       max-width: 100%;
-
-      white-space: nowrap;
       overflow: hidden;
+      white-space: nowrap;
       text-overflow: ellipsis;
+
       font-weight: 600;
     }
   }

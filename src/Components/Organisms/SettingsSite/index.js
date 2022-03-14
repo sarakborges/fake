@@ -41,30 +41,6 @@ const SettingsSite = () => {
 
       <S.List>
         <S.Row>
-          <Text type='subtitle'>Qual tema você prefere?</Text>
-
-          <S.ThemeOptions>
-            {Themes.map((item) => {
-              return (
-                <Button
-                  key={item.slug}
-                  style='transparent'
-                  onClick={() => {
-                    setTheme(item.slug);
-                  }}
-                >
-                  <S.ThemeButton
-                    theme={item.slug}
-                    isActive={item.slug === theme.slug}
-                    thumb={item.thumb}
-                  />
-                </Button>
-              );
-            })}
-          </S.ThemeOptions>
-        </S.Row>
-
-        <S.Row>
           <Checkbox
             id='display-adult'
             label='Deseja visualizar conteúdo adulto no site?'

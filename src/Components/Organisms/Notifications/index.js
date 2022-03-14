@@ -98,8 +98,9 @@ const Notifications = () => {
                             <a>
                               {item.user.name} (@{item.user.url})
                             </a>
-                          </Link>{" "}
-                          deseja conectar-se.
+                          </Link>
+
+                          <> deseja conectar-se.</>
                         </Text>
                       </S.NotificationText>
                     </S.NotificationsContent>
@@ -112,11 +113,11 @@ const Notifications = () => {
                       </div>
 
                       <S.NotificationsButtons>
-                        <AcceptConnectionButton profileId={item.user._id}>
+                        <AcceptConnectionButton profileId={item.user._id} small>
                           Aceitar
                         </AcceptConnectionButton>
 
-                        <UnconnectButton profileId={item.user._id}>
+                        <UnconnectButton profileId={item.user._id} small>
                           Recusar
                         </UnconnectButton>
                       </S.NotificationsButtons>

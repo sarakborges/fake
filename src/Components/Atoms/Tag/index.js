@@ -9,7 +9,7 @@ const Tag = ({ tag, highlighted, handleRemove }) => {
   return (
     <S.Tag
       key={tag}
-      onClick={() => handleRemove(tag)}
+      onClick={() => handleRemove?.(tag)}
       handleRemove={handleRemove}
       highlighted={highlighted}
     >

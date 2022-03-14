@@ -16,6 +16,9 @@ export const ROUTES = {
   GROUPS: "/groups",
 
   PROFILE_CONNECTIONS: "/profile/:id/connections",
+  PROFILE_MUTUAL_CONNECTIONS: "/profile/:id/mutual-connections",
+  PROFILE_BLOCKED: "/profile/:id/blocked-profiles",
+
   PROFILE_GROUPS: "/profile/:id/groups",
   PROFILE_FEED: "/profile/:id/feed",
 
