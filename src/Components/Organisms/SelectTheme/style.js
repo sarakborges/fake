@@ -65,22 +65,22 @@ export const MainColorWrapper = styled.div`
     bright === "dark" ? "var(--offWhite)" : "var(--offBlack)"};
 `;
 
-export const Purple = styled.div`
-  background-color: var(--purple);
-`;
-
-export const Green = styled.div`
-  background-color: var(--green);
-`;
-
 export const ColorsWrapper = styled.div`
   display: flex;
   place-content: center;
   place-items: center;
   gap: 32px;
+`;
 
-  > div > button {
+export const ColorItem = styled.div`
+  > button {
     width: 64px;
     aspect-ratio: 1;
+
+    background-color: ${({ color }) => color};
+
+    &:not(:disabled):hover {
+      background-color: ${({ color }) => color};
+    }
   }
 `;

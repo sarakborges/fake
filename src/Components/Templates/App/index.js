@@ -26,6 +26,7 @@ const AppTemplate = ({ children }) => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
+      // localStorage.clear();
       const localStorageTheme = localStorage.getItem("theme");
 
       if (localStorageTheme) {

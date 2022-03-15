@@ -69,28 +69,23 @@ const SelectTheme = () => {
       ) : (
         <S.MainColorWrapper bright={bright}>
           <div>
-            <Text type='title' pb={32}>
+            <Text type='title' pb={32} ta='center'>
               Escolha qual cor de destaque você prefere
             </Text>
 
             <S.ColorsWrapper>
-              <S.Purple>
-                <Button
-                  style='secondary'
-                  onClick={() => {
-                    selectMainColor("purple");
-                  }}
-                />
-              </S.Purple>
-
-              <S.Green>
-                <Button
-                  style='secondary'
-                  onClick={() => {
-                    selectMainColor("green");
-                  }}
-                />
-              </S.Green>
+              {Object.keys(Colors).map((item) => {
+                return (
+                  <S.ColorItem color={Colors[item]} key={item}>
+                    <Button
+                      style='secondary'
+                      onClick={() => {
+                        selectMainColor(item);
+                      }}
+                    />
+                  </S.ColorItem>
+                );
+              })}
             </S.ColorsWrapper>
           </div>
         </S.MainColorWrapper>
