@@ -9,32 +9,19 @@ export const List = styled.div`
 export const Row = styled.div`
   display: flex;
   place-items: center;
+  gap: 12px;
 `;
 
-export const ThemeOptions = styled.div`
-  display: flex;
-  gap: 16px;
-
-  padding-left: 32px;
-
+export const ColorButton = styled.div`
   > button {
-    padding: 0;
+    width: 32px;
+    aspect-ratio: 1;
 
-    background: none;
-    box-shadow: none;
+    background-color: ${({ color }) => color};
     border: 0;
+
+    &:not(:disabled):hover {
+      background-color: ${({ color }) => color};
+    }
   }
-`;
-
-export const ThemeButton = styled.span`
-  width: 32px;
-  height: 32px;
-
-  border-radius: 8px;
-  border: 2px solid var(--bg);
-  box-shadow: 0 0 3px
-    ${({ isActive }) => (isActive ? "var(--main)" : "var(--bg)")};
-  background-color: ${({ thumb }) => thumb};
-
-  transition: border-color 0.3s;
 `;

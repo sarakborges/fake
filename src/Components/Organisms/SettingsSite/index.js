@@ -7,22 +7,39 @@ import { AppContext } from "Contexts/App";
 // Atoms
 import Button from "Components/Atoms/Button";
 import Text from "Components/Atoms/Text";
+import Checkbox from "Components/Atoms/Checkbox";
 
 // Themes
-import Themes from "Styles/Themes";
+import Colors from "Styles/Colors";
 
 // Style
 import * as S from "./style";
-import Checkbox from "Components/Atoms/Checkbox";
 
 const SettingsSite = () => {
   const { appState, appDispatch } = useContext(AppContext);
   const { theme, displayAdult } = appState;
 
-  const setTheme = (themeSlug) => {
+  const setTheme = (newTheme) => {
+    localStorage.setItem(
+      "theme",
+      JSON.stringify({ ...theme, localTheme: newTheme })
+    );
+
     appDispatch({
       type: "SET_THEME",
-      data: Themes.find((item) => item.slug === themeSlug),
+      data: { ...theme, localTheme: newTheme },
+    });
+  };
+
+  const setMainColor = (newMainColor) => {
+    localStorage.setItem(
+      "theme",
+      JSON.stringify({ ...theme, localMainColor: newMainColor })
+    );
+
+    appDispatch({
+      type: "SET_THEME",
+      data: { ...theme, localMainColor: newMainColor },
     });
   };
 
@@ -35,11 +52,44 @@ const SettingsSite = () => {
 
   return (
     <>
-      <Text type='title' pb={16}>
+      <Text type='title' pb={32}>
         Configurações do site
       </Text>
 
       <S.List>
+        <S.Row>
+          <Text type='custom' fs={12} fw={400}>
+            Tema:
+          </Text>
+
+          <Button
+            style='transparent'
+            size={12}
+            onClick={() =>
+              setTheme(theme?.localTheme === "dark" ? "light" : "dark")
+            }
+          >
+            Mudar para tema {theme?.localTheme === "dark" ? "claro" : "escuro"}
+          </Button>
+        </S.Row>
+
+        <S.Row>
+          <Text type='custom' fs={12} fw={400}>
+            Cor de destaque:
+          </Text>
+
+          {Object.keys(Colors).map((item) => {
+            return (
+              <S.ColorButton key={item} color={Colors[item]}>
+                <Button
+                  style='transparent'
+                  onClick={() => setMainColor(item)}
+                />
+              </S.ColorButton>
+            );
+          })}
+        </S.Row>
+
         <S.Row>
           <Checkbox
             id='display-adult'

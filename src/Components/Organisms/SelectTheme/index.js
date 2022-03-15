@@ -25,8 +25,6 @@ const SelectTheme = () => {
   };
 
   const selectMainColor = (color) => {
-    const theme = { ...Themes[bright], main: Colors[color] };
-
     localStorage.setItem(
       "theme",
       JSON.stringify({ localTheme: bright, localMainColor: color })
@@ -34,7 +32,7 @@ const SelectTheme = () => {
 
     appDispatch({
       type: "SET_THEME",
-      data: { ...theme },
+      data: { localTheme: bright, localMainColor: color },
     });
   };
 

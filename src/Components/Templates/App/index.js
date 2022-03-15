@@ -38,7 +38,7 @@ const AppTemplate = ({ children }) => {
 
         appDispatch({
           type: "SET_THEME",
-          data: { ...Themes[localTheme], main: Colors[localMainColor] },
+          data: { localTheme, localMainColor },
         });
       }
     }
@@ -47,7 +47,12 @@ const AppTemplate = ({ children }) => {
   return (
     <>
       {theme ? (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider
+          theme={{
+            ...Themes[theme.localTheme],
+            main: Colors[theme.localMainColor],
+          }}
+        >
           <GlobalStyle />
 
           {<Toast {...toast} />}
