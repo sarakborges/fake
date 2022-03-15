@@ -1,6 +1,6 @@
 // Dependencies
 import Link from "next/link";
-import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
 
 // Helpers
 import { ROUTES } from "Helpers/routes";
@@ -10,14 +10,12 @@ import { AppContext } from "Contexts/App";
 
 // Atoms
 import Text from "Components/Atoms/Text";
-import RoundIcon from "Components/Atoms/RoundIcon";
 
 // Molecules
 import ProfilePicture from "Components/Molecules/ProfilePicture";
 
 // Styles
 import * as S from "./style";
-import { useContext } from "react";
 
 const RoundList = ({
   list,
@@ -26,14 +24,19 @@ const RoundList = ({
   extraItemLink,
   emptyTitle,
   hideEmpty,
-  displayMore,
 }) => {
   const { appState } = useContext(AppContext);
   const { displayAdult } = appState;
 
   return !hideEmpty ? (
     <S.RoundList>
-      <S.Title>{title}</S.Title>
+      <S.Title>
+        <span>{title}</span>
+
+        <Link href={extraItemLink}>
+          <a>(ver mais)</a>
+        </Link>
+      </S.Title>
 
       {list?.length ? (
         <S.List>
@@ -56,14 +59,6 @@ const RoundList = ({
               </S.LinkWrapper>
             );
           })}
-
-          {displayMore && (
-            <Link href={extraItemLink}>
-              <a>
-                <RoundIcon icon={faEllipsisH} bgColor='main' />
-              </a>
-            </Link>
-          )}
         </S.List>
       ) : (
         <S.EmptyTitle>

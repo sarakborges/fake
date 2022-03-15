@@ -185,7 +185,7 @@ const GroupForm = ({ form, setForm, originalData }) => {
           type: "SET_TOAST",
           data: {
             ...TOAST_TYPES.error,
-            text: [_id ? TOASTS.EDIT_GROUP : TOASTS.CREATE_GROUP].error,
+            text: _id ? TOASTS.EDIT_GROUP.error : TOASTS.CREATE_GROUP.error,
             isVisible: true,
           },
         });
@@ -254,7 +254,7 @@ const GroupForm = ({ form, setForm, originalData }) => {
         type: "SET_TOAST",
         data: {
           ...TOAST_TYPES.success,
-          text: [_id ? TOASTS.EDIT_GROUP : TOASTS.CREATE_GROUP].success,
+          text: _id ? TOASTS.EDIT_GROUP.success : TOASTS.CREATE_GROUP.success,
           isVisible: true,
         },
       });
@@ -275,7 +275,7 @@ const GroupForm = ({ form, setForm, originalData }) => {
         type: "SET_TOAST",
         data: {
           ...TOAST_TYPES.error,
-          text: [_id ? TOASTS.EDIT_GROUP : TOASTS.CREATE_GROUP].error,
+          text: _id ? TOASTS.EDIT_GROUP.error : TOASTS.CREATE_GROUP.error,
           isVisible: true,
         },
       });

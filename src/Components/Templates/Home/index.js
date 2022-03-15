@@ -156,7 +156,7 @@ const HomeTemplate = () => {
             </S.ProfileWrapper>
 
             <RoundList
-              list={approvedConnections.slice(0, 6).map((item) => item.user)}
+              list={approvedConnections.slice(0, 14).map((item) => item.user)}
               title='Suas conexões'
               type='profile'
               extraItemLink={ROUTES.PROFILE_CONNECTIONS.replace(
@@ -164,11 +164,10 @@ const HomeTemplate = () => {
                 profileData?.url
               )}
               emptyTitle={"Você ainda não possui conexões"}
-              displayMore
             />
 
             <RoundList
-              list={approvedMemberships.slice(0, 6).map((item) => item.group)}
+              list={approvedMemberships.slice(0, 14).map((item) => item.group)}
               title='Seus grupos'
               type='group'
               extraItemLink={ROUTES.PROFILE_GROUPS.replace(
@@ -176,7 +175,6 @@ const HomeTemplate = () => {
                 profileData?.url
               )}
               emptyTitle={"Você ainda não participa de grupos"}
-              displayMore
             />
 
             {[

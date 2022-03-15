@@ -42,7 +42,7 @@ const SearchForm = ({ isBgContrast }) => {
     <S.Search>
       <Input
         id='site-search'
-        placeholder='Insira sua pesquisa'
+        placeholder='Encontre pessoas e grupos'
         value={search}
         isBgContrast={!isBgContrast}
         onChange={(e) => {

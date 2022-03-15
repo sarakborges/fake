@@ -211,7 +211,9 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
           type: "SET_TOAST",
           data: {
             ...TOAST_TYPES.warning,
-            text: [_id ? TOASTS.EDIT_PROFILE : TOASTS.CREATE_PROFILE].warning,
+            text: _id
+              ? TOASTS.EDIT_PROFILE.warning
+              : TOASTS.CREATE_PROFILE.warning,
             isVisible: true,
           },
         });
@@ -306,7 +308,9 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
         type: "SET_TOAST",
         data: {
           ...TOAST_TYPES.success,
-          text: [_id ? TOASTS.EDIT_PROFILE : TOASTS.CREATE_PROFILE].success,
+          text: _id
+            ? TOASTS.EDIT_PROFILE.success
+            : TOASTS.CREATE_PROFILE.success,
           isVisible: true,
         },
       });
@@ -322,7 +326,7 @@ const SettingsProfile = ({ form, setForm, originalData }) => {
         type: "SET_TOAST",
         data: {
           ...TOAST_TYPES.error,
-          text: [_id ? TOASTS.EDIT_PROFILE : TOASTS.CREATE_PROFILE].error,
+          text: _id ? TOASTS.EDIT_PROFILE.error : TOASTS.CREATE_PROFILE.error,
           isVisible: true,
         },
       });

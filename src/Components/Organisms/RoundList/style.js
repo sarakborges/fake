@@ -10,8 +10,16 @@ export const RoundList = styled.div`
 `;
 
 export const Title = styled.div`
+  display: flex;
+  place-content: center;
+  place-items: center;
+  gap: 8px;
+
   text-align: center;
-  color: var(--main);
+
+  > a {
+    font-size: 10px;
+  }
 `;
 
 export const LinkWrapper = styled.div`

@@ -166,7 +166,7 @@ const SelectProfile = () => {
               id='filter-profiles'
               value={filter}
               onChange={handleFilterChange}
-              placeholder='Filtrar seus perfis'
+              placeholder='Encontre perfis'
             />
 
             <SelectProfilesList
