@@ -10,13 +10,13 @@ import { UserContext } from "Contexts/User";
 import Form from "Components/Atoms/Form";
 import Input from "Components/Atoms/Input";
 import Button from "Components/Atoms/Button";
+import Text from "Components/Atoms/Text";
 
 // Molecules
 import ChatMessageItem from "Components/Molecules/ChatMessageItem";
 
 // Styles
 import * as S from "./style";
-import Text from "Components/Atoms/Text";
 
 const ChatMessages = ({
   messages,

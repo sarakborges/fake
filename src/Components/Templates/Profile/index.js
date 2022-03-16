@@ -56,17 +56,18 @@ const ProfileTemplate = ({ children }) => {
   }, [url, ProfileAPI]);
 
   const handleSubmit = async () => {
+    console.log(messages);
     try {
-      const sentProfile = messages?.profileData?._id;
+      const sentProfile = messages?.profile?._id;
 
       if (!sentProfile) {
         return;
       }
 
       await MessageAPI.sendMessage({
-        users: [profileState._id, sentProfile],
+        users: [profile._id, sentProfile],
         message: newMessage,
-        sender: profileState._id,
+        sender: profile._id,
       });
 
       setNewMessage("");
