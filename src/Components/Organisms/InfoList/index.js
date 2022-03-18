@@ -1,8 +1,11 @@
 // Dependencies
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 // Contexsts
 import { AppContext } from "Contexts/App";
+
+// Atoms
+import Text from "Components/Atoms/Text";
 
 // Molecules
 import InfoCard from "Components/Molecules/InfoCardVertical";
@@ -14,9 +17,23 @@ const InfoList = ({ info, type, parentInfo }) => {
   const { appState } = useContext(AppContext);
   const { displayAdult } = appState;
 
+  const [infoList, setInfoList] = useState();
+
+  useEffect(() => {
+    if (!info?.length) {
+      return;
+    }
+
+    setInfoList(
+      info.sort((a, b) =>
+        a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
+      )
+    );
+  }, [info]);
+
   return (
     <S.InfoList>
-      {info?.length &&
+      {infoList?.length > 0 ? (
         info.map((item) => {
           return (
             <li key={item?.url}>
@@ -28,7 +45,10 @@ const InfoList = ({ info, type, parentInfo }) => {
               />
             </li>
           );
-        })}
+        })
+      ) : (
+        <Text>Nenhum resultado encontrado</Text>
+      )}
     </S.InfoList>
   );
 };

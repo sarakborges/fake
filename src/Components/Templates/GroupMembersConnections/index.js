@@ -6,6 +6,7 @@ import { GROUP_MEMBERS_TABS } from "Helpers/Constants";
 
 // Contexts
 import { GroupContext } from "Contexts/Group";
+import { UserContext } from "Contexts/User";
 
 // Molecules
 import Tabs from "Components/Molecules/Tabs";
@@ -19,24 +20,30 @@ import GroupTemplate from "Components/Templates/Group";
 // Styles
 import * as S from "./style";
 
-const GroupMembersMembersTemplate = () => {
+const GroupMembersConnectionsTemplate = () => {
   const [members, setMembers] = useState([]);
 
   const { groupState } = useContext(GroupContext);
 
+  const { userState } = useContext(UserContext);
+  const { profile } = userState;
+
   const getMembers = useCallback(() => {
-    if (!groupState?.members?.length) {
+    if (!groupState?.members?.length || !profile?.connections?.length) {
       return [];
     }
+
+    const connections = profile?.connections
+      .filter((item) => item.status === "connected")
+      .map((item) => item.user._id);
 
     setMembers(
       groupState?.members.filter(
         (item) =>
-          groupState.owner !== item.profile._id &&
-          !groupState?.moderators?.includes?.(item.profile._id)
-      )
+          item.status === "member" && connections.includes(item.profile._id)
+      ) || []
     );
-  }, [groupState, setMembers]);
+  }, [groupState, profile, setMembers]);
 
   useEffect(() => {
     getMembers();
@@ -55,21 +62,24 @@ const GroupMembersMembersTemplate = () => {
         />
 
         <FilteredList
-          info={members?.map((item) => {
+          info={members.map((item) => {
             return {
               ...item.profile,
               joinedAt: item.joinedAt,
+              isOwner: item.profile._id === groupState?.owner,
+              isModerator: groupState?.moderators?.includes?.(item.profile._id),
             };
           })}
           id='group-members-filter'
           placeholder='Encontre pessoas'
           type='member'
-          title={`Participantes de ${groupState?.name}:`}
-          noInfoText={`${groupState?.name} ainda não possui participantes.`}
+          title={`Suas conexões, participantes de ${groupState?.name}:`}
+          noInfoText={`Nenhuma de suas conexões participa de ${groupState?.name}`}
+          parentInfo={groupState}
         />
       </S.MembersWrapper>
     </GroupTemplate>
   );
 };
 
-export default GroupMembersMembersTemplate;
+export default GroupMembersConnectionsTemplate;

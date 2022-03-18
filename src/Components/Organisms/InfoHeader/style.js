@@ -6,7 +6,9 @@ export const PendingAction = styled.div`
   place-content: center;
   gap: 32px;
 
-  padding: 16px 32px;
+  padding: 16px 28px;
+
+  background-color: var(--bgTransparent);
 `;
 
 export const PendingText = styled.div`

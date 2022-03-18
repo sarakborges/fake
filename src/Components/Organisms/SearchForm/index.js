@@ -1,83 +1,48 @@
 // Dependencies
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
+import { useRouter } from "next/dist/client/router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-// APIs
-import SearchAPI from "Apis/Search";
+// Helpers
+import { ROUTES } from "Helpers/routes";
 
 // Atoms
 import Input from "Components/Atoms/Input";
-import Text from "Components/Atoms/Text";
-
-// Organisms
-import InfoListHorizontal from "Components/Organisms/InfoListHorizontal";
+import Form from "Components/Atoms/Form";
+import Button from "Components/Atoms/Button";
 
 // Styles
 import * as S from "./style";
 
 const SearchForm = ({ isBgContrast }) => {
-  const [displayResults, setDisplayResults] = useState(false);
+  const router = useRouter();
+
   const [search, setSearch] = useState();
-  const [searchData, setSearchData] = useState();
 
-  const getSearch = useCallback(async () => {
-    if (!search) {
-      setSearchData();
-      return;
+  const handleSubmit = () => {
+    if (search.trim()) {
+      router.push(ROUTES.SEARCH.replace(":str", search));
     }
-
-    const searchReq = await SearchAPI.searchByStr(search);
-
-    if (searchReq) {
-      setSearchData(searchReq);
-    } else {
-      setSearchData();
-    }
-  }, [search, SearchAPI]);
-
-  useEffect(() => {
-    getSearch();
-  }, [getSearch]);
+  };
 
   return (
     <S.Search>
-      <Input
-        id='site-search'
-        placeholder='Encontre pessoas e grupos'
-        value={search}
-        isBgContrast={!isBgContrast}
-        onChange={(e) => {
-          setSearch(e.currentTarget.value);
-        }}
-        onFocus={() => {
-          setDisplayResults(true);
-        }}
-        onBlur={() => {
-          setDisplayResults(false);
-        }}
-      />
+      <Form onSubmit={handleSubmit}>
+        <Input
+          id='site-search'
+          placeholder='Encontre pessoas e grupos'
+          value={search}
+          isBgContrast={!isBgContrast}
+          onChange={(e) => {
+            setSearch(e.currentTarget.value);
+          }}
+        />
 
-      <S.SearchResults
-        displayResults={
-          displayResults &&
-          (searchData?.profiles?.length || searchData?.groups?.length)
-        }
-      >
-        {searchData?.profiles?.length > 0 && (
-          <div>
-            <Text>Perfis encontrados:</Text>
-
-            <InfoListHorizontal type='profile' info={searchData?.profiles} />
-          </div>
-        )}
-
-        {searchData?.groups?.length > 0 && (
-          <div>
-            <Text>Grupos encontrados:</Text>
-
-            <InfoListHorizontal type='group' info={searchData?.groups} />
-          </div>
-        )}
-      </S.SearchResults>
+        <Button type='submit' style='primary' size={14}>
+          <FontAwesomeIcon icon={faSearch} />
+        </Button>
+      </Form>
     </S.Search>
   );
 };

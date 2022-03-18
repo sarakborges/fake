@@ -11,17 +11,26 @@ export const Cover = styled.span`
 
   width: 100%;
 
-  background-color: var(--bg);
   background-image: url(${({ img }) => img});
   background-size: cover;
   background-position: center;
 `;
 
 export const InfoCardContent = styled.span`
+  display: flex;
+  flex-flow: column;
+
   width: 100%;
-  padding-right: 24px;
+  padding-right: 16px;
+  padding-bottom: 16px;
 
   background-color: var(--bgTransparent);
+
+  transition: background-color 0.3s;
+
+  ${InfoCard}:hover & {
+    background-color: var(--bgContrastTransparent);
+  }
 `;
 
 export const InfoAreaWrapper = styled.span`
@@ -30,9 +39,7 @@ export const InfoAreaWrapper = styled.span`
   gap: 16px;
   flex: 1;
 
-  > a {
-    padding: 24px;
-  }
+  padding: 16px 16px 0;
 `;
 
 export const MainInfo = styled.span`
@@ -45,7 +52,14 @@ export const MainInfo = styled.span`
 export const Tags = styled.span`
   display: flex;
 
-  padding: 0 24px 16px;
+  padding: 12px 16px 0;
+`;
+
+export const Self = styled.span`
+  > svg {
+    color: var(--white);
+    text-shadow: 2px 2px 3px var(--bg);
+  }
 `;
 
 export const Owner = styled.span`

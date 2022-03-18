@@ -28,7 +28,7 @@ const ProfileGroupsTemplate = () => {
           })}
           id='non-owned-groups-filter'
           type='group'
-          placeholder='Insira sua pesquisa'
+          placeholder='Encontre pessoas'
           title={`Grupos que ${profileState?.name} participa:`}
           noInfoText={`${profileState?.name} ainda não participa de nenhum grupo.`}
           parentInfo={profileState}

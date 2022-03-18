@@ -15,4 +15,9 @@ export const GROUP_MEMBERS_TABS = [
     link: ROUTES.GROUP_MEMBERS.MODERATORS,
     text: "Apenas moderadores",
   },
+
+  {
+    link: ROUTES.GROUP_MEMBERS.CONNECTIONS,
+    text: "Conexões participantes",
+  },
 ];

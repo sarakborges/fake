@@ -4,18 +4,16 @@ export const GROUP_HEADER = {
   SECTIONS: [
     {
       id: "about",
-      type: "link",
-      title: "Sobre",
+      title: "Início",
       to: ROUTES.GROUP,
       activeOnRoutes: [ROUTES.GROUP.replace(":id", "[url]")],
     },
 
     {
       id: "forum",
-      type: "link",
       title: "Fórum",
-      to: "#",
-      activeOnRoutes: ["#"],
+      to: ROUTES.GROUP_FORUM,
+      activeOnRoutes: [ROUTES.GROUP_FORUM.replace(":id", "[url]")],
     },
 
     {
@@ -27,8 +25,15 @@ export const GROUP_HEADER = {
         ROUTES.GROUP_MEMBERS.ALL.replace(":id", "[url]"),
         ROUTES.GROUP_MEMBERS.MEMBERS.replace(":id", "[url]"),
         ROUTES.GROUP_MEMBERS.MODERATORS.replace(":id", "[url]"),
-        ROUTES.GROUP_MEMBERS.OWNER.replace(":id", "[url]"),
+        ROUTES.GROUP_MEMBERS.CONNECTIONS.replace(":id", "[url]"),
       ],
+    },
+
+    {
+      id: "related",
+      title: "Grupos relacionados",
+      to: "#",
+      activeOnRoutes: [],
     },
   ],
 

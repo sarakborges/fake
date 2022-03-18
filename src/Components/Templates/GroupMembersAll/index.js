@@ -60,7 +60,7 @@ const GroupMembersAllTemplate = () => {
             };
           })}
           id='group-members-filter'
-          placeholder='Insira sua pesquisa'
+          placeholder='Encontre pessoas'
           type='member'
           title={`Todos participantes de ${groupState?.name}:`}
           parentInfo={groupState}

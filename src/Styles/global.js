@@ -6,10 +6,12 @@ export const GlobalStyle = createGlobalStyle`
 
   :root{
     --main: ${({ theme }) => theme.main};
+    --mainTransparent: ${({ theme }) => `${theme.main}44`};
     --bg: ${({ theme }) => theme.bg};
     --bgContrast: ${({ theme }) => theme.bgContrast};
     --bgInverted: ${({ theme }) => theme.bgInverted};
     --bgTransparent: ${({ theme }) => `${theme.bg}DD`};
+    --bgContrastTransparent: ${({ theme }) => `${theme.bgContrast}DD`};
 
     --lightGray: #CCCCCC;
     --mediumGray: #999999;

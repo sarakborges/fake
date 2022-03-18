@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCrown } from "@fortawesome/free-solid-svg-icons";
+import { faCrown, faUser } from "@fortawesome/free-solid-svg-icons";
 
 // Helpers
 import { ROUTES } from "Helpers/routes";
@@ -87,6 +87,12 @@ const InfoCard = ({ info, type, isBlured, parentInfo }) => {
                   <InfoArea info={info} side='left' />
                 </a>
               </Link>
+
+              {profile?._id === info?._id && (
+                <S.Self>
+                  <FontAwesomeIcon icon={faUser} />
+                </S.Self>
+              )}
 
               {((info?.owner && parentInfo?._id === info?.owner) ||
                 parentInfo?.owner === info?._id) && (

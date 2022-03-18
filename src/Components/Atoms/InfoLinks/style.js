@@ -13,7 +13,7 @@ export const SectionLink = styled.div`
     padding: 16px 24px;
 
     font-size: 16px;
-    color: ${({ active }) => (active ? "var(--white)" : "var(--bgInverted)")};
+    color: ${({ active }) => (active ? "var(--main)" : "var(--bgInverted)")};
     text-shadow: 2px 2px 3px var(--bgContrast);
 
     transition: color 0.3s;

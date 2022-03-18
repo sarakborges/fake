@@ -5,7 +5,7 @@ export const PROFILE_HEADER = {
     {
       id: "about",
       type: "link",
-      title: "Sobre",
+      title: "Início",
       to: ROUTES.PROFILE,
       activeOnRoutes: [ROUTES.PROFILE.replace(":id", "[url]")],
     },
@@ -23,7 +23,12 @@ export const PROFILE_HEADER = {
       type: "link",
       title: "Conexões",
       to: ROUTES.PROFILE_CONNECTIONS,
-      activeOnRoutes: [ROUTES.PROFILE_CONNECTIONS.replace(":id", "[url]")],
+      activeOnRoutes: [
+        ROUTES.PROFILE_CONNECTIONS.replace(":id", "[url]"),
+        ROUTES.PROFILE_MUTUAL_CONNECTIONS.replace(":id", "[url]"),
+        ROUTES.PROFILE_BLOCKED.replace(":id", "[url]"),
+        ROUTES.PROFILE_PENDING.replace(":id", "[url]"),
+      ],
     },
 
     {

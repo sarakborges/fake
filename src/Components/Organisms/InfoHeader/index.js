@@ -1,6 +1,6 @@
 // Dependencies
 import Link from "next/link";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
@@ -25,13 +25,13 @@ import { UserContext } from "Contexts/User";
 import { AppContext } from "Contexts/App";
 
 // Atoms
-import Button from "Components/Atoms/Button";
 import InfoLinks from "Components/Atoms/InfoLinks";
 
 // Molecules
 import InfoArea from "Components/Molecules/InfoArea";
 import TagsList from "Components/Molecules/TagsList";
 import ConnectButton from "Components/Molecules/ConnectButton";
+import AcceptConnectionButton from "Components/Molecules/AcceptConnectionButton";
 import UnconnectButton from "Components/Molecules/UnconnectButton";
 import BlockProfileButton from "Components/Molecules/BlockProfileButton";
 import UnblockProfileButton from "Components/Molecules/UnblockProfileButton";
@@ -45,11 +45,9 @@ const InfoHeader = ({ info, type, setInfo }) => {
   const headerType = type === "group" ? GROUP_HEADER : PROFILE_HEADER;
 
   const { userState, userDispatch } = useContext(UserContext);
+  const { user, profile } = userState;
 
   const { appState, appDispatch } = useContext(AppContext);
-  const { isRequesting } = appState;
-
-  const { user, profile } = userState;
   const { displayAdult } = appState;
 
   const updateLocalUser = (newProfile) => {
@@ -69,42 +67,6 @@ const InfoHeader = ({ info, type, setInfo }) => {
         profile: { ...newProfile },
       },
     });
-  };
-
-  const updateUsers = (req) => {
-    const newLocalUser = req.find((item) => item._id === profile._id);
-    const newInfo = req.find((item) => item._id === info._id);
-
-    updateLocalUser({ ...newLocalUser });
-    setInfo({ ...newInfo });
-  };
-
-  const updateConnection = async (status) => {
-    try {
-      appDispatch({
-        type: "SET_IS_REQUESTING",
-        data: true,
-      });
-
-      const updateConnectinoReq = await ProfileAPI.updateConnection({
-        ids: [profile._id, info._id],
-        status: status,
-      });
-
-      updateUsers(updateConnectinoReq);
-
-      appDispatch({
-        type: "SET_IS_REQUESTING",
-        data: false,
-      });
-    } catch (e) {
-      console.log(e);
-
-      appDispatch({
-        type: "SET_IS_REQUESTING",
-        data: false,
-      });
-    }
   };
 
   const headerButtons = {
@@ -299,35 +261,25 @@ const InfoHeader = ({ info, type, setInfo }) => {
 
   return (
     <>
-      {!getCondition("isNotSent") && (
+      {profile?._id && !getCondition("isNotSent") && (
         <S.PendingAction>
           <S.PendingText>
             <b>Ação pendente:</b>
-            <> Deseja conectar-se a </>
+            <> Aceitar solicitação de conexão de </>
             <b>{info?.name}</b>
             <>?</>
           </S.PendingText>
 
           <S.PendingButtons>
-            <Button
-              style='success-secondary'
-              size={16}
-              disabled={isRequesting}
-              onClick={buttonActions.acceptConnection}
-            >
+            <AcceptConnectionButton colored>
               <FontAwesomeIcon icon={faCheckCircle} />
-              Aceitar
-            </Button>
+              <>Aceitar</>
+            </AcceptConnectionButton>
 
-            <Button
-              style='warning-secondary'
-              size={16}
-              disabled={isRequesting}
-              onClick={buttonActions.removeConnection}
-            >
+            <UnconnectButton colored>
               <FontAwesomeIcon icon={faTimesCircle} />
-              Recusar
-            </Button>
+              <>Recusar</>
+            </UnconnectButton>
           </S.PendingButtons>
         </S.PendingAction>
       )}

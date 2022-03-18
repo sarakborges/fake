@@ -1,5 +1,5 @@
 // Dependencies
-import { useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 // APIs
 import ProfileAPI from "Apis/Profile";
@@ -20,6 +20,8 @@ import * as S from "./style";
 const SelectProfilesList = ({ profiles }) => {
   const { userDispatch } = useContext(UserContext);
   const { appDispatch } = useContext(AppContext);
+
+  const [profilesList, setProfilesList] = useState();
 
   const getPendingConnections = (profile) => {
     return (
@@ -68,10 +70,22 @@ const SelectProfilesList = ({ profiles }) => {
     }
   };
 
+  useEffect(() => {
+    if (!profiles?.length) {
+      return;
+    }
+
+    setProfilesList(
+      profiles.sort((a, b) =>
+        a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
+      )
+    );
+  }, [profiles]);
+
   return (
     <S.ProfilesList>
-      {profiles &&
-        profiles.map((item) => {
+      {profilesList?.length > 0 &&
+        profilesList.map((item) => {
           return (
             <li
               key={item.url}

@@ -6,7 +6,6 @@ const PrimaryButton = css`
   color: var(--offWhite);
 
   &:not(:disabled):hover {
-    background-color: var(--bgContrast);
     color: var(--main);
   }
 `;
@@ -15,10 +14,6 @@ const SecondaryButton = css`
   border: 2px solid var(--main);
   background-color: var(--bg);
   color: var(--main);
-
-  &:not(:disabled):hover {
-    background-color: var(--bgContrast);
-  }
 `;
 
 const TransparentButton = css`
@@ -28,7 +23,6 @@ const TransparentButton = css`
 
   &:not(:disabled):hover {
     border-color: var(--main);
-    background-color: var(--bgContrast);
   }
 `;
 
@@ -38,7 +32,6 @@ const SuccessButton = css`
   color: var(--white);
 
   &:not(:disabled):hover {
-    background-color: var(--white);
     color: var(--green);
   }
 `;
@@ -47,10 +40,6 @@ const SuccessSecondaryButton = css`
   border: 2px solid var(--green);
   background-color: transparent;
   color: var(--green);
-
-  &:not(:disabled):hover {
-    background-color: var(--white);
-  }
 `;
 
 const WarningButton = css`
@@ -59,7 +48,6 @@ const WarningButton = css`
   color: var(--white);
 
   &:not(:disabled):hover {
-    background-color: var(--white);
     color: var(--red);
   }
 `;
@@ -68,10 +56,6 @@ const WarningSecondaryButton = css`
   border: 2px solid var(--red);
   background-color: transparent;
   color: var(--red);
-
-  &:not(:disabled):hover {
-    background-color: var(--white);
-  }
 `;
 
 export const Button = styled.button`
@@ -101,6 +85,11 @@ export const Button = styled.button`
   ${({ buttonStyle }) => buttonStyle === "success" && SuccessButton}
   ${({ buttonStyle }) =>
     buttonStyle === "success-secondary" && SuccessSecondaryButton}
+    
+
+  &:not(:disabled):hover {
+    background-color: var(--bgContrast);
+  }
 
   &:disabled {
     opacity: 0.6;

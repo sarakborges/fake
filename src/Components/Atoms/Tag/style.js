@@ -11,7 +11,7 @@ export const Tag = styled.span`
   font-size: 12px;
 
   background-color: ${({ highlighted }) =>
-    highlighted ? "var(--main)" : "var(--bgContrast)"};
+    highlighted ? "var(--main)" : "var(--mainTransparent)"};
   border-radius: 4px;
   box-shadow: 2px 2px 3px var(--bg);
 
@@ -24,6 +24,6 @@ export const Tag = styled.span`
         ? "var(--red)"
         : highlighted
         ? "var(--main)"
-        : "var(--bgContrast)"};
+        : "var(--mainTransparent)"};
   }
 `;

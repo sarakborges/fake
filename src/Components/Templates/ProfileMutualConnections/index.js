@@ -87,7 +87,7 @@ const ProfileMutualConnectionsTemplate = () => {
           <FilteredList
             info={approvedConnections}
             id='profile-connections-filter'
-            placeholder='Insira sua pesquisa'
+            placeholder='Encontre pessoas'
             type='connection'
             title={`Conexões em comum com ${profileState?.name}:`}
             noInfoText={`Você e ${profileState?.name} não possuem conexões em comum.`}

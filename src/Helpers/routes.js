@@ -10,6 +10,7 @@ export const ROUTES = {
   NEW_PROFILE: "/new-profile",
 
   GROUP: "/group/:id",
+  GROUP_FORUM: "/group/:id/forum",
   PROFILE: "/profile/:id",
   MESSAGES: "/messages/:id",
 
@@ -18,15 +19,16 @@ export const ROUTES = {
   PROFILE_CONNECTIONS: "/profile/:id/connections",
   PROFILE_MUTUAL_CONNECTIONS: "/profile/:id/mutual-connections",
   PROFILE_BLOCKED: "/profile/:id/blocked-profiles",
+  PROFILE_PENDING: "/profile/:id/pending-profiles",
 
   PROFILE_GROUPS: "/profile/:id/groups",
   PROFILE_FEED: "/profile/:id/feed",
 
   GROUP_MEMBERS: {
     ALL: "/group/:id/members/all",
-    OWNER: "/group/:id/members/owner",
     MODERATORS: "/group/:id/members/moderators",
     MEMBERS: "/group/:id/members/members",
+    CONNECTIONS: "/group/:id/members/connections",
   },
 
   SETTINGS: {

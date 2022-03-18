@@ -125,43 +125,47 @@ const SelectProfile = () => {
             <InfoArea info={profile} avatarSize={48} side='left' displayTags />
           </S.ActiveInfo>
 
-          <S.GoToProfile>
+          <div>
             <ButtonLink href={ROUTES.PROFILE.replace(":id", profile.url)}>
               Ver perfil
             </ButtonLink>
-          </S.GoToProfile>
+          </div>
         </S.ActiveProfile>
 
         <div>
           <S.Settings>
-            <Link href={ROUTES.SETTINGS.PROFILE}>
-              <a>Gerenciar seu perfil</a>
-            </Link>
+            <div>
+              <Link href={ROUTES.SETTINGS.PROFILE}>
+                <a>Editar perfil ativo</a>
+              </Link>
+            </div>
 
-            <span />
+            <div>
+              <Link href={ROUTES.SETTINGS.SITE}>
+                <a>Preferências do site</a>
+              </Link>
+            </div>
 
-            <Link href={ROUTES.SETTINGS.ACCOUNT}>
-              <a>Gerenciar sua conta</a>
-            </Link>
+            <div>
+              <Link href={ROUTES.SETTINGS.ACCOUNT}>
+                <a>Gerenciar sua conta</a>
+              </Link>
+            </div>
 
-            <span />
-
-            <Link href={ROUTES.SETTINGS.SITE}>
-              <a>Preferências do site</a>
-            </Link>
-
-            <span />
-
-            <S.Logout onClick={handleLogout}>
-              <Text type='custom' fs={12} fc='main' fw={400}>
-                Sair
-              </Text>
-            </S.Logout>
+            <div>
+              <S.Logout>
+                <span onClick={handleLogout}>Sair</span>
+              </S.Logout>
+            </div>
           </S.Settings>
         </div>
 
         {user.profiles.length > 1 && (
           <>
+            <Text type='custom' pl={16} pb={16} fw={400}>
+              Selecionar perfil ativo:
+            </Text>
+
             <Input
               id='filter-profiles'
               value={filter}

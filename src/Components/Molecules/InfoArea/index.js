@@ -1,8 +1,10 @@
 // Dependencies
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 
-// Contexsts
+// Contexts
 import { AppContext } from "Contexts/App";
+
+// Atoms
 import Text from "Components/Atoms/Text";
 
 // Molecules
@@ -11,32 +13,21 @@ import ProfilePicture from "Components/Molecules/ProfilePicture";
 // Style
 import * as S from "./style";
 
-const InfoArea = ({ info, side, displayCounters, notifications, messages }) => {
+const InfoArea = ({
+  info,
+  side,
+  displayCounters,
+  notifications,
+  messages,
+  avatarSize,
+}) => {
   const { appState } = useContext(AppContext);
   const { displayAdult } = appState;
-
-  const [tags, setTags] = useState([]);
-
-  useEffect(() => {
-    let newTags = [];
-
-    if (info?.privateTags) {
-      newTags = [...newTags, ...info?.privateTags];
-    }
-
-    if (info?.publicTags) {
-      newTags = [...newTags, ...info?.publicTags];
-    }
-
-    newTags.sort((a, b) => (a > b ? 1 : -1));
-
-    setTags(newTags);
-  }, [info]);
 
   return (
     <S.InfoArea side={side}>
       <S.Avatar>
-        <ProfilePicture avatar={info?.avatar} size={40} />
+        <ProfilePicture avatar={info?.avatar} size={avatarSize || 40} />
       </S.Avatar>
 
       <S.TextWrapper>

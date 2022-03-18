@@ -62,7 +62,7 @@ const GroupMembersModeratorsTemplate = () => {
             };
           })}
           id='group-members-filter'
-          placeholder='Insira sua pesquisa'
+          placeholder='Encontre pessoas'
           type='member'
           title={`Moderadores de ${groupState?.name}:`}
           parentInfo={groupState}

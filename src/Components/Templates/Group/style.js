@@ -48,7 +48,13 @@ export const GroupRight = styled.div`
   max-height: calc(100vh - 72px);
   min-width: 400px;
   max-width: 400px;
-  padding-top: 32px;
+  padding-top: 16px;
 
   background-color: var(--bgTransparent);
+`;
+
+export const ForumTitle = styled.div`
+  display: flex;
+  place-content: space-between;
+  place-items: center;
 `;

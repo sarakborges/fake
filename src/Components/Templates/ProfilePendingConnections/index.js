@@ -20,7 +20,7 @@ import ProfileTemplate from "Components/Templates/Profile";
 // Styles
 import * as S from "./style";
 
-const ProfileConnectionsTemplate = () => {
+const ProfilePendingConnectionsTemplate = () => {
   const { profileState } = useContext(ProfileContext);
   const { userState } = useContext(UserContext);
   const { profile } = userState;
@@ -40,7 +40,7 @@ const ProfileConnectionsTemplate = () => {
 
     const filteredConnections = profileState?.connections
       ?.filter?.((item) => {
-        if (item.status === "connected") {
+        if (item.status !== "connected") {
           return item;
         } else {
           return false;
@@ -62,7 +62,7 @@ const ProfileConnectionsTemplate = () => {
 
   return (
     <ProfileTemplate>
-      {profileState?._id && (
+      {profile?._id === profileState?._id && profileState?._id && (
         <S.ProfileConnections>
           <S.Tabs>
             <Tabs
@@ -82,8 +82,8 @@ const ProfileConnectionsTemplate = () => {
             id='profile-connections-filter'
             placeholder='Encontre pessoas'
             type='connection'
-            title={`Conexões de ${profileState?.name}:`}
-            noInfoText={`${profileState?.name} ainda não possui nenhuma conexão.`}
+            title={`Suas solicitações de conexão pendentes:`}
+            noInfoText='Nenhuma solicitação de conexão pendente'
             parentInfo={profileState}
           />
         </S.ProfileConnections>
@@ -92,4 +92,4 @@ const ProfileConnectionsTemplate = () => {
   );
 };
 
-export default ProfileConnectionsTemplate;
+export default ProfilePendingConnectionsTemplate;

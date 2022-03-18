@@ -7,6 +7,12 @@ export const CONNECTIONS_TABS = [
   },
 
   {
+    link: ROUTES.PROFILE_PENDING,
+    text: "Solicitações pendentes",
+    condition: "isNotSelf",
+  },
+
+  {
     link: ROUTES.PROFILE_BLOCKED,
     text: "Perfis bloqueados",
     condition: "isNotSelf",

@@ -54,7 +54,7 @@ const ProfileBlockedTemplate = () => {
           <FilteredList
             info={profileState?.blockedUsers}
             id='profile-blocked-filter'
-            placeholder='Insira sua pesquisa'
+            placeholder='Encontre pessoas'
             type='profile'
             title='Perfis que você bloqueou:'
             parentInfo={profileState}

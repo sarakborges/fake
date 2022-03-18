@@ -83,6 +83,8 @@ export const ActionsButtons = styled.div`
   place-items: center;
   gap: 12px;
 
+  padding-left: 16px;
+
   flex: 1;
 
   > button {

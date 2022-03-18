@@ -13,6 +13,7 @@ import { SITE_NAME } from "Helpers/Constants";
 // Contexts
 import { UserContext } from "Contexts/User";
 import { ProfileContext } from "Contexts/Profile";
+import { AppContext } from "Contexts/App";
 
 // Atoms
 import Text from "Components/Atoms/Text";
@@ -39,6 +40,8 @@ const ProfileTemplate = ({ children }) => {
   const { userState } = useContext(UserContext);
   const { profile } = userState;
 
+  const { appDispatch } = useContext(AppContext);
+
   const router = useRouter();
   const {
     query: { url },
@@ -64,6 +67,11 @@ const ProfileTemplate = ({ children }) => {
         return;
       }
 
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: true,
+      });
+
       await MessageAPI.sendMessage({
         users: [profile._id, sentProfile],
         message: newMessage,
@@ -73,8 +81,18 @@ const ProfileTemplate = ({ children }) => {
       setNewMessage("");
 
       await getMessages();
+
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
     } catch (e) {
       console.log(e);
+
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
     }
   };
 

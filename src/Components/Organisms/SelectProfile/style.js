@@ -22,39 +22,48 @@ export const ActiveInfo = styled.div`
   overflow: hidden;
 `;
 
-export const GoToProfile = styled.div`
-  min-width: 80px;
-`;
-
 export const Settings = styled.div`
-  display: flex;
-  place-content: center;
-  place-items: center;
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  gap: 8px;
 
-  padding-bottom: 16px;
+  padding: 0 16px 20px;
 
-  > a {
-    font-size: 12px;
+  a {
+    font-size: 14px;
 
     &:hover {
       text-decoration: underline;
     }
   }
 
-  > span {
-    width: 4px;
-    height: 4px;
-    margin: 0 12px;
+  > div {
+    display: flex;
+    place-items: center;
+    gap: 8px;
 
-    background-color: var(--bgInverted);
+    &:before {
+      content: "";
+
+      width: 4px;
+      height: 4px;
+      margin-top: 2px;
+
+      background-color: var(--bgInverted);
+    }
   }
 `;
 
 export const Logout = styled.div`
-  cursor: pointer;
+  > span {
+    cursor: pointer;
 
-  &:hover > p {
-    text-decoration: underline;
+    font-size: 14px;
+    color: var(--main);
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
 

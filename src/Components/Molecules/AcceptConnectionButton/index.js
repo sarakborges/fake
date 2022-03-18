@@ -15,7 +15,7 @@ import { ProfileContext } from "Contexts/Profile";
 // Atoms
 import Button from "Components/Atoms/Button";
 
-const AcceptConnectionButton = ({ children, profileId, small }) => {
+const AcceptConnectionButton = ({ children, profileId, small, colored }) => {
   const { userState, userDispatch } = useContext(UserContext);
   const { profile } = userState;
 
@@ -93,7 +93,7 @@ const AcceptConnectionButton = ({ children, profileId, small }) => {
 
   return (
     <Button
-      style='primary'
+      style={colored ? "success-secondary" : "primary"}
       size={small ? 12 : 14}
       onClick={handleClick}
       disabled={isRequesting}

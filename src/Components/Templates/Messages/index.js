@@ -48,6 +48,11 @@ const MessagesTemplate = () => {
         return;
       }
 
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: true,
+      });
+
       await MessageAPI.sendMessage({
         users: [profile._id, sentProfile],
         message: newMessage,
@@ -58,8 +63,18 @@ const MessagesTemplate = () => {
 
       await getMessages();
       await getChatUsers();
+
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
     } catch (e) {
       console.log(e);
+
+      appDispatch({
+        type: "SET_IS_REQUESTING",
+        data: false,
+      });
     }
   };
 
