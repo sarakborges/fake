@@ -34,6 +34,8 @@ export const Text = styled.span`
 
   > p {
     width: 100%;
+    height: 20px;
+    line-height: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
