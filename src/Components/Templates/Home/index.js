@@ -117,7 +117,7 @@ const HomeTemplate = () => {
         <S.HomeWrapper>
           <S.Lists>
             <S.ProfileWrapper>
-              <div>
+              <S.ProfileContent>
                 <ProfilePicture avatar={profileData?.avatar} size={128} />
 
                 <Text
@@ -135,7 +135,7 @@ const HomeTemplate = () => {
                 <Text type='custom' pb={16} pt={8} ta='center'>
                   @{profileData?.url}
                 </Text>
-              </div>
+              </S.ProfileContent>
 
               <S.ProfileButtons>
                 <ButtonLink

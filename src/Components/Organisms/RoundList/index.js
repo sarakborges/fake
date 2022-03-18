@@ -1,6 +1,6 @@
 // Dependencies
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 // Helpers
 import { ROUTES } from "Helpers/routes";
@@ -28,6 +28,16 @@ const RoundList = ({
   const { appState } = useContext(AppContext);
   const { displayAdult } = appState;
 
+  const [infoList, setInfoList] = useState();
+
+  useEffect(() => {
+    setInfoList(
+      list.sort((a, b) =>
+        a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
+      )
+    );
+  }, [list]);
+
   return !hideEmpty ? (
     <S.RoundList>
       <S.Title>
@@ -38,9 +48,9 @@ const RoundList = ({
         </Link>
       </S.Title>
 
-      {list?.length ? (
+      {infoList?.length ? (
         <S.List>
-          {list.map((item) => {
+          {infoList.map((item) => {
             return (
               <S.LinkWrapper key={item._id}>
                 <Link
