@@ -1,8 +1,8 @@
 // Templates
-import ProfileConnectionsPendingTemplate from "Components/Templates/ProfileConnectionsPending";
+import ProfilePendingConnectionsTemplate from "Components/Templates/ProfilePendingConnections";
 
-const ProfileConnectionsPendingPage = () => {
-  return <ProfileConnectionsPendingTemplate />;
+const ProfilePendingConnectionsPage = () => {
+  return <ProfilePendingConnectionsTemplate />;
 };
 
-export default ProfileConnectionsPendingPage;
+export default ProfilePendingConnectionsPage;
