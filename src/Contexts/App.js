@@ -14,7 +14,6 @@ const INITIAL_STATE = {
 
   toast: {
     isVisible: false,
-    title: "",
     text: "",
     type: "",
   },

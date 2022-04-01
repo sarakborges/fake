@@ -1,30 +1,24 @@
 import styled from "styled-components";
 
-const colors = {
-  success: "var(--green)",
-  warning: "var(--yellow)",
-  error: "var(--red)",
-};
-
 export const Icon = styled.div`
   display: flex;
   place-content: center;
   place-items: center;
 
   max-width: 400px;
-  height: 32px;
+  height: 40px;
   aspect-ratio: 1;
 
-  font-size: 16px;
-  color: var(--offWhite);
+  color: var(--white);
 
-  border-radius: 8px;
+  border-radius: 16px;
+  background-color: var(--main);
 `;
 
 export const Toast = styled.div`
   position: fixed;
-  right: 16px;
-  top: 16px;
+  right: 24px;
+  bottom: 24px;
   z-index: 999;
 
   display: flex;
@@ -37,7 +31,7 @@ export const Toast = styled.div`
 
   background-color: var(--bgContrast);
   box-shadow: 0 0 3px 3px var(--bg);
-  border-radius: 16px;
+  border-radius: 4px;
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   visibility: ${({ isVisible }) => (isVisible ? "visible" : "hidden")};
 
@@ -47,16 +41,16 @@ export const Toast = styled.div`
     height: 40px;
     aspect-ratio: 1;
   }
-
-  & ${Icon} {
-    background-color: ${({ type }) => colors[type]};
-  }
 `;
 
 export const Text = styled.div`
   display: flex;
   flex-flow: column;
   gap: 8px;
+
+  padding-right: 32px;
+
+  color: var(--white);
 
   p {
     &:first-child {

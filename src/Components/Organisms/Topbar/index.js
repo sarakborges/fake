@@ -37,7 +37,7 @@ const TopBar = () => {
     <S.Topbar>
       <S.ToggleMenu>
         <Button
-          style='transparent'
+          style='borderless'
           onClick={() => setDisplaySidebar(!displaySidebar)}
           size={20}
         >

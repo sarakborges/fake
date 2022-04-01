@@ -16,6 +16,8 @@ export const Title = styled.div`
   place-items: center;
   gap: 8px;
 
+  padding-bottom: 12px;
+
   text-align: center;
 
   > a {
@@ -36,5 +38,5 @@ export const List = styled.div`
   grid-template-columns: repeat(7, 1fr);
   gap: 12px;
 
-  padding: 12px 16px 0;
+  padding: 0 16px;
 `;

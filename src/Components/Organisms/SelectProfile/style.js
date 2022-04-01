@@ -77,7 +77,7 @@ export const SelectProfile = styled.div`
   overflow: hidden;
 
   background-color: var(--bgContrast);
-  border-radius: 0 0 16px 16px;
+  border-radius: 0 0 4px 4px;
   box-shadow: 0 3px 5px var(--bg);
 
   opacity: ${({ displayProfiles }) => (displayProfiles ? 1 : 0)};
@@ -85,6 +85,24 @@ export const SelectProfile = styled.div`
     displayProfiles ? "visible" : "hidden"};
 
   transition: opacity 0.3s, visibility 0.3s;
+`;
+
+export const SelectProfileHeader = styled.div`
+  display: flex;
+  place-content: space-between;
+  place-items: center;
+
+  padding: 0 16px 16px;
+`;
+
+export const ListStyle = styled.div`
+  display: flex;
+  place-items: center;
+  gap: 8px;
+
+  > button {
+    aspect-ratio: 1;
+  }
 `;
 
 export const InfoAreaWrapper = styled.div`

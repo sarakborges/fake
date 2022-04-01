@@ -17,6 +17,7 @@ const InfoArea = ({
   info,
   side,
   displayCounters,
+  displayUrl,
   notifications,
   messages,
   avatarSize,
@@ -35,6 +36,12 @@ const InfoArea = ({
           <Text type='custom' fc='white' fs={16} fw={400}>
             {info?.name || "Não encontrado"}
           </Text>
+
+          {displayUrl && (
+            <Text type='custom' fc='bgInverted' fs={12} fw={400}>
+              @{info?.url || "Não encontrado"}
+            </Text>
+          )}
         </S.Text>
 
         {displayCounters && (

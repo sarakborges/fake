@@ -39,6 +39,12 @@ export const Text = styled.span`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    transition: color 0.3s;
+
+    a > ${InfoArea}:hover & {
+      color: var(--main);
+    }
   }
 `;
 
@@ -74,16 +80,6 @@ export const CounterIcon = styled.span`
 
   background-color: var(--main);
   border-radius: 100%;
-`;
-
-export const TagItem = styled.span`
-  padding: 4px 8px;
-
-  color: var(--white);
-  font-size: 12px;
-
-  background-color: var(--main);
-  border-radius: 4px;
 `;
 
 export const Link = styled.span`

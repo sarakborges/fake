@@ -123,7 +123,7 @@ const HomeTemplate = () => {
                 <Text
                   type='custom'
                   fs={20}
-                  fw={600}
+                  fw={400}
                   pt={16}
                   lh={1.4}
                   ta='center'

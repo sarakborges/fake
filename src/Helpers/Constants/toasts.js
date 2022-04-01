@@ -1,16 +1,13 @@
 export const TOAST_TYPES = {
   success: {
-    title: "Sucesso!",
     type: "success",
   },
 
   error: {
-    title: "Erro!",
     type: "error",
   },
 
   warning: {
-    title: "Cuidado!",
     type: "warning",
   },
 };

@@ -47,11 +47,14 @@ const Toast = ({ type, title, text }) => {
       </S.Icon>
 
       <S.Text>
-        <p>{title}</p>
+        {type === "success" && <p>Sucesso!</p>}
+        {type === "error" && <p>Erro!</p>}
+        {type === "warning" && <p>Cuidado!</p>}
+
         <p>{text}</p>
       </S.Text>
 
-      <Button style='transparent' size={20} onClick={handleClose}>
+      <Button style='borderless' size={20} onClick={handleClose}>
         <FontAwesomeIcon icon={faTimes} />
       </Button>
     </S.Toast>

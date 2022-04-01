@@ -13,11 +13,13 @@ import { TOASTS, TOAST_TYPES } from "Helpers/Constants";
 
 // Molecules
 import InfoArea from "Components/Molecules/InfoArea";
+import ProfilePicture from "Components/Molecules/ProfilePicture";
 
 // Style
 import * as S from "./style";
+import TagsList from "Components/Molecules/TagsList";
 
-const SelectProfilesList = ({ profiles }) => {
+const SelectProfilesList = ({ profiles, listStyle }) => {
   const { userDispatch } = useContext(UserContext);
   const { appDispatch } = useContext(AppContext);
 
@@ -83,29 +85,50 @@ const SelectProfilesList = ({ profiles }) => {
   }, [profiles]);
 
   return (
-    <S.ProfilesList>
-      {profilesList?.length > 0 &&
-        profilesList.map((item) => {
-          return (
-            <li
-              key={item.url}
-              onClick={() => {
-                handleProfileChange(item);
-              }}
-            >
-              <InfoArea
-                info={item}
-                avatarSize={48}
-                messages={0}
-                notifications={getPendingConnections(item)}
-                side='left'
-                displayCounters
-                displayTags
-              />
-            </li>
-          );
-        })}
-    </S.ProfilesList>
+    <>
+      <S.ProfilesList type={listStyle}>
+        {profilesList?.length > 0 &&
+          profilesList.map((item) => {
+            return (
+              <li
+                key={item.url}
+                onClick={() => {
+                  handleProfileChange(item);
+                }}
+              >
+                {listStyle === "list" ? (
+                  <>
+                    <InfoArea
+                      info={item}
+                      avatarSize={48}
+                      messages={0}
+                      notifications={getPendingConnections(item)}
+                      side='left'
+                      displayCounters
+                      displayUrl
+                    />
+
+                    {[...(item?.privateTags || []), ...(item?.publicTags || [])]
+                      .length > 0 && (
+                      <S.TagsList>
+                        <TagsList
+                          tags={[
+                            ...(item?.privateTags || []),
+                            ...(item?.publicTags || []),
+                          ]}
+                          highlighted
+                        />
+                      </S.TagsList>
+                    )}
+                  </>
+                ) : (
+                  <ProfilePicture avatar={item?.avatar} size={40} />
+                )}
+              </li>
+            );
+          })}
+      </S.ProfilesList>
+    </>
   );
 };
 

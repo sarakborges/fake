@@ -30,7 +30,6 @@ export const ProfileContent = styled.div`
   display: flex;
   flex-flow: column;
   place-items: center;
-  gap: 8px;
 `;
 
 export const ProfileButtons = styled.div`

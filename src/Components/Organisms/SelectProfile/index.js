@@ -25,6 +25,9 @@ import SelectProfilesList from "Components/Organisms/SelectProfilesList";
 
 // Style
 import * as S from "./style";
+import Button from "Components/Atoms/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faList, faTh } from "@fortawesome/free-solid-svg-icons";
 
 const SelectProfile = () => {
   const router = useRouter();
@@ -35,10 +38,15 @@ const SelectProfile = () => {
   const { appDispatch } = useContext(AppContext);
 
   const [displayProfiles, setDisplayProfiles] = useState(false);
+  const [listStyle, setListStyle] = useState("list");
   const [filter, setFilter] = useState("");
   const [filteredProfiles, setFilteredProfiles] = useState();
 
   const profilesListRef = useRef();
+
+  const handleChangeListStyle = (style) => {
+    setListStyle(style);
+  };
 
   const handleLogout = () => {
     localStorage.clear();
@@ -87,12 +95,14 @@ const SelectProfile = () => {
   }, []);
 
   useEffect(() => {
-    setFilteredProfiles(user.profiles);
+    setFilteredProfiles(
+      user.profiles.filter((item) => item._id !== profile._id)
+    );
   }, [user]);
 
   useEffect(() => {
-    setFilteredProfiles(
-      user.profiles.filter((item) => {
+    const newProfiles = user.profiles
+      .filter((item) => {
         let fields = ["name", "url"];
 
         for (let field of fields) {
@@ -114,8 +124,10 @@ const SelectProfile = () => {
 
         return false;
       })
-    );
-  }, [filter]);
+      .filter((item) => item._id !== profile._id);
+
+    setFilteredProfiles(newProfiles);
+  }, [filter, profile]);
 
   return (
     <S.SelectProfileWrapper ref={profilesListRef}>
@@ -162,9 +174,29 @@ const SelectProfile = () => {
 
         {user.profiles.length > 1 && (
           <>
-            <Text type='custom' pl={16} pb={16} fw={400}>
-              Selecionar perfil ativo:
-            </Text>
+            <S.SelectProfileHeader>
+              <Text type='custom' fw={400}>
+                Selecione seu perfil ativo
+              </Text>
+
+              <S.ListStyle>
+                <Button
+                  style={listStyle === "list" ? "primary" : "borderless"}
+                  size={12}
+                  onClick={() => handleChangeListStyle("list")}
+                >
+                  <FontAwesomeIcon icon={faList} />
+                </Button>
+
+                <Button
+                  style={listStyle === "grid" ? "primary" : "borderless"}
+                  size={12}
+                  onClick={() => handleChangeListStyle("grid")}
+                >
+                  <FontAwesomeIcon icon={faTh} />
+                </Button>
+              </S.ListStyle>
+            </S.SelectProfileHeader>
 
             <Input
               id='filter-profiles'
@@ -173,11 +205,12 @@ const SelectProfile = () => {
               placeholder='Encontre perfis'
             />
 
-            <SelectProfilesList
-              profiles={filteredProfiles?.filter(
-                (item) => item._id !== profile._id
-              )}
-            />
+            {filteredProfiles?.length > 0 && (
+              <SelectProfilesList
+                listStyle={listStyle}
+                profiles={filteredProfiles}
+              />
+            )}
           </>
         )}
       </S.SelectProfile>

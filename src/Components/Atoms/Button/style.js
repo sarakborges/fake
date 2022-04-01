@@ -16,7 +16,7 @@ const SecondaryButton = css`
   color: var(--main);
 `;
 
-const TransparentButton = css`
+const BorderlessButton = css`
   border: 2px solid transparent;
   background-color: var(--bg);
   color: var(--main);
@@ -76,17 +76,6 @@ export const Button = styled.button`
 
   transition: background-color 0.3s, border-color 0.3s, color 0.3s, opacity 0.3s;
 
-  ${({ buttonStyle }) => buttonStyle === "primary" && PrimaryButton}
-  ${({ buttonStyle }) => buttonStyle === "secondary" && SecondaryButton}
-  ${({ buttonStyle }) => buttonStyle === "transparent" && TransparentButton}
-  ${({ buttonStyle }) => buttonStyle === "warning" && WarningButton}
-  ${({ buttonStyle }) =>
-    buttonStyle === "warning-secondary" && WarningSecondaryButton}
-  ${({ buttonStyle }) => buttonStyle === "success" && SuccessButton}
-  ${({ buttonStyle }) =>
-    buttonStyle === "success-secondary" && SuccessSecondaryButton}
-    
-
   &:not(:disabled):hover {
     background-color: var(--bgContrast);
   }
@@ -95,4 +84,14 @@ export const Button = styled.button`
     opacity: 0.6;
     cursor: default;
   }
+
+  ${({ buttonStyle }) => buttonStyle === "primary" && PrimaryButton}
+  ${({ buttonStyle }) => buttonStyle === "secondary" && SecondaryButton}
+  ${({ buttonStyle }) => buttonStyle === "borderless" && BorderlessButton}
+  ${({ buttonStyle }) => buttonStyle === "warning" && WarningButton}
+  ${({ buttonStyle }) =>
+    buttonStyle === "warning-secondary" && WarningSecondaryButton}
+  ${({ buttonStyle }) => buttonStyle === "success" && SuccessButton}
+  ${({ buttonStyle }) =>
+    buttonStyle === "success-secondary" && SuccessSecondaryButton}
 `;

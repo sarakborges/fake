@@ -40,13 +40,17 @@ const RoundList = ({
 
   return !hideEmpty ? (
     <S.RoundList>
-      <S.Title>
-        <span>{title}</span>
+      {title && (
+        <S.Title>
+          <span>{title}</span>
 
-        <Link href={extraItemLink}>
-          <a>(ver mais)</a>
-        </Link>
-      </S.Title>
+          {extraItemLink && (
+            <Link href={extraItemLink}>
+              <a>(ver mais)</a>
+            </Link>
+          )}
+        </S.Title>
+      )}
 
       {infoList?.length ? (
         <S.List>

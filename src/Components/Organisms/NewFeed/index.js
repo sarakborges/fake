@@ -188,7 +188,7 @@ const NewFeed = ({ feed, setFeed }) => {
 
       <S.FeedButtons>
         <div>
-          <Button style='transparent' size={14} onClick={handleImageButton}>
+          <Button style='borderless' size={14} onClick={handleImageButton}>
             <FontAwesomeIcon icon={faImage} />
             <span>{displayImage ? "Remover" : "Anexar"} imagem</span>
           </Button>

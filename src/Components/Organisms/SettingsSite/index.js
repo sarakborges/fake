@@ -63,7 +63,7 @@ const SettingsSite = () => {
           </Text>
 
           <Button
-            style='transparent'
+            style='borderless'
             size={12}
             onClick={() =>
               setTheme(theme?.localTheme === "dark" ? "light" : "dark")
@@ -81,10 +81,7 @@ const SettingsSite = () => {
           {Object.keys(Colors).map((item) => {
             return (
               <S.ColorButton key={item} color={Colors[item]}>
-                <Button
-                  style='transparent'
-                  onClick={() => setMainColor(item)}
-                />
+                <Button style='borderless' onClick={() => setMainColor(item)} />
               </S.ColorButton>
             );
           })}
