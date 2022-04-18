@@ -49,11 +49,11 @@ const ConnectButton = () => {
         data: true,
       });
 
-      const createConnectinoReq = await ProfileAPI.createConnection({
+      const createConnectionReq = await ProfileAPI.createConnection({
         ids: [profile._id, profileState._id],
       });
 
-      updateUsers(createConnectinoReq);
+      updateUsers(createConnectionReq);
 
       appDispatch({
         type: "SET_IS_REQUESTING",

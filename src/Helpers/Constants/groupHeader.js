@@ -40,16 +40,12 @@ export const GROUP_HEADER = {
   ACTIONS: [
     {
       id: "enter",
-      type: "button",
-      title: "Participar",
       hideCondition: "isMember",
-      action: "enterGroup",
+      action: "joinGroup",
     },
 
     {
       id: "leave",
-      type: "button",
-      title: "Deixar de participar",
       hideCondition: "isNotMember",
       action: "leaveGroup",
     },

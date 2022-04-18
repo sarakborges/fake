@@ -8,7 +8,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // APIs
-import ProfileAPI from "Apis/Profile";
 import GroupAPI from "Apis/Group";
 
 // Helpers
@@ -35,11 +34,13 @@ import AcceptConnectionButton from "Components/Molecules/AcceptConnectionButton"
 import UnconnectButton from "Components/Molecules/UnconnectButton";
 import BlockProfileButton from "Components/Molecules/BlockProfileButton";
 import UnblockProfileButton from "Components/Molecules/UnblockProfileButton";
+import JoinGroupButton from "Components/Molecules/JoinGroupButton";
+import LeaveGroupButton from "Components/Molecules/LeaveGroupButton";
 
 // Style
 import * as S from "./style";
 
-const InfoHeader = ({ info, type, setInfo }) => {
+const InfoHeader = ({ info, type }) => {
   const [tags, setTags] = useState([]);
 
   const headerType = type === "group" ? GROUP_HEADER : PROFILE_HEADER;
@@ -47,7 +48,7 @@ const InfoHeader = ({ info, type, setInfo }) => {
   const { userState, userDispatch } = useContext(UserContext);
   const { user, profile } = userState;
 
-  const { appState, appDispatch } = useContext(AppContext);
+  const { appState } = useContext(AppContext);
   const { displayAdult } = appState;
 
   const updateLocalUser = (newProfile) => {
@@ -75,118 +76,8 @@ const InfoHeader = ({ info, type, setInfo }) => {
     removeConnection: <UnconnectButton>Remover conexão</UnconnectButton>,
     blockProfile: <BlockProfileButton />,
     unBlockProfile: <UnblockProfileButton />,
-  };
-
-  const buttonActions = {
-    enterGroup: async () => {
-      try {
-        appDispatch({
-          type: "SET_IS_REQUESTING",
-          data: true,
-        });
-
-        const joinReq = await GroupAPI.joinGroup({
-          profile: profile._id,
-          group: info._id,
-        });
-
-        updateLocalUser({
-          ...profile,
-
-          groups:
-            profile?.groups?.length > 0
-              ? [...profile.groups, { ...joinReq.profile }]
-              : [{ ...joinReq.profile }],
-        });
-
-        setInfo({ ...joinReq.group });
-
-        appDispatch({
-          type: "SET_IS_REQUESTING",
-          data: false,
-        });
-
-        appDispatch({
-          type: "SET_TOAST",
-          data: {
-            ...TOAST_TYPES.success,
-            text: TOASTS.JOIN_GROUP.success,
-            isVisible: true,
-          },
-        });
-      } catch (e) {
-        console.log(e);
-
-        appDispatch({
-          type: "SET_TOAST",
-          data: {
-            ...TOAST_TYPES.error,
-            text: TOASTS.JOIN_GROUP.error,
-            isVisible: true,
-          },
-        });
-
-        appDispatch({
-          type: "SET_IS_REQUESTING",
-          data: false,
-        });
-      }
-    },
-
-    leaveGroup: async () => {
-      try {
-        appDispatch({
-          type: "SET_IS_REQUESTING",
-          data: true,
-        });
-
-        const leaveReq = await GroupAPI.leaveGroup({
-          profile: profile._id,
-          group: info._id,
-        });
-
-        updateLocalUser({
-          ...profile,
-
-          groups:
-            profile?.groups?.length > 0
-              ? [...profile.groups.filter((item) => item !== info._id)]
-              : [],
-        });
-
-        setInfo({ ...leaveReq });
-
-        appDispatch({
-          type: "SET_IS_REQUESTING",
-          data: false,
-        });
-
-        appDispatch({
-          type: "SET_TOAST",
-          data: {
-            ...TOAST_TYPES.success,
-            text: TOASTS.LEAVE_GROUP.success,
-            isVisible: true,
-          },
-        });
-      } catch (e) {
-        console.log(e);
-
-        appDispatch({
-          type: "SET_TOAST",
-          data: {
-            ...TOAST_TYPES.error,
-            text: TOASTS.LEAVE_GROUP.error,
-            isVisible: true,
-          },
-        });
-
-        appDispatch({
-          type: "SET_IS_REQUESTING",
-          data: false,
-        });
-      }
-    },
+    joinGroup: <JoinGroupButton />,
+    leaveGroup: <LeaveGroupButton />,
   };
 
   const getCondition = (condition) => {

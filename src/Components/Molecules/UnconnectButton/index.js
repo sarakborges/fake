@@ -52,12 +52,12 @@ const UnconnectButton = ({ children, profileId, small, colored }) => {
         data: true,
       });
 
-      const updateConnectinoReq = await ProfileAPI.updateConnection({
+      const updateConnectionReq = await ProfileAPI.updateConnection({
         ids: [profile._id, profileId || profileState?._id],
         status: "remove",
       });
 
-      updateUsers(updateConnectinoReq);
+      updateUsers(updateConnectionReq);
 
       appDispatch({
         type: "SET_IS_REQUESTING",

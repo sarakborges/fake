@@ -2,7 +2,7 @@
 import { useContext } from "react";
 
 // APIs
-import ProfileAPI from "Apis/Profile";
+import GroupAPI from "Apis/Group";
 
 // Helpers
 import { TOASTS, TOAST_TYPES } from "Helpers/Constants";
@@ -10,37 +10,36 @@ import { TOASTS, TOAST_TYPES } from "Helpers/Constants";
 // Contexts
 import { AppContext } from "Contexts/App";
 import { UserContext } from "Contexts/User";
-import { ProfileContext } from "Contexts/Profile";
+import { GroupContext } from "Contexts/Group";
 
 // Atoms
 import Button from "Components/Atoms/Button";
 
-const AcceptConnectionButton = ({ children, profileId, small, colored }) => {
+const LeaveGroupButton = () => {
   const { userState, userDispatch } = useContext(UserContext);
   const { profile } = userState;
 
-  const { profileState, profileDispatch } = useContext(ProfileContext);
+  const { groupState, groupDispatch } = useContext(GroupContext);
   const { appState, appDispatch } = useContext(AppContext);
   const { isRequesting } = appState;
 
   const updateUsers = (req) => {
-    const newLocalProfile = req.find((item) => item._id === profile._id);
     userDispatch({
       type: "SET_ACTIVE_PROFILE",
       data: {
-        ...newLocalProfile,
+        ...profile,
+
+        groups:
+          profile?.groups?.length > 0
+            ? [...profile.groups.filter((item) => item !== groupState._id)]
+            : [],
       },
     });
 
-    if (!profileState?._id) {
-      return;
-    }
-
-    const newParentProfile = req.find((item) => item._id === profileState._id);
-    profileDispatch({
-      type: "SET_PROFILE",
+    groupDispatch({
+      type: "SET_GROUP",
       data: {
-        ...newParentProfile,
+        ...req,
       },
     });
   };
@@ -52,12 +51,12 @@ const AcceptConnectionButton = ({ children, profileId, small, colored }) => {
         data: true,
       });
 
-      const updateConnectionReq = await ProfileAPI.updateConnection({
-        ids: [profile._id, profileId || profileState?._id],
-        status: "accept",
+      const leaveReq = await GroupAPI.leaveGroup({
+        profile: profile._id,
+        group: groupState._id,
       });
 
-      updateUsers(updateConnectionReq);
+      updateUsers(leaveReq);
 
       appDispatch({
         type: "SET_IS_REQUESTING",
@@ -68,7 +67,7 @@ const AcceptConnectionButton = ({ children, profileId, small, colored }) => {
         type: "SET_TOAST",
         data: {
           ...TOAST_TYPES.success,
-          text: TOASTS.ACCEPT_CONNECTION.success,
+          text: TOASTS.LEAVE_GROUP.success,
           isVisible: true,
         },
       });
@@ -84,7 +83,7 @@ const AcceptConnectionButton = ({ children, profileId, small, colored }) => {
         type: "SET_TOAST",
         data: {
           ...TOAST_TYPES.error,
-          text: TOASTS.ACCEPT_CONNECTION.error,
+          text: TOASTS.LEAVE_GROUP.error,
           isVisible: true,
         },
       });
@@ -93,14 +92,14 @@ const AcceptConnectionButton = ({ children, profileId, small, colored }) => {
 
   return (
     <Button
-      style={colored ? "success-secondary" : "primary"}
-      size={small ? 12 : 14}
+      style='primary'
+      size={14}
       onClick={handleClick}
       disabled={isRequesting}
     >
-      {children}
+      Deixar de participar
     </Button>
   );
 };
 
-export default AcceptConnectionButton;
+export default LeaveGroupButton;
