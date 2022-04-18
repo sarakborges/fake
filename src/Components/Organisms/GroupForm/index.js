@@ -25,6 +25,7 @@ import Text from "Components/Atoms/Text";
 import File from "Components/Molecules/File";
 import LabeledInput from "Components/Molecules/LabeledInput";
 import LabeledTextarea from "Components/Molecules/LabeledTextarea";
+import TagsForm from "Components/Molecules/TagsForm";
 
 // Style
 import * as S from "./style";
@@ -178,6 +179,16 @@ const GroupForm = ({ form, setForm, originalData }) => {
     return false;
   };
 
+  const handleNewTags = (newTags) => {
+    setForm({
+      ...form,
+      tags: {
+        value: [...newTags],
+        error: "",
+      },
+    });
+  };
+
   const handleSubmit = async () => {
     try {
       if (!form.name.value) {
@@ -206,6 +217,7 @@ const GroupForm = ({ form, setForm, originalData }) => {
         link: form.link.value,
         about: form.about.value,
         isAdult: !!form.isAdult.value,
+        tags: form.tags.value,
       };
 
       if (!_id) {
@@ -362,6 +374,12 @@ const GroupForm = ({ form, setForm, originalData }) => {
             value={form.about.value}
             onChange={handleChange}
             size={120}
+          />
+
+          <TagsForm
+            title='Tags'
+            tags={form.tags.value}
+            setTags={handleNewTags}
           />
 
           <Checkbox

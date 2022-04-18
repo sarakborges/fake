@@ -40,6 +40,7 @@ const NewGroupTemplate = () => {
     isAdult: { ...baseFormField },
     about: { ...baseFormField },
     cover: { ...baseFormField },
+    tags: { ...baseFormField },
   };
 
   const [group, setGroup] = useState({});

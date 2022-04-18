@@ -145,6 +145,10 @@ const InfoHeader = ({ info, type }) => {
       newTags = [...newTags, ...info?.publicTags];
     }
 
+    if (info?.tags) {
+      newTags = [...newTags, ...info?.tags];
+    }
+
     newTags.sort((a, b) => (a > b ? 1 : -1));
 
     setTags(newTags);
