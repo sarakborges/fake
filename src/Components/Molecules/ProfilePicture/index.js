@@ -1,5 +1,5 @@
 // Dependencies
-import { faQuestion } from "@fortawesome/free-solid-svg-icons";
+import { faImage } from "@fortawesome/free-solid-svg-icons";
 
 // Atoms
 import Avatar from "Components/Atoms/Avatar";
@@ -9,7 +9,7 @@ const ProfilePicture = ({ avatar, size, isBlured }) => {
   return (
     <>
       {!avatar ? (
-        <RoundIcon icon={faQuestion} size={size} bgColor='main' />
+        <RoundIcon icon={faImage} size={size} bgColor='main' />
       ) : (
         <Avatar img={avatar} size={size} bgColor='main' isBlured={isBlured} />
       )}

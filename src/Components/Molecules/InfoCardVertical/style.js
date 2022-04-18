@@ -22,7 +22,6 @@ export const InfoCardContent = styled.span`
 
   width: 100%;
   padding-right: 16px;
-  padding-bottom: 16px;
 
   background-color: var(--bgTransparent);
 
@@ -39,7 +38,7 @@ export const InfoAreaWrapper = styled.span`
   gap: 16px;
   flex: 1;
 
-  padding: 16px 16px 0;
+  padding: 16px;
 `;
 
 export const MainInfo = styled.span`
@@ -52,7 +51,7 @@ export const MainInfo = styled.span`
 export const Tags = styled.span`
   display: flex;
 
-  padding: 12px 16px 0;
+  padding: 0 16px 16px;
 `;
 
 export const Self = styled.span`

@@ -1,8 +1,6 @@
 // Dependencies
 import Head from "next/head";
-import Link from "next/link";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { faEllipsisH, faQuestion } from "@fortawesome/free-solid-svg-icons";
 
 // APIs
 import ProfileAPI from "Apis/Profile";

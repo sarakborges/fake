@@ -6,7 +6,6 @@ export const Tabs = styled.ul`
 
   padding: 8px;
 
-  background-color: var(--bg);
   border-radius: 4px;
 `;
 
@@ -24,11 +23,12 @@ export const TabItem = styled.li`
     color: ${({ active }) => (active ? "var(--main)" : "var(--bgInverted)")};
 
     border-radius: 4px;
+    background-color: var(--bgTransparent);
 
     transition: background-color 0.3s, color 0.3s;
 
     &:hover {
-      background-color: var(--bgContrast);
+      background-color: var(--bgContrastTransparent);
 
       color: var(--main);
     }

@@ -1,7 +1,7 @@
 // Dependencies
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 
 // APIs
@@ -58,7 +58,7 @@ const FeedItem = ({ info, setFeed }) => {
 
         {profile?._id === info.user._id && (
           <Button style='borderless' size={12} onClick={handleDelete}>
-            <FontAwesomeIcon icon={faTimes} />
+            <FontAwesomeIcon icon={faTrashAlt} />
           </Button>
         )}
       </S.Header>
