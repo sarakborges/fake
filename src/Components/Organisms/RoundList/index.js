@@ -46,7 +46,7 @@ const RoundList = ({
 
           {extraItemLink && (
             <Link href={extraItemLink}>
-              <a>(ver mais)</a>
+              <a>(ver tudo)</a>
             </Link>
           )}
         </S.Title>

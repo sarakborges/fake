@@ -8,7 +8,7 @@ import ChatUserItem from "Components/Molecules/ChatUserItem";
 // Styles
 import * as S from "./style";
 
-const ChatUsers = ({ usersList, tempUser, currentUrl }) => {
+const ChatUsers = ({ usersList, tempUser, currentUrl, isBgContrast }) => {
   return (
     <S.PeopleWrapper>
       {tempUser?._id || usersList?.length > 0 ? (
@@ -17,7 +17,7 @@ const ChatUsers = ({ usersList, tempUser, currentUrl }) => {
             <Input
               id='messages-people-filter'
               placeholder='Encontre pessoas'
-              isBgContrast
+              isBgContrast={!isBgContrast}
             />
           </S.PeopleFilter>
 
@@ -33,15 +33,13 @@ const ChatUsers = ({ usersList, tempUser, currentUrl }) => {
               )}
 
             {usersList?.length > 0 &&
-              usersList
-                .filter((item) => item?.user?._id)
-                .map((item, key) => {
-                  return (
-                    <li key={item.user._id || key}>
-                      <ChatUserItem info={item} currentUrl={currentUrl || ""} />
-                    </li>
-                  );
-                })}
+              usersList.map((item, key) => {
+                return (
+                  <li key={item.user._id || key}>
+                    <ChatUserItem info={item} currentUrl={currentUrl || ""} />
+                  </li>
+                );
+              })}
           </S.PeopleList>
         </>
       ) : (

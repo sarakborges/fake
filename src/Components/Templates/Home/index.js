@@ -4,10 +4,10 @@ import { useCallback, useContext, useEffect, useState } from "react";
 
 // APIs
 import ProfileAPI from "Apis/Profile";
-import MessageAPI from "Apis/Message";
 
 // Contexts
 import { UserContext } from "Contexts/User";
+import { MessagesContext } from "Contexts/Messages";
 
 // Helpers
 import { SITE_NAME } from "Helpers/Constants";
@@ -37,10 +37,12 @@ const HomeTemplate = () => {
   const [approvedConnections, setApprovedConnections] = useState([]);
   const [approvedMemberships, setApprovedMemberships] = useState([]);
   const [profileData, setProfileData] = useState();
-  const [chatUsers, setChatUsers] = useState();
 
   const { userState } = useContext(UserContext);
   const { profile } = userState;
+
+  const { messagesState } = useContext(MessagesContext);
+  const { chatUsers } = messagesState;
 
   const getProfile = useCallback(async () => {
     if (!profile?._id) {
@@ -78,18 +80,6 @@ const HomeTemplate = () => {
     );
   }, [profileData, setApprovedMemberships]);
 
-  const getChatUsers = useCallback(async () => {
-    if (!profile?._id) {
-      return;
-    }
-
-    const chatUsersReq = await MessageAPI.getAllMessages(profile._id);
-
-    if (chatUsersReq) {
-      setChatUsers(chatUsersReq);
-    }
-  }, [profile, MessageAPI]);
-
   useEffect(() => {
     getProfile();
   }, [getProfile]);
@@ -98,10 +88,6 @@ const HomeTemplate = () => {
     getApprovedConnections();
     getApprovedMemberships();
   }, [getApprovedConnections, getApprovedMemberships]);
-
-  useEffect(() => {
-    getChatUsers();
-  }, [getChatUsers]);
 
   return (
     <AuthedTemplate>

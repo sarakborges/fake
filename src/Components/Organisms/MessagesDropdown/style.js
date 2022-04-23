@@ -1,39 +1,39 @@
 import styled from "styled-components";
 
-export const NotificationsWrapper = styled.div`
+export const MessagesWrapper = styled.div`
   position: absolute;
   top: 100%;
-  right: 0;
+  right: 25%;
   z-index: 1;
 
-  width: 480px;
-  max-height: 300px;
+  width: 400px;
+  max-height: 400px;
   overflow: hidden auto;
 
   background-color: var(--bgContrast);
-  box-shadow: 2px 2px 3px 2px var(--bg);
+  box-shadow: 0 2px 3px 2px var(--bg);
   border-radius: 0 0 4px 4px;
 
-  opacity: ${({ displayNotifications }) => (displayNotifications ? 1 : 0)};
-  visibility: ${({ displayNotifications }) =>
-    displayNotifications ? "visible" : "hidden"};
+  opacity: ${({ displayMessages }) => (displayMessages ? 1 : 0)};
+  visibility: ${({ displayMessages }) =>
+    displayMessages ? "visible" : "hidden"};
 
   transition: opacity 0.3s, visibility 0.3s;
 `;
 
-export const NoNotificationsWrapper = styled.div`
+export const NoMessagesWrapper = styled.div`
   display: flex;
   place-items: center;
   place-content: center;
 `;
 
-export const NotificationsList = styled.ul`
+export const MessagesList = styled.ul`
   display: flex;
   flex-flow: column;
   gap: 16px;
 `;
 
-export const NotificationsItem = styled.li`
+export const MessagesItem = styled.li`
   padding: 12px 24px;
 
   background-color: var(--bg);
@@ -43,7 +43,7 @@ export const NotificationsItem = styled.li`
   }
 `;
 
-export const NotificationsContent = styled.div`
+export const MessagesContent = styled.div`
   display: flex;
   place-items: center;
   gap: 16px;
@@ -83,7 +83,7 @@ export const NotificationActions = styled.div`
   padding-top: 8px;
 `;
 
-export const NotificationsButtons = styled.div`
+export const MessagesButtons = styled.div`
   display: flex;
   place-items: center;
   gap: 16px;
@@ -91,12 +91,29 @@ export const NotificationsButtons = styled.div`
 
 export const NotificationIcon = styled.span`
   position: relative;
+
+  display: flex;
+  place-content: center;
+  place-items: center;
+
+  height: 100%;
+  aspect-ratio: 1;
+
+  background-color: ${({ isActive }) =>
+    isActive ? "var(--bgContrast)" : "transparent"};
+  cursor: pointer;
+
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: var(--bgContrast);
+  }
 `;
 
 export const Counter = styled.span`
   position: absolute;
-  right: 4px;
-  top: 4px;
+  right: 16px;
+  top: 16px;
 
   display: flex;
   place-content: center;

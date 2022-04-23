@@ -12,7 +12,6 @@ export const Topbar = styled.div`
   z-index: 99;
 
   width: 100%;
-  padding: 0 20px 0 12px;
 
   background-color: var(--bg);
 `;
@@ -46,7 +45,6 @@ export const ActionsWrapper = styled.div`
   display: flex;
   place-items: center;
   place-content: center;
-  gap: 8px;
 
   > div {
     position: relative;
@@ -59,15 +57,13 @@ export const ActionsWrapper = styled.div`
 
     font-size: 20px;
 
-    > :is(a, span) {
+    > a {
       display: flex;
-      place-content: center;
       place-items: center;
+      place-content: center;
 
-      height: 48px;
+      height: 100%;
       aspect-ratio: 1;
-
-      cursor: pointer;
 
       transition: background-color 0.3s;
 

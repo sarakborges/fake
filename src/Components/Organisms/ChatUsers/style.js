@@ -4,8 +4,6 @@ export const PeopleWrapper = styled.div`
   display: flex;
   flex-flow: column;
   flex: 1;
-
-  width: 400px;
 `;
 
 export const PeopleList = styled.ul`

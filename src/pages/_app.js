@@ -6,6 +6,7 @@ import { AppProvider } from "Contexts/App";
 import { UserProvider } from "Contexts/User";
 import { ProfileProvider } from "Contexts/Profile";
 import { GroupProvider } from "Contexts/Group";
+import { MessagesProvider } from "Contexts/Messages";
 
 // Component
 const MyApp = ({ Component, pageProps }) => {
@@ -14,7 +15,9 @@ const MyApp = ({ Component, pageProps }) => {
       <UserProvider>
         <ProfileProvider>
           <GroupProvider>
-            <Component {...pageProps} />
+            <MessagesProvider>
+              <Component {...pageProps} />
+            </MessagesProvider>
           </GroupProvider>
         </ProfileProvider>
       </UserProvider>

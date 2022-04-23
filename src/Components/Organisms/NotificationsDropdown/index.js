@@ -1,5 +1,7 @@
 // Dependencies
 import { useCallback, useContext, useEffect, useState, useRef } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
 // Contexts
@@ -20,10 +22,8 @@ import UnconnectButton from "Components/Molecules/UnconnectButton";
 
 // Styles
 import * as S from "./style";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell } from "@fortawesome/free-solid-svg-icons";
 
-const Notifications = () => {
+const NotificationsDropdown = () => {
   const [pendingConnections, setPendingConnections] = useState([]);
   const [displayNotifications, setDisplayNotifications] = useState(false);
 
@@ -132,6 +132,7 @@ const Notifications = () => {
 
       <S.NotificationIcon
         onClick={() => setDisplayNotifications(!displayNotifications)}
+        isActive={displayNotifications}
       >
         <FontAwesomeIcon icon={faBell} />
 
@@ -143,4 +144,4 @@ const Notifications = () => {
   );
 };
 
-export default Notifications;
+export default NotificationsDropdown;

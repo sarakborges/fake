@@ -2,6 +2,9 @@
 import { useCallback, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 
+// Apis
+import MessageAPI from "Apis/Message";
+
 // Helpers
 import { getUserData, getAppData } from "Helpers/Functions";
 import { ROUTES } from "Helpers/routes";
@@ -9,6 +12,7 @@ import { ROUTES } from "Helpers/routes";
 // Contexts
 import { AppContext } from "Contexts/App";
 import { UserContext } from "Contexts/User";
+import { MessagesContext } from "Contexts/Messages";
 
 // Organisms
 import Topbar from "Components/Organisms/Topbar";
@@ -24,7 +28,8 @@ const AuthedTemplate = ({ children }) => {
   const router = useRouter();
 
   const { appDispatch } = useContext(AppContext);
-  const { userDispatch } = useContext(UserContext);
+  const { messagesDispatch } = useContext(MessagesContext);
+  const { userState, userDispatch } = useContext(UserContext);
 
   const setUserData = useCallback(async () => {
     try {
@@ -42,7 +47,25 @@ const AuthedTemplate = ({ children }) => {
     } catch (e) {
       console.log(e);
     }
-  }, [getUserData, userDispatch]);
+  }, [getUserData, userDispatch, ROUTES, router]);
+
+  const setMessagesData = useCallback(async () => {
+    const { profile } = userState;
+
+    if (!profile?._id) {
+      return;
+    }
+
+    const chatUsersReq = await MessageAPI.getAllMessages(profile._id);
+    const newChatUsers = chatUsersReq.filter((item) => item?.user?._id);
+
+    if (newChatUsers) {
+      messagesDispatch({
+        type: "SET_CHAT_USERS",
+        data: newChatUsers,
+      });
+    }
+  }, [userState, messagesDispatch, MessageAPI]);
 
   const setAppData = useCallback(async () => {
     const { displayAdult } = getAppData();
@@ -56,7 +79,11 @@ const AuthedTemplate = ({ children }) => {
   useEffect(() => {
     setUserData();
     setAppData();
-  }, [setUserData, setAppData, getUserData, getAppData]);
+  }, [setUserData, setAppData]);
+
+  useEffect(() => {
+    setMessagesData();
+  }, [setMessagesData]);
 
   return (
     <AppTemplate>

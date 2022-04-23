@@ -69,8 +69,8 @@ export const Logout = styled.div`
 
 export const SelectProfile = styled.div`
   position: absolute;
-  right: 0;
   top: 100%;
+  right: 25%;
   z-index: 3;
 
   width: 480px;
@@ -78,7 +78,7 @@ export const SelectProfile = styled.div`
 
   background-color: var(--bgContrast);
   border-radius: 0 0 4px 4px;
-  box-shadow: 0 3px 5px var(--bg);
+  box-shadow: 0 2px 3px 2px var(--bg);
 
   opacity: ${({ displayProfiles }) => (displayProfiles ? 1 : 0)};
   visibility: ${({ displayProfiles }) =>
@@ -115,4 +115,8 @@ export const InfoAreaWrapper = styled.div`
   cursor: pointer;
 
   transition: background-color 0.3s;
+
+  &:hover {
+    background-color: var(--bgContrast);
+  }
 `;

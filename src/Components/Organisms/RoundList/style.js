@@ -11,7 +11,6 @@ export const RoundList = styled.div`
 
 export const Title = styled.div`
   display: flex;
-  flex-flow: column;
   place-content: center;
   place-items: center;
   gap: 8px;

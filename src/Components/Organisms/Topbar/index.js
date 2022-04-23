@@ -22,7 +22,8 @@ import ButtonLink from "Components/Atoms/ButtonLink";
 // Organisms
 import SearchForm from "Components/Organisms/SearchForm";
 import SelectProfile from "Components/Organisms/SelectProfile";
-import Notifications from "Components/Organisms/Notifications";
+import NotificationsDropdown from "Components/Organisms/NotificationsDropdown";
+import MessagesDropdown from "Components/Organisms/MessagesDropdown";
 
 // Style
 import * as S from "./style";
@@ -80,13 +81,8 @@ const TopBar = () => {
       {profile?._id && (
         <S.ActionsWrapper>
           <SelectProfile />
-          <Notifications />
-
-          <div>
-            <span>
-              <FontAwesomeIcon icon={faEnvelope} />
-            </span>
-          </div>
+          <NotificationsDropdown />
+          <MessagesDropdown />
         </S.ActionsWrapper>
       )}
     </S.Topbar>
